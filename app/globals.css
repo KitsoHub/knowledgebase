@@ -3,133 +3,165 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --background: 120 20% 99%;
-        --foreground: 108 8% 12%;
-        --card: 120 17% 98%;
-        --card-foreground: 108 8% 12%;
-        --popover: 120 17% 98%;
-        --popover-foreground: 108 8% 12%;
-        --primary: 206 100% 50%;
-        --primary-foreground: 0 0% 93%;
-        --secondary: 203 100% 92%;
-        --secondary-foreground: 216 71% 23%;
-        --muted: 120 5% 88%;
-        --muted-foreground: 108 8% 12%;
-        --accent: 120 7% 94%;
-        --accent-foreground: 108 8% 12%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 120 3% 81%;
-        --input: 120 3% 81%;
-        --ring: 206 100% 50%;
-        --radius: 0.5rem;
-    }
+  :root {
+    --background: 120 20% 99%;
+    --foreground: 108 8% 12%;
+    --card: 120 17% 98%;
+    --card-foreground: 108 8% 12%;
+    --popover: 120 17% 98%;
+    --popover-foreground: 108 8% 12%;
+    --primary: 206 100% 50%;
+    --primary-foreground: 0 0% 93%;
+    --secondary: 203 100% 92%;
+    --secondary-foreground: 216 71% 23%;
+    --muted: 120 5% 88%;
+    --muted-foreground: 108 8% 12%;
+    --accent: 120 7% 94%;
+    --accent-foreground: 108 8% 12%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 120 3% 81%;
+    --input: 120 3% 81%;
+    --ring: 206 100% 50%;
+    --radius: 0.5rem;
 
-    .dark {
-        --background: 90 6% 7%;
-        --foreground: 120 6% 93%;
-        --card: 90 4% 9%;
-        --card-foreground: 120 6% 93%;
-        --popover: 90 4% 9%;
-        --popover-foreground: 120 6% 93%;
-        --primary: 206 100% 50%;
-        --primary-foreground: 0 0% 93%;
-        --secondary: 209 100% 19%;
-        --secondary-foreground: 205 100% 88%;
-        --muted: 100 3% 19%;
-        --muted-foreground: 120 6% 93%;
-        --accent: 90 3% 13%;
-        --accent-foreground: 120 6% 93%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 96 4% 27%;
-        --input: 96 4% 27%;
-        --ring: 206 100% 50%;
-    }
-    h1 {
-        font-size: var(--text-2xl);
-      }
-      h2 {
-        font-size: var(--text-xl);
-      }
+    --background2: 222 47% 11%;
+
+    --sidebar-background: 222 47% 11%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 199 89% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 224 76% 48%;
+  }
+
+
+  .bg-background2 {
+    background-color: hsl(var(--background2));
+  }
+
+  .text-sidebar-foreground {
+    color: hsl(var(--sidebar-foreground));
+}
+
+  .dark {
+    --background: 90 6% 7%;
+    --foreground: 120 6% 93%;
+    --card: 90 4% 9%;
+    --card-foreground: 120 6% 93%;
+    --popover: 90 4% 9%;
+    --popover-foreground: 120 6% 93%;
+    --primary: 206 100% 50%;
+    --primary-foreground: 0 0% 93%;
+    --secondary: 209 100% 19%;
+    --secondary-foreground: 205 100% 88%;
+    --muted: 100 3% 19%;
+    --muted-foreground: 120 6% 93%;
+    --accent: 90 3% 13%;
+    --accent-foreground: 120 6% 93%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 96 4% 27%;
+    --input: 96 4% 27%;
+    --ring: 206 100% 50%;
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+  }
+
+
 
 }
+
 .faq-button {
-    background: linear-gradient(90deg, #8000ff, #bd00ff);
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    border-radius: 25px;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    transition:
-        transform 0.2s,
-        box-shadow 0.2s;
+  background: linear-gradient(90deg, #8000ff, #bd00ff);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 25px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .faq-button:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 4px 15px rgba(128, 0, 255, 0.5);
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(128, 0, 255, 0.5);
 }
 
 .faq-button:focus {
-    outline: none;
+  outline: none;
 }
+
 .confetti {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    transform-origin: center bottom;
-    animation: fall 4s linear infinite;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  transform-origin: center bottom;
+  animation: fall 4s linear infinite;
 }
 
 .confetti.square {
-    clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%, 100% 0%);
 }
+
 .confetti.triangle {
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 }
 
 @keyframes fall {
-    to {
-        transform: translateY(100vh) rotate(720deg);
-    }
+  to {
+    transform: translateY(100vh) rotate(720deg);
+  }
 }
 
 
 @layer base {
-    * {
-      @apply border-border;
-    }
-
-    body {
-      @apply bg-background text-foreground;
-      font-feature-settings: "rlig" 1, "calt" 1;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-      @apply tracking-tight;
-    }
-
-    h1 {
-      @apply text-4xl font-bold md:text-5xl lg:text-6xl;
-    }
-
-    h2 {
-      @apply text-3xl font-bold md:text-4xl;
-    }
-
-    h3 {
-      @apply text-2xl font-bold md:text-3xl;
-    }
-
-    h4 {
-      @apply text-xl font-semibold md:text-2xl;
-    }
-
-    h5 {
-      @apply text-lg font-semibold md:text-xl;
-    }
+  * {
+    @apply border-border;
   }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl font-bold md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl font-bold md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl font-bold md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl font-semibold md:text-2xl;
+  }
+
+  h5 {
+    @apply text-lg font-semibold md:text-xl;
+  }
+}

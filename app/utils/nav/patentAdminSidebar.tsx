@@ -13,14 +13,29 @@ import {
    // UsersRound,
     //Amphora,
     Newspaper,
+    ChevronRight,
+    ChevronLeft,
+    FileSearch,
+    BarChart3,
+    Users,
     //BrainCircuit,
 } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { Button } from '@/app/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/app/components/ui/tooltip"
+
 
 interface SidebarProps {
-    isOpen: boolean
-    toggleSidebar: () => void
+    isCollapsed: boolean
+    onToggle: () => void
+    className?: string
 }
-const PatentAdminSidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
+const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onToggle }) => {
     const [isDarkMode, setIsDarkMode] = useState(false)
 
     const toggleTheme = () => {
@@ -28,91 +43,133 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) =
         document.documentElement.classList.toggle('dark')
     }
 
-    const menuItems = [
-        { icon: HomeIcon, label: 'Overview', href: '/overview' },
-        { icon: Newspaper, label: 'Patents', href: '/patents',  badge: 'Beta' },
-        { icon: Headphones, label: 'Support', href: '/support', badge: 'Beta' },
-        { icon: CogIcon, label: 'Settings', href: '/settings', badge: 'Beta' },
+    const navigationItems = [
+        { icon: HomeIcon, label: 'Overview', href: '/overview', active: true },
+        { icon: Newspaper, label: 'Applications', href: '/patents',  badge: 'Beta', active: false},
+        { icon: Users, label: 'Examiners', href: '/patents',  badge: 'Beta', active: false },
+        { icon: FileSearch, label: 'Workplace', href: '/patents',  badge: 'Beta', active: false},
+        { icon: BarChart3, label: 'Analytics',  href: '/patents',  badge: 'Beta', active: false },
+        // { icon: Headphones, label: 'Support', href: '/support', badge: 'Beta', active: false},
+        // { icon: CogIcon, label: 'Settings', href: '/settings', badge: 'Beta', actie: false},
     ]
 
+    const patentProcessItems = [
+      { icon: HomeIcon, label: 'Draftings', href: '/overview', active: true },
+      { icon: Newspaper, label: 'Examinations', href: '/patents',  badge: 'Beta', active: false},
+      { icon: FileSearch, label: 'Publications', href: '/patents',  badge: 'Beta', active: false},
+      { icon: Newspaper, label: 'Office Actions', href: '/patents',  badge: 'Beta', active: false},
+
+  ]
+
     return (
-        <>
-            {isOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-                    onClick={toggleSidebar}
-                />
-            )}
+        <div className={cn(
+            'bg-background2 text-sidebar-foreground h-screen lex flex-col transition-all duration-300',
+            isCollapsed ? "w-16" : "w-64", className
+        )}>
+             <div className="p-4 border-b border-sidebar-border flex items-center justify-between">
+        {!isCollapsed && (
+          <h1 className="text-xl font-bold text-sidebar-foreground flex items-center">
+            <span className="text-patent-blue mr-2">●</span> IKMS Patents
+          </h1>
+        )}
+        <Button
+          onClick={onToggle}
+          className="p-1.5 rounded-md hover:bg-sidebar-accent text-sidebar-foreground"
+          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+        </Button>
 
-            <div
-                className={`
-          fixed left-0 top-0 h-full
-          bg-white dark:bg-gray-800
-          shadow-md transition-all duration-300
-          z-50
-          w-64
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      </div>
 
-        `}
-            >
-                <button
-                    onClick={toggleSidebar}
-                    className="
-          absolute right-0 top-4
-            translate-x-full bg-white dark:bg-gray-800
-            p-2 rounded-r-md shadow-md hover:bg-indigo-400
-          "
-                >
-                    <ChevronRightIcon
-                        className={`w-5 h-5 text-gray-500 dark:text-gray-400 hover:text-white
-              ${isOpen ? 'rotate-180' : ''} transition-transform`}
-                    />
-                </button>
-                <div className="p-4 border-b dark:border-gray-700">
-                    <img
-                        src="/logo.svg"
-                        alt="KitsoHub"
-                        className="h-10 mx-auto"
-                    />
-                </div>
 
-                <nav className="mt-5">
-                    {menuItems.map((item, index) => (
-                        <Link
-                            key={index}
-                            href={item.href}
-                            className="flex items-center p-3 hover:bg-purple-50 dark:hover:bg-gray-700 transition-colors group"
-                        >
-                            <item.icon className="w-5 h-5 mr-3 text-gray-500 dark:text-gray-400 group-hover:text-purple-600" />
-                            <span className="flex-grow text-gray-700 dark:text-gray-300 group-hover:text-purple-600">
-                                {item.label}
-                            </span>
-                            {item.badge && (
-                                <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">
-                                    {item.badge}
-                                </span>
-                            )}
-                        </Link>
-                    ))}
-                </nav>
-
-                <div className="absolute bottom-0 left-0 right-0 p-4 border-t dark:border-gray-700">
-                    <button
-                        onClick={toggleTheme}
-                        className="w-full flex items-center justify-center p-2 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600"
+      {/* nav list */}
+      <nav className="flex-1 p-2">
+        <TooltipProvider delayDuration={300}>
+          <ul className="space-y-2">
+            {navigationItems.map((item) => (
+              <li key={item.label}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a
+                      href={item.href}
+                      className={cn(
+                        "flex items-center space-x-3 p-3 rounded-md transition-colors",
+                        item.active
+                          ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                          : "hover:bg-sidebar-accent/80 hover:text-sidebar-accent-foreground",
+                        isCollapsed && "justify-center"
+                      )}
                     >
-                        {isDarkMode ? (
-                            <SunIcon className="w-5 h-5 mr-2 text-yellow-500" />
-                        ) : (
-                            <MoonIcon className="w-5 h-5 mr-2 text-purple-600" />
-                        )}
-                        <span className="text-gray-700 dark:text-gray-300">
-                            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-                        </span>
-                    </button>
-                </div>
+                      <item.icon className="h-5 w-5" />
+                      {!isCollapsed && <span>{item.label}</span>}
+                      {!isCollapsed && item.active && (
+                        <div className="ml-auto w-1.5 h-6 bg-patent-blue rounded-full"> </div>
+                      )}
+                    </a>
+                  </TooltipTrigger>
+                  {isCollapsed && (
+                    <TooltipContent side="right">
+                      {item.label}
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </li>
+            ))}
+          </ul>
+        </TooltipProvider>
+        <span className="pt-14 pb-4 text-sidebar-foreground/70 ring-sidebar-ring flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-none transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&amp;>svg]:size-4 [&amp;>svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0" data-sidebar="group-label">Patent Process</span>
+        {/* <span className="border-b border-sidebar-border my-8"> Patent Process</span> */}
+        <TooltipProvider delayDuration={300}>
+          <ul className="space-y-2">
+            {patentProcessItems.map((item) => (
+              <li key={item.label}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <a
+                      href={item.href}
+                      className={cn(
+                        "flex items-center space-x-3 p-3 rounded-md transition-colors",
+                        item.active
+                          ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                          : "hover:bg-sidebar-accent/80 hover:text-sidebar-accent-foreground",
+                        isCollapsed && "justify-center"
+                      )}
+                    >
+                      <item.icon className="h-5 w-5" />
+                      {!isCollapsed && <span>{item.label}</span>}
+                      {!isCollapsed && item.active && (
+                        <div className="ml-auto w-1.5 h-6 bg-patent-blue rounded-full"> </div>
+                      )}
+                    </a>
+                  </TooltipTrigger>
+                  {isCollapsed && (
+                    <TooltipContent side="right">
+                      {item.label}
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </li>
+            ))}
+          </ul>
+        </TooltipProvider>
+      </nav>
+
+      <div className="p-4 border-t border-sidebar-border">
+        <div className={cn("flex items-center", isCollapsed && "justify-center")}>
+          <div className="w-10 h-10 rounded-full bg-patent-blue flex items-center justify-center text-white font-semibold">
+            EX
+          </div>
+          {!isCollapsed && (
+            <div className="ml-3">
+              <p className="font-medium">Examiner 1</p>
+              <p className="text-sm text-sidebar-foreground/70">Patent Officer</p>
             </div>
-        </>
+          )}
+        </div>
+      </div>
+        </div>
+
     )
 }
 

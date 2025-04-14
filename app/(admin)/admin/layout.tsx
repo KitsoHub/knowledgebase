@@ -1,6 +1,7 @@
 'use client'
 
-import AdminSidebar from '@/app/utils/nav/adminSidebar'
+
+import PatentAdminSidebar from '@/app/utils/nav/patentAdminSidebar'
 import Topbar from '@/app/utils/nav/topbar'
 import { useState } from 'react'
 
@@ -13,9 +14,9 @@ const AppLayout: React.FC<LayoutProps> = ({ children }) => {
         setIsSidebarOpen(!isSidebarOpen)
     }
     return (
-        <div className="flex h-screen">
+        <div className="flex h-screen bg-background">
             {/* Sidebar */}
-            <AdminSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+            <PatentAdminSidebar isCollapsed={isSidebarOpen} onToggle={toggleSidebar} />
 
             {/* Main content area */}
             <div
