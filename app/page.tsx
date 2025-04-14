@@ -3,18 +3,30 @@
 import { Footer } from '@/app/components/shared/footer'
 import { HeroSection } from '@/app/components/shared/hero-section'
 import Chatbot from '@/app/components/chatbot'
-// import { auth } from '@clerk/nextjs/server'
+import { auth, currentUser } from '@clerk/nextjs/server'
 import React from 'react'
 import ArticleSection from './components/articles/article-section'
 import CategoryStatsSection from './components/shared/category-stats-section'
 import RecentArticlesSection from './components/articles/recent-articles-section'
 import HomeNavigation from './utils/nav/homeNavigation'
 import ContributeSection from './components/shared/contribute-section'
+import prisma from '@/lib/prisma'
 
 export default async function Home() {
-    // const { userId } = await auth()
+    const { userId } = await auth()
+
     // const href = userId ? '/dashboard' : '/sign-up'
     // const href = userId ? '/onboarding' : '/sign-up'
+
+
+    const match = await prisma.user.findUnique({
+        where: {
+            clerkId: userId as string,
+        },
+    })
+
+
+    console.log(">> Current User >>", match)
     return (
         <div className="min-h-screen flex flex-col ">
 

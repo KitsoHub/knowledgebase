@@ -23,6 +23,7 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   account   Account?
+  role      String?
   // onboarding Onboarding?
   // onboarding   Onboarding? @relation(fields: [onboardingId], references: [id])
   // onboardingId String?

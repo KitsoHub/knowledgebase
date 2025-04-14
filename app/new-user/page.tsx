@@ -1,9 +1,12 @@
-import { redirect } from 'next/navigation'
+
 import { currentUser } from '@clerk/nextjs/server'
 import prisma from '@/lib/prisma'
+import { redirect } from 'next/navigation'
 
 const createNewUser = async () => {
     const user = await currentUser()
+
+
     if (!user) {
         throw new Error('User not found')
     }
@@ -22,12 +25,21 @@ const createNewUser = async () => {
                 email: user.emailAddresses[0].emailAddress,
             },
         })
+
+
+         redirect('/onboarding')
+    }else{
+
+        if (match.role === "is_staff") {
+            redirect('/admin')
+        }
     }
 
-    redirect('/onboarding')
 }
 
 const NewUserPage = async () => {
+
+
     await createNewUser()
     return <div>...loading</div>
 }
