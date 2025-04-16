@@ -94,7 +94,7 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
                     <a
                       href={item.href}
                       className={cn(
-                        "flex items-center space-x-3 p-3 rounded-md transition-colors",
+                        "flex items-center space-x-3 transition-colors text-xs text-left p-2 rounded-md overflow-hidden h-8 w-full gap-2 ring-sidebar-ring",
                         item.active
                           ? "bg-sidebar-accent text-sidebar-accent-foreground"
                           : "hover:bg-sidebar-accent/80 hover:text-sidebar-accent-foreground",
@@ -129,7 +129,7 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
                     <a
                       href={item.href}
                       className={cn(
-                        "flex items-center space-x-3 p-3 rounded-md transition-colors",
+                        "flex items-center space-x-3 transition-colors text-xs text-left p-2 rounded-md overflow-hidden h-8 w-full gap-2 ring-sidebar-ring",
                         item.active
                           ? "bg-sidebar-accent text-sidebar-accent-foreground"
                           : "hover:bg-sidebar-accent/80 hover:text-sidebar-accent-foreground",

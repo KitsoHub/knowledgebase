@@ -33,7 +33,6 @@ export type ApplicationStage =
   | "Verification"
   | "Search"
   | "Drafting"
-  | "Filed"
   | "Publication"
   | "Examination"
   | "Awaiting Response"

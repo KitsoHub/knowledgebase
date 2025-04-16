@@ -8,7 +8,7 @@ import { useState } from 'react'
 interface LayoutProps {
     children: React.ReactNode
 }
-const AppLayout: React.FC<LayoutProps> = ({ children }) => {
+const PatentAppLayout: React.FC<LayoutProps> = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen)
@@ -45,4 +45,4 @@ const AppLayout: React.FC<LayoutProps> = ({ children }) => {
     )
 }
 
-export default AppLayout
+export default PatentAppLayout
