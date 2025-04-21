@@ -35,12 +35,29 @@
     --sidebar-accent-foreground: 210 40% 98%;
     --sidebar-border: 217 33% 17%;
     --sidebar-ring: 224 76% 48%;
+    --sidebar-accent80: 199 89% 48%;
   }
 
 
   .bg-background2 {
     background-color: hsl(var(--background2));
   }
+
+  .bg-sidebar {
+    background-color: hsl(var(--sidebar-background));
+  }
+
+  .bg-sidebar-accent {
+    background-color: hsl(var(--sidebar-accent));
+  }
+
+  .bg-sidebar-accent80 {
+    background-color: hsl(var(--sidebar-accent80));
+  }
+  .bg-patent-blue{
+    background-color: hsl(var(--sidebar-primary));
+  }
+
 
   .text-sidebar-foreground {
     color: hsl(var(--sidebar-foreground));

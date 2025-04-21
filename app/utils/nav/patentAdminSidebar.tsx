@@ -44,7 +44,7 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
     }
 
     const navigationItems = [
-        { icon: HomeIcon, label: 'Overview', href: '/overview', active: true },
+        { icon: HomeIcon, label: 'Overview', href: '/admin/patents', active: true },
         { icon: Newspaper, label: 'Applications', href: '/patents',  badge: 'Beta', active: false},
         { icon: Users, label: 'Examiners', href: '/patents',  badge: 'Beta', active: false },
         { icon: FileSearch, label: 'Workplace', href: '/patents',  badge: 'Beta', active: false},
@@ -63,7 +63,7 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
 
     return (
         <div className={cn(
-            'bg-background2 text-sidebar-foreground h-screen lex flex-col transition-all duration-300',
+            'bg-sidebar text-sidebar-foreground h-screen flex flex-col transition-all duration-300',
             isCollapsed ? "w-16" : "w-64", className
         )}>
              <div className="p-4 border-b border-sidebar-border flex items-center justify-between">
@@ -94,10 +94,10 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
                     <a
                       href={item.href}
                       className={cn(
-                        "flex items-center space-x-3 transition-colors text-xs text-left p-2 rounded-md overflow-hidden h-8 w-full gap-2 ring-sidebar-ring",
+                        "flex items-center space-x-3 p-3 rounded-md transition-colors ",
                         item.active
                           ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                          : "hover:bg-sidebar-accent/80 hover:text-sidebar-accent-foreground",
+                          : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                         isCollapsed && "justify-center"
                       )}
                     >
@@ -118,7 +118,7 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
             ))}
           </ul>
         </TooltipProvider>
-        <span className="pt-14 pb-4 text-sidebar-foreground/70 ring-sidebar-ring flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-none transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&amp;>svg]:size-4 [&amp;>svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0" data-sidebar="group-label">Patent Process</span>
+        {!isCollapsed &&(<span className="pt-14 pb-4 text-sidebar-foreground/70  flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-none transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&amp;>svg]:size-4 [&amp;>svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0" data-sidebar="group-label">Patent Process</span>)}
         {/* <span className="border-b border-sidebar-border my-8"> Patent Process</span> */}
         <TooltipProvider delayDuration={300}>
           <ul className="space-y-2">
@@ -129,7 +129,7 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
                     <a
                       href={item.href}
                       className={cn(
-                        "flex items-center space-x-3 transition-colors text-xs text-left p-2 rounded-md overflow-hidden h-8 w-full gap-2 ring-sidebar-ring",
+                        "flex items-center space-x-3 p-3 rounded-md transition-colors",
                         item.active
                           ? "bg-sidebar-accent text-sidebar-accent-foreground"
                           : "hover:bg-sidebar-accent/80 hover:text-sidebar-accent-foreground",
