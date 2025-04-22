@@ -112,7 +112,7 @@ export const generateApplications = (count: number): PatentApplication[] => {
     const technologyAreas: TechnologyArea[] = ["Software", "Hardware", "Biotechnology", "Chemical", "Mechanical", "Electrical"];
     const priorityLevels: PriorityLevel[] = ["Low", "Medium", "High", "Urgent"];
     for (let i = 0; i < count; i++) {
-        const stage = stages[Math.floor(Math.random() * (stages.length - 2))];
+        const stage = stages[Math.floor(Math.random() * (stages.length - 3))];
         applications.push({
             id: `PAT-${10000 + 1}`,
             title: `Innovation in ${technologyAreas[Math.floor(Math.random() * technologyAreas.length)]} Technologies`,
@@ -131,7 +131,7 @@ export const generateApplications = (count: number): PatentApplication[] => {
 }
 
 // creating mock data for patent applications
-export const mockApplications = generateApplications(5);
+export const mockApplications = generateApplications(10);
 export const mockExaminers = generateExaminers(5);
 export const mockWeeklyProductivity = generateWeeklyProductivity(10);
 

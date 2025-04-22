@@ -45,9 +45,9 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
 
     const navigationItems = [
         { icon: HomeIcon, label: 'Overview', href: '/admin/patents', active: true },
-        { icon: Newspaper, label: 'Applications', href: '/patents',  badge: 'Beta', active: false},
+        { icon: Newspaper, label: 'Applications', href: 'admin/patens/applications',  badge: 'Beta', active: false},
         { icon: Users, label: 'Examiners', href: '/patents',  badge: 'Beta', active: false },
-        { icon: FileSearch, label: 'Workplace', href: '/patents',  badge: 'Beta', active: false},
+        { icon: FileSearch, label: 'Workplace', href: '/admin/patents',  badge: 'Beta', active: false},
         { icon: BarChart3, label: 'Analytics',  href: '/patents',  badge: 'Beta', active: false },
         // { icon: Headphones, label: 'Support', href: '/support', badge: 'Beta', active: false},
         // { icon: CogIcon, label: 'Settings', href: '/settings', badge: 'Beta', actie: false},
@@ -118,8 +118,8 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
             ))}
           </ul>
         </TooltipProvider>
-        {!isCollapsed &&(<span className="pt-14 pb-4 text-sidebar-foreground/70  flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-none transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&amp;>svg]:size-4 [&amp;>svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0" data-sidebar="group-label">Patent Process</span>)}
-        {/* <span className="border-b border-sidebar-border my-8"> Patent Process</span> */}
+        {/* {!isCollapsed &&(<span className="pt-14 pb-4 text-sidebar-foreground/70  flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-none transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&amp;>svg]:size-4 [&amp;>svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0" data-sidebar="group-label">Patent Process</span>)} */}
+{/*
         <TooltipProvider delayDuration={300}>
           <ul className="space-y-2">
             {patentProcessItems.map((item) => (
@@ -152,7 +152,7 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
               </li>
             ))}
           </ul>
-        </TooltipProvider>
+        </TooltipProvider> */}
       </nav>
 
       <div className="p-4 border-t border-sidebar-border">
