@@ -1,11 +1,14 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react'
+
 const SHAPES = ['square', 'triangle']
 const COLOR_DIGIT = 'ABCDEF1234567890'
 
 const ConfettiButton = () => {
     const [isConfettiActive, setConfettiActive] = useState(false)
-    const containerRef = useRef(null)
+    // Add typing for useRef
+    const containerRef = useRef<HTMLDivElement | null>(null) // Specify the correct type
+
     useEffect(() => {
         if (isConfettiActive) {
             generateConfetti()
@@ -19,6 +22,7 @@ const ConfettiButton = () => {
         }
         return color
     }
+
     const generateConfetti = () => {
         const container = containerRef.current
         if (container) {
@@ -68,4 +72,6 @@ const ConfettiButton = () => {
         </div>
     )
 }
+
 export default ConfettiButton
+
