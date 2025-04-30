@@ -1,28 +1,45 @@
+'use client'
+
 import React from 'react'
-import { BellIcon, } from 'lucide-react'
+import { BellIcon } from 'lucide-react'
 import { UserButton } from '@clerk/nextjs'
 
 interface TopbarProps {
     username: string
     accountHostname: string
-    // toggleSidebar: () => void
+    toggleSidebar: () => void
 }
 
 const Topbar: React.FC<TopbarProps> = ({
     username,
     accountHostname,
-    // toggleSidebar,
+    toggleSidebar,
 }) => {
     return (
         <div className="sticky top-0 z-40 flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-sm">
-            <div className="flex items-center pl-10">
-                {/* <button
-          onClick={toggleSidebar}
-          className=" mr-4 text-gray-600 dark:text-gray-300 hover:text-purple-600"
-          aria-label="Toggle Sidebar"
-        >
-          <MenuIcon className="w-6 h-6" />
-        </button> */}
+            <div className="flex items-center">
+                {/* Sidebar toggle button */}
+                <button
+                    onClick={toggleSidebar}
+                    className="mr-4 text-gray-600 dark:text-gray-300 hover:text-purple-600"
+                    aria-label="Toggle Sidebar"
+                >
+                    <svg
+                        className="w-6 h-6"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M4 6h16M4 12h16M4 18h16"
+                        ></path>
+                    </svg>
+                </button>
+
                 <h1 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                     Welcome, {username}
                 </h1>
@@ -32,14 +49,6 @@ const Topbar: React.FC<TopbarProps> = ({
             </div>
 
             <div className="flex items-center space-x-4">
-                {/* <button
-          className="flex items-center justify-center bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors"
-          aria-label="Create new article"
-        >
-          <PlusIcon className="w-5 h-5 mr-2" />
-          Create a new article
-        </button> */}
-
                 <button
                     className="text-gray-600 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400"
                     aria-label="Notifications"
@@ -48,12 +57,6 @@ const Topbar: React.FC<TopbarProps> = ({
                 </button>
 
                 <div className="relative">
-                    {/* <button
-                        className="flex items-center"
-                        aria-label="User profile"
-                    >
-                        <UserCircleIcon className="w-8 h-8 text-gray-500 dark:text-gray-400 hover:text-purple-600" />
-                    </button> */}
                     <UserButton afterSignOutUrl="/" />
                 </div>
             </div>
@@ -62,3 +65,4 @@ const Topbar: React.FC<TopbarProps> = ({
 }
 
 export default Topbar
+
