@@ -169,35 +169,23 @@ export function OnboardingModal({
                                                     Purpose of Research
                                                 </FormLabel>
                                                 <Select
-                                                    onValueChange={
-                                                        field.onChange
-                                                    }
-                                                    defaultValue={field.value}
-                                                    autoFocus
-                                                >
-                                                    <FormControl>
-                                                        <SelectTrigger>
-                                                            <SelectValue placeholder="Select your research purpose" />
-                                                        </SelectTrigger>
-                                                    </FormControl>
-                                                    <SelectContent>
-                                                        <SelectItem value="academic">
-                                                            Academic
-                                                        </SelectItem>
-                                                        <SelectItem value="commercial">
-                                                            Commercial
-                                                        </SelectItem>
-                                                        <SelectItem value="personal">
-                                                            Personal
-                                                        </SelectItem>
-                                                        <SelectItem value="nonprofit">
-                                                            Non-profit
-                                                        </SelectItem>
-                                                        <SelectItem value="government">
-                                                            Government
-                                                        </SelectItem>
-                                                    </SelectContent>
-                                                </Select>
+  onValueChange={field.onChange}
+  defaultValue={field.value}
+>
+  <FormControl>
+    <SelectTrigger>
+      <SelectValue placeholder="Select your research purpose" />
+    </SelectTrigger>
+  </FormControl>
+  <SelectContent>
+    <SelectItem value="academic">Academic</SelectItem>
+    <SelectItem value="commercial">Commercial</SelectItem>
+    <SelectItem value="personal">Personal</SelectItem>
+    <SelectItem value="nonprofit">Non-profit</SelectItem>
+    <SelectItem value="government">Government</SelectItem>
+  </SelectContent>
+</Select>
+
                                                 <FormDescription>
                                                     This helps us understand how
                                                     you will use our platform.
