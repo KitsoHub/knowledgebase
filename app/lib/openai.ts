@@ -1,10 +1,9 @@
-import { Configuration, OpenAIApi } from 'openai';
+import { OpenAIApi } from 'openai';
 
-const configuration = new Configuration({
+// Initialize OpenAIApi with API key directly
+const openai = new OpenAIApi({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
-const openai = new OpenAIApi(configuration);
 
 export async function getChatResponse(messages: { role: 'system' | 'user' | 'assistant'; content: string }[]) {
   try {
