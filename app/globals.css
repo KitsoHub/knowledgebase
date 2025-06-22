@@ -90,6 +90,24 @@
   background-color: #f59e0b33;
 }
 
+.bg-patent-green {
+    --tw-bg-opacity: 1;
+    background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+}
+
+.bg-patent-ai-green {
+    --tw-bg-opacity: 1;
+    background-color: rgb(16 185 129 / var(--tw-bg-opacity));
+}
+.text-patent-green {
+    --tw-text-opacity: 1;
+    color: rgb(16 185 129 / var(--tw-text-opacity));
+}
+.text-patent-red {
+    --tw-text-opacity: 1;
+    color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
   .dark {
     --background: 90 6% 7%;
     --foreground: 120 6% 93%;

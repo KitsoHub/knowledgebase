@@ -26,7 +26,7 @@ export const getUserByClerkID = async (select = { id: true }) => {
         select,
     })
 
-    console.log('>>>>>>Get user by ID>>>>>>>>>>>', user)
+    // console.log('>>>>>>Get user by ID>>>>>>>>>>>', user)
 
     return user
 }

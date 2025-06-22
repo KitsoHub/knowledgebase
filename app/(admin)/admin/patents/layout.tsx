@@ -14,7 +14,8 @@ const PatentAppLayout: React.FC<LayoutProps> = ({ children }) => {
         setIsSidebarOpen(!isSidebarOpen)
     }
     return (
-        <div className="flex h-screen bg-background">
+
+        <div className="flex flex-1 min-h-screen bg-background">
             {/* Sidebar */}
             <PatentAdminSidebar isCollapsed={isSidebarOpen} onToggle={toggleSidebar} />
 

@@ -19,6 +19,7 @@ export default function HomeNavigation() {
         { href: '/dashboard', label: 'Dashboard' },
         { href: '/games', label: 'Games' },
         { href: '/contribute', label: 'Contribute' },
+        { href: '/admin/patents', label: 'Patents' },
     ]
     useEffect(() => {
         const handleScroll = () => {
@@ -65,9 +66,9 @@ export default function HomeNavigation() {
                     {/* <Button variant="outline" size="icon" className="ml-2">
                         <Search className="h-4 w-4" />
                     </Button> */}
-                    <Button asChild className="ml-4">
+                    {/* <Button asChild className="ml-4">
                         <Link href="/sign-in">SignIn</Link>
-                    </Button>
+                    </Button> */}
                 </nav>
                 {/* mobile menu button */}
 

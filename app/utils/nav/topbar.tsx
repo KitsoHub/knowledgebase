@@ -15,7 +15,7 @@ const Topbar: React.FC<TopbarProps> = ({
     toggleSidebar,
 }) => {
     return (
-        <div className="sticky top-0 z-40 flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-sm">
+        <div className="flex sticky top-0 z-40 flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 shadow-sm">
             <div className="flex items-center pl-10">
                 {/* <button
           onClick={toggleSidebar}

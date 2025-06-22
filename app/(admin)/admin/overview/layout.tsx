@@ -12,7 +12,7 @@ const AppLayout: React.FC<LayoutProps> = ({ children }) => {
         setIsSidebarOpen(!isSidebarOpen)
     }
     return (
-        <div className="flex h-screen bg-background">
+        <div className="flex-1 flex min-h-screen bg-background">
             {/* Sidebar */}
             <AdminSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 

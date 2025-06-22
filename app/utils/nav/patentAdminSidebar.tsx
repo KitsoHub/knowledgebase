@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import Link from 'next/link'
 import {
     HomeIcon,
     CogIcon,
@@ -45,10 +44,11 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
 
     const navigationItems = [
         { icon: HomeIcon, label: 'Overview', href: '/admin/patents', active: true },
-        { icon: Newspaper, label: 'Applications', href: 'admin/patens/applications',  badge: 'Beta', active: false},
-        { icon: Users, label: 'Examiners', href: '/patents',  badge: 'Beta', active: false },
-        { icon: FileSearch, label: 'Workplace', href: '/admin/patents',  badge: 'Beta', active: false},
+        { icon: Newspaper, label: 'Applications', href: '/admin/patents/applications',  badge: 'Beta', active: false},
+        { icon: Users, label: 'WorkSpace', href: '/admin/patents/workspace',  badge: 'Beta', active: false },
+        { icon: FileSearch, label: 'Verification', href: '/admin/patents/verification',  badge: 'Beta', active: false},
         { icon: BarChart3, label: 'Analytics',  href: '/patents',  badge: 'Beta', active: false },
+                // { icon: Users, label: 'Examiners', href: '/patents',  badge: 'Beta', active: false },
         // { icon: Headphones, label: 'Support', href: '/support', badge: 'Beta', active: false},
         // { icon: CogIcon, label: 'Settings', href: '/settings', badge: 'Beta', actie: false},
     ]

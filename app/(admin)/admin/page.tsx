@@ -1,4 +1,4 @@
 
 export default function AdminDashboard() {
-    return <div> </div>
+    return    <div className="flex-1 min-h-screen"> </div>
 }

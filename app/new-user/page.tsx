@@ -1,4 +1,5 @@
 
+
 import { currentUser } from '@clerk/nextjs/server'
 import prisma from '@/lib/prisma'
 import { redirect } from 'next/navigation'
@@ -10,14 +11,14 @@ const createNewUser = async () => {
     if (!user) {
         throw new Error('User not found')
     }
-    console.log(user)
+    // console.log(user)
 
     const match = await prisma.user.findUnique({
         where: {
             clerkId: user.id as string,
         },
     })
-
+    console.log("MATCH>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",match)
     if (!match) {
         await prisma.user.create({
             data: {
