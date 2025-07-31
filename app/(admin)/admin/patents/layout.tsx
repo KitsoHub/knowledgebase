@@ -1,6 +1,5 @@
 'use client'
 
-
 import PatentAdminSidebar from '@/app/utils/nav/patentAdminSidebar'
 import Topbar from '@/app/utils/nav/topbar'
 import { useState } from 'react'

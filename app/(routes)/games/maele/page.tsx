@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/app/components/ui/button';
+import Leaderboard from '@/app/components/shared/games/leaderboard';
 import {
   Card,
   CardContent,
@@ -252,65 +253,7 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   );
 }
 
-function Leaderboard() {
-  const [entries, setEntries] = useState<
-    { username: string; score: number; timestamp: Date }[]
-  >([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchLeaderboard = async () => {
-      try {
-        const q = query(
-          collection(db, 'leaderboard'),
-          orderBy('score', 'desc'),
-          limit(10)
-        );
-        const querySnapshot = await getDocs(q);
-        const leaderboardData = querySnapshot.docs.map((doc) => ({
-          username: doc.data().username,
-          score: doc.data().score,
-          timestamp: doc.data().timestamp.toDate(),
-        }));
-        setEntries(leaderboardData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching leaderboard:', error);
-        setLoading(false);
-      }
-    };
-    fetchLeaderboard();
-  }, []);
-
-  return (
-    <Card className="w-full max-w-lg mx-4 mt-12 bg-white/90 border border-gray-200 shadow-xl backdrop-blur-sm relative z-10">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center text-gray-800">
-          Leaderboard
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {loading ? (
-          <p className="text-center text-gray-700">Loading...</p>
-        ) : entries.length === 0 ? (
-          <p className="text-center text-gray-700">No scores yet.</p>
-        ) : (
-          <ul className="space-y-2">
-            {entries.map((entry, index) => (
-              <li
-                key={index}
-                className="flex justify-between items-center py-2 px-4 bg-gray-50 rounded-md"
-              >
-                <span className="text-gray-800">{entry.username}</span>
-                <span className="font-bold text-purple-600">{entry.score}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </CardContent>
-    </Card>
-  );
-}
 
 export default function GamePage() {
   const [activeTab, setActiveTab] = useState('game');
