@@ -33,7 +33,7 @@ export function GameCard({ game }: GameCardProps) {
                 <div
                     className={cn(
                         'absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent p-4 text-white transition-opacity',
-                        !isHovered && 'opacity-0'
+                        !isHovered && 'opacity-100'
                     )}
                 >
                     <h3 className="text-xl font-bold">{game.name}</h3>

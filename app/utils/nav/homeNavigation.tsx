@@ -15,11 +15,11 @@ export default function HomeNavigation() {
     const links = [
         { href: '/', label: 'Home' },
         { href: '/browse', label: 'Browse' },
-        { href: '/analytics', label: 'Analytics'},
-        { href: '/dashboard', label: 'Dashboard' },
+        // { href: '/analytics', label: 'Analytics'},
+        // { href: '/dashboard', label: 'Dashboard' },
         { href: '/games', label: 'Games' },
         { href: '/contribute', label: 'Contribute' },
-        { href: '/admin/patents', label: 'Patents' },
+        // { href: '/admin/patents', label: 'Patents' },
     ]
     useEffect(() => {
         const handleScroll = () => {
@@ -56,9 +56,9 @@ export default function HomeNavigation() {
                         <Link key={link.href} href={link.href}
                         className={cn(
                             'px-4 py-2 rounded-md text-sm font-medium transition-colors',
-                            location.pathname === link.href
+                            location.href === link.href
                               ? 'text-primary-foreground bg-primary'
-                              : 'text-foreground/80 hover:text-foreground hover:bg-accent'
+                              : 'text-foreground/80 hover:text-foreground hover:bg-blue-100/10 dark:hover:bg-blue-950/10'
                           )}>
                             {link.label}
                         </Link>
@@ -75,7 +75,7 @@ export default function HomeNavigation() {
                 <div className='flex items-center md:hidden'>
                     {/* add other buttons eg search */}
                     <Button
-                        variant="ghost"
+                        variant="outline"
                         size='icon'
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         aria-label='Toggle menu'

@@ -50,7 +50,7 @@ export default async function Home() {
                 <ContributeSection/>i
                 {/* footer */}
                 <Footer />
-                <Chatbot />
+                {/* <Chatbot /> */}
             </main>
         </div>
     )
