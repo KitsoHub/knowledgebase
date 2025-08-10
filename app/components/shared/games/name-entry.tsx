@@ -6,8 +6,8 @@ import { useState } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
-import { Trophy, Users, Gamepad2 } from "lucide-react"
+
+import { Trophy, Users} from "lucide-react"
 
 interface NameEntryProps {
   onSubmit: (username: string) => void;
