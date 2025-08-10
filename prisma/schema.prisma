@@ -58,10 +58,10 @@ model Onboarding {
 model Submission {
   id                   String    @id @default(uuid())
   articleTitle         String
-  userId               String
-  name                 String
-  surname              String
-  userEmail            String
+  userId               String?
+  name                 String?
+  surname              String?
+  userEmail            String?
   articleCategory      String
   articleAbstract      String
   articleContent       String
