@@ -41,13 +41,13 @@ export default async function Home() {
 
                 <HeroSection/>
                 {/* featured articles */}
-                <ArticleSection />
+                {/* <ArticleSection /> */}
                 {/* categories */}
-                <CategoryStatsSection />
+                {/* <CategoryStatsSection /> */}
                 {/* recent articles */}
-                <RecentArticlesSection />
+                {/* <RecentArticlesSection /> */}
                 {/* Contribute section */}
-                <ContributeSection/>i
+                {/* <ContributeSection/> */}
                 {/* footer */}
                 <Footer />
                 {/* <Chatbot /> */}
