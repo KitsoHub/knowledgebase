@@ -55,7 +55,7 @@ export function HeroSection() {
             </div>
 
             {/* Static stats section */}
-            <div className='container px-4 mx-auto mt-24'>
+            {/* <div className='container px-4 mx-auto mt-24'>
                <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
                {[{number:'10K+', label:'Articles'},
                     {number:'1K+', label:'Verifiers'},
@@ -70,7 +70,7 @@ export function HeroSection() {
                     </div>
                 ))}
                </div>
-            </div>
+            </div> */}
 
             {/* <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-28 sm:pb-32 lg:flex lg:px-8 lg:py-48">
 
