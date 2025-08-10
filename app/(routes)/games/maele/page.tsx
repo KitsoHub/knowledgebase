@@ -22,6 +22,7 @@ import { useAudio } from 'react-use';
 import ConfettiButton from '@/app/components/shared/confetti';
 import NameEntry from '@/app/components/shared/games/name-entry';
 import { db } from '@/lib/firebase';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { collection, addDoc, query, orderBy, limit, getDocs } from 'firebase/firestore';
 
 function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
@@ -29,7 +30,9 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [currentLevel, setCurrentLevel] = useState(0);
   const { chosenQuestion: question, options } = useRandomQuestion(currentLevel);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [answerChecked, setAnswerChecked] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showResults, setShowResults] = useState(false);
   const [quizResult, setQuizResult] = useState({
     score: 0,
@@ -41,10 +44,12 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   const quizItem = question;
   const quizQuestion = quizItem?.phrase;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [audio, _state, controls, _ref] = useAudio({
     src: '/Win sound.wav',
     autoPlay: false,
   });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [wrong_audio, _wrong_state, wrong_controls, _wrong_ref] = useAudio({
     src: '/wrong.mp3',
     autoPlay: false,
@@ -223,7 +228,7 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
                         ? 'default'
                         : 'outline'
                     }
-                    className={`h-20 flex flex-col py-4 px-6 text-left transition-all text-wrap text-center ${
+                    className={`h-20 flex flex-col py-4 px-6 text-left transition-all text-wrap ${
                       selectedAnswer === answer?.meaning
                         ? 'bg-purple-600 text-white'
                         : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'

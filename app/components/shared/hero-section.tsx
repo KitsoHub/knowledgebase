@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Link from 'next/link'
@@ -37,7 +38,7 @@ const FloatingElement: React.FC<FloatingElementProps> = ({
       style={floatingStyle}
       {...props}
     >
-      <style jsx>{`
+      <style>{`
         @keyframes floatCustom {
           0%, 100% {
             transform: translateY(0px);

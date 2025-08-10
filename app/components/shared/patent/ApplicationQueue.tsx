@@ -91,6 +91,7 @@ export default function ApplicationQueue() {
 		useState<keyof PatentApplication>("filingDate");
 	const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const handleSort = (column: keyof PatentApplication) => {
 		if (sortByColumn === column) {
 			setSortDirection(sortDirection === "asc" ? "desc" : "asc");

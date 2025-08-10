@@ -1,4 +1,4 @@
-import { mockApplication } from './patent-data';
+
 
 
 // Generate random dates from the last 2 years

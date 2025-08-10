@@ -18,6 +18,7 @@ const StatusDistributionChart: React.FC = () => {
     outerRadius,
     percent,
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }: any) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));

@@ -10,6 +10,7 @@ const ConfettiButton = () => {
         if (isConfettiActive) {
             generateConfetti()
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isConfettiActive])
 
     const generateRandomColor = () => {

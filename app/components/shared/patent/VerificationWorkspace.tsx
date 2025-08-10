@@ -22,6 +22,7 @@ type SearchResult = {
 
 export default function VerificationWorkspace() {
       const inVerification = mockApplications.filter(app => app.stage === 'Verification' && app.assignedExaminer === 'Examiner 1').slice(0, 1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedApplication, setSelectedApplication] = useState<PatentApplication | null>(
     inVerification.length > 0 ? inVerification[0] : null
   );

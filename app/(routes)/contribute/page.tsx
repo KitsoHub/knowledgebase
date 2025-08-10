@@ -7,9 +7,6 @@ import { Label } from '@/app/components/ui/label'
 import { Progress } from '@/app/components/ui/progress'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select'
 import { Textarea } from '@/app/components/ui/textarea'
-// import  {Toast}  from '@/app/components/ui/toast'
-// import { toast } from '@/app/hooks/use-toast'
-// import { useToast } from '@/app/hooks/use-toast'
 import HomeNavigation from '@/app/utils/nav/homeNavigation'
 import { createNewSubmit } from '@/lib/api'
 import { CategoryType } from '@/lib/types'
@@ -17,7 +14,6 @@ import { cn } from '@/lib/utils'
 import { isDragActive } from 'framer-motion'
 import { AlertCircle, FileText, LucideFile, Upload, Image, Trash2 } from 'lucide-react'
 import React, { useState } from 'react'
-// import toast from 'react-hot-toast';
 import { useDropzone } from 'react-dropzone'
 import Swal from "sweetalert2";
 
@@ -163,6 +159,7 @@ export default function ContributionPage() {
     },
   })
   const getFileIcon = (file: File) => {
+    // eslint-disable-next-line jsx-a11y/alt-text
     if (file.type.startsWith('image/')) return <Image className="h-6 w-6" />;
     if (file.type === 'application/pdf') return <FileText className="h-6 w-6" />;
     return <LucideFile className="h-6 w-6" />;
@@ -171,7 +168,7 @@ export default function ContributionPage() {
 
     <div className='flex flex-col min-h-screen'>
       <HomeNavigation />
-      <section>   
+      <section>
             <div className='mb-1 text-center bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-16'>
             <span className="inline-block mt-7 px-4 py-2 mb-6 rounded-full bg-white text-primary text-sm font-medium animate-fade-in">Contribute knowledge for a better Botswana</span>
             <h1 className='mb-5'>Contribute Knowledge</h1>
@@ -180,12 +177,12 @@ export default function ContributionPage() {
             </p>
 
           </div>
-            
+
           </section>
            <main className='flex-grow py-16 container px-4 mx-auto '>
       <div className='max-w-4xl mx-auto '>
-          
-       
+
+
           {/* Submission Guidelines */}
 
           <div className='mt-12 bg-muted p-10 rounded-lg mb-12'>
@@ -201,7 +198,7 @@ export default function ContributionPage() {
 
 
           {/* form */}
-          
+
           <Card className='border shadow-sm'>
             <CardHeader>
               <CardTitle>Submission Form</CardTitle>
@@ -224,7 +221,7 @@ export default function ContributionPage() {
                       onChange={(e) => setSurname(e.target.value)} />
                   </div>
                   </div>
-                
+
                   <div className="space-y-2">
                     <Label htmlFor="Email">Email <span className="text-destructive">*</span></Label>
                     <Input id="userEmail" placeholder="Enter contributer email" required
@@ -409,6 +406,6 @@ export default function ContributionPage() {
       </main>
       \\\\\\\
     </div>
-    
+
   )
 }

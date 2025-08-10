@@ -1,23 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import {
     HomeIcon,
-    CogIcon,
-   // BookOpenText,
-    MoonIcon,
-    SunIcon,
-    ChevronRightIcon,
-    Headphones,
-   // UsersRound,
-    //Amphora,
     Newspaper,
     ChevronRight,
     ChevronLeft,
     FileSearch,
     BarChart3,
     Users,
-    //BrainCircuit,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/app/components/ui/button'
@@ -35,12 +26,12 @@ interface SidebarProps {
     className?: string
 }
 const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onToggle }) => {
-    const [isDarkMode, setIsDarkMode] = useState(false)
+    // const [isDarkMode, setIsDarkMode] = useState(false)
 
-    const toggleTheme = () => {
-        setIsDarkMode(!isDarkMode)
-        document.documentElement.classList.toggle('dark')
-    }
+    // const toggleTheme = () => {
+    //     setIsDarkMode(!isDarkMode)
+    //     document.documentElement.classList.toggle('dark')
+    // }
 
     const navigationItems = [
         { icon: HomeIcon, label: 'Overview', href: '/admin/patents', active: true },
@@ -53,13 +44,13 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
         // { icon: CogIcon, label: 'Settings', href: '/settings', badge: 'Beta', actie: false},
     ]
 
-    const patentProcessItems = [
-      { icon: HomeIcon, label: 'Draftings', href: '/overview', active: true },
-      { icon: Newspaper, label: 'Examinations', href: '/patents',  badge: 'Beta', active: false},
-      { icon: FileSearch, label: 'Publications', href: '/patents',  badge: 'Beta', active: false},
-      { icon: Newspaper, label: 'Office Actions', href: '/patents',  badge: 'Beta', active: false},
+  //   const patentProcessItems = [
+  //     { icon: HomeIcon, label: 'Draftings', href: '/overview', active: true },
+  //     { icon: Newspaper, label: 'Examinations', href: '/patents',  badge: 'Beta', active: false},
+  //     { icon: FileSearch, label: 'Publications', href: '/patents',  badge: 'Beta', active: false},
+  //     { icon: Newspaper, label: 'Office Actions', href: '/patents',  badge: 'Beta', active: false},
 
-  ]
+  // ]
 
     return (
         <div className={cn(
