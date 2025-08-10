@@ -11,9 +11,9 @@ export default function Games() {
         <section className="min-h-screen bg-gradient-to-b from-pink-400 to-purple-600 p-6">
             <div className="max-w-6xl mx-auto">
                 <div className="mb-4">
-                    <Button asChild variant="link" className="mt-4 sm:mt-0">
+                    <Button asChild variant="link" className="mt-4 sm:mt-0 text-white-600">
                         <Link href="/" className="flex items-center">
-                            <ArrowLeft className="ml-2 h-4 w-4" />
+                            <ArrowLeft className="ml-2 h-4 w-4 " />
                             Back
                         </Link>
                     </Button>

@@ -56,24 +56,34 @@ export default function ArticleBrowse() {
         // implement handling filters
     }
     const pathname = usePathname()
-    return <div className='flex min-h-screen flex-col '>
-        <main className='flex-grow pt-10 pb-16'>
-            <div className='container px-4 mx-a'>
-                <div className='mb-10'>
-                {pathname === '/browse' &&(
-            <Button asChild variant="link" className="mt-4 sm:mt-0">
-              <Link href="/" className="flex items-center">
-              <ArrowLeft className="ml-2 h-4 w-4" />
-              Back
-              </Link>
-            </Button>
-          ) }
-                    <h1 className='mb-4'>Browse Articles</h1>
-                    <p className='text-xl text-muted-foreground max-w-3lx'>
-                    Explore our comprehensive collection of articles, research papers, and resources
-                    across various disciplines and categories.
-                    </p>
-                </div>
+    return <div className='flex min-h-screen flex-col  '>
+       <section>
+  <div className='mb-1 bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 pb-8 sm:pb-14 pt-5 mx-auto w-full'>
+    {pathname === '/browse' && (
+      <Button asChild variant="link" className="mt-4 sm:mt-0 ml-4 sm:ml-0">
+        <Link href="/" className="flex items-center">
+          <ArrowLeft className="ml-2 h-4 w-4" />
+          Back
+        </Link>
+      </Button>
+    )}
+    <div className='max-w-4xl mx-auto text-center px-4 sm:px-6'>
+      <span className="inline-block mt-4 sm:mt-7 px-3 sm:px-4 py-2 mb-4 sm:mb-6 rounded-full bg-white text-primary text-xs sm:text-sm font-medium animate-fade-in">
+        Explore articles on Botswana Indigenous knowledge
+      </span>
+      <h1 className='mb-3 sm:mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight'>
+        Browse Articles
+      </h1>
+      <p className='text-lg sm:text-xl text-muted-foreground max-w-2xl sm:max-w-3xl mx-auto px-2'>
+        Explore our comprehensive collection of articles, research papers, and resources
+        across various disciplines and categories.
+      </p>
+    </div>
+  </div>
+</section>
+        <main className=' pt-10 pb-16 px-4 mx-auto'>
+            <div className='container px-4 mx-auto'>
+                
                 {/* Add search bar and filter */}
                 <ArticleSearchBar
                 onSearch={handleSearch}
@@ -108,7 +118,7 @@ export default function ArticleBrowse() {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
                     {filteredArticles.map((article)=>(
                         <ArticleCard
-                        className="animate-fade-in h-full"
+                        className="animate-fade-in h-full sm:h-auto sm:max-w-sm"
                         key={article.id}
                         {...article}/>
                     ))}
