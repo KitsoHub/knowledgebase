@@ -30,9 +30,9 @@ export default function ContributionPage() {
   //  const {toast} = useToast();
   const [isUploading, setIsUploading] = useState(false);
   //form data
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [Email, setEmail] = useState('');
+  // const [name, setName] = useState('');
+  // const [surname, setSurname] = useState('');
+  // const [Email, setEmail] = useState('');
   const [articleTitle, setArticleTitle] = useState('');
   const [articleCategory, setArticleCategory] = useState('');
   const [articleAbstract, setArticleAbstract] = useState('');
@@ -80,9 +80,9 @@ export default function ContributionPage() {
     try {
       const formData = new FormData()
       //update the submission schema
-      formData.append('userId', name); // Replace with actual user ID
-      formData.append('userName', surname); // Replace with actual user name
-      formData.append('userEmail', Email); // Replace with actual user email
+      // formData.append('userId', name); // Replace with actual user ID
+      // formData.append('userName', surname); // Replace with actual user name
+      // formData.append('userEmail', Email); // Replace with actual user email
       formData.append('articleTitle', articleTitle);
       formData.append('articleCategory', articleCategory);
       formData.append('articleAbstract', articleAbstract);
@@ -94,7 +94,7 @@ export default function ContributionPage() {
 
       formData.append('articleTermsAccepted', (articleTermsAccepted ? "true" : "false"));
 
-      console.log(">>>>Ext>>>>>",formData.getAll('uploaded_files'))
+      console.log(">>>>Ext>>>>>", formData.getAll('uploaded_files'))
       await createNewSubmit(formData)
       // await createNewSubmit({
       //   articleTitle: formData.get('articleTitle') as string,
@@ -106,20 +106,20 @@ export default function ContributionPage() {
       //   files: formData.getAll('uploaded_files') as string[]
       // })
 
-    //  await prisma.submission.create({
-    //    data: {
-    //         articleTitle: formData.get('articleTitle') as string || '',
-    //         articleCategory: formData.articleCategory, // TypeScript cast to enum type
-    //         articleAbstract: formData.articleAbstract,
-    //         articleContent: formData.articleContent,
-    //       tags: formData.tags,
-    //       files: formData.uploaded_images,
-    //       articleTermsAccepted: formData.termsAccepted === "true"? true : false,
-    //     },
+      //  await prisma.submission.create({
+      //    data: {
+      //         articleTitle: formData.get('articleTitle') as string || '',
+      //         articleCategory: formData.articleCategory, // TypeScript cast to enum type
+      //         articleAbstract: formData.articleAbstract,
+      //         articleContent: formData.articleContent,
+      //       tags: formData.tags,
+      //       files: formData.uploaded_images,
+      //       articleTermsAccepted: formData.termsAccepted === "true"? true : false,
+      //     },
 
-    //   });
+      //   });
 
-       showSwal();
+      showSwal();
 
       // if (response.ok) {
 
@@ -169,18 +169,18 @@ export default function ContributionPage() {
     <div className='flex flex-col min-h-screen'>
       <HomeNavigation />
       <section>
-            <div className='mb-1 text-center bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-16'>
-            <span className="inline-block mt-7 px-4 py-2 mb-6 rounded-full bg-white text-primary text-sm font-medium animate-fade-in">Contribute knowledge for a better Botswana</span>
-            <h1 className='mb-5'>Contribute Knowledge</h1>
-            <p className='text-xl text-muted-foreground max-w-2xl mx-auto'>
-              Share your expertise and research with our community. Your contribution helps expand our collective Knowledge base.
-            </p>
+        <div className='mb-1 text-center bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-16'>
+          <span className="inline-block mt-7 px-4 py-2 mb-6 rounded-full bg-white text-primary text-sm font-medium animate-fade-in">Contribute knowledge for a better Botswana</span>
+          <h1 className='mb-5'>Contribute Knowledge</h1>
+          <p className='text-xl text-muted-foreground max-w-2xl mx-auto'>
+            Share your expertise and research with our community. Your contribution helps expand our collective Knowledge base.
+          </p>
 
-          </div>
+        </div>
 
-          </section>
-           <main className='flex-grow py-16 container px-4 mx-auto '>
-      <div className='max-w-4xl mx-auto '>
+      </section>
+      <main className='flex-grow py-16 container px-4 mx-auto '>
+        <div className='max-w-4xl mx-auto '>
 
 
           {/* Submission Guidelines */}
@@ -210,23 +210,23 @@ export default function ContributionPage() {
               <form onSubmit={handleSubmit}>
                 <CardContent className="space-y-6">
                   <div className='grid grid-cols-2 gap-4'>
-                      <div className="space-y-2">
-                    <Label htmlFor="name">First Name <span className="text-destructive">*</span></Label>
-                    <Input id="userName" placeholder="Enter contributer Name" required
-                      onChange={(e) => setName(e.target.value)} />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Surname<span className="text-destructive">*</span></Label>
-                    <Input id="userName" placeholder="Enter contributer surname" required
-                      onChange={(e) => setSurname(e.target.value)} />
-                  </div>
+                    {/* <div className="space-y-2">
+                      <Label htmlFor="name">First Name <span className="text-destructive">*</span></Label>
+                      <Input id="userName" placeholder="Enter contributer Name" required
+                        onChange={(e) => setName(e.target.value)} />
+                    </div> */}
+                    {/* <div className="space-y-2">
+                      <Label htmlFor="name">Surname<span className="text-destructive">*</span></Label>
+                      <Input id="userName" placeholder="Enter contributer surname" required
+                        onChange={(e) => setSurname(e.target.value)} />
+                    </div> */}
                   </div>
 
-                  <div className="space-y-2">
+                  {/* <div className="space-y-2">
                     <Label htmlFor="Email">Email <span className="text-destructive">*</span></Label>
                     <Input id="userEmail" placeholder="Enter contributer email" required
                       onChange={(e) => setEmail(e.target.value)} />
-                  </div>
+                  </div> */}
                   <div className="space-y-2">
                     <Label htmlFor="title">Title <span className="text-destructive">*</span></Label>
                     <Input id="title" placeholder="Enter a descriptive title" required
