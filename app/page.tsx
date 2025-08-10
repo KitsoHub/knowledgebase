@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import { CategoryGrid } from '@/app/components/shared/category-section'
 // import { FeaturedContent } from '@/app/components/shared/feature-section'
 import { Footer } from '@/app/components/shared/footer'
