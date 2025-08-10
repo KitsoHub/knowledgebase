@@ -11,6 +11,7 @@ import CategoryStatsSection from './components/shared/category-stats-section'
 import RecentArticlesSection from './components/articles/recent-articles-section'
 import HomeNavigation from './utils/nav/homeNavigation'
 import ContributeSection from './components/shared/contribute-section'
+import MainFooter from './components/layout/footer'
 //import prisma from '@/lib/prisma'
 
 export default async function Home() {
@@ -50,7 +51,8 @@ export default async function Home() {
                 {/* Contribute section */}
                 {/* <ContributeSection/> */}
                 {/* footer */}
-                <Footer />
+                {/* <Footer /> */}
+                <MainFooter/>
                 {/* <Chatbot /> */}
             </main>
         </div>
