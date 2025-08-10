@@ -14,17 +14,22 @@ const PatentAppLayout: React.FC<LayoutProps> = ({ children }) => {
     }
     return (
 
-        <div className="flex flex-1 min-h-screen bg-background">
-            {/* Sidebar */}
-            <PatentAdminSidebar isCollapsed={isSidebarOpen} onToggle={toggleSidebar} />
+        <div className="flex min-h-screen bg-background">
+
 
             {/* Main content area */}
             <div
-                className={`flex flex-col flex-1 transition-all duration-300 ${
-                    isSidebarOpen ? 'ml-64' : 'ml-0'
-                }`}
+                className={`flex-shrink-0 transition-width duration-300 ${isSidebarOpen ? 'w-16' : 'w-64'
+                    }`}
             >
-                {/* Topbar */}
+                {/* Sidebar */}
+                <PatentAdminSidebar isCollapsed={isSidebarOpen} onToggle={toggleSidebar} />
+
+
+            </div>
+
+      <div className="flex flex-col flex-1 transition-all duration-300">
+                        {/* Topbar */}
                 <Topbar
                     username="Testuser"
                     accountHostname="localhost"

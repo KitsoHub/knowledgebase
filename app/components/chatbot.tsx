@@ -49,8 +49,8 @@ const Chatbot: React.FC = () => {
 
             if (response.ok) {
                 // Handle case where data.message might be an object with content
-                const botMessage = typeof data.message === 'object' && data.message.content 
-                    ? data.message.content 
+                const botMessage = typeof data.message === 'object' && data.message.content
+                    ? data.message.content
                     : data.message || 'No content received'
                 const source = data.source || 'No source available'
 
@@ -108,7 +108,7 @@ const Chatbot: React.FC = () => {
                 >
                     <div className="flex flex-col space-y-1.5 pb-6">
                         <h2 className="font-semibold text-lg tracking-tight">Kitso Ai</h2>
-                        <p className="text-sm text-[#6b7280] leading-3">Powered by openAi and KitsoAi</p>
+                        <p className="text-sm text-[#6b7280] leading-3">Powered by KitsoAi</p>
                     </div>
 
                     <div
