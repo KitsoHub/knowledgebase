@@ -24,6 +24,9 @@ import NameEntry from '@/app/components/shared/games/name-entry';
 import { db } from '@/lib/firebase';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { collection, addDoc, query, orderBy, limit, getDocs } from 'firebase/firestore';
+import { validateUsername } from '@/lib/vulgar';
+import GuidelineModal from '@/app/components/shared/games/guide_modal';
+
 
 function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   const [username, setUsername] = useState<string | null>(null);
@@ -155,7 +158,14 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   };
 
   const handleNameSubmit = (name: string) => {
-    setUsername(name);
+    const trimmedName = name.trim();
+
+    const validation = validateUsername(trimmedName);
+    if (!validation.isValid) {
+      MySwal.fire({title: 'Invalid Name', text: validation.message, icon: 'error',confirmButtonText: 'OK'});
+      return;
+    }
+    setUsername(trimmedName);
   };
 
   const allOptions = useShuffledOptions(question, options);
@@ -261,10 +271,21 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
 
 
 export default function GamePage() {
-  const [activeTab, setActiveTab] = useState('game');
+  const [activeTab, setActiveTab] = useState('game')
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  ;
   return (
     <div className="min-h-screen bg-gray-100">
+      
       <div className="max-w-3xl mx-auto pt-6">
         <div className="flex justify-center mb-6">
           <div className="flex space-x-4 bg-white rounded-lg shadow-md p-1">
@@ -292,12 +313,14 @@ export default function GamePage() {
             </Button>
           </div>
         </div>
+
         {activeTab === 'game' ? (
           <QuizApp setActiveTab={setActiveTab} />
         ) : (
           <Leaderboard />
         )}
-      </div>
+        <GuidelineModal isOpen={isModalOpen} onClose={handleCloseModal} />
+        </div>
     </div>
   );
 }
