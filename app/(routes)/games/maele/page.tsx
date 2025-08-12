@@ -25,7 +25,7 @@ import { db } from '@/lib/firebase';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { collection, addDoc, query, orderBy, limit, getDocs } from 'firebase/firestore';
 import { validateUsername } from '@/lib/vulgar';
-import GuidelineModal from '@/app/components/shared/games/guide_modal';
+import GuidelineModal from '@/app/components/shared/games/modal/guide_modal';
 
 
 function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
@@ -157,16 +157,14 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
     }
   };
 
-  const handleNameSubmit = (name: string) => {
-    const trimmedName = name.trim();
-
-    const validation = validateUsername(trimmedName);
-    if (!validation.isValid) {
-      MySwal.fire({title: 'Invalid Name', text: validation.message, icon: 'error',confirmButtonText: 'OK'});
-      return;
-    }
-    setUsername(trimmedName);
-  };
+const handleNameSubmit = (name: string) => {
+  const validation = validateUsername(name);
+  if (!validation.isValid) {
+    MySwal.fire({title: 'Invalid Name', text: validation.message, icon: 'error',confirmButtonText: 'OK'});
+    return; // This should prevent further execution
+  }
+  setUsername(name);
+};
 
   const allOptions = useShuffledOptions(question, options);
   const completed = currentLevel === maxLevel;
@@ -272,16 +270,7 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
 
 export default function GamePage() {
   const [activeTab, setActiveTab] = useState('game')
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-  }
-
+   const [isModalOpen, setIsModalOpen] = useState(true)
   ;
   return (
     <div className="min-h-screen bg-gray-100">
@@ -293,10 +282,12 @@ export default function GamePage() {
               variant={activeTab === 'game' ? 'default' : 'outline'}
               className={`${
                 activeTab === 'game'
-                  ? 'bg-purple-600 text-white hover:bg-purple-700'
+                  ? '[#af652d] text-white hover:[#af652d]'
                   : 'text-gray-700'
               } px-6 py-2 rounded-md`}
-              onClick={() => setActiveTab('game')}
+              onClick={() => setActiveTab('game')
+
+              }
             >
               Game
             </Button>
@@ -319,7 +310,13 @@ export default function GamePage() {
         ) : (
           <Leaderboard />
         )}
-        <GuidelineModal isOpen={isModalOpen} onClose={handleCloseModal} />
+        <div>
+      {/* Modal */}
+      <GuidelineModal
+        isOpen={isModalOpen}
+        onClose={() => {setIsModalOpen(false); }}
+      />
+    </div>
         </div>
     </div>
   );
