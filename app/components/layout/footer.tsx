@@ -69,8 +69,8 @@ export default function MainFooter() {
                     <img src="assets/partnerLogos/UB-logo.png" alt="UB Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
-                  <div className="text-xs sm:text-sm font-semibold text-gray-300">Kimberley Cornfield</div>
-                  <div className="text-xs sm:text-sm font-bold text-white">Director</div>
+                  <div className="text-xs sm:text-sm font-semibold text-gray-300">Research and Innovation</div>
+                  <div className="text-xs sm:text-sm font-bold text-white">Department</div>
                   <div className="text-xs text-gray-400">ASSOCIATION</div>
                 </div>
               </div>
@@ -81,8 +81,8 @@ export default function MainFooter() {
                     <img src="assets/partnerLogos/UB-logo.png" alt="San Center Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
-                  <div className="text-xs sm:text-sm font-semibold text-gray-300">Partners</div>
-                  <div className="text-xs sm:text-sm font-bold text-white">Foundation</div>
+                  <div className="text-xs sm:text-sm font-semibold text-gray-300">The San Research Centre</div>
+                  <div className="text-xs sm:text-sm font-bold text-white">Department</div>
                   <div className="text-xs text-gray-400">ASSOCIATION</div>
                 </div>
               </div>
