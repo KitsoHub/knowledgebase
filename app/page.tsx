@@ -12,6 +12,7 @@ import RecentArticlesSection from './components/articles/recent-articles-section
 import HomeNavigation from './utils/nav/homeNavigation'
 import ContributeSection from './components/shared/contribute-section'
 import MainFooter from './components/layout/footer'
+import FairUsageProvider from '@/lib/providers/fair-usage-provider'
 //import prisma from '@/lib/prisma'
 
 export default async function Home() {
@@ -30,6 +31,7 @@ export default async function Home() {
 
    // console.log(">> Current User >>", match)
     return (
+        <FairUsageProvider>
         <div className="min-h-screen flex flex-col ">
 
 
@@ -56,5 +58,6 @@ export default async function Home() {
                 {/* <Chatbot /> */}
             </main>
         </div>
+        </FairUsageProvider>
     )
 }
