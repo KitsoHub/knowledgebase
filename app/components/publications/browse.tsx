@@ -7,9 +7,12 @@ import PublicationSearchBar from './search-bar';
 import { ArrowLeft, Globe } from 'lucide-react';
 import { Separator } from '../ui/separator';
 import { Badge } from '../ui/badge';
-import router from 'next/router';
+import { usePathname } from 'next/navigation';
+import { Button } from '../ui/button';
+import Link from 'next/link';
 
 export default function PublicationsBrowse() {
+    const pathname = usePathname();
     const [isLoading, setIsLoading] = useState(true);
     const [filteredPublications, setFilteredPublications] = useState(publicationsData.categories.flatMap(category => category.items));
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -42,11 +45,14 @@ export default function PublicationsBrowse() {
         <div className="min-h-screen bg-background">
             {/* Header */}
             <section className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-12">
-                <div>
-                    <button className="text-blue-600 flex pl-5" onClick={() => router.back()}>
-                        <ArrowLeft size={20} /> Back
-                    </button>
-                </div>
+                {pathname === '/publications' && (
+                  <Button asChild variant="link" className="mt-4 sm:mt-0 ml-4 sm:ml-0">
+                    <Link href="/" className="flex items-center">
+                      <ArrowLeft className="ml-2 h-4 w-4" />
+                      Back
+                    </Link>
+                  </Button>
+                  )}
                 <div className="container mx-auto px-4 text-center">
                     <div className="max-w-2xl mx-auto">
                         <div className="inline-block bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-full md-6">
