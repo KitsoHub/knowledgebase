@@ -59,6 +59,7 @@ export interface PublicationCategory {
 
 // TypeScript Interface
 export interface Publication {
+    category: string;
     id: string;
     year: number;
     authors: Array<{

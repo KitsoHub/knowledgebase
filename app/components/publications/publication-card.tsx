@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 type PublicationCardProps = {
   publication: Publication;
   index: number;
+  className?: string;
+  isFeatured?: boolean;
 };
 
 // Helper components
