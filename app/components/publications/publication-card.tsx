@@ -1,9 +1,10 @@
 import { Publication } from "@/app/utils/mock/publications";
 import { Badge } from "../ui/badge";
-import { ExternalLink, Globe, Link, LockIcon } from "lucide-react";
+import { ExternalLink, FileText, Globe, LockIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import Link from "next/link";
 
 type PublicationCardProps = {
   publication: Publication;
@@ -40,11 +41,66 @@ const AccessIndicator = ({ publication }: { publication: Publication }) => {
   );
 };
 
+const AuthorList = ({ authors }: { authors: Publication['authors'] }) => (
+  <div className="flex flex-wrap gap-2 mt-1">
+    {authors.map((author, index) => (
+      <span key={index} className="text-sm">
+        <span className={cn(
+          author.isIndigenousResearcher && "font-semibold text-indigo-700 dark:text-indigo-300"
+        )}>
+          {author.name}
+        </span>
+        {author.orcid && (
+          <Link
+            href={`https://orcid.org/${author.orcid}`}
+            target="_blank"
+
+            className="ml-1 inline-block hover:text-primary"
+          >
+            <span className="sr-only">ORCID</span>
+            <FileText className="h-3 w-3 inline" />
+          </Link>
+        )}
+        {index < authors.length - 1 && <span className="mx-1">•</span>}
+      </span>
+    ))}
+  </div>
+);
+
+const getPrimaryAssetUrl = (publication: Publication): string | null => {
+  if (!publication.assets?.length) return null;
+
+  // Try to find the primary asset first
+  const primaryAsset = publication.assets.find(asset => asset.isPrimary);
+  if (primaryAsset) return primaryAsset.url;
+
+  const webAsset = publication.assets.find(asset =>
+    asset.type === 'html' || asset.type === 'pdf'
+  );
+  return webAsset?.url || null;
+};
+
 const PublicationCard = ({ publication, index }: PublicationCardProps) => {
   const isFeatured = publication.isFeatured;
   const hasIndigenousContext = publication.indigenousContext?.tkLabels?.length;
+  const primaryAssetUrl = getPrimaryAssetUrl(publication);
+
+  const requiresApproval =
+    (publication.access.assetsRequireApproval || false) ||
+    (publication.assets?.some(asset => asset.requiresApproval) || false);
+
+  const linkUrl = primaryAssetUrl && !requiresApproval
+    ? primaryAssetUrl
+    : `/publications/${publication.id}`;
 
   return (
+    <Link href={linkUrl}
+      className={cn(
+        "block",
+        "group relative overflow-hidden transition-all duration-300",
+        isFeatured && "border-primary shadow-lg hover:shadow-xl",
+        hasIndigenousContext && "border-amber-200 dark:border-amber-800",
+      )}>
     <Card
       className={cn(
         "group relative overflow-hidden transition-all duration-300",
@@ -63,14 +119,15 @@ const PublicationCard = ({ publication, index }: PublicationCardProps) => {
           <div>
             <CardTitle className="text-lg leading-tight group-hover:text-primary transition-colors">
               <Link
-                href={`/publications/${publication.id}`}
+               href={linkUrl}
                 className="hover:underline"
               >
                 {publication.title}
               </Link>
             </CardTitle>
-            {/* TODO */}
-            {/* <AuthorList authors={publication.authors} /> */}
+
+            <AuthorList authors={publication.authors} />
+
           </div>
           <Badge
             variant="secondary"
@@ -118,6 +175,7 @@ const PublicationCard = ({ publication, index }: PublicationCardProps) => {
         <AccessIndicator publication={publication} />
       </CardContent>
     </Card>
+    </Link>
   );
 };
 
