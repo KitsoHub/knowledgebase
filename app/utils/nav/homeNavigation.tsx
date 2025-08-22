@@ -19,6 +19,7 @@ export default function HomeNavigation() {
         // { href: '/dashboard', label: 'Dashboard' },
         { href: '/games', label: 'Games' },
         { href: '/contribute', label: 'Contribute' },
+        { href: '/publications', label: 'Publications' },
         // { href: '/admin/patents', label: 'Patents' },
     ]
     useEffect(() => {

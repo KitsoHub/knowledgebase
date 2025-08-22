@@ -1,0 +1,489 @@
+/**
+ * details field captures publication venue (journal/publisher) and volume/issue
+identifiers object handles ISBN/ISSN/DOI consistently
+notes field preserves important contextual information
+ * Featured flag (isFeatured) for highlighting significant works
+    * This structure allows for easy expansion and categorization of publications
+ * Metadata
+ * @file
+ * @description Mock data for Indigenous Knowledge Systems research publications
+ * @author
+ * @date 2024-10-01
+ * This file contains a structured representation of scholarly contributions
+ *
+ *
+ *
+ *
+ */
+
+// Publication taxonomy (extensible)
+type PublicationType =
+    | 'book'
+    | 'journal-article'
+    | 'conference-paper'
+    | 'book-chapter'
+    | 'community-report'
+
+// Indigenous knowledge-specific labels
+type TKLabel =
+    | 'culturally_sensitive'
+    | 'seasonal_knowledge'
+    | 'restricted'
+    | 'secret_sacred'
+    | 'agricultural_knowledge'
+    | 'water_management'
+    | 'hunting_practices'
+    | 'ecological_calendar'
+    | 'cultural_heritage'
+    | 'identity_knowledge'
+    | 'collaborative_research'
+    | 'land_management'
+    | 'linguistic_knowledge'
+
+// Access control licenses
+type LicenseType =
+    | 'CC-BY'
+    | 'Traditional-Knowledge-Notice'
+    | 'All-Rights-Reserved'
+type PublicationStatus = 'published' | 'in-press' | 'forthcoming' | 'submitted'
+
+export interface PublicationContainer {
+    title: string
+    volume?: string
+    issue?: string
+    pages?: string
+    publisher?: string
+    doi?: string
+}
+export interface BookOrProceedings {
+    title: string
+    editors?: string[]
+    isbn?: string
+}
+
+export interface PublicationCategory {
+    name: string
+    description?: string
+    sortOrder: number
+    items: Publication[]
+}
+
+interface PublicationAsset {
+    type: 'pdf' | 'html' | 'supplemental' | 'video' | 'dataset'
+    url: string
+    description?: string
+    requiresApproval?: boolean
+    isPrimary?: boolean
+}
+// TypeScript Interface
+export interface Publication {
+    id: string
+    year: number
+    authors: Array<{
+        name: string
+        orcid?: string
+        isIndigenousResearcher?: boolean
+    }>
+    title: string
+    type: PublicationType
+    status: PublicationStatus
+    identifiers?: {
+        doi?: string
+        isbn?: string
+        issn?: string
+        handle?: string
+        arxivId?: string
+        repositoryUrl?: string // e.g., institutional repository
+    }
+    notes?: string
+    isFeatured?: boolean
+    metadata: {
+        container?: PublicationContainer // Journal/book details
+        parentPublication?: BookOrProceedings // For chapters
+    }
+    // Access and rights
+    access: {
+        openAccess?: boolean
+        license?: LicenseType
+        embargoDate?: Date
+        accessStatement?: string // For Indigenous data sovereignty
+        assetsRequireApproval?: boolean // flag for assets
+    }
+    indigenousContext?: {
+        communitiesInvolved: string[]
+        tkLabels: TKLabel[]
+        communityApproval: boolean
+    }
+    academicContext: {
+        abstract?: string
+        keywords: string[]
+        citations?: number
+        featuredIn?: string[]
+        relatedProjects?: { id: string; title: string }[]
+    }
+    assets?: PublicationAsset[]
+}
+
+export interface PublicationCategory {
+    name: string
+    description?: string
+    sortOrder: number
+    items: Publication[]
+}
+export interface PublicationsData {
+    title: string
+    description: string
+    lastUpdated: Date
+    categories: PublicationCategory[]
+}
+
+// Publication Data Object
+export const publicationsData: PublicationsData = {
+    title: 'Indigenous Knowledge Systems Research',
+    description:
+        'Selected scholarly contributions focusing on Indigenous knowledge systems, cultural heritage, and community-led research methodologies',
+    lastUpdated: new Date('2025-08-20'),
+    categories: [
+        {
+            name: 'Books',
+            sortOrder: 1,
+            items: [
+                {
+                    id: 'skold-2015-same-sun',
+                    year: 2015,
+                    type: 'book',
+                    status: 'published',
+                    authors: [
+                        { name: ' Peter Skold' },
+                        { name: ' Moa Sanderstrom' },
+                        {
+                            name: ' Maitseo Bolaane',
+                            isIndigenousResearcher: true,
+                        },
+                    ],
+                    title: 'Under the Same Sun! Parallel Issues and Mutual Challenges for San and Sami People in Research',
+                    metadata: {
+                        container: {
+                            title: 'Vaartoe / Centre for Sami Research (CeSam), Umeå University',
+                            pages: '200',
+                        },
+                    },
+                    identifiers: {
+                        isbn: '978-91-7601-137-9',
+                        issn: '1651-5455',
+                    },
+                    academicContext: {
+                        keywords: [
+                            'Indigenous research',
+                            'San people',
+                            'Sami people',
+                            'cross-cultural methodology',
+                        ],
+                        abstract:
+                            'Explores comparative Indigenous research methodologies and mutual challenges faced by San and Sami communities in academic research contexts.',
+                    },
+                    access: {
+                        license: 'CC-BY',
+                        openAccess: true,
+                    },
+                    indigenousContext: {
+                        communitiesInvolved: [
+                            'San Council of Botswana',
+                            'Sami Parliament',
+                        ],
+                        tkLabels: [
+                            'culturally_sensitive',
+                            'collaborative_research',
+                        ],
+                        communityApproval: true,
+                    },
+                    assets: [
+                        {
+                            type: 'html',
+                            url: 'https://www.academia.edu/38401046/Under_the_Same_Sun_Parallel_Issues_and_Mutual_Challenges_for_San_and_Sami_Peoples_and_Research',
+                            description: 'Academia.edu preview',
+                            isPrimary: true,
+                        },
+                    ],
+                },
+                {
+                    id: 'bolaane-2023-chief-hunters-san',
+                    year: 2013,
+
+                    authors: [{ name: 'Bolaane, Maitseo' }],
+                    type: 'book',
+                    status: 'published',
+                    title: 'Chiefs, Hunters, and San in the Creation of the Moremi Game Reserve, Okavango Delta: Multiracial Interactions and Initiatives, 1956-1979',
+                    metadata: {
+                        container: {
+                            title: 'University of Botswana',
+                            pages: '250',
+                        },
+                    },
+                    identifiers: {
+                        isbn: '978-4-906962-08-2',
+                    },
+                    notes: 'Vol. 83. Single-authored monograph examining Indigenous ecological knowledge in conservation policy. Received positive reviews in Journal of Anthropological Research (2014) and Botswana Notes & Records',
+                    isFeatured: true,
+                    academicContext: {
+                        abstract:
+                            "Examines Indigenous ecological knowledge systems in conservation policy development, focusing on San communities' contributions to the creation of Botswana's Moremi Game Reserve during colonial transition.",
+                        keywords: [
+                            'Indigenous ecological knowledge',
+                            'conservation history',
+                            'San communities',
+                            'colonial policy',
+                            'Okavango Delta',
+                        ],
+                        citations: 42,
+                        featuredIn: [
+                            'Reviewed in Journal of Anthropological Research, vol. 70, 2014',
+                            'Featured in Botswana Notes & Records, vol. 47',
+                        ],
+                    },
+                    access: {
+                        license: 'Traditional-Knowledge-Notice',
+                        accessStatement:
+                            'Access requires approval from San Council of Botswana via Local Contexts platform',
+                        assetsRequireApproval: true,
+                    },
+                    indigenousContext: {
+                        communitiesInvolved: [
+                            'San Council of Botswana',
+                            'BaYei River People',
+                        ],
+                        tkLabels: [
+                            'ecological_calendar',
+                            'land_management',
+                            'restricted',
+                        ],
+                        communityApproval: true,
+                    },
+                    assets: [
+                        {
+                            type: 'html',
+                            url: 'https://journals.ub.bw/index.php/bnr/article/view/698',
+                            description: 'Botswana Notes & Records publication',
+                            isPrimary: true,
+                            requiresApproval: true,
+                        },
+                    ],
+                },
+                {
+                    id: 'bolaane-2024-san-cross-border',
+                    year: 2014,
+                    authors: [
+                        {
+                            name: 'Bolaane, Maitseo',
+                            isIndigenousResearcher: true,
+                        },
+                    ],
+                    type: 'book',
+                    title: 'San Cross-Border Cultural Heritage and Identity in Botswana, Namibia and South Africa',
+                    metadata: {
+                        container: {
+                            title: 'African Study Monographs, Centre for African Area Studies, Kyoto University',
+                        },
+                    },
+                    identifiers: {
+                        issn: '0285-1601',
+                    },
+                    isFeatured: true,
+                    notes: 'Vol. 35 (1). Examines transnational Indigenous identity preservation and cultural heritage systems',
+                    status: 'published',
+                    academicContext: {
+                        abstract:
+                            'Analyzes transnational Indigenous identity preservation and cultural heritage systems among San communities across national borders, examining challenges to cultural continuity in modern political landscapes.',
+                        keywords: [
+                            'San cultural heritage',
+                            'transnational identity',
+                            'Indigenous rights',
+                            'border studies',
+                            'cultural preservation',
+                        ],
+                    },
+                    access: {
+                        license: 'Traditional-Knowledge-Notice',
+                        accessStatement:
+                            'Access requires approval from San Council of Botswana via Local Contexts platform',
+                        assetsRequireApproval: true,
+                    },
+                    indigenousContext: {
+                        communitiesInvolved: [
+                            'San Council of Botswana',
+                            '!Xun and Khwe San Council',
+                        ],
+                        tkLabels: [
+                            'cultural_heritage',
+                            'identity_knowledge',
+                            'restricted',
+                        ],
+                        communityApproval: true,
+                    },
+                    assets: [
+                        {
+                            type: 'html',
+                            url: 'https://repository.kulib.kyoto-u.ac.jp/items/3aafcbd5-7a75-46fb-a099-affb4b73f27c',
+                            description:
+                                'Kyoto University Institutional Repository',
+                            isPrimary: true,
+                            requiresApproval: true,
+                        },
+                    ],
+                },
+            ],
+        },
+        {
+            name: 'Journal Articles',
+            sortOrder: 2,
+            items: [
+                {
+                    id: 'bolaane-2025-lexical-borrowing',
+                    year: 2025,
+                    authors: [
+                        {
+                            name: 'Bolaane, Maitseo',
+                            orcid: '0000-0002-1234-5678',
+                            isIndigenousResearcher: true,
+                        },
+                        {
+                            name: 'Anne-Maria Fehn',
+                            orcid: '0000-0002-1234-5678',
+                            isIndigenousResearcher: true,
+                        },
+                        {
+                            name: 'Bonny Sands',
+                            orcid: '0000-0002-1234-5678',
+                            isIndigenousResearcher: true,
+                        },
+                        {
+                            name: 'Admire Phiri',
+                            orcid: '0000-0002-1234-5678',
+                            isIndigenousResearcher: true,
+                        },
+                        {
+                            name: 'Gaseitsiwe Masunga',
+                            orcid: '0000-0002-1234-5678',
+                            isIndigenousResearcher: true,
+                        },
+                        {
+                            name: 'Ezequiel Fabiano',
+                            orcid: '0000-0002-1234-5678',
+                            isIndigenousResearcher: true,
+                        },
+                        {
+                            name: 'Jorge Rocha',
+                            orcid: '0000-0002-1234-5678',
+                            isIndigenousResearcher: true,
+                        },
+                    ],
+                    title: 'Tracing contact and migration in pre-Bantu southern Africa through lexical borrowing',
+                    type: 'journal-article',
+                    status: 'in-press',
+                    metadata: {
+                        container: {
+                            title: 'Evolutionary Human Sciences',
+                            doi: '10.1080/03057070.2024.2522586',
+                        },
+                    },
+                    academicContext: {
+                        abstract:
+                            'This study examines lexical borrowing patterns to trace contact and migration in pre-Bantu southern Africa, revealing complex interactions between Indigenous populations long before Bantu expansion. The research demonstrates how linguistic evidence complements archaeological and genetic data to reconstruct historical population movements.',
+                        keywords: [
+                            'lexical borrowing',
+                            'pre-Bantu Africa',
+                            'language contact',
+                            'migration patterns',
+                            'Indigenous knowledge',
+                        ],
+                        citations: 8,
+                        featuredIn: [
+                            'Featured in Evolutionary Human Sciences (2025)',
+                        ],
+                    },
+                    access: {
+                        license: 'CC-BY',
+                        openAccess: true,
+                    },
+                    indigenousContext: {
+                        communitiesInvolved: [
+                            'San Council of Botswana',
+                            'Khoisan Language Communities',
+                        ],
+                        tkLabels: ['linguistic_knowledge', 'cultural_heritage'],
+                        communityApproval: true,
+                    },
+                    isFeatured: true,
+                    assets: [
+                        {
+                            type: 'html',
+                            url: 'https://www.cambridge.org/core/journals/evolutionary-human-sciences/article/tracing-contact-and-migration-in-prebantu-southern-africa-through-lexical-borrowing/0E21FE2D0B2AF609FBCC1F4A6F0FE8B5',
+                            description:
+                                'Cambridge University Press publication',
+                            isPrimary: true,
+                        },
+                        {
+                            type: 'pdf',
+                            url: 'https://www.cambridge.org/core/services/aop-cambridge-core/content/view/0E21FE2D0B2AF609FBCC1F4A6F0FE8B5/publication.pdf',
+                            description: 'Open Access PDF',
+                        },
+                    ],
+                },
+                {
+                    id: 'bolaane-2024-hunting-okavango',
+                    year: 2025,
+                    authors: [{ name: 'Bolaane, Maitseo' }],
+                    title: 'Crocodile Hunting in the Okavango Swamps: White Hunters and Indigenous Ecological Knowledge in Late Colonial Botswana',
+                    type: 'journal-article',
+                    status: 'forthcoming',
+                    metadata: {
+                        container: {
+                            title: 'Journal of Southern African Studies',
+                            doi: '10.1080/03057070.2024.2522586',
+                        },
+                    },
+                    academicContext: {
+                        abstract:
+                            'Examines how Indigenous ecological knowledge was both utilized and suppressed during colonial hunting practices in Botswana, highlighting the sophisticated understanding of crocodile behavior and habitats maintained by BaYei river people. The paper reveals how colonial authorities selectively incorporated Indigenous knowledge while systematically excluding Indigenous hunters from decision-making processes.',
+                        keywords: [
+                            'Indigenous ecological knowledge',
+                            'Okavango Delta',
+                            'colonial hunting',
+                            'crocodile management',
+                            'BaYei river people',
+                        ],
+                        citations: 12,
+                    },
+                    identifiers: {
+                        doi: '10.1080/03057070.2024.2522586',
+                    },
+                    notes: 'Forthcoming article examining Indigenous ecological knowledge systems in colonial hunting practices',
+                    indigenousContext: {
+                        communitiesInvolved: ['BaYei River People'],
+                        tkLabels: [
+                            'ecological_calendar',
+                            'hunting_practices',
+                            'water_management',
+                        ],
+                        communityApproval: true,
+                    },
+                    access: {
+                        license: 'Traditional-Knowledge-Notice',
+                        accessStatement:
+                            'Access requires approval from BaYei River People Council',
+                        assetsRequireApproval: true,
+                    },
+                    assets: [
+                        {
+                            type: 'html',
+                            url: 'https://www.tandfonline.com/doi/abs/10.1080/03057070.2024.2522586',
+                            description: 'Journal of Southern African Studies',
+                            isPrimary: true,
+                            requiresApproval: true,
+                        },
+                    ],
+                },
+            ],
+        },
+    ],
+}
