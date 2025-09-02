@@ -27,7 +27,7 @@ export default function PublicationsBrowse() {
         setSearchQuery(query);
         const filtered = publicationsData.categories.flatMap(cat => cat.items).filter(publication => {
             const matchesQuery = publication.title.toLowerCase().includes(query.toLowerCase());
-            const matchesCategory = selectedCategory === 'all' || publication.category === selectedCategory;
+            const matchesCategory = selectedCategory === 'all' || publication.type === selectedCategory;
             return matchesQuery && matchesCategory;
         });
         setFilteredPublications(filtered);
@@ -76,7 +76,7 @@ export default function PublicationsBrowse() {
 
                     {/* Category Filter */}
                     <CategoryFilter
-                        categories={['all', ...publicationsData.categories.map(cat => cat.name)]}
+                        categories={[...publicationsData.categories.map(cat => cat.name)]}
                         selectedCategory={selectedCategory}
                         onSelectCategory={handleCategorySelect}
                         className="mb-8"

@@ -63,7 +63,7 @@ export default function PublicationSearchBar({
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                         type="text"
-                        placeholder="Search articles, artifacts, species..."
+                        placeholder="Search books and published articles..."
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         className="px-10 py-6 rounded-lg shadow-sm focus-visible:ring-primary"
@@ -81,7 +81,7 @@ export default function PublicationSearchBar({
                         </Button>
                     )}
                 </div>
-                <Popover>
+                {/* <Popover>
                     <PopoverTrigger asChild>
                         <Button
                             type="button"
@@ -127,7 +127,7 @@ export default function PublicationSearchBar({
                                     )}
                                 </div>
                             </div>
-                            {/* date range filter */}
+
                             <div>
                                 <h4 className="font-medium mb-2">Date Range</h4>
                                 <div className="grid gap-2">
@@ -165,7 +165,7 @@ export default function PublicationSearchBar({
                                     )}
                                 </div>
                             </div>
-                            {/* reset and apply buttons */}
+
                             <div className="flex justify-end space-x-2 pt-2">
                                 <Button
                                     type="button"
@@ -192,7 +192,7 @@ export default function PublicationSearchBar({
                             </div>
                         </div>
                     </PopoverContent>
-                </Popover>
+                </Popover> */}
 
                 <Button type="submit" className="ml-2 hidden sm:flex">
                     Search
