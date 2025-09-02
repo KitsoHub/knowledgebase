@@ -45,7 +45,7 @@ export default function PublicationsBrowse() {
         <div className="min-h-screen bg-background">
             {/* Header */}
             <section className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-12">
-                {pathname === '/publications' && (
+                {pathname === '/publications34' && (
                   <Button asChild variant="link" className="mt-4 sm:mt-0 ml-4 sm:ml-0">
                     <Link href="/" className="flex items-center">
                       <ArrowLeft className="ml-2 h-4 w-4" />
