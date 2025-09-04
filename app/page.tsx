@@ -13,6 +13,7 @@ import HomeNavigation from './utils/nav/homeNavigation'
 import ContributeSection from './components/shared/contribute-section'
 import MainFooter from './components/layout/footer'
 import FairUsageProvider from '@/lib/providers/fair-usage-provider'
+import MapPage from './(routes)/map/page'
 //import prisma from '@/lib/prisma'
 
 export default async function Home() {
@@ -54,6 +55,8 @@ export default async function Home() {
                 {/* <ContributeSection/> */}
                 {/* footer */}
                 {/* <Footer /> */}
+                
+                <MapPage/>
                 <MainFooter/>
                 {/* <Chatbot /> */}
             </main>

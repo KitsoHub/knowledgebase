@@ -18,7 +18,12 @@ export type VocabularyItem = {
   tags: string[]
 }
 
-
+export type vowelCategory ={
+  id: string
+  name: string
+  description: string
+  vowels: VowelItem[]
+}
 export type VowelItem = {
   id: string
   symbol: string //khoekhoegowab vowel symbol
