@@ -59,7 +59,6 @@
         "react-dropzone": "^14.3.8",
         "react-hook-form": "^7.54.2",
         "react-hot-toast": "^2.5.2",
-        "react-leaflet": "^5.0.0",
         "react-use": "^17.6.0",
         "recharts": "^2.15.1",
         "sweetalert2": "^11.17.2",

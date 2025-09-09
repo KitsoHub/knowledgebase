@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
 import Link from "next/link"
 
 
@@ -16,7 +16,16 @@ import { Button } from "@/app/components/ui/button"
 import React from "react"
 
 
-export default function LessonPage({ params }: { params: { unitId: string; lessonId: string } }) {
+type LessonParams = {
+  unitId: string;
+  lessonId: string;
+}
+
+
+export default function LessonPage() {
+  const params = useParams<LessonParams>();
+  const { unitId, lessonId } = params;
+
   const [step, setStep] = useState(0)
   const [progress, setProgress] = useState(0)
   const [isListening, setIsListening] = useState(false)
@@ -27,7 +36,6 @@ export default function LessonPage({ params }: { params: { unitId: string; lesso
   const [phrasesPerPage] = useState(10) // Show 10 phrases per page
 
   const router = useRouter()
-const { unitId, lessonId } = params
   const { completeLesson, startLesson } = useProgressStore()
 
   const recognitionRef = useRef<any>(null)
@@ -158,7 +166,7 @@ const { unitId, lessonId } = params
         setIsListening(false)
       }
     } else {
-       console.error("Not supported")
+      console.error("Not supported")
       // toast({
       //   title: "Not supported",
       //   description: "Speech recognition is not supported in your browser.",
@@ -351,9 +359,8 @@ const { unitId, lessonId } = params
 
                 {result && (
                   <div
-                    className={`flex items-center justify-center gap-2 ${
-                      result === "correct" ? "text-green-600" : "text-red-600"
-                    }`}
+                    className={`flex items-center justify-center gap-2 ${result === "correct" ? "text-green-600" : "text-red-600"
+                      }`}
                   >
                     {result === "correct" ? (
                       <>
@@ -382,11 +389,10 @@ const { unitId, lessonId } = params
                       className={`flex ${phrase.speaker === "You" || phrase.speaker === "Person B" ? "justify-end" : "justify-start"}`}
                     >
                       <div
-                        className={`max-w-[80%] p-3 rounded-lg ${
-                          phrase.speaker === "You" || phrase.speaker === "Person B"
+                        className={`max-w-[80%] p-3 rounded-lg ${phrase.speaker === "You" || phrase.speaker === "Person B"
                             ? "bg-primary text-primary-foreground"
                             : "bg-muted"
-                        }`}
+                          }`}
                       >
                         <p className="text-xs font-medium mb-1">{phrase.speaker}</p>
                         <p>{phrase.text}</p>
@@ -414,9 +420,8 @@ const { unitId, lessonId } = params
 
                 {result && (
                   <div
-                    className={`flex items-center justify-center gap-2 ${
-                      result === "correct" ? "text-green-600" : "text-red-600"
-                    }`}
+                    className={`flex items-center justify-center gap-2 ${result === "correct" ? "text-green-600" : "text-red-600"
+                      }`}
                   >
                     {result === "correct" ? (
                       <>
