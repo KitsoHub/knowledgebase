@@ -33,12 +33,12 @@ export function GameCard({ game }: GameCardProps) {
                 </div>
                 <div
                     className={cn(
-                        'absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent p-4 text-white transition-opacity',
+                        'absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 to-transparent p-4 text-[#af652d] transition-opacity',
                         !isHovered && 'opacity-100'
                     )}
                 >
-                    <h3 className="text-xl font-bold">{game.name}</h3>
-                    <p className="mt-2 line-clamp-2 text-sm text-white/90">
+                    <h3 className="text-xl font-bold text-[#683a16]">{game.name}</h3>
+                    <p className="mt-2 line-clamp-2 text-sm text-[#93501c]">
                         {game.shortDescription}
                     </p>
                 </div>
