@@ -1,23 +1,28 @@
-import React, {useEffect, useMemo, useState} from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react';
 import { mockPlants } from '@/app/utils/mock/botanical';
 import { MedicinalPlant } from '@/lib/types/botanical';
 import PlantCard from './plant-card';
 import { Button } from '../ui/button';
 import { PlantModal } from './plant-modal';
-import { ChevronUp } from 'lucide-react';
+import { ChevronUp, LucideArrowLeft } from 'lucide-react';
+import BotanicalSearchBar from './search-bar';
+import { useRouter } from 'next/navigation';
 
 export default function BotanicalBrowse() {
 
-    const [botanicalData, setBotanicalData] = useState<MedicinalPlant[]>(mockPlants);
-      const [searchTerm, setSearchTerm] = useState('');
+  const [botanicalData, setBotanicalData] = useState<MedicinalPlant[]>(mockPlants);
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedFamily, setSelectedFamily] = useState('All Families');
   const [selectedOrigin, setSelectedOrigin] = useState('All Origins');
   const [selectedPartUsed, setSelectedPartUsed] = useState('All Parts');
-    const [selectedPlant, setSelectedPlant] = useState<MedicinalPlant | null>(null);
+  const [selectedCondition, setSelectedCondition] = useState('All Conditions');
+  const [selectedPlant, setSelectedPlant] = useState<MedicinalPlant | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+
+  const router = useRouter();
 
   const plantsPerPage = 6;
 
@@ -31,18 +36,24 @@ export default function BotanicalBrowse() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-    // Scroll to top
+  // Scroll to top
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-    const clearFilters = () => {
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedFamily, selectedOrigin, selectedPartUsed, selectedCondition]);
+
+  const clearFilters = () => {
     setSearchTerm('');
     setSelectedFamily('All Families');
     setSelectedOrigin('All Origins');
     setSelectedPartUsed('All Parts');
+    setSelectedCondition('All Conditions');
   };
 
-      // Filter plants based on search and filters
+  // Filter plants based on search and filters
   const filteredPlants = useMemo(() => {
     return botanicalData.filter((plant) => {
       const matchesSearch =
@@ -65,30 +76,64 @@ export default function BotanicalBrowse() {
     });
   }, [botanicalData, searchTerm, selectedFamily, selectedOrigin, selectedPartUsed]);
 
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
-
-            <div className="container mx-auto px-4 py-8">
-
-                {/* Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-8"
-                >
 
 
-                    <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-4">
-                        Botanical Explorer
-                    </h1>
-                    <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                        Discover the healing power of nature with our comprehensive database of medicinal plants,
-                        their traditional uses, and modern research.
-                    </p>
-                </motion.div>
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
 
-                {/* Search and Upload Section */}
+
+      <div className="container mx-auto px-4 py-8">
+        <Button
+          onClick={() => router.back()}
+          variant={'ghost'}
+          size="icon"
+          className="mb-9"
+        >
+          <LucideArrowLeft size={20} />
+        </Button>
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-8"
+        >
+
+
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-4">
+            Botanical Explorer
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Discover the healing power of nature with our comprehensive database of medicinal plants,
+            their traditional uses, and modern research.
+          </p>
+        </motion.div>
+
+        {/* Search and Upload Section */}
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-6"
+        >
+          <div className="flex justify-between items-start gap-4 mb-4">
+            <div className="flex-1">
+              <BotanicalSearchBar
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                selectedFamily={selectedFamily}
+                onFamilyChange={setSelectedFamily}
+                selectedOrigin={selectedOrigin}
+                onOriginChange={setSelectedOrigin}
+                selectedPartUsed={selectedPartUsed}
+                onPartUsedChange={setSelectedPartUsed}
+                selectedCondition={selectedCondition}
+                onConditionChange={setSelectedCondition}
+                onClearFilters={clearFilters} />
+            </div>
+          </div>
+        </motion.div>
 
         {/* Results Summary */}
         <motion.div
@@ -104,7 +149,6 @@ export default function BotanicalBrowse() {
         </motion.div>
 
         {/* Plants Grid */}
-                {/* Plants Grid */}
         <AnimatePresence mode="wait">
           {filteredPlants.length === 0 ? (
             <motion.div
@@ -157,19 +201,19 @@ export default function BotanicalBrowse() {
                     </motion.div>
                   ))}
                 </AnimatePresence>
-                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
 
 
-                {/* Plant Detail Modal */}
+        {/* Plant Detail Modal */}
         <PlantModal
           plant={selectedPlant}
           isOpen={!!selectedPlant}
           onClose={() => setSelectedPlant(null)}
         />
-                {/* Scroll to Top Button */}
+        {/* Scroll to Top Button */}
         <AnimatePresence>
           {showScrollTop && (
             <motion.button
@@ -185,10 +229,10 @@ export default function BotanicalBrowse() {
             </motion.button>
           )}
         </AnimatePresence>
-                            </div>
+      </div>
 
 
-        </div>
+    </div>
 
-    )
+  )
 }

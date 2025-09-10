@@ -2,7 +2,97 @@ import { MedicinalPlant } from "@/lib/types/botanical";
 
 export const mockPlants: MedicinalPlant[] = [
   {
-    id: '1',
+  id: "1",
+  name: "Dicoma anomala",
+  scientificName: "Dicoma anomala",
+  otherNames: ["Fever bush", "Stomach bush"],
+  localNames: ["Pelobotlhoko","Tlhonya"],
+  family: "Asteraceae",
+  origin: "Sub-Saharan Africa",
+  partsUsed: ["Roots", "Leaves"],
+  image: "assets/botanical/Dicoma_anomala_500X500.jpg",
+  description:
+    "Dicoma anomala is a widespread African perennial herb valued for its medicinal versatility. Known locally as 'fever bush' or 'stomach bush,' it has woody rootstocks with annual stems, dark green serrated leaves, and mauve-white florets. It thrives in well-drained soils and dry grassland conditions. Traditionally used for fever, coughs, stomach issues, and skin disorders, the plant contains flavonoids with demonstrated anti-cancer, anti-parasitic, and anti-diabetic properties, along with antioxidant and hepatoprotective benefits.",
+  medicinalQualities: [
+    "Anti-cancer",
+    "Anti-parasitic",
+    "Anti-diabetic",
+    "Antioxidant",
+    "Hepatoprotective",
+    "Antimicrobial",
+    "Anti-tumor",
+  ],
+  traditionalUses: [
+    "Fever, colds, coughs, sore throats",
+    "Intestinal issues: diarrhea, dysentery, worms",
+    "Stomach and abdominal pain",
+    "Malaria and syphilis",
+    "Other sexually transmitted infections",
+    "Diabetes and cardiac problems",
+    "Wounds and skin disorders",
+    "Respiratory complaints",
+  ],
+  modernMedicine: {
+    activeCompounds: ["Flavonoids"],
+    clinicalStudies: [
+      "Flavonoids isolated from Dicoma anomala demonstrated anti-cancer activity, especially in breast cancer cell lines.",
+      "Extracts have shown antimicrobial and anti-diabetic properties.",
+      "Studies highlight hepatoprotective and antioxidant effects beneficial for liver health.",
+    ],
+    approvedUses: [
+      "Traditional decoctions for fever and stomach ailments",
+      "Potential adjunct treatment in metabolic disorders (diabetes)",
+      "Supportive therapy in antimicrobial and antioxidant treatments",
+    ],
+    contraindications: [
+      "Limited toxicological studies; use with caution in pregnancy and lactation",
+      "Not approved as a standardized pharmaceutical in most countries",
+    ],
+  },
+  homeopathicUses: {
+    preparations: ["Root decoctions", "Root shavings", "Powdered extracts"],
+    conditions: [
+      "Fever and colds",
+      "Stomachaches and abdominal pain",
+      "Intestinal worms and diarrhea",
+      "Skin wounds and infections",
+      "Respiratory issues",
+    ],
+    dosage:
+      "Traditionally consumed as a root decoction; dosage varies by community practice and preparation method. Modern standardized dosages are not yet established.",
+  },
+  research: {
+    recentStudies: [
+      {
+        title: "Flavonoid-rich extracts of Dicoma anomala show anti-tumor activity in breast cancer cell lines",
+        year: 2021,
+        findings:
+          "Flavonoids isolated from the roots demonstrated significant cytotoxicity against breast cancer cells.",
+        source: "Journal of Ethnopharmacology",
+      },
+      {
+        title: "Antimicrobial and anti-diabetic effects of Dicoma anomala extracts",
+        year: 2019,
+        findings:
+          "Extracts showed broad antimicrobial activity and improved glucose regulation in diabetic models.",
+        source: "South African Journal of Botany",
+      },
+    ],
+    futureDirections: [
+      "Clinical trials to evaluate safety and efficacy in humans",
+      "Standardization of dosage and preparations",
+      "Further exploration of hepatoprotective and antioxidant mechanisms",
+      "Development of nutraceutical or phytopharmaceutical products",
+    ],
+  },
+  references: [
+    "Wildflower Nursery: Dicoma anomala profile",
+    "Journal of Ethnopharmacology (2021) – Anti-tumor activity study",
+    "South African Journal of Botany (2019) – Antimicrobial and anti-diabetic effects",
+  ],
+},
+  {
+    id: '2',
     name: 'Echinacea',
     scientificName: 'Echinacea purpurea',
     family: 'Asteraceae',
@@ -46,7 +136,7 @@ export const mockPlants: MedicinalPlant[] = [
     ]
   },
   {
-    id: '2',
+    id: '3',
     name: 'Turmeric',
     scientificName: 'Curcuma longa',
     family: 'Zingiberaceae',
@@ -90,7 +180,7 @@ export const mockPlants: MedicinalPlant[] = [
     ]
   },
   {
-    id: '3',
+    id: '4',
     name: 'Ginseng',
     scientificName: 'Panax ginseng',
     family: 'Araliaceae',
@@ -134,7 +224,7 @@ export const mockPlants: MedicinalPlant[] = [
     ]
   },
   {
-    id: '4',
+    id: '5',
     name: 'Lavender',
     scientificName: 'Lavandula angustifolia',
     family: 'Lamiaceae',
@@ -178,7 +268,7 @@ export const mockPlants: MedicinalPlant[] = [
     ]
   },
   {
-    id: '5',
+    id: '6',
     name: 'Ginkgo',
     scientificName: 'Ginkgo biloba',
     family: 'Ginkgoaceae',

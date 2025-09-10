@@ -49,6 +49,9 @@ export default function PlantCard({plant, onCardClick}: PlantCardProps) {
             <div>
               <h3 className="text-lg font-semibold">{plant.name}</h3>
               <p className="text-sm text-muted-foreground italic">{plant.scientificName}</p>
+              <p className="text-sm text-muted-foreground italic">
+                {plant.localNames && `Also known as: ${plant.localNames.join(', ')}`}
+              </p>
               <p className="text-sm text-muted-foreground">Origin: {plant.origin}</p>
             </div>
 
