@@ -99,13 +99,17 @@ export default function BotanicalBrowse() {
           className="text-center mb-8"
         >
 
-
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-4">
-            Botanical Explorer
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-3 mb-6">
+            <div className="w-12 h-12 bg-green-500 from-primary to-primary/80 rounded-2xl flex items-center justify-center text-2xl">
+              🌿
+            </div>
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-primary via-green-600 to-emerald-500 bg-clip-text text-transparent">
+              Botanical Explorer
+            </h1>
+          </div>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Discover the healing power of nature with our comprehensive database of medicinal plants,
-            their traditional uses, and modern research.
+            their traditional uses, and modern research. Connect with ancient wisdom and contemporary science.
           </p>
         </motion.div>
 

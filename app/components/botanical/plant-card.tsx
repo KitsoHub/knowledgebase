@@ -12,35 +12,45 @@ interface PlantCardProps {
   plant: MedicinalPlant;
   onCardClick: (plant: MedicinalPlant) => void;
 }
-export default function PlantCard({plant, onCardClick}: PlantCardProps) {
+export default function PlantCard({ plant, onCardClick }: PlantCardProps) {
   return (
-       <motion.div
-      whileHover={{
-        scale: 1.02,
-        boxShadow: "0 10px 30px rgba(0,0,0,0.15)"
+    <motion.div
+      // whileHover={{
+      //   scale: 1.02,
+      //   boxShadow: "0 10px 30px rgba(0,0,0,0.15)"
+      // }}
+           whileHover={{
+        scale: 1.03,
+        y: -4
       }}
       transition={{
         type: "spring",
-        stiffness: 300,
+        stiffness: 400,
         damping: 20
       }}
       className="cursor-pointer"
       onClick={() => onCardClick(plant)}
     >
-              <Card className={cn(
-                      "group relative overflow-hidden transition-all duration-300",
-                        "hover:shadow-lg hover:shadow-gray-200 dark:hover:shadow-gray-800"
-                    )}>
+      <Card className={cn("glass-card leaf-shadow rounded-3xl overflow-hidden group relative"
+        // "group relative overflow-hidden transition-all duration-300",
+        // "hover:shadow-lg hover:shadow-gray-200 dark:hover:shadow-gray-800"
+      )}>
         <div className="relative overflow-hidden">
           <ImageWithFallback
             src={plant.image}
             alt={plant.name}
             className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
           />
-          <div className="absolute top-2 right-2">
-            <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm">
-              {plant.family}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+          <div className="absolute top-3 right-3">
+            <Badge className="bg-white/90 backdrop-blur-sm text-slate-500 border-primary/20 shadow-sm">
+              🌸 {plant.family}
             </Badge>
+          </div>
+          <div className="absolute top-3 left-3">
+            <div className="w-8 h-8 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center text-lg">
+              🌿
+            </div>
           </div>
         </div>
 
@@ -52,7 +62,10 @@ export default function PlantCard({plant, onCardClick}: PlantCardProps) {
               <p className="text-sm text-muted-foreground italic">
                 {plant.localNames && `Also known as: ${plant.localNames.join(', ')}`}
               </p>
-              <p className="text-sm text-muted-foreground">Origin: {plant.origin}</p>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span>🌍</span>
+                <span>{plant.origin}</span>
+              </div>
             </div>
 
             <motion.div
