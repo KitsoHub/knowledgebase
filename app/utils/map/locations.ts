@@ -9,16 +9,9 @@ export const locations = {
   },
   etosha: {
     id: "Tsodilo hills",
-    name: "Etosha National Park",
+    name: "Tsodilo Hill",
     position: [-18.7586615, 21.7357546] as [number, number],
     description: "The Tsodilo Hills are a UNESCO World Heritage Site, consisting of rock art, rock shelters, depressions, and caves in Botswana, Southern Africa",
     imageUrl: "/sites/tsodilo.jpeg",
-  },
-  windhoek: {
-    id: "windhoek",
-    name: "Windhoek",
-    position: [-19, 17.92439] as [number, number],
-    description: "The capital of Namibia, blending modernity with German colonial architecture.",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Windhoek_from_Aviation_Museum.jpg/800px-Windhoek_from_Aviation_Museum.jpg",
-  },
+  }
 };
