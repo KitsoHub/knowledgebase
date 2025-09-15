@@ -140,7 +140,7 @@ export default function LanguagesBrowse() {
             </main>
 
             {/* Indigenous Knowledge Labels Section */}
-            <div className="mt-12 p-6 bg-muted rounded-lg">
+            {/* <div className="mt-12 p-6 bg-muted rounded-lg">
                 <h3 className="text-xl font-semibold mb-3 flex items-center">
                     <Globe className="w-5 h-5 mr-2 text-amber-600" />
                     Understanding Indigenous Knowledge Labels
@@ -174,7 +174,7 @@ export default function LanguagesBrowse() {
                         Restricted
                     </Badge>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

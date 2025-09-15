@@ -14,6 +14,7 @@ import ContributeSection from './components/shared/contribute-section'
 import MainFooter from './components/layout/footer'
 import FairUsageProvider from '@/lib/providers/fair-usage-provider'
 import MapPage from './(routes)/map/page'
+import Navigation from './utils/nav/navigation'
 //import prisma from '@/lib/prisma'
 
 export default async function Home() {
@@ -37,7 +38,7 @@ export default async function Home() {
 
 
             {/* <HomeNavigation/> */}
-            <HomeNavigation />
+            <Navigation />
 
             <main className="flex-grow">
 
@@ -55,8 +56,10 @@ export default async function Home() {
                 {/* <ContributeSection/> */}
                 {/* footer */}
                 {/* <Footer /> */}
-                
-                <MapPage/>
+
+                {/* <MapPage/> */}
+
+                {/* Contact */}
                 <MainFooter/>
                 {/* <Chatbot /> */}
             </main>
