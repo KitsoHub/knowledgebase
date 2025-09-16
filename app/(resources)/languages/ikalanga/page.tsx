@@ -9,8 +9,6 @@ import { useSearchParam } from 'react-use'
 
 export default function IkalangaLanguageDashboard() {
     const beginnerUnits = ikalangaUnits.filter((unit) => unit.level === "beginner")
-     const pathname = useSearchParams()
-    console.log("<<<<<<<<<<Language ID>>>>>>", pathname)
     return (
         <div className='container max-w-4xl mx-auto px-4 py-8 pb-24 md:pb-8'>
             <header className="flex justify-between items-center mb-8">
