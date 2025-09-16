@@ -257,12 +257,12 @@ const Navigation = memo(() => {
                                             </NavigationMenuLink>
                                         </div>
                                         <MenuItemCard
-                                            href="#"
+                                            href="/languages/khoekhoegowab"
                                             title="Khoekhoegowab"
                                             description="One of the indigenous languages of Southern Africa"
                                         />
                                         <MenuItemCard
-                                            href="#"
+                                            href="/languages/ikalanga"
                                             title="Ikalanga"
                                             description="A Bantu language spoken in Botswana and Zimbabwe"
                                         />

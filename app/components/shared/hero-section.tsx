@@ -4,12 +4,13 @@
 import Link from 'next/link'
 import { Button } from '@/app/components/ui/button'
 import { heroData } from '@/lib/hero_data'
-import { ArrowRight, Star } from 'lucide-react'
+import { ArrowRight, Heart, Star } from 'lucide-react'
 // import { FloatingElement } from '../floatingElement/floatingElement'
 // import { number } from 'zod'
 // import { Label } from 'recharts'
 
 import React from 'react';
+import { motion } from 'motion/react'
 
 interface FloatingElementProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -89,16 +90,30 @@ export function HeroSection() {
           </p>
 
           {/* hero buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 animate-slide-down" style={{ animationDelay: '0.3s' }}>
-            <Button asChild size='lg' className='text-base rounded-3xl'>
-              <Link href='/browse'>
-                {heroData.buttons[0].label} <ArrowRight className='ml-2 h-4 w-4' /></Link>
-            </Button>
-            <Button asChild size='lg' variant='outline' className='text-base rounded-3xl'>
-              <Link href='/contribute'>
-                {heroData.buttons[1].label}</Link>
-            </Button>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                onClick={() => { }}
+                size="lg"
+                className="gap-3 bg-gradient-to-r from-amber-700 to-amber-300 hover:from-primary/90 hover:to-emerald-500/90 text-white rounded-full px-8 py-4 shadow-lg hover:shadow-xl transition-all"
+              >
+                🌱 Request to Contribute
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="gap-3 border-primary/30 text-primary hover:bg-primary hover:text-white rounded-full px-8 py-4"
+              >
+                <Heart className="w-5 h-5" />
+                Support Our Mission
+              </Button>
+            </div>
+          </motion.div>
 
         </div>
       </div>

@@ -3,11 +3,11 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { useProgressStore } from "@/lib/store/progress-store"
-import { khoekhoegowabUnits } from "@/app/utils/mock/khoekhoegowab-vocabulary"
-import { ikalangaUnits } from "@/app/utils/mock/ikalanga-vocabulary"
+import { unitsByLanguage } from "@/lib/languages/config/units"
 
 
 interface UnitCardProps {
+  languageId:string
   unitId: string
   title: string
   animal: string
@@ -18,15 +18,13 @@ interface UnitCardProps {
   }[]
 }
 
-export function UnitCard({ unitId, title, animal, color, lessons }: UnitCardProps) {
+export function UnitCard({languageId, unitId, title, animal, color, lessons }: UnitCardProps) {
   const { progress } = useProgressStore()
   const unitProgress = progress.unitProgress[unitId]
 
-  // refactor to get the correct unit dynamically based on the language
-  //const unitData = khoekhoegowabUnits.find((unit) => unit.id === unitId)
-  const unitData = ikalangaUnits.find((unit) => unit.id === unitId)
+  const unitData = unitsByLanguage[languageId].find((unit) => unit.id === unitId)
 
-  // Get the appropriate animal icon
+
   const getAnimalIcon = (animal: string) => {
     switch (animal.toLowerCase()) {
       case "owl":
@@ -52,7 +50,6 @@ export function UnitCard({ unitId, title, animal, color, lessons }: UnitCardProp
     }
   }
 
-  // Get color class based on the color prop
   const getColorClass = (color: string) => {
     const colorMap: Record<string, string> = {
       yellow: "text-yellow-500",
@@ -103,10 +100,7 @@ export function UnitCard({ unitId, title, animal, color, lessons }: UnitCardProp
         {lessonStatus.map((lesson, index) => (
           <Link
             key={index}
-            // href={lesson.completed || lesson.current ? `/languages/${unitId}/${lesson.id}` : "#"}
-            // update to dynamic language route
-            //href={lesson.completed || lesson.current ? `/languages/khoekhoegowab/${unitId}/${lesson.id}` : "#"}
-            href={lesson.completed || lesson.current ? `/languages/ikalanga/${unitId}/${lesson.id}` : "#"}
+            href={lesson.completed || lesson.current ? `/languages/${languageId}/${unitId}/${lesson.id}` : "#"}
 
             className={`flex items-center justify-between p-3 rounded-lg ${
               lesson.completed

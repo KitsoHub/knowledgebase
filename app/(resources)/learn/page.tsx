@@ -24,7 +24,7 @@ export default function LanguageLearnDashboard() {
       {/* Browse */}
       <LanguagesBrowse />
       {/* Contributions */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <section className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-4 py-6">
                   <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>

@@ -3,7 +3,8 @@ import { motion } from 'motion/react'
 import React from 'react'
 import { Button } from '../../ui/button'
 import { Badge } from '../../ui/badge'
-import { BookOpen, Heart, Users } from 'lucide-react'
+import { BookOpen, Calendar, Heart, Target, TrendingUp, Users } from 'lucide-react'
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card'
 
 export default function ContributionSection() {
     return (
@@ -125,6 +126,162 @@ export default function ContributionSection() {
             </div>
           </div>
         </motion.div>
+
+                {/* What We Do & How We Do It Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mb-20"
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-primary via-green-600 to-emerald-500 bg-clip-text text-transparent">
+              Our Approach
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Building sustainable partnerships through education, measurement, and long-term planning
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Training and Support */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              <Card className="glass-card leaf-shadow rounded-2xl h-full">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary to-emerald-500 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
+                    <BookOpen className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl">Training and Support</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    We work with educators and Indigenous organizations and communities to build and deliver training, professional development and access to resources, and peer networks that empower Indigenous professionals in their efforts to work towards Indigenous well-being.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary" className="text-xs">
+                      Education Programs
+                    </Badge>
+                    <Badge variant="secondary" className="text-xs">
+                      Professional Development
+                    </Badge>
+                    <Badge variant="secondary" className="text-xs">
+                      Peer Networks
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Measuring Impact */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+            >
+              <Card className="glass-card leaf-shadow rounded-2xl h-full">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
+                    <TrendingUp className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl">Measuring Impact</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Honoring Indigenous principles regarding data ownership and control, we work with Indigenous communities and organizations to establish their own metrics of success. MPI designs tools to support Indigenous schools, organizations, and communities to collect and analyze data that helps track positive outcomes and measure impact over time.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary" className="text-xs">
+                      Data Sovereignty
+                    </Badge>
+                    <Badge variant="secondary" className="text-xs">
+                      Impact Measurement
+                    </Badge>
+                    <Badge variant="secondary" className="text-xs">
+                      Community Metrics
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Long-term Planning */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+            >
+              <Card className="glass-card leaf-shadow rounded-2xl h-full">
+                <CardHeader className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-600 to-primary rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
+                    <Calendar className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl">Long-term Operational Planning</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    To encourage sustained impact over the long term, our organizational and community leadership to identify and build supports that are forward-thinking and built to last. Future needs to future resource planning, we work together to get ahead.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary" className="text-xs">
+                      Strategic Planning
+                    </Badge>
+                    <Badge variant="secondary" className="text-xs">
+                      Resource Development
+                    </Badge>
+                    <Badge variant="secondary" className="text-xs">
+                      Sustainability
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.4 }}
+          className="text-center"
+        >
+          <div className="glass-card leaf-shadow rounded-3xl p-12 max-w-4xl mx-auto">
+            <h2 className="text-3xl font-bold mb-6 text-foreground">
+              Ready to Make a Difference?
+            </h2>
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+              Join our community of knowledge keepers, researchers, and advocates working to preserve
+              traditional medicinal wisdom while building bridges to modern healthcare.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                onClick={() => {}}
+                size="lg"
+                className="gap-3 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary/90 hover:to-emerald-500/90 text-white rounded-full px-8 py-4 shadow-lg hover:shadow-xl transition-all"
+              >
+                🌿 Share Your Knowledge
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="gap-3 border-primary/30 text-primary hover:bg-primary hover:text-white rounded-full px-8 py-4"
+              >
+                <Target className="w-5 h-5" />
+                Learn More About Our Work
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Contribute Modal */}
+        {/* <ContributeModal
+          isOpen={showContributeModal}
+          onClose={() => setShowContributeModal(false)}
+        /> */}
         </div>
     )
 }

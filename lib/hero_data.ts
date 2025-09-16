@@ -4,7 +4,7 @@ export const heroData = {
     descriptionTag:"Discover, Contribute and Connect with Knowledge",
     description:
         "Discover, contribute, and learn about Botswana's rich cultural heritage, traditional practices, and indigenous knowledge. Join our community of experts and enthusiasts in preserving and sharing this valuable information",
-    subDescription:"A powerful platform for researchers, academics, and enthusiasts to discover contribute, and connect with diverse knowledge across disciplines for a better Botswana.",
+    subDescription:"Preserving indigenous knowledge and creating pathways for reciprocal partnerships that honor traditional wisdom while advancing modern understanding of medicinal plants.",
         buttons: [
         {
             label: 'Start Exploring',
