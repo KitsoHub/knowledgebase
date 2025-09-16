@@ -9,10 +9,10 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { languagesMetadata } from '@/lib/languages-data'
 import { Button } from '../../ui/button'
-import PublicationSearchBar from '../../publications/search-bar'
+
 import { Separator } from '../../ui/separator'
 import LanguageCard from './language-card'
-import { Badge } from '../../ui/badge'
+
 
 export default function LanguagesBrowse() {
     const pathname = usePathname()
@@ -49,7 +49,7 @@ export default function LanguagesBrowse() {
     return (
         <div className="min-h-screen bg-background">
             {/* Header */}
-            <section className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-12">
+            <section className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-8">
                 {pathname === '/learn' && (
                     <Button
                         asChild
@@ -138,43 +138,6 @@ export default function LanguagesBrowse() {
                     )}
                 </div>
             </main>
-
-            {/* Indigenous Knowledge Labels Section */}
-            <div className="mt-12 p-6 bg-muted rounded-lg">
-                <h3 className="text-xl font-semibold mb-3 flex items-center">
-                    <Globe className="w-5 h-5 mr-2 text-amber-600" />
-                    Understanding Indigenous Knowledge Labels
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                    Traditional Knowledge Labels help identify cultural
-                    sensitivity and usage rights. These labels are part of the
-                    Local Contexts initiative to support Indigenous data
-                    sovereignty.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                    <Badge
-                        variant="outline"
-                        className="border-amber-500 text-amber-700 dark:text-amber-300"
-                    >
-                        <Globe className="w-3 h-3 mr-1" />
-                        Culturally Sensitive
-                    </Badge>
-                    <Badge
-                        variant="outline"
-                        className="border-amber-500 text-amber-700 dark:text-amber-300"
-                    >
-                        <Globe className="w-3 h-3 mr-1" />
-                        Seasonal Knowledge
-                    </Badge>
-                    <Badge
-                        variant="outline"
-                        className="border-amber-500 text-amber-700 dark:text-amber-300"
-                    >
-                        <Globe className="w-3 h-3 mr-1" />
-                        Restricted
-                    </Badge>
-                </div>
-            </div>
         </div>
     )
 }

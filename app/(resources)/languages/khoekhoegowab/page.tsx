@@ -27,6 +27,7 @@ export default function LanguageDashboard() {
       <div className="space-y-6">
         {beginnerUnits.map((unit) => (
           <UnitCard
+            languageId='khoekhoegowab'
             key={unit.id}
             unitId={unit.id}
             title={unit.title}
@@ -41,6 +42,7 @@ export default function LanguageDashboard() {
 
         {intermediateUnits.map((unit) => (
           <UnitCard
+            languageId='khoekhoegowab'
             key={unit.id}
             unitId={unit.id}
             title={unit.title}
@@ -55,6 +57,7 @@ export default function LanguageDashboard() {
 
         {advancedUnits.map((unit) => (
           <UnitCard
+            languageId='khoekhoegowab'
             key={unit.id}
             unitId={unit.id}
             title={unit.title}

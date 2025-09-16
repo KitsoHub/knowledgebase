@@ -3,10 +3,11 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { useProgressStore } from "@/lib/store/progress-store"
-import { khoekhoegowabUnits } from "@/app/utils/mock/khoekhoegowab-vocabulary"
+import { unitsByLanguage } from "@/lib/languages/config/units"
 
 
 interface UnitCardProps {
+  languageId:string
   unitId: string
   title: string
   animal: string
@@ -17,14 +18,13 @@ interface UnitCardProps {
   }[]
 }
 
-export function UnitCard({ unitId, title, animal, color, lessons }: UnitCardProps) {
+export function UnitCard({languageId, unitId, title, animal, color, lessons }: UnitCardProps) {
   const { progress } = useProgressStore()
   const unitProgress = progress.unitProgress[unitId]
 
-  // Get the unit data to show phrase counts
-  const unitData = khoekhoegowabUnits.find((unit) => unit.id === unitId)
+  const unitData = unitsByLanguage[languageId].find((unit) => unit.id === unitId)
 
-  // Get the appropriate animal icon
+
   const getAnimalIcon = (animal: string) => {
     switch (animal.toLowerCase()) {
       case "owl":
@@ -50,7 +50,6 @@ export function UnitCard({ unitId, title, animal, color, lessons }: UnitCardProp
     }
   }
 
-  // Get color class based on the color prop
   const getColorClass = (color: string) => {
     const colorMap: Record<string, string> = {
       yellow: "text-yellow-500",
@@ -76,7 +75,11 @@ export function UnitCard({ unitId, title, animal, color, lessons }: UnitCardProp
 
     // Get the lesson data to show phrase counts
     const lessonData = unitData?.lessons.find((l) => l.id === lesson.id)
-    const phraseCount = lessonData ? lessonData.vocabulary.length + lessonData.phrases.length : 0
+    const phraseCount = lessonData
+      ? lessonData.vocabulary.length +
+        (lessonData.phrases ? lessonData.phrases.length : 0) +
+        (lessonData.numbers? lessonData.numbers.length : 0)
+      : 0
 
     return {
       ...lesson,
@@ -97,9 +100,8 @@ export function UnitCard({ unitId, title, animal, color, lessons }: UnitCardProp
         {lessonStatus.map((lesson, index) => (
           <Link
             key={index}
-            // href={lesson.completed || lesson.current ? `/languages/${unitId}/${lesson.id}` : "#"}
-            // update to dynamic language route
-            href={lesson.completed || lesson.current ? `/languages/khoekhoegowab/${unitId}/${lesson.id}` : "#"}
+            href={lesson.completed || lesson.current ? `/languages/${languageId}/${unitId}/${lesson.id}` : "#"}
+
             className={`flex items-center justify-between p-3 rounded-lg ${
               lesson.completed
                 ? "bg-green-100 dark:bg-green-900/20"
