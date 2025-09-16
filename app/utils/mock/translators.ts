@@ -22,9 +22,10 @@ export const mockAIUsage: AIToolUsage = {
 };
 export const mockContributors: TranslationContributor[] = [
 
+  // TODO: Expand with more diverse and realistic mock contributors + proper titles
   {
     id: "contrib-002",
-    name: "Mrs Tumani Ntombi Modimo",
+    name: "Ms Tumani Ntombi Modimo",
     email: "tmodimo@gmail.com",
     affiliation: "Bukalanga Community",
     country: "Botswana",
@@ -47,7 +48,7 @@ export const mockContributors: TranslationContributor[] = [
   },
   {
     id: "contrib-004",
-    name: "Samuel Kabelo",
+    name: "Mr Samuel Kabelo",
     email: "skadmin@kitohub.com",
     affiliation: "OpenSource Botswana",
     country: "Botswana",
