@@ -8,18 +8,6 @@ export default function CommunityPage() {
         Welcome to the community hub. Choose a section below:
       </p>
 
-      <ul className="list-disc list-inside space-y-2">
-        <li>
-          <Link href="/community/admin" className="text-blue-600 hover:underline">
-            Admin Panel
-          </Link>
-        </li>
-        <li>
-          <Link href="/community/resources" className="text-blue-600 hover:underline">
-            Resources
-          </Link>
-        </li>
-      </ul>
 
     </div>
   );

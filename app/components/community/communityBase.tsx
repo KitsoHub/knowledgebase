@@ -35,13 +35,15 @@ interface CommunityBaseProps {
 export default function CommunityBase({ children, allowedRoles }: CommunityBaseProps) {
   //const { user } = useUser();
 
-  return (
+  return <div className="flex-1 flex-col space-y-4 p-4 pt-6 md:p-8">{children}</div>
 
-      <div className="flex min-h-screen">
+  // return (
 
-        <main className="flex-1 overflow-y-auto p-4 ">{children}</main>
+  //     <div className="flex min-h-screen">
 
-      </div>
+  //       <main className="flex-1 overflow-y-auto p-4 ">{children}</main>
 
-  );
+  //     </div>
+
+  // );
 }
