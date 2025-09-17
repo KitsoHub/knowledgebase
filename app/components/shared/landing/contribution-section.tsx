@@ -78,8 +78,8 @@ export default function ContributionSection() {
                   Support the Mission
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                  Join MPI in creating new pathways with Indigenous Peoples that lead to a more just system by
-                  addressing critical climate to get there.
+                  Join IKMS in creating new pathways with Indigenous Peoples that lead to a more just system by
+                  addressing critical socio economic and representation issues to get there.
                 </p>
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center gap-3">
@@ -191,7 +191,7 @@ export default function ContributionSection() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">
-                    Honoring Indigenous principles regarding data ownership and control, we work with Indigenous communities and organizations to establish their own metrics of success. MPI designs tools to support Indigenous schools, organizations, and communities to collect and analyze data that helps track positive outcomes and measure impact over time.
+                    Honoring Indigenous principles regarding data ownership and control, we work with Indigenous communities and organizations to establish their own metrics of success. IKMS designs tools to support schools, organizations, and communities to collect and analyze data that helps track positive outcomes and measure impact over time.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="secondary" className="text-xs">
@@ -223,7 +223,7 @@ export default function ContributionSection() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">
-                    To encourage sustained impact over the long term, our organizational and community leadership to identify and build supports that are forward-thinking and built to last. Future needs to future resource planning, we work together to get ahead.
+                    To encourage sustained impact over the long term, our organizational and community leadership to identify and build supports that are forward-thinking and built to last. The future needs future resource planning, we work together to get ahead.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="secondary" className="text-xs">
@@ -255,7 +255,7 @@ export default function ContributionSection() {
             </h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
               Join our community of knowledge keepers, researchers, and advocates working to preserve
-              traditional medicinal wisdom while building bridges to modern healthcare.
+              traditional wisdom while building bridges to a unified and modern society.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
