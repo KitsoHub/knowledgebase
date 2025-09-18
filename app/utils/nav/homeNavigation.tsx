@@ -20,6 +20,7 @@ export default function HomeNavigation() {
         { href: '/games', label: 'Games' },
         { href: '/contribute', label: 'Contribute' },
         { href: '/publications', label: 'Publications' },
+        { href: '/botanical', label: 'Botanical-Explorer' },
         { href: '/learn', label: 'LanguageLearn' },
         { href: '/nlp', label: 'NLP' },
         // { href: '/admin/patents', label: 'Patents' },

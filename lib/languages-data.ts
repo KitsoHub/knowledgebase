@@ -87,7 +87,41 @@ const khoekhoegowabMetadata: LanguageMetadata = {
 
 }
 
+const ikalangaMetadata: LanguageMetadata = {
+    id: 'ikalanga',
+        name: 'Ikalanga',
+        nativeName: 'Ikalanga',
+        script: 'Latin',
+        writingDirection: 'ltr',
+        modality: [
+            {
+                types: ['spoken', 'written'],
+                description: 'Ikalanga is both a spoken and written language.'
+            },
+
+        ],
+        regionTag: 'Southern Africa',
+        variety: 'Ikalanga',
+        description: 'Learn Khoekhoegowab, a Khoisan language spoken in Namibia and Botswana, known for its unique click consonants.',
+        // Technical Metadata
+        isRtl: false,
+        characterSet: 'latin',
+        minUnicodeVersion: '1.1',
+        iso639_1: 'naq',
+        languageFamily: 'bantu',
+        totalSpeakers: 250000, // Approximate
+        regions: ['Zimbabwe', 'Botswana', 'South Africa'],
+        isActive: true, // Beta, Supported
+        launchDate: '2024-01-15',
+        puoId: 'ikalanga',
+        version: '1.0.0',
+
+}
+
+
+
 export const languagesMetadata: LanguageMetadata[] = [
     khoekhoegowabMetadata,
+    ikalangaMetadata
     // Add other languages here as needed
 ];

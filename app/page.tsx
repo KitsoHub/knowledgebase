@@ -1,3 +1,5 @@
+// "use client"
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // import { CategoryGrid } from '@/app/components/shared/category-section'
 // import { FeaturedContent } from '@/app/components/shared/feature-section'
@@ -14,6 +16,12 @@ import ContributeSection from './components/shared/contribute-section'
 import MainFooter from './components/layout/footer'
 import FairUsageProvider from '@/lib/providers/fair-usage-provider'
 import MapPage from './(routes)/map/page'
+import Navigation from './utils/nav/navigation'
+import { motion } from 'motion/react'
+import { Button } from './components/ui/button'
+import { Badge } from './components/ui/badge'
+import { BookOpen, Users } from 'lucide-react'
+import ContributionSection from './components/shared/landing/contribution-section'
 //import prisma from '@/lib/prisma'
 
 export default async function Home() {
@@ -30,37 +38,40 @@ export default async function Home() {
     // })
 
 
-   // console.log(">> Current User >>", match)
+    // console.log(">> Current User >>", match)
     return (
         <FairUsageProvider>
-        <div className="min-h-screen flex flex-col ">
+            <div className="min-h-screen flex flex-col ">
 
 
-            {/* <HomeNavigation/> */}
-            <HomeNavigation />
+                {/* <HomeNavigation/> */}
+                <Navigation />
 
-            <main className="flex-grow">
+                <main className="flex-grow">
 
-                {/* TODO: update the hero section */}
-                {/* <HeroSection href={href} /> */}
+                    {/* TODO: update the hero section */}
+                    {/* <HeroSection href={href} /> */}
 
-                <HeroSection/>
-                {/* featured articles */}
-                {/* <ArticleSection /> */}
-                {/* categories */}
-                {/* <CategoryStatsSection /> */}
-                {/* recent articles */}
-                {/* <RecentArticlesSection /> */}
-                {/* Contribute section */}
-                {/* <ContributeSection/> */}
-                {/* footer */}
-                {/* <Footer /> */}
-                
-                <MapPage/>
-                <MainFooter/>
-                {/* <Chatbot /> */}
-            </main>
-        </div>
+                    <HeroSection />
+                    {/* featured articles */}
+                    {/* <ArticleSection /> */}
+                    {/* categories */}
+                    {/* <CategoryStatsSection /> */}
+                    {/* recent articles */}
+                    {/* <RecentArticlesSection /> */}
+                    {/* Contribute section */}
+                    {/* <ContributeSection/> */}
+                    {/* footer */}
+                    {/* <Footer /> */}
+
+                    {/* <MapPage/> */}
+
+                    {/* Contact */}
+                    <ContributionSection />
+                    <MainFooter />
+                    {/* <Chatbot /> */}
+                </main>
+            </div>
         </FairUsageProvider>
     )
 }
