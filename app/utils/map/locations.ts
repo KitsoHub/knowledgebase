@@ -1,17 +1,32 @@
-// You can place this in a file like `lib/locations.ts` or directly in your component
-export const locations = {
-  okavango: {
-    id: "okavango",
+// app/lib/locations.ts
+import { CulturalSite } from '@/lib/types/culturalSites';
+
+export const culturalSites: CulturalSite[] = [
+  {
+    id: "site1",
     name: "Okavango Delta",
-    position: [-19.318701, 22.446918] as [number, number],
+    latitude: -19.318701,
+    longitude: 22.446918,
     description: "A lush inland delta in Botswana, home to elephants, hippos, and incredible biodiversity.",
-    imageUrl: "/sites/okavango.jpeg",
+    category: "heritage",
+    tribe: "Kalanga People",
+    language: "kalanga",
+    images: ["/sites/okavango.jpeg"],
+    videos: [],
+    audio: [],
+    metadata: {
+      unesco: true,
+      undp: false,
+      unicef: true,
+      localContext: "Sacred water source for ancestral rituals.",
+      indigenousSystem: "Oral storytelling and seasonal migration tracking.",
+      rights: "Community-owned; requires permission for research use.",
+      ipMetadata: "CC-BY-NC 4.0",
+      sensitivityLevel: "public",
+      accessProtocol: "Open for education, restricted for commercial use."
+    },
+    dateCreated: "2020-05-12",
+    lastUpdated: "2023-08-15"
   },
-  etosha: {
-    id: "Tsodilo hills",
-    name: "Tsodilo Hill",
-    position: [-18.7586615, 21.7357546] as [number, number],
-    description: "The Tsodilo Hills are a UNESCO World Heritage Site, consisting of rock art, rock shelters, depressions, and caves in Botswana, Southern Africa",
-    imageUrl: "/sites/tsodilo.jpeg",
-  }
-};
+  // Add more as needed...
+];
