@@ -37,13 +37,4 @@ export default function CommunityBase({ children, allowedRoles }: CommunityBaseP
 
   return <div className="flex-1 flex-col space-y-4 p-4 pt-6 md:p-8">{children}</div>
 
-  // return (
-
-  //     <div className="flex min-h-screen">
-
-  //       <main className="flex-1 overflow-y-auto p-4 ">{children}</main>
-
-  //     </div>
-
-  // );
 }

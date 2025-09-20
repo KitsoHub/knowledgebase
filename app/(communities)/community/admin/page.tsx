@@ -5,7 +5,7 @@ import { DataDistributionChart } from "@/app/components/shared/overview/data-dis
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
-import { BookOpen, DownloadIcon, Plus, User2Icon, UsersIcon } from "lucide-react";
+import { BookOpen, DownloadIcon, UsersIcon } from "lucide-react";
 
 
 export default function AdminPage() {
@@ -23,7 +23,7 @@ export default function AdminPage() {
               </h1>
               <p className="text-muted-foreground">Manage your communities, collections, and content</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               <Button variant="outline" className="flex items-center space-x-2">
                 <UsersIcon className="h-4 w-4" />
                 <span>Manage Roles</span>
@@ -32,18 +32,9 @@ export default function AdminPage() {
                 <DownloadIcon className="h-4 w-4" />
                 <span>Export Data</span>
               </Button>
-              <Button variant="outline" className="flex items-center space-x-2">
-                <Plus className="h-4 w-4" />
-                <span>Create Collection</span>
-              </Button>
-
-              <Button className="flex items-center space-x-2">
-                <Plus className="h-4 w-4" />
-                <span>Create Community</span>
-              </Button>
             </div>
 
-            {/*  add create-community ,create-collection, manage roles, export data buttons*/}
+            {/* TODO: add create-community ,create-collection, manage roles, export data buttons*/}
           </div>
         </header>
         <main className="flex-1 space-y-4 p-4 md:p-8">
@@ -96,12 +87,10 @@ export default function AdminPage() {
             </TabsContent>
 
           </Tabs>
+
         </main>
 
-
       </div>
-
-
     </CommunityBase>
   );
 }

@@ -91,8 +91,14 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive={pathname === "/licensing"} tooltip="WorkLicensingspace">
-                    <Link href="/licensing"><Briefcase /><span>Communities & Collections</span></Link>
+                  <SidebarMenuButton asChild isActive={pathname === "/communities"} tooltip="Communities">
+                    <Link href="/community/resources/communities"><Briefcase /><span>Communities & Collections</span></Link>
+                  </SidebarMenuButton>
+
+                </SidebarMenuItem>
+                           <SidebarMenuItem>
+                  <SidebarMenuButton asChild isActive={pathname === "/compliance"} tooltip="TkLabels">
+                    <Link href="/compliance"><Briefcase /><span>TK Labels</span></Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
