@@ -1,3 +1,4 @@
+import { collection } from 'firebase/firestore';
 // Core Types for Indigenous Knowledge Portal
 
 export enum CommunityGovernance {
@@ -101,6 +102,8 @@ export interface Community {
     publicItems: number;
     restrictedItems: number;
     memberCount: number;
+    collectionCount: number;
+    subCommunityCount: number;
   };
 }
 
