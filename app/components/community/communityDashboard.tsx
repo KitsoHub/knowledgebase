@@ -5,17 +5,21 @@ import { Alert, AlertDescription } from '../ui/alert';
 import { BookOpen, Calendar, Crown, Database, Download, Edit, Globe, Info, Languages, MapPin, MoreVertical, Plus, Settings, Shield, ShieldBanIcon, ShieldCheck, Trash2, Users } from 'lucide-react';
 import { Badge } from '../ui/badge';
 import { formatGovernanceText, formatProtocolText, getProtocolColor } from '@/lib/utils';
-import { CommunityGovernance } from '@/lib/types/community';
 import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
+import CommunityCreationFlow from './communityCreationFlow';
+import SubCommunityCreationFlow from './subCommunityCreationFlow';
+import { CommunityGovernance } from '@/lib/constants/community';
 
 
 interface CommunityDashboardProps {
     onNavigate?: (view: string) => void;
+    onCreateSubCommunity?: () => void;
 }
-export default function communityDashboard({ onNavigate }: CommunityDashboardProps) {
+export default function communityDashboard({ onNavigate, onCreateSubCommunity }: CommunityDashboardProps) {
     const { currentCommunity } = useCommunityStore();
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showEditCommunity, setShowEditCommunity] = useState(false);
@@ -110,7 +114,7 @@ export default function communityDashboard({ onNavigate }: CommunityDashboardPro
                             Create Collection
                         </Button>
 
-                        <Button variant="outline" onClick={() => setShowSubCommunityCreation(true)}>
+                        <Button variant="outline" onClick={() => onCreateSubCommunity?.() || setShowSubCommunityCreation(true)}>
                             <Plus className="w-4 h-4 mr-2" />
                             <span className="hidden sm:inline">Create </span>Sub-Community
                         </Button>
@@ -388,6 +392,24 @@ export default function communityDashboard({ onNavigate }: CommunityDashboardPro
 
 
             </Tabs>
+
+            {/* Sub-Community Creation Dialog */}
+            <Dialog open={showSubCommunityCreation} onOpenChange={setShowSubCommunityCreation}>
+                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>Create Sub-Community</DialogTitle>
+                        <DialogDescription>
+                            Create a new sub-community under "{currentCommunity.identity.title}"
+                        </DialogDescription>
+                    </DialogHeader>
+                    <SubCommunityCreationFlow
+                        parentCommunity={currentCommunity}
+                        onComplete={() => setShowSubCommunityCreation(false)
+                        }
+                    />
+                </DialogContent>
+            </Dialog>
+
 
         </div>
     )

@@ -1,5 +1,5 @@
 "use client";
-import { Community, CommunityGovernance, CulturalProtocol } from "@/lib/types/community";
+import { Community } from "@/lib/types/community";
 import { Calendar, Crown, Filter, MapPin, Search, TreePine, Users } from "lucide-react";
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Input } from "../ui/input";
 import { useCommunityCreationStore } from "@/lib/store/communityCreation";
 import { useCommunityStore } from "@/lib/store/communityStore";
+import { CommunityGovernance, CulturalProtocol } from "@/lib/constants/community";
 
 
 interface CommunityDirectoryProps {

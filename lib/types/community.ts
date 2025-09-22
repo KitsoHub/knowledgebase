@@ -1,33 +1,9 @@
-import { collection } from 'firebase/firestore';
+//import { collection } from 'firebase/firestore';
 // Core Types for Indigenous Knowledge Portal
 
-export enum CommunityGovernance {
-  INDIGENOUS_COUNCIL = 'INDIGENOUS_COUNCIL',
-  ELDER_COUNCIL = 'ELDER_COUNCIL',
-  STEWARDSHIP_CIRCLE = 'STEWARDSHIP_CIRCLE'
-}
+import { CommunityGovernance, CulturalProtocol, LicensingOption, TKLabel } from "../constants/community";
 
-export enum TKLabel {
-  SECRET_SACRED = 'SECRET_SACRED',
-  CULTURAL_INFLUENCE = 'CULTURAL_INFLUENCE',
-  WOMEN_S_ONLY = 'WOMEN_S_ONLY',
-  MEN_S_ONLY = 'MEN_S_ONLY'
-}
 
-export enum CulturalProtocol {
-  PUBLIC = 'PUBLIC',
-  COMMUNITY_ONLY = 'COMMUNITY_ONLY',
-  ELDER_APPROVAL_REQUIRED = 'ELDER_APPROVAL_REQUIRED',
-  GENDER_RESTRICTED = 'GENDER_RESTRICTED'
-}
-
-export enum LicensingOption {
-  ATTRIBUTION = 'ATTRIBUTION',
-  ATTRIBUTION_SHARE_ALIKE = 'ATTRIBUTION_SHARE_ALIKE',
-  ATTRIBUTION_NON_COMMERCIAL = 'ATTRIBUTION_NON_COMMERCIAL',
-  COMMUNITY_PROTOCOL = 'COMMUNITY_PROTOCOL',
-  ALL_RIGHTS_RESERVED = 'ALL_RIGHTS_RESERVED'
-}
 
 export interface Person {
   id: string;
@@ -134,4 +110,16 @@ export interface AppState {
   setCurrentCommunity: (community: Community | null) => void;
   setUser: (user: Person | null) => void;
   toggleDarkMode: () => void;
+}
+
+
+export interface SubCommunityData {
+  title: string;
+  description: string;
+  indigenousAuthorityId: string;
+  custodianIds: string[];
+  localContextLabels: TKLabel[];
+  geographicRegion: string;
+  communityIdentifier: string;
+  protocols: CulturalProtocol[];
 }

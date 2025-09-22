@@ -1,4 +1,6 @@
-import { Community, CommunityGovernance, CulturalProtocol } from "@/lib/types/community";
+import { CommunityGovernance, CulturalProtocol } from "@/lib/constants/community";
+import { Community } from "@/lib/types/community";
+
 
 export const mockCommunities: Community[] = [
   {
@@ -37,7 +39,9 @@ export const mockCommunities: Community[] = [
       totalItems: 156,
       publicItems: 45,
       restrictedItems: 111,
-      memberCount: 89
+      memberCount: 89,
+      collectionCount:0,
+      subCommunityCount: 0
     }
   },
   {
@@ -67,7 +71,10 @@ export const mockCommunities: Community[] = [
       totalItems: 203,
       publicItems: 89,
       restrictedItems: 114,
-      memberCount: 156
+      memberCount: 156,
+      collectionCount:0,
+      subCommunityCount: 0
+
     }
   },
   {
@@ -97,7 +104,9 @@ export const mockCommunities: Community[] = [
       totalItems: 78,
       publicItems: 23,
       restrictedItems: 55,
-      memberCount: 42
+      memberCount: 42,
+      collectionCount:0,
+      subCommunityCount: 0
     }
   }
 ];

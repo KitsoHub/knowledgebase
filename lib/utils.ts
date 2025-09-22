@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { Message, TextUIPart } from './types';
-import { CommunityGovernance, CulturalProtocol } from './types/community';
+import { CommunityGovernance, CulturalProtocol } from '@/lib/constants/community';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

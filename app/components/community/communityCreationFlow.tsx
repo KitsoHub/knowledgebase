@@ -12,7 +12,7 @@ import { Label } from '../ui/label';
 import { CommunityGovernance, CulturalProtocol } from '@/lib/types/community';
 import { useCommunityStore } from '@/lib/store/communityStore';
 
-export default function communityCreationFlow() {
+export default function CommunityCreationFlow() {
     const {
         step,
         communityData,

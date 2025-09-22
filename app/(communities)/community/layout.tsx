@@ -12,8 +12,7 @@ interface CommunityLayoutProps {
 
 export default function CommunityLayout({ children }: CommunityLayoutProps) {
     return (
-        <html lang="en" suppressHydrationWarning>
-            <body className="bg-background text-foreground">
+
                 <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange >
                     <SidebarProvider>
 
@@ -40,8 +39,11 @@ export default function CommunityLayout({ children }: CommunityLayoutProps) {
                         </div>
                     </SidebarProvider>
                 </ThemeProvider>
-            </body>
-        </html>
+
+        //                 <html lang="en" suppressHydrationWarning>
+        //     <body className="bg-background text-foreground">
+        //     </body>
+        // </html>
     )
 
 
