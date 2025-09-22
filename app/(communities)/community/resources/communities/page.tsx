@@ -14,12 +14,12 @@ export default function CommunityPage() {
   const [showCreateCommunity, setShowCreateCommunity] = useState(false);
   const [showCreateSubCommunity, setShowCreateSubCommunity] = useState(false);
 
-  if(showCreateSubCommunity){
+  if (showCreateSubCommunity) {
     return (
 
       <SubCommunityCreationFlow
-      onComplete={()=>setShowCreateSubCommunity(false)}
-      onCancel={()=>setShowCreateSubCommunity(false)}
+        onComplete={() => setShowCreateSubCommunity(false)}
+        onCancel={() => setShowCreateSubCommunity(false)}
       />
     )
   }
@@ -35,7 +35,8 @@ export default function CommunityPage() {
         return <CommunityDirectory onNavigate={setCurrentView} />;
       case 'community-dashboard':
         return <CommunityDashboard onNavigate={setCurrentView}
- />;
+          onCreateSubCommunity={() => setShowCreateSubCommunity(true)}
+        />;
       // case 'knowledge':
       //   return <KnowledgeBaseView />;
       // case 'contribute':

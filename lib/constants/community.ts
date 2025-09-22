@@ -31,3 +31,10 @@ export enum LicensingOption {
   COMMUNITY_PROTOCOL = 'COMMUNITY_PROTOCOL',
   ALL_RIGHTS_RESERVED = 'ALL_RIGHTS_RESERVED'
 }
+
+  export const steps = [
+    CommunityGovernanceSteps.BASIC,
+    CommunityGovernanceSteps.AUTHORITY,
+    CommunityGovernanceSteps.PROTOCOLS,
+    CommunityGovernanceSteps.REVIEW
+  ];
