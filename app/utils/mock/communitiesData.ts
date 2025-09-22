@@ -32,7 +32,15 @@ export const mockCommunities: Community[] = [
       language: "Selete, Setswana, English",
       establishedDate: new Date("2025-09-20")
     },
-    members: [],
+    members: [
+       {
+          id: "3",
+          name: "Kgosi Puso Gaborone",
+          email: "demo@kitsohub.org.bw",
+          role: "Paramount Chief",
+          culturalTitle: "Lead Steward"
+        }
+    ],
     knowledgeItems: [],
     protocols: [CulturalProtocol.ELDER_APPROVAL_REQUIRED, CulturalProtocol.COMMUNITY_ONLY],
     stats: {
