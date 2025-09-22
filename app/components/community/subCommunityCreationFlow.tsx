@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { useAppStore } from '@/lib/store/appStore';
 import { Badge } from '../ui/badge';
 import { Checkbox } from '../ui/checkbox';
+import { useSubCommunityStore } from '@/lib/store/communityStore';
 
 
 interface SubCommunityData {
@@ -36,11 +37,17 @@ export default function SubCommunityCreationFlow({ onComplete, onCancel, parentC
     // get current community
     const [step, setStep] = useState<CommunityGovernanceSteps>(CommunityGovernanceSteps.BASIC)
     const [subCommunityData, setSubCommunityData] = useState<Partial<SubCommunityData>>({
+      title:'',
+      description:'',
+      indigenousAuthorityId:'',
         custodianIds: [],
         localContextLabels: [],
+        geographicRegion:'',
+        communityIdentifier:'',
         protocols: []
     })
     const {user} = useAppStore();
+    const {addSubCommunity}= useSubCommunityStore();
     const generateCommunityIdentifier = () => {
         return uuidv4();
     };
@@ -274,7 +281,7 @@ export default function SubCommunityCreationFlow({ onComplete, onCancel, parentC
                             onChange={() => {}}
                           />
                           <div className="flex-1">
-                            <h4 className="font-medium">{title}</h4>
+                            <h6 className="font-medium">{title}</h6>
                             <p className="text-sm text-muted-foreground">{description}</p>
                           </div>
                         </div>
@@ -302,7 +309,7 @@ export default function SubCommunityCreationFlow({ onComplete, onCancel, parentC
                             onChange={() => {}}
                           />
                           <div className="flex-1">
-                            <h4 className="font-medium">{title}</h4>
+                            <h6 className="font-medium">{title}</h6>
                             <p className="text-sm text-muted-foreground">{description}</p>
                           </div>
                         </div>
@@ -417,8 +424,9 @@ export default function SubCommunityCreationFlow({ onComplete, onCancel, parentC
     };
 
     const handleSubmit = () => {
-        console.log('Creating sub-community:', subCommunityData);
-        alert('Sub-community created successfully!');
+        console.log('Creating sub-community:', subCommunityData.communityIdentifier);
+        alert(`Sub-community created successfully!${subCommunityData.title}${subCommunityData.localContextLabels}`);
+        addSubCommunity(subCommunityData)
         onComplete?.();
     };
 

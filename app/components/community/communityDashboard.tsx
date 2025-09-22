@@ -1,5 +1,5 @@
 "use client";
-import { useCommunityStore } from '@/lib/store/communityStore';
+import { useCommunityStore, useSubCommunityStore } from '@/lib/store/communityStore';
 import React, { useState } from 'react'
 import { Alert, AlertDescription } from '../ui/alert';
 import { BookOpen, Calendar, Crown, Database, Download, Edit, Globe, Info, Languages, MapPin, MoreVertical, Plus, Settings, Shield, ShieldBanIcon, ShieldCheck, Trash2, Users } from 'lucide-react';
@@ -21,11 +21,13 @@ interface CommunityDashboardProps {
 }
 export default function communityDashboard({ onNavigate, onCreateSubCommunity }: CommunityDashboardProps) {
     const { currentCommunity } = useCommunityStore();
+    const { subCommunity } = useSubCommunityStore();
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showEditCommunity, setShowEditCommunity] = useState(false);
     const [showSubCommunityCreation, setShowSubCommunityCreation] = useState(false);
     const [showContributeDialog, setShowContributeDialog] = useState(false);
     const [activeTab, setActiveTab] = useState("overview");
+
 
     if (!currentCommunity) {
         return (
@@ -241,7 +243,7 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
             >
                 <TabsList className='grid w-full grid-cols-6'>
                     <TabsTrigger value="overview">Overview</TabsTrigger>
-                    <TabsTrigger value="community">Commmunities</TabsTrigger>
+                    <TabsTrigger value="community">Sub Commmunities</TabsTrigger>
                     <TabsTrigger value="collections">Collections</TabsTrigger>
                     <TabsTrigger value="members">Members</TabsTrigger>
                     <TabsTrigger value="protocols">Protocols&Processes</TabsTrigger>
@@ -388,6 +390,76 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
                             </div>
                         </CardContent>
                     </Card>
+                </TabsContent>
+
+                <TabsContent value='community' className='space-y-4'>
+
+
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {/* {currentCommunity.subCommunities?.map((subCommunity) => ( */}
+                            {subCommunity && (
+                                <Card key={subCommunity.communityIdentifier} className="hover:shadow-lg transition-shadow border-secondary/20">
+                                    <CardHeader>
+                                        <CardTitle className="text-lg flex items-center space-x-2">
+                                            <Users className="w-5 h-5 text-secondary" />
+                                            <span>{subCommunity.title}</span>
+                                        </CardTitle>
+                                        <CardDescription>{subCommunity.description}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-3">
+                                            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                                <Crown className="w-4 h-4" />
+                                                <span>Authority: {subCommunity.indigenousAuthorityId}</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                                <MapPin className="w-4 h-4" />
+                                                <span>{subCommunity.geographicRegion}</span>
+                                            </div>
+                                            <div className="grid grid-cols-3 gap-4 text-center text-sm">
+                                                <div>
+                                                    {/* <p className="text-lg">{subCommunity.stats.memberCount}</p> */}
+                                                    <p className="text-lg">100</p>
+                                                    <p className="text-muted-foreground text-xs">Members</p>
+                                                </div>
+                                                <div>
+                                                    {/* <p className="text-lg">{subCommunity.stats.collectionCount}</p> */}
+                                                    <p className="text-lg">10</p>
+                                                    <p className="text-muted-foreground text-xs">Collections</p>
+                                                </div>
+                                                <div>
+                                                    {/* <p className="text-lg">{subCommunity.stats.totalItems}</p> */}
+                                                    <p className="text-lg">200</p>
+                                                    <p className="text-muted-foreground text-xs">Items</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center space-x-2 text-sm">
+                                                <Shield className="w-4 h-4" />
+                                                {subCommunity.protocols && subCommunity.protocols.length > 0 && (
+                                                    <Badge variant="outline" className={getProtocolColor(subCommunity.protocols[0])}>
+                                                        {formatProtocolText(subCommunity.protocols[0])}
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                        </div>
+                                        {/* <Button
+                      className="w-full mt-4"
+                      variant="outline"
+                      onClick={() => onSubCommunitySelect?.(subCommunity.id)}
+                    >
+                      Enter Sub-Community
+                    </Button> */}
+                                    </CardContent>
+                                </Card>
+                            )}
+                        </div>
+
+                    </div>
+
+
                 </TabsContent>
 
 
