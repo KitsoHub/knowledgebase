@@ -67,21 +67,7 @@ export interface CommunityIdentity {
 }
 
 
-export interface Community {
-  id: string;
-  identity: Partial<CommunityIdentity>;
-  members: Person[];
-  knowledgeItems: KnowledgeItem[];
-  protocols: CulturalProtocol[];
-  stats: {
-    totalItems: number;
-    publicItems: number;
-    restrictedItems: number;
-    memberCount: number;
-    collectionCount: number;
-    subCommunityCount: number;
-  };
-}
+
 
 // Zustand Store Types
 export interface CommunityCreationState {
@@ -103,14 +89,6 @@ export interface TKLabelState {
   updateUsage: (label: TKLabel, count: number) => void;
 }
 
-export interface AppState {
-  currentCommunity: Community | null;
-  user: Person | null;
-  darkMode: boolean;
-  setCurrentCommunity: (community: Community | null) => void;
-  setUser: (user: Person | null) => void;
-  toggleDarkMode: () => void;
-}
 
 
 export interface SubCommunityData {
@@ -156,4 +134,30 @@ export interface Collection {
   parentCollectionId?: string;
   createdAt: Date;
   updatedAt: Date;
+}
+export interface Community {
+  id: string;
+  identity: Partial<CommunityIdentity>;
+  members: Person[];
+  knowledgeItems: KnowledgeItem[];
+  protocols: CulturalProtocol[];
+  collections?: Collection[];
+  subCommunities?: SubCommunityData[];
+  stats: {
+    totalItems: number;
+    publicItems: number;
+    restrictedItems: number;
+    memberCount: number;
+    collectionCount: number;
+    subCommunityCount: number;
+  };
+}
+
+export interface AppState {
+  currentCommunity: Community | null;
+  user: Person | null;
+  darkMode: boolean;
+  setCurrentCommunity: (community: Community | null) => void;
+  setUser: (user: Person | null) => void;
+  toggleDarkMode: () => void;
 }

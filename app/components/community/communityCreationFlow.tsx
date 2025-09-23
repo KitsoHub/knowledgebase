@@ -9,8 +9,9 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import { Label } from '../ui/label';
-import { CommunityGovernance, CulturalProtocol } from '@/lib/types/community';
+
 import { useCommunityStore } from '@/lib/store/communityStore';
+import { CommunityGovernance, CulturalProtocol } from '@/lib/constants/community';
 
 export default function CommunityCreationFlow() {
     const {
@@ -465,6 +466,8 @@ export default function CommunityCreationFlow() {
                   publicItems: 0,
                   restrictedItems: 0,
                   memberCount: 0,
+                  collectionCount: 0,
+                  subCommunityCount: 0,
                 },
               };
 
