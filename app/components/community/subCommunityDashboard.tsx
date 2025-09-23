@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from '../ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Badge } from '../ui/badge';
 import { Label } from '../ui/label';
+import CollectionCreationFlow from './collectionCreationFlow';
 
 
 interface SubCommunityDashboardProps {
@@ -225,7 +226,7 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
                                         Create a new thematic collection for this sub-community
                                     </DialogDescription>
                                 </DialogHeader>
-                                {/* <CollectionCreationFlow onComplete={() => setShowCollectionDialog(false)} onCancel={() => setShowCollectionDialog(false)} /> */}
+                                <CollectionCreationFlow onComplete={() => setShowCollectionDialog(false)} onCancel={() => setShowCollectionDialog(false)} />
                             </DialogContent>
                         </Dialog>
 

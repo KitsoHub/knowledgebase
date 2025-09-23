@@ -1,9 +1,10 @@
 export enum CommunityGovernanceSteps {
-    BASIC = 'BASIC',
-    AUTHORITY = 'AUTHORITY',
-    PROTOCOLS = 'PROTOCOLS',
-    REVIEW = 'REVIEW'
+  BASIC = 'BASIC',
+  AUTHORITY = 'AUTHORITY',
+  PROTOCOLS = 'PROTOCOLS',
+  REVIEW = 'REVIEW'
 }
+
 export enum CommunityGovernance {
   INDIGENOUS_COUNCIL = 'INDIGENOUS_COUNCIL',
   ELDER_COUNCIL = 'ELDER_COUNCIL',
@@ -32,13 +33,28 @@ export enum LicensingOption {
   ALL_RIGHTS_RESERVED = 'ALL_RIGHTS_RESERVED'
 }
 
-  export const steps = [
-    CommunityGovernanceSteps.BASIC,
-    CommunityGovernanceSteps.AUTHORITY,
-    CommunityGovernanceSteps.PROTOCOLS,
-    CommunityGovernanceSteps.REVIEW
-  ];
+export const steps = [
+  CommunityGovernanceSteps.BASIC,
+  CommunityGovernanceSteps.AUTHORITY,
+  CommunityGovernanceSteps.PROTOCOLS,
+  CommunityGovernanceSteps.REVIEW
+];
 
+export enum CollectionGovernanceSteps {
+  BASIC = 'BASIC',
+  METADATA = 'METADATA',
+  CURATION = 'CURATION',
+  PROTOCOLS = 'PROTOCOLS',
+  REVIEW = 'REVIEW'
+}
+
+export const stepsCollection = [
+  CollectionGovernanceSteps.BASIC,
+  CollectionGovernanceSteps.METADATA,
+  CollectionGovernanceSteps.CURATION,
+  CollectionGovernanceSteps.PROTOCOLS,
+  CollectionGovernanceSteps.REVIEW
+];
 
 export enum CollectionType {
   EVENTS = 'EVENTS',
@@ -49,3 +65,27 @@ export enum CollectionType {
   ARTIFACTS = 'ARTIFACTS',
   CEREMONIES = 'CEREMONIES'
 }
+
+export const collectionTypeOptions = [
+  { value: CollectionType.EVENTS, label: "Events", description: "Historical events and occurrences" },
+  { value: CollectionType.CULTURAL_PRACTICE, label: "Cultural Practice", description: "Traditional practices and customs" },
+  { value: CollectionType.RITUAL, label: "Ritual", description: "Ceremonial and spiritual practices" },
+  { value: CollectionType.ORAL_HISTORY, label: "Oral History", description: "Stories and spoken traditions" },
+  { value: CollectionType.TRADITIONAL_KNOWLEDGE, label: "Traditional Knowledge", description: "Indigenous knowledge systems" },
+  { value: CollectionType.ARTIFACTS, label: "Artifacts", description: "Cultural objects and materials" },
+  { value: CollectionType.CEREMONIES, label: "Ceremonies", description: "Formal cultural ceremonies" }
+];
+
+  export const tkLabelOptions = [
+    { label: TKLabel.SECRET_SACRED, title: "Secret/Sacred", description: "Requires highest protection" },
+    { label: TKLabel.CULTURAL_INFLUENCE, title: "Cultural Influence", description: "May influence cultural understanding" },
+    { label: TKLabel.WOMEN_S_ONLY, title: "Women's Knowledge", description: "Specific to women's traditions" },
+    { label: TKLabel.MEN_S_ONLY, title: "Men's Knowledge", description: "Specific to men's traditions" }
+  ];
+
+    export const protocolOptions = [
+    { value: CulturalProtocol.PUBLIC, title: "Public", description: "Openly accessible to all" },
+    { value: CulturalProtocol.COMMUNITY_ONLY, title: "Community Only", description: "Restricted to community members" },
+    { value: CulturalProtocol.ELDER_APPROVAL_REQUIRED, title: "Elder Approval Required", description: "Requires elder council approval" },
+    { value: CulturalProtocol.GENDER_RESTRICTED, title: "Gender Restricted", description: "Limited by traditional gender protocols" }
+  ];
