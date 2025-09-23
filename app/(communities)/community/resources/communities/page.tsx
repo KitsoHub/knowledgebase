@@ -3,9 +3,11 @@ import CommunityCreationFlow from '@/app/components/community/communityCreationF
 import CommunityDashboard from '@/app/components/community/communityDashboard';
 import { CommunityDirectory } from '@/app/components/community/communityDirectory';
 import SubCommunityCreationFlow from '@/app/components/community/subCommunityCreationFlow';
+import SubCommunityDashboard from '@/app/components/community/subCommunityDashboard';
 import { Alert, AlertDescription } from '@/app/components/ui/alert'
 import { Button } from '@/app/components/ui/button';
 import { useCommunityStore } from '@/lib/store/communityStore';
+import { SubCommunityData } from '@/lib/types/community';
 import { BookOpen, Info, Plus } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
@@ -13,6 +15,7 @@ export default function CommunityPage() {
   const [currentView, setCurrentView] = useState('directory');
   const [showCreateCommunity, setShowCreateCommunity] = useState(false);
   const [showCreateSubCommunity, setShowCreateSubCommunity] = useState(false);
+  const [currentSubCommunity, setCurrentSubCommunity] = useState<SubCommunityData | null>(null);
 
   if (showCreateSubCommunity) {
     return (
@@ -23,6 +26,11 @@ export default function CommunityPage() {
       />
     )
   }
+
+    const handleBackToMain = () => {
+    setCurrentSubCommunity(null);
+    setCurrentView('community-dashboard');
+  };
 
 
   const renderCurrentView = () => {
@@ -37,6 +45,10 @@ export default function CommunityPage() {
         return <CommunityDashboard onNavigate={setCurrentView}
           onCreateSubCommunity={() => setShowCreateSubCommunity(true)}
         />;
+      case 'sub-community-dashboard':
+        return <SubCommunityDashboard
+        onBack={handleBackToMain}
+         onNavigate={setCurrentView} />
       // case 'knowledge':
       //   return <KnowledgeBaseView />;
       // case 'contribute':

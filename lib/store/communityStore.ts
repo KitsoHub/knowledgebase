@@ -1,7 +1,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Community } from "@/lib/types/community";
+import { Community, SubCommunityData } from "@/lib/types/community";
 import { mockCommunities } from "@/app/utils/mock/communitiesData";
 import { CulturalProtocol, TKLabel } from "../constants/community";
 
@@ -15,20 +15,12 @@ interface CommunityStore {
   setCurrentCommunity: (community: Community | null) => void;
 }
 
-interface SubCommunity {
-  title: string;
-  description: string;
-  indigenousAuthorityId: string;
-  custodianIds?: string[];
-  localContextLabels: TKLabel[];
-  geographicRegion: string;
-  communityIdentifier: string;
-  protocols: CulturalProtocol[];
-}
-
 interface SubCommunityStore {
-  subCommunity: Partial<SubCommunity> | null;
-  addSubCommunity: (community: Partial<SubCommunity> | null) => void;
+  // to update to capture multiple sub communities
+  subCommunity: Partial<SubCommunityData> | null;
+  addSubCommunity: (community: Partial<SubCommunityData> | null) => void;
+  currentSubCommunity: Partial<SubCommunityData> | null;
+  setCurrentSubCommunity:(community: Partial<SubCommunityData> | null) => void;
 }
 
 export const useCommunityStore = create<CommunityStore>()(
@@ -49,10 +41,7 @@ export const useCommunityStore = create<CommunityStore>()(
       setCurrentCommunity: (community) => set({ currentCommunity: community }),
 
     }),
-
-    {
-      name: "community-store-a00001",
-    }
+    { name: "community-store-a00001",}
   )
 );
 
@@ -60,9 +49,12 @@ export const useSubCommunityStore = create<SubCommunityStore>()(
   persist(
   (set) => ({
     subCommunity: null,
+    currentSubCommunity: null,
     addSubCommunity: (community) =>
       set(() => ({
         subCommunity: community,
       })),
+
+      setCurrentSubCommunity:(community) => set({currentSubCommunity:community})
   }), { name: "sub-community-store-a00001", })
 );

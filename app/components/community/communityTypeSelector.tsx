@@ -1,8 +1,9 @@
 
 import { Crown, Users, TreePine } from "lucide-react";
-import { CommunityGovernance } from "@/lib/types/community";
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
+import { CommunityGovernance } from "@/lib/constants/community";
 
 interface CommunityTypeSelectorProps {
   selectedType: CommunityGovernance | null;

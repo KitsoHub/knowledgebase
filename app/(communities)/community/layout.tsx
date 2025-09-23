@@ -31,7 +31,7 @@ export default function CommunityLayout({ children }: CommunityLayoutProps) {
                                     {/* Main content */}
                                     <main className="flex-1 h-full overflow-y-auto p-4 ">{children}</main>
                                     <footer className="bg-white dark:bg-gray-900 p-4 text-center text-sm text-gray-500 dark:text-gray-400 w-full">
-                                        © {new Date().getFullYear()} Financial Regulatory Portal | Version 1.0.0
+                                        © {new Date().getFullYear()} IKMS | Version 1.0.0
                                     </footer>
 
                                 </CommunityBase>

@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import CommunityCreationFlow from './communityCreationFlow';
 import SubCommunityCreationFlow from './subCommunityCreationFlow';
 import { CommunityGovernance } from '@/lib/constants/community';
+import { SubCommunityData } from '@/lib/types/community';
 
 
 interface CommunityDashboardProps {
@@ -21,7 +22,7 @@ interface CommunityDashboardProps {
 }
 export default function communityDashboard({ onNavigate, onCreateSubCommunity }: CommunityDashboardProps) {
     const { currentCommunity } = useCommunityStore();
-    const { subCommunity } = useSubCommunityStore();
+    const { subCommunity, setCurrentSubCommunity } = useSubCommunityStore();
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showEditCommunity, setShowEditCommunity] = useState(false);
     const [showSubCommunityCreation, setShowSubCommunityCreation] = useState(false);
@@ -52,6 +53,11 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
     const handleExportCommunity = () => {
         console.log("Export full data for community:", currentCommunity.id);
     }
+
+    const handleViewSubCommunity = (community: Partial<SubCommunityData>) => {
+        setCurrentSubCommunity(community);
+        onNavigate?.('sub-community-dashboard');
+      };
 
     const getGovernanceIcon = (model: CommunityGovernance) => {
         switch (model) {
@@ -444,6 +450,9 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
                                                     </Badge>
                                                 )}
                                             </div>
+                                            <Button className="w-full" variant="outline" onClick={() => handleViewSubCommunity(subCommunity)}>
+                                                View Community
+                                            </Button>
                                         </div>
                                         {/* <Button
                       className="w-full mt-4"

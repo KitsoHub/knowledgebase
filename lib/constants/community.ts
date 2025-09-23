@@ -38,3 +38,14 @@ export enum LicensingOption {
     CommunityGovernanceSteps.PROTOCOLS,
     CommunityGovernanceSteps.REVIEW
   ];
+
+
+export enum CollectionType {
+  EVENTS = 'EVENTS',
+  CULTURAL_PRACTICE = 'CULTURAL_PRACTICE',
+  RITUAL = 'RITUAL',
+  ORAL_HISTORY = 'ORAL_HISTORY',
+  TRADITIONAL_KNOWLEDGE = 'TRADITIONAL_KNOWLEDGE',
+  ARTIFACTS = 'ARTIFACTS',
+  CEREMONIES = 'CEREMONIES'
+}

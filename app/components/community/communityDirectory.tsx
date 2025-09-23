@@ -22,6 +22,7 @@ export function CommunityDirectory({onNavigate}:CommunityDirectoryProps) {
   const [showFilters, setShowFilters] = useState(false);
   const { communities, setCurrentCommunity } = useCommunityStore();
 
+
   const governanceIcons = {
     [CommunityGovernance.ELDER_COUNCIL]: Crown,
     [CommunityGovernance.INDIGENOUS_COUNCIL]: Users,

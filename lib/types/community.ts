@@ -1,7 +1,7 @@
 //import { collection } from 'firebase/firestore';
 // Core Types for Indigenous Knowledge Portal
 
-import { CommunityGovernance, CulturalProtocol, LicensingOption, TKLabel } from "../constants/community";
+import { CollectionType, CommunityGovernance, CulturalProtocol, LicensingOption, TKLabel } from "../constants/community";
 
 
 
@@ -116,10 +116,44 @@ export interface AppState {
 export interface SubCommunityData {
   title: string;
   description: string;
-  indigenousAuthorityId: string;
+  indigenousAuthority: Person;
   custodianIds: string[];
   localContextLabels: TKLabel[];
   geographicRegion: string;
   communityIdentifier: string;
   protocols: CulturalProtocol[];
+  collections?: Collection[];
+  members: Person[];
+  establishedDate: Date;
+  stats:{
+    totalItems: number;
+    publicItems: number;
+    restrictedItems: number;
+    memberCount: number;
+    collectionCount: number;
+  }
+}
+
+
+export interface Collection {
+  id: string;
+  title: string;
+  collectionType: CollectionType;
+  description: string;
+  curator: Person;
+  contributors: Person[];
+  dateRange: {
+    startDate: Date;
+    endDate?: Date;
+  };
+  subjects: string[];
+  keywords: string[];
+  relatedCollections: string[];
+  rightsProtocols: CulturalProtocol[];
+  tkLabels: TKLabel[];
+  knowledgeItems: KnowledgeItem[];
+  communityId: string;
+  parentCollectionId?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
