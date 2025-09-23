@@ -257,205 +257,205 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
                     <TabsTrigger value="governance">Governance</TabsTrigger>
                 </TabsList>
 
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Indigenous Authority</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
-                    <Crown className="w-5 h-5 text-secondary" />
-                  </div>
-                  <div>
-                    {/* <p className="font-medium">{subCommunity.indigenousAuthority.name}</p>
+                <TabsContent value="overview" className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Indigenous Authority</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-3">
+                                <div className="flex items-center space-x-3">
+                                    <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
+                                        <Crown className="w-5 h-5 text-secondary" />
+                                    </div>
+                                    <div>
+                                        {/* <p className="font-medium">{subCommunity.indigenousAuthority.name}</p>
                     <p className="text-sm text-muted-foreground font-cultural">
                       {subCommunity.indigenousAuthority.culturalTitle}
                     </p> */}
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Responsible for maintaining cultural protocols and community governance.
-                </p>
-              </CardContent>
-            </Card>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                    Responsible for maintaining cultural protocols and community governance.
+                                </p>
+                            </CardContent>
+                        </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Geographic Context</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4 text-muted-foreground" />
-                  <span>{currentCommunity?.identity.region}</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Users className="w-4 h-4 text-muted-foreground" />
-                  <span>Community ID: {currentCommunity?.id}</span>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  This sub-community represents specific cultural and geographic traditions within the larger community.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Geographic Context</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-3">
+                                <div className="flex items-center space-x-2">
+                                    <MapPin className="w-4 h-4 text-muted-foreground" />
+                                    <span>{currentCommunity?.identity.region}</span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <Users className="w-4 h-4 text-muted-foreground" />
+                                    <span>Community ID: {currentCommunity?.id}</span>
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                    This sub-community represents specific cultural and geographic traditions within the larger community.
+                                </p>
+                            </CardContent>
+                        </Card>
+                    </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>TK Labels & Protocols</CardTitle>
-              <CardDescription>
-                Traditional Knowledge labels and cultural protocols in use
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium mb-2">Local Context Labels</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {currentSubCommunity?.localContextLabels?.map((label) => (
-                      <Badge key={label} variant="outline" className="tk-cultural">
-                        {label.replace(/_/g, ' ')}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium mb-2">Access Protocols</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {currentSubCommunity?.protocols?.map((protocol) => (
-                      <Badge key={protocol} className={getProtocolColor(protocol)}>
-                        {formatProtocolText(protocol)}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>TK Labels & Protocols</CardTitle>
+                            <CardDescription>
+                                Traditional Knowledge labels and cultural protocols in use
+                            </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-4">
+                                <div>
+                                    <h4 className="font-medium mb-2">Local Context Labels</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {currentSubCommunity?.localContextLabels?.map((label) => (
+                                            <Badge key={label} variant="outline" className="tk-cultural">
+                                                {label.replace(/_/g, ' ')}
+                                            </Badge>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="font-medium mb-2">Access Protocols</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {currentSubCommunity?.protocols?.map((protocol) => (
+                                            <Badge key={protocol} className={getProtocolColor(protocol)}>
+                                                {formatProtocolText(protocol)}
+                                            </Badge>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
 
                 <TabsContent value="knowledge" className="space-y-6">
-          {/* Collections Section */}
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3>Collections</h3>
-              <Button onClick={() => setShowCollectionDialog(true)}>
-                <Plus className="w-4 h-4 mr-2" />
-                Create Collection
-              </Button>
-            </div>
+                    {/* Collections Section */}
+                    <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                            <h3>Collections</h3>
+                            <Button onClick={() => setShowCollectionDialog(true)}>
+                                <Plus className="w-4 h-4 mr-2" />
+                                Create Collection
+                            </Button>
+                        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              { (currentSubCommunity?.collections?.length ?? 0) > 0 ? (
-                currentSubCommunity?.collections?.map((collection) => (
-                  <Card key={collection.id} className="hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <CardTitle className="text-lg">{collection.title}</CardTitle>
-                      <CardDescription>{collection.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-3">
-                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                          <Database className="w-4 h-4" />
-                          <span>{collection.collectionType.replace(/_/g, ' ')}</span>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {(currentSubCommunity?.collections?.length ?? 0) > 0 ? (
+                                currentSubCommunity?.collections?.map((collection) => (
+                                    <Card key={collection.id} className="hover:shadow-lg transition-shadow">
+                                        <CardHeader>
+                                            <CardTitle className="text-lg">{collection.title}</CardTitle>
+                                            <CardDescription>{collection.description}</CardDescription>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="space-y-3">
+                                                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                                    <Database className="w-4 h-4" />
+                                                    <span>{collection.collectionType.replace(/_/g, ' ')}</span>
+                                                </div>
+                                                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                                    <Users className="w-4 h-4" />
+                                                    <span>Curator: {collection.curator.name}</span>
+                                                </div>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {collection.subjects.slice(0, 3).map((subject, index) => (
+                                                        <Badge key={index} variant="secondary" className="text-xs">
+                                                            {subject}
+                                                        </Badge>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <Button className="w-full mt-4" variant="outline">
+                                                <FolderOpen className="w-4 h-4 mr-2" />
+                                                View Collection
+                                            </Button>
+                                        </CardContent>
+                                    </Card>
+                                ))
+                            ) : (
+                                <Card className="col-span-full">
+                                    <CardContent className="p-8 text-center">
+                                        <Database className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                                        <h3 className="text-lg mb-2">No Collections Yet</h3>
+                                        <p className="text-muted-foreground mb-4">
+                                            Start organizing knowledge by creating your first collection.
+                                        </p>
+                                        <Button onClick={() => setShowCollectionDialog(true)}>
+                                            <Plus className="w-4 h-4 mr-2" />
+                                            Create First Collection
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            )}
                         </div>
-                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                          <Users className="w-4 h-4" />
-                          <span>Curator: {collection.curator.name}</span>
-                        </div>
-                        <div className="flex flex-wrap gap-1">
-                          {collection.subjects.slice(0, 3).map((subject, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              {subject}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <Button className="w-full mt-4" variant="outline">
-                        <FolderOpen className="w-4 h-4 mr-2" />
-                        View Collection
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))
-              ) : (
-                <Card className="col-span-full">
-                  <CardContent className="p-8 text-center">
-                    <Database className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg mb-2">No Collections Yet</h3>
-                    <p className="text-muted-foreground mb-4">
-                      Start organizing knowledge by creating your first collection.
-                    </p>
-                    <Button onClick={() => setShowCollectionDialog(true)}>
-                      <Plus className="w-4 h-4 mr-2" />
-                      Create First Collection
-                    </Button>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
-        </TabsContent>
+                    </div>
+                </TabsContent>
 
                 <TabsContent value="members" className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h3>Sub-Community Members</h3>
-            <Button>
-              <UserPlus className="w-4 h-4 mr-2" />
-              Invite Members
-            </Button>
-          </div>
-
-          <Card>
-            <CardContent className="p-8 text-center">
-              <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-lg mb-2">Member management coming soon</h3>
-              <p className="text-muted-foreground">
-                This feature will allow you to manage sub-community membership and roles.
-              </p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="governance" className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Authority Structure</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <Label className="text-sm font-medium">Indigenous Authority</Label>
-                    <p className="text-sm">{currentSubCommunity?.indigenousAuthority?.name}</p>
-                    <p className="text-xs text-muted-foreground">{currentSubCommunity?.indigenousAuthority?.culturalTitle}</p>
-                  </div>
-                  <div>
-                    <Label className="text-sm font-medium">Parent Community</Label>
-                    <p className="text-sm">{currentCommunity?.identity.title}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Cultural Protocols</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {currentCommunity?.protocols?.map((protocol) => (
-                    <div key={protocol} className="flex items-center space-x-2">
-                      <Shield className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-sm">{formatProtocolText(protocol)}</span>
+                    <div className="flex justify-between items-center">
+                        <h3>Sub-Community Members</h3>
+                        <Button>
+                            <UserPlus className="w-4 h-4 mr-2" />
+                            Invite Members
+                        </Button>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
+
+                    <Card>
+                        <CardContent className="p-8 text-center">
+                            <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                            <h3 className="text-lg mb-2">Member management coming soon</h3>
+                            <p className="text-muted-foreground">
+                                This feature will allow you to manage sub-community membership and roles.
+                            </p>
+                        </CardContent>
+                    </Card>
+                </TabsContent>
+
+                <TabsContent value="governance" className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Authority Structure</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="space-y-4">
+                                    <div>
+                                        <Label className="text-sm font-medium">Indigenous Authority</Label>
+                                        <p className="text-sm">{currentSubCommunity?.indigenousAuthority?.name}</p>
+                                        <p className="text-xs text-muted-foreground">{currentSubCommunity?.indigenousAuthority?.culturalTitle}</p>
+                                    </div>
+                                    <div>
+                                        <Label className="text-sm font-medium">Parent Community</Label>
+                                        <p className="text-sm">{currentCommunity?.identity.title}</p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Cultural Protocols</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="space-y-3">
+                                    {currentCommunity?.protocols?.map((protocol) => (
+                                        <div key={protocol} className="flex items-center space-x-2">
+                                            <Shield className="w-4 h-4 text-muted-foreground" />
+                                            <span className="text-sm">{formatProtocolText(protocol)}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </TabsContent>
             </Tabs>
 
         </div>

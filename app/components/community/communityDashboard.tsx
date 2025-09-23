@@ -419,7 +419,7 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
                                         <div className="space-y-3">
                                             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                                                 <Crown className="w-4 h-4" />
-                                                <span>Authority: {subCommunity.indigenousAuthorityId}</span>
+                                                <span>Authority: {subCommunity.indigenousAuthority?.name || currentCommunity.identity.leadership?.primaryContact.name}</span>
                                             </div>
                                             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                                                 <MapPin className="w-4 h-4" />
