@@ -90,6 +90,11 @@ export function AppSidebar() {
                     <Link href="/community/admin"><ShieldBanIcon /><span>AdminOverview</span></Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
+                  <SidebarMenuItem>
+                  <SidebarMenuButton asChild isActive={pathname === "/community/maps"} tooltip="Maps">
+                    <Link href="/community/maps"><ShieldBanIcon /><span>HeritageMaps</span></Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild isActive={pathname === "/communities"} tooltip="Communities">
                     <Link href="/community/resources/communities"><Briefcase /><span>Communities & Collections</span></Link>
