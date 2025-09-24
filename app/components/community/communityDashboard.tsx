@@ -21,8 +21,7 @@ interface CommunityDashboardProps {
     onCreateSubCommunity?: () => void;
 }
 export default function communityDashboard({ onNavigate, onCreateSubCommunity }: CommunityDashboardProps) {
-    const { currentCommunity, setCurrentCommunity } = useCommunityStore();
-    const { setCurrentSubCommunity } = useSubCommunityStore();
+    const { currentCommunity, setCurrentCommunity, setCurrentSubCommunity  } = useCommunityStore();
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showEditCommunity, setShowEditCommunity] = useState(false);
     const [showSubCommunityCreation, setShowSubCommunityCreation] = useState(false);

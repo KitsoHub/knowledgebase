@@ -20,8 +20,7 @@ interface SubCommunityDashboardProps {
 
 export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommunityDashboardProps) {
     const [activeTab, setActiveTab] = useState('overview');
-    const { currentCommunity } = useCommunityStore();
-    const { currentSubCommunity } = useSubCommunityStore();
+    const { currentCommunity, currentSubCommunity } = useCommunityStore();
     const [showContributeDialog, setShowContributeDialog] = useState(false);
     const [showCollectionDialog, setShowCollectionDialog] = useState(false);
 
@@ -228,7 +227,7 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
                                         Create a new thematic collection for this sub-community
                                     </DialogDescription>
                                 </DialogHeader>
-                                <CollectionCreationFlow onComplete={() => setShowCollectionDialog(false)} onCancel={() => setShowCollectionDialog(false)} />
+                                <CollectionCreationFlow parentCommunity={currentSubCommunity ? currentSubCommunity : null } onComplete={() => setShowCollectionDialog(false)} onCancel={() => setShowCollectionDialog(false)} />
                             </DialogContent>
                         </Dialog>
 

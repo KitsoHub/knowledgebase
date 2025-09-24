@@ -103,12 +103,12 @@ export interface SubCommunityData {
   collections?: Partial<Collection>[];
   members: Person[];
   establishedDate: Date;
-  stats:{
-    totalItems: number;
-    publicItems: number;
-    restrictedItems: number;
-    memberCount: number;
-    collectionCount: number;
+  stats?:{
+    totalItems?: number;
+    publicItems?: number;
+    restrictedItems?: number;
+    memberCount?: number;
+    collectionCount?: number;
   }
 }
 

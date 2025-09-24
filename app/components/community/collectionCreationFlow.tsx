@@ -1,7 +1,7 @@
 import { CollectionGovernanceSteps, CollectionType, collectionTypeOptions, CommunityGovernanceSteps, CulturalProtocol, protocolOptions, steps, stepsCollection, TKLabel, tkLabelOptions } from '@/lib/constants/community';
 import { useAppStore } from '@/lib/store/appStore';
-import { useCommunityStore, useSubCommunityStore } from '@/lib/store/communityStore';
-import { Collection } from '@/lib/types/community';
+import { SubCommunityWithCollections, useCommunityStore, useSubCommunityStore } from '@/lib/store/communityStore';
+import { Collection, SubCommunityData } from '@/lib/types/community';
 import { useCommandState } from 'cmdk';
 import { ArrowLeft, CheckCircle, Database, X } from 'lucide-react';
 import React, { useState } from 'react'
@@ -14,25 +14,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Checkbox } from '../ui/checkbox';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { useCollectionStore } from '@/lib/store/collectionStore';
 
 
 interface CollectionCreationFlowProps {
   onComplete?: () => void;
   onCancel?: () => void;
+  parentCommunity?: Partial<SubCommunityData> | null ;
 }
 
-export default function CollectionCreationFlow({ onComplete, onCancel }: CollectionCreationFlowProps) {
+export default function CollectionCreationFlow({ onComplete, onCancel,parentCommunity }: CollectionCreationFlowProps) {
 
   //get the communityID, parentCollectionId
-  const { currentCommunity } = useCommunityStore();
+  const { currentCommunity, addCollectionMetaData } = useCommunityStore();
   // const {addCollectionMetaData}=useCollectionStore();
-  const { addCollectionMetadata, updateCollectionMetadata } = useSubCommunityStore();
+  // const { addCollectionMetadata, updateCollectionMetadata } = useSubCommunityStore();
   const { user } = useAppStore();
   const [step, setStep] = useState<CollectionGovernanceSteps>(CollectionGovernanceSteps.BASIC)
   const [collectionData, setCollectionData] = useState<Partial<Collection>>(
     {
-
+      collectionMetadataIdentifier:'',
       title: '',
       collectionType: collectionTypeOptions[0].value,
       description: '',
@@ -116,7 +116,10 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
     // alert(`Collection create successfully! ${collectionData.collectionMetadataIdentifier}${collectionData.title}`);
     // TODO:addCollectionData -> store
     // addCollectionMetaData(collectionData);
-    addCollectionMetadata(collectionData);
+    currentCommunity?.collections
+    parentCommunity?.communityIdentifier
+
+    addCollectionMetaData(collectionData, parentCommunity?.communityIdentifier?.toString() || '');
     //updateCollectionMetadata(collectionData);
 
     onComplete?.();
@@ -130,7 +133,8 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
             <div className="text-center mb-6">
               <h3 className="text-xl mb-2">Basic Information</h3>
               <p className="text-muted-foreground">Define the core details of your collection</p>
-              <p className='text-muted-foreground'>{currentCommunity?.communityIdentifier}</p>
+              <p className='text-muted-foreground'>CommunityID: {currentCommunity?.communityIdentifier}</p>
+              <p className='text-muted-foreground'>Parent: {parentCommunity?.communityIdentifier}</p>
             </div>
 
             <div className="space-y-4">

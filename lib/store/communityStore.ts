@@ -9,15 +9,18 @@ import { CulturalProtocol, TKLabel } from "../constants/community";
 
 interface CommunityStore {
   currentCommunity: Community | null;
+  currentSubCommunity: Partial<SubCommunityData>  | null;
   communities: Community[];
   addCommunity: (community: Community) => void;
   removeCommunity: (id: string) => void;
   reset: () => void;
   setCurrentCommunity: (community: Community | null) => void;
   addSubCommunity: (subCommunity: Partial<SubCommunityData>, id: string)=>void;
+  setCurrentSubCommunity: (community: Partial<SubCommunityData> | null) => void;
+  addCollectionMetaData: (collection: Partial<Collection>, subCommunityId: string) => void;
 }
 
-type SubCommunityWithCollections = Partial<SubCommunityData> & {
+export type SubCommunityWithCollections = Partial<SubCommunityData> & {
   collections: Partial<Collection>[];
 };
 // interface SubCommunityWithCollections extends Partial<SubCommunityData> {
@@ -43,6 +46,7 @@ export const useCommunityStore = create<CommunityStore>()(
   persist(
     (set,get) => ({
       currentCommunity: null,
+      currentSubCommunity:null,
       communities: mockCommunities,
       addCommunity: (community) =>
 
@@ -75,6 +79,55 @@ export const useCommunityStore = create<CommunityStore>()(
           currentCommunity: get().currentCommunity?.communityIdentifier === id
           ? updatedCommunities.find((c)=> c.communityIdentifier === id) || null: get().currentCommunity,
         });
+      },
+
+      setCurrentSubCommunity: (community) =>{
+        if(!community){
+          set({
+            currentSubCommunity: null
+          });
+          return;
+        }
+        const { communities }= get();
+        const found  = communities.flatMap(
+          (c)=> c.subCommunities ?? []
+        )
+        .find((sc)=> sc?.communityIdentifier === community.communityIdentifier) || null;
+        set({currentSubCommunity: found})
+      },
+
+      // Collection
+      addCollectionMetaData:(collection,subCommunityId)=> {
+
+        //get the community by, get the subcommunity by id
+        // add the new collection
+        // console.error("Collection", collection?.title);
+        // console.error("Sub Community Parend ID",id);
+
+        const { communities }= get();
+        const updatedCommunities = communities.map((c)=>({
+            ...c,
+            subCommunities: (c.subCommunities ?? []).map((sc)=>
+            sc.communityIdentifier === subCommunityId
+          ? {
+            ...sc,
+            collections: [...(sc.collections ?? []), collection],
+            stats:{
+              ...sc.stats,
+              collectionCount:(sc.collections?.length ?? 0) +1,
+            }
+          }: sc)
+          })
+        );
+
+        const updatedSubCommunity = updatedCommunities.flatMap((c) => c.subCommunities ?? []).find(
+          (sc)=> sc.communityIdentifier === subCommunityId) || null;
+
+        set({
+            communities: updatedCommunities,
+            currentSubCommunity: updatedSubCommunity,
+        });
+
       },
 
     }),
