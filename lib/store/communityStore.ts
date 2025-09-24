@@ -10,14 +10,17 @@ import { CulturalProtocol, TKLabel } from "../constants/community";
 interface CommunityStore {
   currentCommunity: Community | null;
   currentSubCommunity: Partial<SubCommunityData>  | null;
+  currentCollection: Partial<Collection> | null;
+
   communities: Community[];
   addCommunity: (community: Community) => void;
   removeCommunity: (id: string) => void;
   reset: () => void;
-  setCurrentCommunity: (community: Community | null) => void;
   addSubCommunity: (subCommunity: Partial<SubCommunityData>, id: string)=>void;
-  setCurrentSubCommunity: (community: Partial<SubCommunityData> | null) => void;
   addCollectionMetaData: (collection: Partial<Collection>, subCommunityId: string) => void;
+  setCurrentCommunity: (community: Community | null) => void;
+  setCurrentSubCommunity: (community: Partial<SubCommunityData> | null) => void;
+  setCurrentCollectionMetaData: (collection: Partial<Collection> | null) => void;
 }
 
 export type SubCommunityWithCollections = Partial<SubCommunityData> & {
@@ -47,6 +50,7 @@ export const useCommunityStore = create<CommunityStore>()(
     (set,get) => ({
       currentCommunity: null,
       currentSubCommunity:null,
+      currentCollection: null,
       communities: mockCommunities,
       addCommunity: (community) =>
 
@@ -130,6 +134,10 @@ export const useCommunityStore = create<CommunityStore>()(
 
       },
 
+      setCurrentCollectionMetaData: (collection) => {
+        set({ currentCollection: collection });
+      },
+
     }),
     { name: "community-store-a00001a", }
   )
@@ -171,7 +179,7 @@ export const useSubCommunityStore = create<SubCommunityStore>()(
            const { currentSubCommunity, subCommunities } = get();
             const state = get();
 
-          console.error(">>>>> C: Id >>>>>>>>>", state.currentSubCommunity?.title)
+          // console.error(">>>>> C: Id >>>>>>>>>", state.currentSubCommunity?.title)
 
 
            if(!currentSubCommunity?.communityIdentifier) return;
@@ -180,7 +188,7 @@ export const useSubCommunityStore = create<SubCommunityStore>()(
           (sc)=> sc.communityIdentifier === currentSubCommunity.communityIdentifier
         ) || null;
 
-          console.error(">>>>> SC: Id >>>>>>>>>", found?.communityIdentifier)
+          // console.error(">>>>> SC: Id >>>>>>>>>", found?.communityIdentifier)
 
 
 

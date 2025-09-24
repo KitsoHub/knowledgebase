@@ -1,4 +1,5 @@
 "use client"
+import CollectionDashboard from '@/app/components/community/collectionDashboard';
 import CommunityCreationFlow from '@/app/components/community/communityCreationFlow';
 import CommunityDashboard from '@/app/components/community/communityDashboard';
 import { CommunityDirectory } from '@/app/components/community/communityDirectory';
@@ -52,6 +53,13 @@ export default function CommunityPage() {
         return <SubCommunityDashboard
         onBack={handleBackToMain}
          onNavigate={setCurrentView} />
+
+      case 'collection-dashboard':
+        return <CollectionDashboard
+         onBack={handleBackToMain}
+        onNavigate={setCurrentView}
+
+        />
       // case 'knowledge':
       //   return <KnowledgeBaseView />;
       // case 'contribute':

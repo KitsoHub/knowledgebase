@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { Badge } from '../ui/badge';
 import { Label } from '../ui/label';
 import CollectionCreationFlow from './collectionCreationFlow';
+import { Collection } from '@/lib/types/community';
 
 
 interface SubCommunityDashboardProps {
@@ -20,7 +21,7 @@ interface SubCommunityDashboardProps {
 
 export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommunityDashboardProps) {
     const [activeTab, setActiveTab] = useState('overview');
-    const { currentCommunity, currentSubCommunity } = useCommunityStore();
+    const { currentCommunity, currentSubCommunity, setCurrentCollectionMetaData} = useCommunityStore();
     const [showContributeDialog, setShowContributeDialog] = useState(false);
     const [showCollectionDialog, setShowCollectionDialog] = useState(false);
 
@@ -37,6 +38,14 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
 
     const formatProtocolText = (protocol: string) => {
         return protocol?.replace(/_/g, ' ') || '';
+    };
+
+    const handleViewCollection = (collection: Partial<Collection>) => {
+            // setCurrentCommunity(currentCommunity)
+            // setCurrentSubCommunity(community);
+
+            setCurrentCollectionMetaData(collection)
+            onNavigate?.('collection-dashboard');
     };
 
     return (
@@ -374,7 +383,7 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
                                                     ))}
                                                 </div>
                                             </div>
-                                            <Button className="w-full mt-4" variant="outline">
+                                            <Button className="w-full mt-4" variant="outline" onClick={()=>handleViewCollection(collection)}>
                                                 <FolderOpen className="w-4 h-4 mr-2" />
                                                 View Collection
                                             </Button>
