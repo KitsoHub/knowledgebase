@@ -100,7 +100,7 @@ export interface SubCommunityData {
   geographicRegion: string;
   communityIdentifier: string;
   protocols: CulturalProtocol[];
-  collections?: Collection[];
+  collections?: Partial<Collection>[];
   members: Person[];
   establishedDate: Date;
   stats:{
@@ -114,7 +114,7 @@ export interface SubCommunityData {
 
 
 export interface Collection {
-  id: string;
+  collectionMetadataIdentifier: string;
   title: string;
   collectionType: CollectionType;
   description: string;
@@ -136,13 +136,13 @@ export interface Collection {
   updatedAt: Date;
 }
 export interface Community {
-  id: string;
+  communityIdentifier: string;
   identity: Partial<CommunityIdentity>;
   members: Person[];
   knowledgeItems: KnowledgeItem[];
   protocols: CulturalProtocol[];
   collections?: Collection[];
-  subCommunities?: SubCommunityData[];
+  subCommunities?: Partial<SubCommunityData>[];
   stats: {
     totalItems: number;
     publicItems: number;

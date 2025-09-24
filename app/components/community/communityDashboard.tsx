@@ -21,8 +21,8 @@ interface CommunityDashboardProps {
     onCreateSubCommunity?: () => void;
 }
 export default function communityDashboard({ onNavigate, onCreateSubCommunity }: CommunityDashboardProps) {
-    const { currentCommunity } = useCommunityStore();
-    const { subCommunity, setCurrentSubCommunity } = useSubCommunityStore();
+    const { currentCommunity, setCurrentCommunity } = useCommunityStore();
+    const { setCurrentSubCommunity } = useSubCommunityStore();
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showEditCommunity, setShowEditCommunity] = useState(false);
     const [showSubCommunityCreation, setShowSubCommunityCreation] = useState(false);
@@ -42,19 +42,20 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
     }
 
     const handleDeleteCommunity = () => {
-        console.log("Delete community:", currentCommunity.id);
+        console.log("Delete community:", currentCommunity.communityIdentifier);
     }
     const handleEditCommunity = () => {
-        console.log("Edit community:", currentCommunity.id);
+        console.log("Edit community:", currentCommunity.communityIdentifier);
     }
     const handleExportMetadata = () => {
-        console.log("Export metadata for community:", currentCommunity.id);
+        console.log("Export metadata for community:", currentCommunity.communityIdentifier);
     }
     const handleExportCommunity = () => {
-        console.log("Export full data for community:", currentCommunity.id);
+        console.log("Export full data for community:", currentCommunity.communityIdentifier);
     }
 
     const handleViewSubCommunity = (community: Partial<SubCommunityData>) => {
+        setCurrentCommunity(currentCommunity)
         setCurrentSubCommunity(community);
         onNavigate?.('sub-community-dashboard');
       };
@@ -122,7 +123,7 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
                             Create Collection
                         </Button>
 
-                        <Button variant="outline" onClick={() => onCreateSubCommunity?.() || setShowSubCommunityCreation(true)}>
+                        <Button variant="outline" onClick={()=> setShowSubCommunityCreation(true)}>
                             <Plus className="w-4 h-4 mr-2" />
                             <span className="hidden sm:inline">Create </span>Sub-Community
                         </Button>
@@ -398,16 +399,18 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
                     </Card>
                 </TabsContent>
 
-                <TabsContent value='community' className='space-y-4'>
+                <TabsContent value='community' className='space-y-6'>
 
 
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+                    <div className='space-y-4'>
 
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {/* {currentCommunity.subCommunities?.map((subCommunity) => ( */}
-                            {subCommunity && (
-                                <Card key={subCommunity.communityIdentifier} className="hover:shadow-lg transition-shadow border-secondary/20">
+                            {(currentCommunity?.subCommunities?.length ?? 0) > 0 ? (
+
+                                currentCommunity.subCommunities?.map((subCommunity)=> (
+                                                              <Card key={subCommunity.communityIdentifier} className="hover:shadow-lg transition-shadow border-secondary/20">
                                     <CardHeader>
                                         <CardTitle className="text-lg flex items-center space-x-2">
                                             <Users className="w-5 h-5 text-secondary" />
@@ -463,6 +466,25 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
                     </Button> */}
                                     </CardContent>
                                 </Card>
+
+                                ))
+
+                            ):(
+
+                              <Card className="col-span-full">
+                                    <CardContent className="p-8 text-center">
+                                        <Database className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                                        <h3 className="text-lg mb-2">No Sub-Community Yet</h3>
+                                        <p className="text-muted-foreground mb-4">
+                                            Start organizing knowledge by creating your first sub community.
+                                        </p>
+                                        <Button onClick={() => setShowSubCommunityCreation(true)}>
+                                            <Plus className="w-4 h-4 mr-2" />
+                                            Create First Sub-Community
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+
                             )}
                         </div>
 
@@ -480,7 +502,7 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
                     <DialogHeader>
                         <DialogTitle>Create Sub-Community</DialogTitle>
                         <DialogDescription>
-                            Create a new sub-community under "{currentCommunity.identity.title}"
+                            Create a new sub-community under {currentCommunity.identity.title}
                         </DialogDescription>
                     </DialogHeader>
                     <SubCommunityCreationFlow

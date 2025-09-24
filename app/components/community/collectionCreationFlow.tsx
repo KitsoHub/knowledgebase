@@ -1,6 +1,6 @@
 import { CollectionGovernanceSteps, CollectionType, collectionTypeOptions, CommunityGovernanceSteps, CulturalProtocol, protocolOptions, steps, stepsCollection, TKLabel, tkLabelOptions } from '@/lib/constants/community';
 import { useAppStore } from '@/lib/store/appStore';
-import { useCommunityStore } from '@/lib/store/communityStore';
+import { useCommunityStore, useSubCommunityStore } from '@/lib/store/communityStore';
 import { Collection } from '@/lib/types/community';
 import { useCommandState } from 'cmdk';
 import { ArrowLeft, CheckCircle, Database, X } from 'lucide-react';
@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Checkbox } from '../ui/checkbox';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
+import { useCollectionStore } from '@/lib/store/collectionStore';
 
 
 interface CollectionCreationFlowProps {
@@ -25,10 +26,13 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
 
   //get the communityID, parentCollectionId
   const { currentCommunity } = useCommunityStore();
+  // const {addCollectionMetaData}=useCollectionStore();
+  const { addCollectionMetadata, updateCollectionMetadata } = useSubCommunityStore();
   const { user } = useAppStore();
   const [step, setStep] = useState<CollectionGovernanceSteps>(CollectionGovernanceSteps.BASIC)
   const [collectionData, setCollectionData] = useState<Partial<Collection>>(
     {
+
       title: '',
       collectionType: collectionTypeOptions[0].value,
       description: '',
@@ -73,7 +77,7 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
   const removeKeyword = (keyword: string) => {
     updateData({ keywords: collectionData.keywords?.filter(k => k !== keyword) || [] });
   };
-  const generateCommunityIdentifier = () => {
+  const generateCollectionIdentifier = () => {
     return uuidv4();
   };
 
@@ -108,9 +112,13 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
   };
 
   const handleSubmit = () => {
-    console.log('Creating collection:', collectionData.id);
-    alert(`Collection create successfully! ${collectionData.id}${collectionData.title}`);
+    //  console.error('Creating collection:', collectionData.collectionMetadataIdentifier);
+    // alert(`Collection create successfully! ${collectionData.collectionMetadataIdentifier}${collectionData.title}`);
     // TODO:addCollectionData -> store
+    // addCollectionMetaData(collectionData);
+    addCollectionMetadata(collectionData);
+    //updateCollectionMetadata(collectionData);
+
     onComplete?.();
   };
 
@@ -122,6 +130,7 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
             <div className="text-center mb-6">
               <h3 className="text-xl mb-2">Basic Information</h3>
               <p className="text-muted-foreground">Define the core details of your collection</p>
+              <p className='text-muted-foreground'>{currentCommunity?.communityIdentifier}</p>
             </div>
 
             <div className="space-y-4">
@@ -130,7 +139,7 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
                 <Input
                   id="title"
                   value={collectionData.title || ''}
-                  onChange={(e) => updateData({ title: e.target.value })}
+                  onChange={(e) => updateData({ title: e.target.value,   collectionMetadataIdentifier: generateCollectionIdentifier() })}
                   placeholder="Enter collection name"
                   className="font-cultural"
                 />
@@ -168,6 +177,19 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
                   rows={4}
                   className="font-cultural"
                 />
+              </div>
+              <div>
+                <Label htmlFor="identifier">Community Identifier</Label>
+                <Input
+                  id="identifier"
+                  value={collectionData.collectionMetadataIdentifier || ''}
+                  onChange={(e) => updateData({ collectionMetadataIdentifier: e.target.value })}
+                  placeholder="Unique identifier (auto-generated)"
+                  className="font-mono text-sm"
+                />
+                <p className="text-xs text-muted-foreground mt-1">
+                  This unique identifier will be used for referencing this sub-community
+                </p>
               </div>
             </div>
           </div>
@@ -338,8 +360,8 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
                     <SelectValue placeholder="Link to related collections" />
                   </SelectTrigger>
                   <SelectContent>
-                    {currentCommunity?.collections?.filter(c => c.id !== collectionData.title).map((collection) => (
-                      <SelectItem key={collection.id} value={collection.id}>
+                    {currentCommunity?.collections?.filter(c => c.collectionMetadataIdentifier !== collectionData.title).map((collection) => (
+                      <SelectItem key={collection.collectionMetadataIdentifier} value={collection.collectionMetadataIdentifier}>
                         {collection.title}
                       </SelectItem>
                     ))}
@@ -347,7 +369,7 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
                 </Select>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {collectionData.relatedCollections?.map((collectionId) => {
-                    const collection = currentCommunity?.collections?.find(c => c.id === collectionId);
+                    const collection = currentCommunity?.collections?.find(c => c.collectionMetadataIdentifier === collectionId);
                     return collection ? (
                       <Badge key={collectionId} variant="secondary" className="flex items-center space-x-1">
                         <span>{collection.title}</span>
@@ -571,6 +593,7 @@ export default function CollectionCreationFlow({ onComplete, onCancel }: Collect
         </Button>
 
         {step === 'REVIEW' ? (
+
           <Button onClick={handleSubmit} className="bg-primary">
             Create Collection
           </Button>

@@ -64,7 +64,7 @@ export function CommunityDirectory({onNavigate}:CommunityDirectoryProps) {
   ));
 
     const handleViewCommunity = (community: Community) => {
-      console.log("To View community:", community.id);
+      console.log("To View community:", community.communityIdentifier);
     setCurrentCommunity(community);
     onNavigate?.('community-dashboard');
   };
@@ -157,7 +157,7 @@ export function CommunityDirectory({onNavigate}:CommunityDirectoryProps) {
             : Crown;
 
           return (
-            <Card key={community.id} className="hover:shadow-lg transition-shadow cursor-pointer">
+            <Card key={community.communityIdentifier} className="hover:shadow-lg transition-shadow cursor-pointer">
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">

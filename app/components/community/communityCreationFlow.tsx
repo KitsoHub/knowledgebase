@@ -9,11 +9,19 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
 import { Label } from '../ui/label';
+import { v4 as uuidv4 } from 'uuid';
 
 import { useCommunityStore } from '@/lib/store/communityStore';
 import { CommunityGovernance, CulturalProtocol } from '@/lib/constants/community';
 
-export default function CommunityCreationFlow() {
+
+
+interface CommunityCreationFlowProps {
+    onComplete?: () => void;
+    onCancel?: () => void;
+
+}
+export default function CommunityCreationFlow({onComplete,onCancel}:CommunityCreationFlowProps) {
     const {
         step,
         communityData,
@@ -22,6 +30,10 @@ export default function CommunityCreationFlow() {
         updateCommunityData,
         resetForm
     } = useCommunityCreationStore();
+
+  const generateCommunityIdentifier = () => {
+            return uuidv4();
+  };
   const { addCommunity } = useCommunityStore();
     const steps = [
         { key: 'TYPE', title: 'Governance Type', description: 'Select community governance model' },
@@ -47,6 +59,9 @@ export default function CommunityCreationFlow() {
                 return true;
         }
     };
+
+
+
     const renderStepContent = () => {
         switch (step) {
             case 'TYPE':
@@ -452,7 +467,7 @@ export default function CommunityCreationFlow() {
             if (step === 'REVIEW') {
               //  submit the community data to backend api
                const newCommunity = {
-                id: Date.now().toString(),
+                communityIdentifier: generateCommunityIdentifier(),
                 identity: {
                   ...communityData,
                   id: Date.now().toString(),
@@ -475,6 +490,7 @@ export default function CommunityCreationFlow() {
 
               alert('Community created successfully!');
               resetForm();
+              onComplete?.();
             } else {
               nextStep();
             }

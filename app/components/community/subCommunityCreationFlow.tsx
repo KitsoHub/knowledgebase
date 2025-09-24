@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { useAppStore } from '@/lib/store/appStore';
 import { Badge } from '../ui/badge';
 import { Checkbox } from '../ui/checkbox';
-import { useSubCommunityStore } from '@/lib/store/communityStore';
+import { useCommunityStore, useSubCommunityStore } from '@/lib/store/communityStore';
 
 
 interface SubCommunityData {
@@ -47,7 +47,7 @@ export default function SubCommunityCreationFlow({ onComplete, onCancel, parentC
         protocols: []
     })
     const {user} = useAppStore();
-    const {addSubCommunity}= useSubCommunityStore();
+    const {addSubCommunity,currentCommunity}= useCommunityStore();
     const generateCommunityIdentifier = () => {
         return uuidv4();
     };
@@ -106,7 +106,7 @@ export default function SubCommunityCreationFlow({ onComplete, onCancel, parentC
                                         const title = e.target.value;
                                         updateData({
                                             title,
-                                            communityIdentifier: generateCommunityIdentifier()
+                                            communityIdentifier: generateCommunityIdentifier().toString()
                                         });
                                     }}
                                     placeholder="Enter sub-community name"
@@ -424,9 +424,9 @@ export default function SubCommunityCreationFlow({ onComplete, onCancel, parentC
     };
 
     const handleSubmit = () => {
-        console.log('Creating sub-community:', subCommunityData.communityIdentifier);
-        alert(`Sub-community created successfully!${subCommunityData.title}${subCommunityData.localContextLabels}`);
-        addSubCommunity(subCommunityData)
+        // console.log('Creating sub-community:', subCommunityData.communityIdentifier);
+        // alert(`Sub-community created successfully!${subCommunityData.title}${subCommunityData.localContextLabels}`);
+        addSubCommunity(subCommunityData, parentCommunity?.communityIdentifier?.toString() || '')
         onComplete?.();
     };
 
@@ -443,6 +443,16 @@ export default function SubCommunityCreationFlow({ onComplete, onCancel, parentC
                 <h2 className="text-2xl">Create Sub-Community</h2>
                 <p className="text-muted-foreground">
                     Establish a cultural sub-group within {parentCommunity?.identity.title}
+                </p>
+
+                                <p className="text-muted-foreground">
+                    ID: {currentCommunity?.identity.title}
+                </p>
+                                            <p className="text-muted-foreground">
+                    ParentID: {parentCommunity?.communityIdentifier.toString()}
+                </p>
+                                            <p className="text-muted-foreground">
+                    CurrentID: {currentCommunity?.communityIdentifier.toString()}
                 </p>
             </div>
 

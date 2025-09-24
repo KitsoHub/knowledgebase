@@ -35,7 +35,10 @@ export default function CommunityPage() {
 
   const renderCurrentView = () => {
     if (showCreateCommunity) {
-      return <CommunityCreationFlow />;
+      return <CommunityCreationFlow
+        onComplete={() => setShowCreateCommunity(false)}
+        onCancel={() => setShowCreateCommunity(false)}
+      />;
     }
 
     switch (currentView) {

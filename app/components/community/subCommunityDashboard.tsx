@@ -26,6 +26,8 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
     const [showCollectionDialog, setShowCollectionDialog] = useState(false);
 
 
+
+
     const getProtocolColor = (protocol: string) => {
         switch (protocol) {
             case 'PUBLIC': return 'protocol-public';
@@ -293,7 +295,7 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
                                 </div>
                                 <div className="flex items-center space-x-2">
                                     <Users className="w-4 h-4 text-muted-foreground" />
-                                    <span>Community ID: {currentCommunity?.id}</span>
+                                    <span>Community ID: {currentCommunity?.communityIdentifier}</span>
                                 </div>
                                 <p className="text-sm text-muted-foreground">
                                     This sub-community represents specific cultural and geographic traditions within the larger community.
@@ -350,7 +352,7 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {(currentSubCommunity?.collections?.length ?? 0) > 0 ? (
                                 currentSubCommunity?.collections?.map((collection) => (
-                                    <Card key={collection.id} className="hover:shadow-lg transition-shadow">
+                                    <Card key={collection.collectionMetadataIdentifier} className="hover:shadow-lg transition-shadow">
                                         <CardHeader>
                                             <CardTitle className="text-lg">{collection.title}</CardTitle>
                                             <CardDescription>{collection.description}</CardDescription>
@@ -359,14 +361,14 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
                                             <div className="space-y-3">
                                                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                                                     <Database className="w-4 h-4" />
-                                                    <span>{collection.collectionType.replace(/_/g, ' ')}</span>
+                                                    <span>{collection?.collectionType?.replace(/_/g, ' ')}</span>
                                                 </div>
                                                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                                                     <Users className="w-4 h-4" />
-                                                    <span>Curator: {collection.curator.name}</span>
+                                                    <span>Curator: {collection?.curator?.name}</span>
                                                 </div>
                                                 <div className="flex flex-wrap gap-1">
-                                                    {collection.subjects.slice(0, 3).map((subject, index) => (
+                                                    {collection?.subjects?.slice(0, 3).map((subject, index) => (
                                                         <Badge key={index} variant="secondary" className="text-xs">
                                                             {subject}
                                                         </Badge>
