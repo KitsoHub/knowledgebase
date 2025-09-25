@@ -2,7 +2,7 @@ import { collection } from 'firebase/firestore';
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Collection, Community, SubCommunityData } from "@/lib/types/community";
+import { Collection, Community, KnowledgeItem, SubCommunityData } from "@/lib/types/community";
 import { mockCommunities } from "@/app/utils/mock/communitiesData";
 import { CulturalProtocol, TKLabel } from "../constants/community";
 
@@ -11,6 +11,7 @@ interface CommunityStore {
   currentCommunity: Community | null;
   currentSubCommunity: Partial<SubCommunityData>  | null;
   currentCollection: Partial<Collection> | null;
+  currentKnowledgeItemMetadata: Partial<KnowledgeItem> | null;
 
   communities: Community[];
   addCommunity: (community: Community) => void;
@@ -18,9 +19,13 @@ interface CommunityStore {
   reset: () => void;
   addSubCommunity: (subCommunity: Partial<SubCommunityData>, id: string)=>void;
   addCollectionMetaData: (collection: Partial<Collection>, subCommunityId: string) => void;
+  addKnowledgeItemMetadata: (knowledgeItemMetadata: Partial<KnowledgeItem>, subCommunityId: string, collectionMetadataId: string) => void;
+
   setCurrentCommunity: (community: Community | null) => void;
   setCurrentSubCommunity: (community: Partial<SubCommunityData> | null) => void;
   setCurrentCollectionMetaData: (collection: Partial<Collection> | null) => void;
+  setCurrentKnowledgeItemMetadata: (item: Partial<KnowledgeItem> | null) => void;
+
 }
 
 export type SubCommunityWithCollections = Partial<SubCommunityData> & {
@@ -51,7 +56,9 @@ export const useCommunityStore = create<CommunityStore>()(
       currentCommunity: null,
       currentSubCommunity:null,
       currentCollection: null,
+      currentKnowledgeItemMetadata: null,
       communities: mockCommunities,
+
       addCommunity: (community) =>
 
         set((state) => ({
@@ -103,11 +110,6 @@ export const useCommunityStore = create<CommunityStore>()(
       // Collection
       addCollectionMetaData:(collection,subCommunityId)=> {
 
-        //get the community by, get the subcommunity by id
-        // add the new collection
-        // console.error("Collection", collection?.title);
-        // console.error("Sub Community Parend ID",id);
-
         const { communities }= get();
         const updatedCommunities = communities.map((c)=>({
             ...c,
@@ -138,7 +140,45 @@ export const useCommunityStore = create<CommunityStore>()(
         set({ currentCollection: collection });
       },
 
+      // items
+      addKnowledgeItemMetadata: (item, subCommuntyId, collectionMetadataId)=>{
+
+        console.error("Item: ", item.title);
+                console.error("Item: ", item.knowledgeItemIdentier);
+
+        console.error("SubID: ", subCommuntyId);
+        console.error("CollectionID: ", collectionMetadataId);
+
+
+        const {communities} = get()
+        const udpatedCommunities = communities.map(
+          (c)=>({
+            ...c, subCommunities: (c.subCommunities ?? []).map(
+              (sc)=> sc.communityIdentifier === subCommuntyId ?
+              {
+                ...sc, collections: (sc.collections ?? []).map(
+                  (col)=> col?.collectionMetadataIdentifier === collectionMetadataId ?
+                {
+                  ...col, knowledgeItems: [...(col.knowledgeItems ?? []), item],
+                }:col),
+              }: sc
+            ),
+          })
+        );
+        const updatedCollection = udpatedCommunities.flatMap((c)=>c.subCommunities??[])
+        .flatMap((sc)=> sc?.collections ?? []).find((col) => col?.collectionMetadataIdentifier === collectionMetadataId);
+        set({
+          communities:udpatedCommunities,
+          currentCollection:updatedCollection,
+          currentKnowledgeItemMetadata: item,
+        });
+
+      },
+      setCurrentKnowledgeItemMetadata:(item)=> set({ currentKnowledgeItemMetadata: item }),
     }),
+    // end
+
+
     { name: "community-store-a00001a", }
   )
 );

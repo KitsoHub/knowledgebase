@@ -11,6 +11,7 @@ import { Badge } from '../ui/badge';
 import { Label } from '../ui/label';
 import CollectionCreationFlow from './collectionCreationFlow';
 import { Collection } from '@/lib/types/community';
+import ItemContributionWizard from './itemContributionWizard';
 
 
 interface SubCommunityDashboardProps {
@@ -97,7 +98,7 @@ export default function SubCommunityDashboard({ onNavigate, onBack }: SubCommuni
                                 Share knowledge with this sub-community
                             </DialogDescription>
                         </DialogHeader>
-                        {/* <ContributionWizard onComplete={() => setShowContributeDialog(false)} /> */}
+                        <ItemContributionWizard onComplete={() => setShowContributeDialog(false)} />
                     </DialogContent>
                 </Dialog>
 

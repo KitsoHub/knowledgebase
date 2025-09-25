@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Alert, AlertDescription } from '../ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import ItemContributionWizard from './itemContributionWizard';
 
 
 interface CollectionDashboardProps {
@@ -20,7 +21,7 @@ interface CollectionDashboardProps {
 
 export default function CollectionDashboard({ onNavigate, onBack }: CollectionDashboardProps) {
     const [activeTab, setActiveTab] = useState('overview');
-    const { currentCollection, currentCommunity } = useCommunityStore();
+    const { currentCollection, currentCommunity, currentKnowledgeItemMetadata, currentSubCommunity } = useCommunityStore();
     const [showContributeDialog, setShowContributeDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showEditCollection, setShowEditCollection] = useState(false);
@@ -46,30 +47,31 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
     const handleExportMetadata = () => {
         console.log("Export metadata for collection:", currentCollection?.collectionMetadataIdentifier);
     }
-    const handleExportCollection= () => {
+    const handleExportCollection = () => {
         console.log("Export full data for community:", currentCollection?.collectionMetadataIdentifier);
     }
+
 
     return (
         <div className='space-y-6'>
 
             {/* header */}
 
-                <div className="flex items-start justify-between">
-                    <div className="flex items-center space-x-4">
-                           <Button variant="ghost" onClick={onBack}>
+            <div className="flex items-start justify-between">
+                <div className="flex items-center space-x-4">
+                    <Button variant="ghost" onClick={onBack}>
                         <ArrowLeft className="w-4 h-4 mr-2" />
                         Back to {currentCommunity?.identity.title}
                     </Button>
 
+                </div>
+                <div>
+                    <div className="flex items-center space-x-2 mb-2">
+                        <Users className="w-6 h-6 text-secondary" />
+                        <h1 className="text-3xl font-cultural">{currentCollection?.title}</h1>
                     </div>
-                    <div>
-                        <div className="flex items-center space-x-2 mb-2">
-                            <Users className="w-6 h-6 text-secondary" />
-                            <h1 className="text-3xl font-cultural">{currentCollection?.title}</h1>
-                        </div>
 
-                            <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                    <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                         <div className="flex items-center space-x-1">
                             <MapPin className="w-4 h-4" />
                             <span>{currentCommunity?.identity.region}</span>
@@ -90,22 +92,22 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
                         </div>
                     </div>
 
-                    </div>
-
-
                 </div>
 
-                                {/* action menu */}
-                <div className="flex items-center space-x-2">
-                    {/* Primary actions */}
-                    {/* <div className='flex items-center space-x-2'>
+
+            </div>
+
+            {/* action menu */}
+            <div className="flex items-center space-x-2">
+                {/* Primary actions */}
+                {/* <div className='flex items-center space-x-2'>
                         <Button onClick={() => setShowContributeDialog(true)}>
                             <Plus className="w-4 h-4 mr-2" />
                             Contribute
                         </Button>
                     </div> */}
 
-                                    <Dialog open={showContributeDialog} onOpenChange={setShowContributeDialog}>
+                <Dialog open={showContributeDialog} onOpenChange={setShowContributeDialog}>
                     <DialogTrigger asChild>
                         <Button>
                             <Plus className="w-4 h-4 mr-2" />
@@ -116,47 +118,47 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
                         <DialogHeader>
                             <DialogTitle>Contribute to {currentCollection?.title}</DialogTitle>
                             <DialogDescription>
-                                Share knowledge in this sub-community
+                                Share knowledge in collection.
                             </DialogDescription>
                         </DialogHeader>
-                        {/* <ContributionWizard onComplete={() => setShowContributeDialog(false)} /> */}
+                        <ItemContributionWizard onComplete={() => setShowContributeDialog(false)} collectionMetadataId={currentCollection?.collectionMetadataIdentifier} />
                     </DialogContent>
                 </Dialog>
 
-                    {/* Secondary Actions Dropdown */}
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="flex items-center space-x-2">
-                                <Settings className="w-4 h-4" />
-                                <span className="hidden sm:inline">Manage</span>
-                                <MoreVertical className="w-4 h-4" />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-56">
-                            <DropdownMenuItem onClick={() => setShowEditCollection(true)}>
-                                <Edit className="w-4 h-4 mr-2" />
-                                Edit Collection Information
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={handleExportCollection}>
-                                <Download className="w-4 h-4 mr-2" />
-                                Export Full Community Data
-                            </DropdownMenuItem>
-                            <DropdownMenuItem onClick={handleExportMetadata}>
-                                <Database className="w-4 h-4 mr-2" />
-                                Export Metadata Only
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                                onClick={() => setShowDeleteDialog(true)}
-                                className="text-red-600 focus:text-red-600 focus:bg-red-50"
-                            >
-                                <Trash2 className="w-4 h-4 mr-2" />
-                                Delete Collection
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
+                {/* Secondary Actions Dropdown */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="flex items-center space-x-2">
+                            <Settings className="w-4 h-4" />
+                            <span className="hidden sm:inline">Manage</span>
+                            <MoreVertical className="w-4 h-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56">
+                        <DropdownMenuItem onClick={() => setShowEditCollection(true)}>
+                            <Edit className="w-4 h-4 mr-2" />
+                            Edit Collection Information
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={handleExportCollection}>
+                            <Download className="w-4 h-4 mr-2" />
+                            Export Full Community Data
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleExportMetadata}>
+                            <Database className="w-4 h-4 mr-2" />
+                            Export Metadata Only
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                            onClick={() => setShowDeleteDialog(true)}
+                            className="text-red-600 focus:text-red-600 focus:bg-red-50"
+                        >
+                            <Trash2 className="w-4 h-4 mr-2" />
+                            Delete Collection
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
 
             {/* stats */}
             <div className='grid grid-cols-2 md:grid-cols-5 gap-4'>
@@ -226,7 +228,7 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
                 </Card>
 
             </div>
-                        {/* Cultural Context Alert */}
+            {/* Cultural Context Alert */}
             <Alert className="border-secondary">
                 <Crown className="h-4 w-4 text-secondary" />
                 <AlertDescription>
@@ -249,66 +251,66 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
                 </TabsList>
                 <TabsContent value='overview' className='space-y-4'>
                     {/* info */}
-                                        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-                                            <Card>
-                                                <CardHeader>
-                                                    <CardTitle>Collection Information</CardTitle>
-                                                </CardHeader>
-                                                <CardContent className="space-y-4">
-                                                    <div>
-                                                        <h4>Primary Contact</h4>
-                                                        <div className="text-sm text-muted-foreground">
-                                                            <p>{currentCommunity?.identity.leadership?.primaryContact.name}</p>
-                                                            <p>{currentCommunity?.identity.leadership?.primaryContact.role}</p>
-                                                            {currentCommunity?.identity.leadership?.primaryContact.culturalTitle && (
-                                                                <p className="font-cultural italic">{currentCommunity.identity.leadership.primaryContact.culturalTitle}</p>
-                                                            )}
-                                                        </div>
-                                                    </div>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Collection Information</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div>
+                                    <h4>Primary Contact</h4>
+                                    <div className="text-sm text-muted-foreground">
+                                        <p>{currentCommunity?.identity.leadership?.primaryContact.name}</p>
+                                        <p>{currentCommunity?.identity.leadership?.primaryContact.role}</p>
+                                        {currentCommunity?.identity.leadership?.primaryContact.culturalTitle && (
+                                            <p className="font-cultural italic">{currentCommunity.identity.leadership.primaryContact.culturalTitle}</p>
+                                        )}
+                                    </div>
+                                </div>
 
-                                                    <div>
-                                                        <h4>Cultural Protocols</h4>
-                                                        <div className="flex flex-wrap gap-2 mt-2">
-                                                            {currentCollection?.rightsProtocols?.map((protocol, index) => (
-                                                                <Badge key={index} variant="outline" className={getProtocolColor(protocol)}>
-                                                                    {formatProtocolText(protocol)}
-                                                                </Badge>
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                </CardContent>
-                                            </Card>
+                                <div>
+                                    <h4>Cultural Protocols</h4>
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        {currentCollection?.rightsProtocols?.map((protocol, index) => (
+                                            <Badge key={index} variant="outline" className={getProtocolColor(protocol)}>
+                                                {formatProtocolText(protocol)}
+                                            </Badge>
+                                        ))}
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
 
-                                            <Card>
-                                                <CardHeader>
-                                                    <CardTitle>Recent Activity</CardTitle>
-                                                    <CardDescription>Latest community activities and contributions</CardDescription>
-                                                </CardHeader>
-                                                <CardContent>
-                                                    <div className="space-y-3">
-                                                        <div className="flex items-center space-x-3 text-sm">
-                                                            <Plus className="w-4 h-4 text-green-600" />
-                                                            <span>New Protocol item added: "Traditional Healing Practices"</span>
-                                                            <span className="text-muted-foreground">1 day ago</span>
-                                                        </div>
-                                                        <div className="flex items-center space-x-3 text-sm">
-                                                            <Users className="w-4 h-4 text-blue-600" />
-                                                            <span>New member joined: Sam Kenpachi</span>
-                                                            <span className="text-muted-foreground">1 day1 ago</span>
-                                                        </div>
-                                                        <div className="flex items-center space-x-3 text-sm">
-                                                            <Shield className="w-4 h-4 text-yellow-600" />
-                                                            <span>Protocol updated: Elder approval required</span>
-                                                            <span className="text-muted-foreground">1 ady ago</span>
-                                                        </div>
-                                                    </div>
-                                                </CardContent>
-                                            </Card>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Recent Activity</CardTitle>
+                                <CardDescription>Latest community activities and contributions</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="space-y-3">
+                                    <div className="flex items-center space-x-3 text-sm">
+                                        <Plus className="w-4 h-4 text-green-600" />
+                                        <span>New Protocol item added: "Traditional Healing Practices"</span>
+                                        <span className="text-muted-foreground">1 day ago</span>
+                                    </div>
+                                    <div className="flex items-center space-x-3 text-sm">
+                                        <Users className="w-4 h-4 text-blue-600" />
+                                        <span>New member joined: Sam Kenpachi</span>
+                                        <span className="text-muted-foreground">1 day1 ago</span>
+                                    </div>
+                                    <div className="flex items-center space-x-3 text-sm">
+                                        <Shield className="w-4 h-4 text-yellow-600" />
+                                        <span>Protocol updated: Elder approval required</span>
+                                        <span className="text-muted-foreground">1 ady ago</span>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
 
-                                        </div>
+                    </div>
 
                     {/* actions */}
-                                        <Card className="border-orange-200 bg-orange-50/50">
+                    <Card className="border-orange-200 bg-orange-50/50">
                         <CardHeader>
                             <CardTitle className="flex items-center space-x-2">
                                 <Settings className="w-5 h-5" />
@@ -393,13 +395,12 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
                 <TabsContent value='knowledgeitems' className='space-y-4'>
                     <div className="space-y-4">
                         <div className="flex justify-between items-center">
-                                <h3>Items</h3>
-                                <Button onClick={() => setShowContributeDialog(true)}>
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Create New Item
-                                </Button>
-                            </div>
-
+                            <h3>Items <span className='text-muted-foreground'>{currentCollection?.knowledgeItems?.length}</span></h3>
+                            <Button onClick={() => setShowContributeDialog(true)}>
+                                <Plus className="w-4 h-4 mr-2" />
+                                Create New Item
+                            </Button>
+                        </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {(currentCollection?.knowledgeItems?.length ?? 0) > 0 ? (
@@ -417,10 +418,10 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
                                                 </div>
                                                 <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                                                     <Users className="w-4 h-4" />
-                                                    <span>Curator: {collection?.contributorId}</span>
+                                                    <span>Curator: {collection?.createdBy?.name}</span>
                                                 </div>
                                             </div>
-                                            <Button className="w-full mt-4" variant="outline" onClick={()=>{}}>
+                                            <Button className="w-full mt-4" variant="outline" onClick={() => { }}>
                                                 <FolderOpen className="w-4 h-4 mr-2" />
                                                 View Items
                                             </Button>

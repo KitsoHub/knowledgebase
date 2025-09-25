@@ -26,7 +26,7 @@ export interface CulturalMetadata {
 }
 
 export interface RightsMetadata {
-  licensing: {
+  licensing?: {
     option: LicensingOption;
     approvalWorkflow?: {
       requiredFor: TKLabel[];
@@ -34,23 +34,36 @@ export interface RightsMetadata {
     };
   };
   accessLevel: CulturalProtocol;
-  attribution: string;
+  attribution?: string;
   restrictions?: string;
 }
 
+export type ContentType = 'audio' | 'video' | 'text' | 'image' | 'document';
 export interface KnowledgeItem {
-  id: string;
+  knowledgeItemIdentier: string;
+  createdBy: Person;
+  contributors?: Person[];
   title: string;
   description: string;
-  type: 'audio' | 'video' | 'text' | 'image' | 'document';
+  type: ContentType;
+  targetType: 'existing_collection' | 'new_collection' | 'standalone';
   content: any;
-  culturalMetadata: CulturalMetadata;
-  rightsMetadata: RightsMetadata;
+  culturalMetadata?: Partial<CulturalMetadata>;
+  requiresWorkFlowApproval?: boolean,
+  rightsMetadata?: RightsMetadata;
+  colletionId: string;
   communityId: string;
-  contributorId: string;
+  subCommunityId: string;
   createdAt: Date;
   updatedAt: Date;
   isAIAssisted?: boolean;
+  newCollection?: {
+    title: string;
+    collectionType: CollectionType;
+    description: string;
+    subjects: string[];
+    keywords: string[];
+  };
 }
 export interface CommunityIdentity {
   id: string;
@@ -129,7 +142,7 @@ export interface Collection {
   relatedCollections: string[];
   rightsProtocols: CulturalProtocol[];
   tkLabels: TKLabel[];
-  knowledgeItems: KnowledgeItem[];
+  knowledgeItems: Partial<KnowledgeItem>[];
   communityId: string;
   parentCollectionId?: string;
   createdAt: Date;
