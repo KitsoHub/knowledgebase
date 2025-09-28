@@ -1,7 +1,7 @@
 // app/components/shared/map/index.tsx
 'use client';
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 import { CulturalSite } from '@/lib/types/culturalSites';
 
@@ -14,6 +14,12 @@ interface MapProps {
   center?: LatLngExpression;
   zoom?: number;
 }
+
+const ChangeView = ({ center, zoom }: { center: LatLngExpression; zoom: number }) => {
+  const map = useMap();
+  map.setView(center, zoom); // Dynamically update the map's center and zoom level
+  return null;
+};
 
 export default function SiteMap({ 
   sites, 
@@ -35,6 +41,9 @@ export default function SiteMap({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+
+      {/* Dynamically update the map's view */}
+      <ChangeView center={center} zoom={zoom} />
 
       {sites.map((site) => (
         <Marker 
@@ -72,7 +81,6 @@ export default function SiteMap({
               </div>
             </div>
           </Popup>
-         
         </Marker>
       ))}
     </MapContainer>
