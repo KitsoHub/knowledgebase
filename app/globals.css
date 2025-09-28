@@ -38,6 +38,17 @@
         --sidebar-ring: 224 76% 48%;
         --sidebar-accent80: 199 89% 48%;
 
+        /* Indigenous Knowledge Portal Custom Colors */
+        --color-water: #1e40af;
+        --color-earth: #ca8a04;
+        --color-protocol-public: #10b981;
+        --color-protocol-community: #3b82f6;
+        --color-protocol-restricted: #ef4444;
+        --color-tk-secret: #7c2d12;
+        --color-tk-cultural: #92400e;
+        --color-tk-women: #be185d;
+        --color-tk-men: #1e40af;
+
     }
 
     .bg-background2 {
@@ -199,6 +210,56 @@
     background: rgba(252, 252, 252, 0.8);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(197, 170, 34, 0.2);
+}
+
+/* Cultural Typography */
+.font-cultural {
+  font-family: 'Noto Sans', 'Inter', system-ui, sans-serif;
+}
+
+/* Protocol Indicators */
+.protocol-public {
+  color: var(--color-protocol-public);
+  border-color: var(--color-protocol-public);
+}
+
+.protocol-community {
+  color: var(--color-protocol-community);
+  border-color: var(--color-protocol-community);
+}
+
+.protocol-restricted {
+  color: var(--color-protocol-restricted);
+  border-color: var(--color-protocol-restricted);
+}
+
+/* TK Label Styling */
+.tk-label {
+  @apply inline-flex items-center px-2 py-1 rounded-full text-xs border-2;
+}
+
+.tk-secret {
+  background-color: rgba(124, 45, 18, 0.1);
+  color: var(--color-tk-secret);
+  border-color: var(--color-tk-secret);
+}
+
+.tk-cultural {
+  background-color: rgba(146, 64, 14, 0.1);
+  color: var(--color-tk-cultural);
+  border-color: var(--color-tk-cultural);
+}
+
+.tk-women {
+  background-color: rgba(190, 24, 93, 0.1);
+  color: var(--color-tk-women);
+  border-color: var(--color-tk-women);
+}
+
+.tk-men {
+  background-color: rgba(30, 64, 175, 0.1);
+  color: var(--color-tk-men);
+  border-color: var(--color-tk-men);
 }
 
 @keyframes fall {

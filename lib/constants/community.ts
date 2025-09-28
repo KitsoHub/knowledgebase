@@ -1,3 +1,5 @@
+import { FileAudio, FileText, FileVideo, ImageIcon } from "lucide-react";
+
 export enum CommunityGovernanceSteps {
   BASIC = 'BASIC',
   AUTHORITY = 'AUTHORITY',
@@ -89,3 +91,18 @@ export const collectionTypeOptions = [
     { value: CulturalProtocol.ELDER_APPROVAL_REQUIRED, title: "Elder Approval Required", description: "Requires elder council approval" },
     { value: CulturalProtocol.GENDER_RESTRICTED, title: "Gender Restricted", description: "Limited by traditional gender protocols" }
   ];
+
+export const contentTypeIcons = {
+  audio: FileAudio,
+  video: FileVideo,
+  text: FileText,
+  image: ImageIcon,
+  document: FileText
+};
+
+export const accessLevelColors = {
+  PUBLIC: "bg-green-100 text-green-800 border-green-300",
+  COMMUNITY_ONLY: "bg-blue-100 text-blue-800 border-blue-300",
+  ELDER_APPROVAL_REQUIRED: "bg-red-100 text-red-800 border-red-300",
+  GENDER_RESTRICTED:  "bg-purple-100 text-purple-800 border-purple-300",
+};

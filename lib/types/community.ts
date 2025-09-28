@@ -47,7 +47,7 @@ export interface KnowledgeItem {
   description: string;
   type: ContentType;
   targetType: 'existing_collection' | 'new_collection' | 'standalone';
-  content: any;
+  content?: any;
   culturalMetadata?: Partial<CulturalMetadata>;
   requiresWorkFlowApproval?: boolean,
   rightsMetadata?: RightsMetadata;

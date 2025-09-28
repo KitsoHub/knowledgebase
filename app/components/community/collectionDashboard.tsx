@@ -1,7 +1,7 @@
-import { CommunityGovernance } from '@/lib/constants/community';
+import { accessLevelColors, CommunityGovernance, contentTypeIcons, CulturalProtocol } from '@/lib/constants/community';
 import { useCommunityStore } from '@/lib/store/communityStore';
-import { Collection } from '@/lib/types/community';
-import { ArrowLeft, BookOpen, Calendar, Crown, Database, Download, Edit, FolderOpen, Globe, Languages, MapPin, MoreVertical, Plus, Settings, Shield, ShieldBanIcon, ShieldCloseIcon, ShieldPlusIcon, Trash2, UserPlus, Users } from 'lucide-react';
+import { Collection, ContentType, KnowledgeItem } from '@/lib/types/community';
+import { ArrowLeft, BookOpen, Calendar, Crown, Database, Download, Edit, ExternalLink, FolderOpen, Globe, Languages, MapPin, MoreVertical, Plus, Settings, Shield, ShieldBanIcon, ShieldCloseIcon, ShieldPlusIcon, Trash2, UserPlus, Users } from 'lucide-react';
 import React, { useState } from 'react'
 import { Badge } from '../ui/badge';
 import { formatGovernanceText, formatProtocolText, getProtocolColor } from '@/lib/utils';
@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { Alert, AlertDescription } from '../ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import ItemContributionWizard from './itemContributionWizard';
+import { Checkbox } from '../ui/checkbox';
 
 
 interface CollectionDashboardProps {
@@ -25,6 +26,9 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
     const [showContributeDialog, setShowContributeDialog] = useState(false);
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showEditCollection, setShowEditCollection] = useState(false);
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const [selectMode, setSelectMode] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<Partial<KnowledgeItem> | null>(null);
 
     const getGovernanceIcon = (model: CommunityGovernance) => {
         switch (model) {
@@ -51,6 +55,16 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
         console.log("Export full data for community:", currentCollection?.collectionMetadataIdentifier);
     }
 
+    const handleSelectItem = (itemId: string) => {
+    setSelectedItems(prev =>
+      prev.includes(itemId)
+        ? prev.filter(id => id !== itemId)
+        : [...prev, itemId]
+    );
+  };
+  const handleExportItem = (item: Partial<KnowledgeItem>) => {
+        console.log("Export metadata for collection:", item?.knowledgeItemIdentier);
+  }
 
     return (
         <div className='space-y-6'>
@@ -402,32 +416,143 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
                             </Button>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {(currentCollection?.knowledgeItems?.length ?? 0) > 0 ? (
-                                currentCollection?.knowledgeItems?.map((collection) => (
-                                    <Card key={currentCollection.collectionMetadataIdentifier} className="hover:shadow-lg transition-shadow">
-                                        <CardHeader>
-                                            <CardTitle className="text-lg">{collection.title}</CardTitle>
-                                            <CardDescription>{collection.description}</CardDescription>
-                                        </CardHeader>
-                                        <CardContent>
-                                            <div className="space-y-3">
-                                                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                                                    <Database className="w-4 h-4" />
-                                                    <span>{collection?.type?.replace(/_/g, ' ')}</span>
-                                                </div>
-                                                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                                                    <Users className="w-4 h-4" />
-                                                    <span>Curator: {collection?.createdBy?.name}</span>
-                                                </div>
-                                            </div>
-                                            <Button className="w-full mt-4" variant="outline" onClick={() => { }}>
-                                                <FolderOpen className="w-4 h-4 mr-2" />
-                                                View Items
-                                            </Button>
-                                        </CardContent>
-                                    </Card>
-                                ))
+                                currentCollection?.knowledgeItems?.map((collection) => {
+                                        const isSelected = selectedItems.includes(collection?.colletionId || '');
+                                        const IconComponent = contentTypeIcons[collection.type as ContentType];
+
+                                    return (
+              <Card
+                key={collection.colletionId}
+                className={`hover:shadow-lg transition-all duration-200 cursor-pointer border-2 hover:border-primary/20 ${
+                  isSelected ? 'ring-2 ring-primary border-primary' : ''
+                }`}
+              >
+                <CardHeader className="space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-2">
+                      {selectMode && (
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={() => handleSelectItem(collection?.colletionId || '')}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      )}
+                      <IconComponent className="w-5 h-5 text-primary" />
+                      <Badge variant="outline" className="text-xs">
+                        {collection.type}
+                      </Badge>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleExportItem(collection);
+                      }}
+                      className="p-1 h-auto"
+                    >
+                      <Download className="w-4 h-4" />
+                    </Button>
+                  </div>
+
+                  <div onClick={() => !selectMode && setSelectedItem(collection)}>
+                    <CardTitle className="text-lg leading-tight">{collection.title}</CardTitle>
+                    <CardDescription className="line-clamp-2">
+                      {collection.description}
+                    </CardDescription>
+                  </div>
+                </CardHeader>
+
+                <CardContent
+                  className="space-y-4"
+                  onClick={() => !selectMode && setSelectedItem(collection)}
+                >
+                  {/* Content Metadata */}
+                  <div className="space-y-2 text-sm">
+                    {collection.content?.duration && (
+                      <div className="flex items-center space-x-2 text-muted-foreground">
+                        <span>Duration: {collection.content.duration}</span>
+                      </div>
+                    )}
+                    {collection.content?.dimensions && (
+                      <div className="flex items-center space-x-2 text-muted-foreground">
+                        <span>Size: {collection.content.dimensions}</span>
+                      </div>
+                    )}
+                    <div className="flex items-center space-x-2 text-muted-foreground">
+                      <span>File: {collection.content?.fileSize}</span>
+                    </div>
+                  </div>
+
+                  {/* Community and Collection */}
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                      <Users className="w-4 h-4" />
+                      <span>{currentCommunity?.identity.title}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                      <MapPin className="w-4 h-4" />
+                      <span>{currentCommunity?.identity.region}</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                      <Calendar className="w-4 h-4" />
+                      <span>{collection?.createdAt?.toLocaleDateString()}</span>
+                    </div>
+                  </div>
+
+                  {/* Access Level */}
+                  <div className="flex items-center space-x-2">
+                    <Shield className="w-4 h-4" />
+                    <Badge className={`text-xs ${accessLevelColors[collection?.rightsMetadata?.accessLevel.toString() as CulturalProtocol]}`}>
+                      {collection.rightsMetadata?.accessLevel.replace(/_/g, ' ')}
+                    </Badge>
+                  </div>
+
+                  {/* TK Labels */}
+                  <div className="flex flex-wrap gap-1">
+                    {collection?.culturalMetadata?.tkLabels?.map((label) => (
+                      <Badge key={label} variant="outline" className="text-xs tk-label tk-cultural">
+                        {label.replace(/_/g, ' ')}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  {/* Action Button */}
+                  {!selectMode && (
+                    <Button className="w-full" variant="outline">
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      View Details
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
+                                    );
+                                }
+                                    // <Card key={currentCollection.collectionMetadataIdentifier} className="hover:shadow-lg transition-shadow">
+                                    //     <CardHeader>
+                                    //         <CardTitle className="text-lg">{collection.title}</CardTitle>
+                                    //         <CardDescription>{collection.description}</CardDescription>
+                                    //     </CardHeader>
+                                    //     <CardContent>
+                                    //         <div className="space-y-3">
+                                    //             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                    //                 <Database className="w-4 h-4" />
+                                    //                 <span>{collection?.type?.replace(/_/g, ' ')}</span>
+                                    //             </div>
+                                    //             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                    //                 <Users className="w-4 h-4" />
+                                    //                 <span>Curator: {collection?.createdBy?.name}</span>
+                                    //             </div>
+                                    //         </div>
+                                    //         <Button className="w-full mt-4" variant="outline" onClick={() => { }}>
+                                    //             <FolderOpen className="w-4 h-4 mr-2" />
+                                    //             View Details
+                                    //         </Button>
+                                    //     </CardContent>
+                                    // </Card>
+                                )
                             ) : (
                                 <Card className="col-span-full">
                                     <CardContent className="p-8 text-center">
