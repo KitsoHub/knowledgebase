@@ -20,9 +20,17 @@ export interface CulturalMetadata {
     startDate: Date;
     endDate: Date;
     reason: string;
+    seasonalGuidance: string;
   }[];
   traditionalPlaceNames?: string[];
-  culturalContext: string;
+  culturalContext?: {
+    ceremony:string;
+    region:string;
+    language:string;
+    season:string;
+    uses: string[];
+    culturalMeaning: string;
+  };
 }
 
 export interface RightsMetadata {
@@ -31,6 +39,7 @@ export interface RightsMetadata {
     approvalWorkflow?: {
       requiredFor: TKLabel[];
       approvers: string[];
+      approvalStatus:"Reviewed and approved by the IKMS Council";
     };
   };
   accessLevel: CulturalProtocol;
@@ -47,7 +56,32 @@ export interface KnowledgeItem {
   description: string;
   type: ContentType;
   targetType: 'existing_collection' | 'new_collection' | 'standalone';
-  content?: any;
+  content?: {
+    primary?: string;
+    metadata?: {
+      languages: ['English','Setswana'],
+      topics:["culture",  "medicinal plants", "environmental stewardship"],
+        pages: 24,
+        wordCount: 5847,
+        photographDate: "2025-08-13",
+        photographer: "Community Elder Council",
+        filmingDate:"2025-08-13",
+        recordingDate: "2025-08-10",
+        recordingLocation: "UNIPOD Center",
+        location: "Test location",
+        equipment: ["birchbark containers", "traditional spiles"],
+        techniques: ["tree selection", "tapping methods", "sap collection"],
+        songCount: 12,
+        songTypes: ["honor songs", "social dance songs", "healing songs"],
+        instruments: ["water drum", "hand drums", "voices"],
+        season: "Late Summer",
+        timeOfDay: "Dawn",
+        culturalNote: "Sacred space requires special protocols for viewing and sharing"
+    };
+    duration?: string;
+    dimensions?: string;
+    fileSize?: string;
+  };
   culturalMetadata?: Partial<CulturalMetadata>;
   requiresWorkFlowApproval?: boolean,
   rightsMetadata?: RightsMetadata;
@@ -57,6 +91,7 @@ export interface KnowledgeItem {
   createdAt: Date;
   updatedAt: Date;
   isAIAssisted?: boolean;
+  relatedItems?: string[];
   newCollection?: {
     title: string;
     collectionType: CollectionType;

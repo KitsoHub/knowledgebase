@@ -35,12 +35,6 @@ export enum LicensingOption {
   ALL_RIGHTS_RESERVED = 'ALL_RIGHTS_RESERVED'
 }
 
-export const steps = [
-  CommunityGovernanceSteps.BASIC,
-  CommunityGovernanceSteps.AUTHORITY,
-  CommunityGovernanceSteps.PROTOCOLS,
-  CommunityGovernanceSteps.REVIEW
-];
 
 export enum CollectionGovernanceSteps {
   BASIC = 'BASIC',
@@ -49,6 +43,13 @@ export enum CollectionGovernanceSteps {
   PROTOCOLS = 'PROTOCOLS',
   REVIEW = 'REVIEW'
 }
+
+export const steps = [
+  CommunityGovernanceSteps.BASIC,
+  CommunityGovernanceSteps.AUTHORITY,
+  CommunityGovernanceSteps.PROTOCOLS,
+  CommunityGovernanceSteps.REVIEW
+];
 
 export const stepsCollection = [
   CollectionGovernanceSteps.BASIC,
@@ -105,4 +106,11 @@ export const accessLevelColors = {
   COMMUNITY_ONLY: "bg-blue-100 text-blue-800 border-blue-300",
   ELDER_APPROVAL_REQUIRED: "bg-red-100 text-red-800 border-red-300",
   GENDER_RESTRICTED:  "bg-purple-100 text-purple-800 border-purple-300",
+};
+
+export const accessLevelDescriptions = {
+  PUBLIC: "This knowledge can be viewed by anyone and shared according to community protocols.",
+  COMMUNITY_ONLY: "This knowledge is restricted to verified community members only.",
+  ELDER_APPROVAL_REQUIRED: "This sacred knowledge requires elder approval before access is granted.",
+  GENDER_RESTRICTED: "This knowledge is restricted to genders only.",
 };

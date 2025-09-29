@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from '../ui/alert';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import ItemContributionWizard from './itemContributionWizard';
 import { Checkbox } from '../ui/checkbox';
+import KnowledgeItemViewer from './itemViewer';
 
 
 interface CollectionDashboardProps {
@@ -64,6 +65,16 @@ export default function CollectionDashboard({ onNavigate, onBack }: CollectionDa
   };
   const handleExportItem = (item: Partial<KnowledgeItem>) => {
         console.log("Export metadata for collection:", item?.knowledgeItemIdentier);
+  }
+
+    if (selectedItem) {
+    return (
+      <KnowledgeItemViewer
+        item={selectedItem}
+        onBack={() => setSelectedItem(null)}
+        onExport={() => handleExportItem(selectedItem)}
+      />
+    );
   }
 
     return (
