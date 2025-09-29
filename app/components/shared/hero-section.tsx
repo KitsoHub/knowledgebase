@@ -1,17 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-'use client'
-
-import Link from 'next/link'
+"use client"
+import React from 'react';
 import { Button } from '@/app/components/ui/button'
 import { heroData } from '@/lib/hero_data'
-import { ArrowRight, Heart, Star } from 'lucide-react'
-// import { FloatingElement } from '../floatingElement/floatingElement'
-// import { number } from 'zod'
-// import { Label } from 'recharts'
+import { Heart, Star } from 'lucide-react'
+import { motion } from 'framer-motion';
 
-import React from 'react';
-import { motion } from 'motion/react'
-
+// import { motion } from 'motion/react';
 interface FloatingElementProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   speed?: number; // duration in seconds
@@ -126,42 +121,6 @@ export function HeroSection() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background/60" />
       </div>
-
-      {/* Static stats section */}
-      {/* <div className='container px-4 mx-auto mt-24'>
-               <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
-               {[{number:'10K+', label:'Articles'},
-                    {number:'1K+', label:'Verifiers'},
-                    {number:'12K+', label:'Contributors'},
-                    {number:'80%', label:'Satisfaction'}
-                ].map((stat, index) =>(
-                    <div key={index}
-                    className='text-center animate-slide-up'
-                    style={{animationDelay:`${0.4 + index*0.1}s`}}>
-                        <p className='text-4xl font-bold text-primary mb-2'>{stat.number}</p>
-                        <p className='text-sm text-foreground/70'>{stat.label}</p>
-                    </div>
-                ))}
-               </div>
-            </div> */}
-
-      {/* <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-28 sm:pb-32 lg:flex lg:px-8 lg:py-48">
-
-                <div className="relative top-0 z-20 w-full image-container">
-                    <img
-                        className="rounded-full object-cover -top-6 -right-10  absolute h-[500px] w-[500px]"
-                        src="https://images.unsplash.com/photo-1531208853003-c1ec1b8a81d7?q=80&w=1866&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        alt=""
-                    />
-                    <img
-                        className="rounded-full object-cover top-[30%] left-10  absolute h-[400px] w-[400px] border-t-8  border-r-8 "
-                        // src="https://images.unsplash.com/photo-1531208853003-c1ec1b8a81d7?q=80&w=1866&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        src="https://images.unsplash.com/photo-1455669175216-9017c9b02fc6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fENob2JlJTIwYmFza2V0fGVufDB8fDB8fHww"
-                        alt=""
-                    />
-                </div>
-
-            </div> */}
     </section>
   )
 }
