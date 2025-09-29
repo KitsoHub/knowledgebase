@@ -22,6 +22,7 @@ export default function HomeNavigation() {
         { href: '/publications', label: 'Publications' },
         { href: '/botanical', label: 'Botanical-Explorer' },
         { href: '/learn', label: 'LanguageLearn' },
+        { href: '/nlp', label: 'NLP' },
         // { href: '/admin/patents', label: 'Patents' },
     ]
     useEffect(() => {

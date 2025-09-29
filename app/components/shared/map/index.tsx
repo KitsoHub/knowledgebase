@@ -1,66 +1,60 @@
-// "@/app/components/shared/map/index.tsx"
+// app/components/shared/map/index.tsx
 'use client';
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { locations } from '@/app/utils/map/locations'; // ✅ Adjust path as needed
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
+import { CulturalSite } from '@/lib/types/culturalSites';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet-defaulticon-compatibility';
 
 interface MapProps {
-  // Pass specific location keys you want to show
-  locationKeys?: (keyof typeof locations)[];
-  posix?: [number, number];
-  // Or pass full data (more flexible)
-  positions?: {
-    id: string;
-    name: string;
-    position: LatLngExpression;
-    description: string;
-    imageUrl: string;
-  }[];
+  sites: CulturalSite[];
+  center?: LatLngExpression;
   zoom?: number;
-  center?: LatLngExpression; // Optional: override default center
 }
 
-const Map = ({ 
-  locationKeys, 
-  positions, 
-  center, 
-  zoom = 8 
-}: MapProps) => {
-  // If no positions passed, use selected locationKeys
-  const markers = positions 
-    ? positions 
-    : locationKeys 
-      ? locationKeys.map(key => locations[key]) 
-      : Object.values(locations); // fallback: show all
+const ChangeView = ({ center, zoom }: { center: LatLngExpression; zoom: number }) => {
+  const map = useMap();
+  map.setView(center, zoom); // Dynamically update the map's center and zoom level
+  return null;
+};
 
-  // Use provided center, or center on first marker
-  const mapCenter: LatLngExpression = center || markers[0]?.position || [-22.3, 17.5];
+export default function SiteMap({ 
+  sites, 
+  center = [0, 0], 
+  zoom = 3 
+}: MapProps) {
+  const mapCenter = sites.length > 0 
+    ? [sites[0].latitude, sites[0].longitude]
+    : center;
 
   return (
     <MapContainer
       center={mapCenter}
       zoom={zoom}
       scrollWheelZoom={false}
-      style={{ height: '600px', width: '900px', borderRadius: '12px' }}
+      style={{ height: '100%', width: '100%', borderRadius: '12px' }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {/* Render all markers */}
-      {markers.map((loc) => (
-        <Marker position={loc.position} key={loc.id}>
+      {/* Dynamically update the map's view */}
+      <ChangeView center={center} zoom={zoom} />
+
+      {sites.map((site) => (
+        <Marker 
+          position={[site.latitude, site.longitude]} 
+          key={site.id}
+        >
           <Popup>
             <div style={{ maxWidth: '300px', fontFamily: 'Arial, sans-serif', margin: 0 }}>
               <img
-                src={loc.imageUrl}
-                alt={loc.name}
+                src={site.images[0]}
+                alt={site.name}
                 style={{
                   width: '100%',
                   height: '140px',
@@ -70,7 +64,7 @@ const Map = ({
               />
               <div style={{ padding: '10px' }}>
                 <h2 style={{ margin: '0 0 6px 0', fontSize: '1.1em', color: '#1a1a1a' }}>
-                  {loc.name}
+                  {site.name}
                 </h2>
                 <p style={{ 
                   margin: '0', 
@@ -78,8 +72,12 @@ const Map = ({
                   color: '#444', 
                   lineHeight: '1.5' 
                 }}>
-                  {loc.description}
-                </p>
+                {site.description.substring(0, 120)}...
+              </p>
+              <div style={{ fontSize: '0.8em', color: '#666' }}>
+                {site.language && <div>🗣️ {site.language}</div>}
+                {site.tribe && <div>👥 {site.tribe}</div>}
+              </div>
               </div>
             </div>
           </Popup>
@@ -87,6 +85,4 @@ const Map = ({
       ))}
     </MapContainer>
   );
-};
-
-export default Map;
+}
