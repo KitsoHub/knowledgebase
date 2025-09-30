@@ -114,10 +114,6 @@ export interface CommunityIdentity {
   establishedDate: Date;
 }
 
-
-
-
-// Zustand Store Types
 export interface CommunityCreationState {
   step: 'TYPE' | 'BASIC' | 'GOVERNANCE' | 'PROTOCOLS' | 'REVIEW';
   communityData: Partial<CommunityIdentity>;
@@ -199,6 +195,7 @@ export interface Community {
     collectionCount: number;
     subCommunityCount: number;
   };
+  isActive?: true;
 }
 
 export interface AppState {
