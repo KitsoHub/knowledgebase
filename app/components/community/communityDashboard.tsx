@@ -71,7 +71,6 @@ export default function communityDashboard({ onNavigate, onCreateSubCommunity }:
     };
 
 
-
     return (
 
         <div className="space-y-6">

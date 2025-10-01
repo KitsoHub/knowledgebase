@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function CommunityPage() {
   return (
     <div className="p-6 space-y-4">
@@ -7,8 +5,6 @@ export default function CommunityPage() {
       <p className="text-gray-600">
         Welcome to the community hub. Choose a section below:
       </p>
-
-
     </div>
   );
 }

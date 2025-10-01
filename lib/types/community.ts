@@ -153,7 +153,8 @@ export interface SubCommunityData {
     restrictedItems?: number;
     memberCount?: number;
     collectionCount?: number;
-  }
+  };
+  isActive?: true;
 }
 
 

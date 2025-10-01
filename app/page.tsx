@@ -1,8 +1,7 @@
 // "use client"
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// import { CategoryGrid } from '@/app/components/shared/category-section'
-// import { FeaturedContent } from '@/app/components/shared/feature-section'
+
 import { HeroSection } from '@/app/components/shared/hero-section'
 
 //import { auth, currentUser } from '@clerk/nextjs/server'
@@ -32,12 +31,9 @@ export default async function Home() {
     // console.log(">> Current User >>", match)
     return (
         <FairUsageProvider>
-            <div className="min-h-screen flex flex-col ">
-
-
+           <div className="min-h-screen flex flex-col ">
                 {/* <HomeNavigation/> */}
                 <Navigation />
-
                 <main className="flex-grow">
 
                     {/* TODO: update the hero section */}
@@ -54,7 +50,6 @@ export default async function Home() {
                     {/* <ContributeSection/> */}
                     {/* footer */}
                     {/* <Footer /> */}
-
                     {/* <MapPage/> */}
 
                     {/* Contact */}

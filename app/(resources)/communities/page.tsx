@@ -1,6 +1,6 @@
 "use client";
 import { Community } from "@/lib/types/community";
-import { Calendar, Crown, Filter, MapPin, Search, TreePine, Users } from "lucide-react";
+import { Calendar, Crown, Filter, Info, LucideArrowLeft, MapPin, Search, TreePine, Users } from "lucide-react";
 import { useState } from "react";
 import { useCommunityStore } from "@/lib/store/communityStore";
 import { CommunityGovernance, CulturalProtocol } from "@/lib/constants/community";
@@ -12,6 +12,8 @@ import { Badge } from "@/app/components/ui/badge";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useRouter } from 'next/navigation';
+import { Alert, AlertDescription } from "@/app/components/ui/alert";
 
 export default function CommunityDirectory() {
 
@@ -20,6 +22,8 @@ export default function CommunityDirectory() {
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [showFilters, setShowFilters] = useState(false);
   const { communities, setCurrentCommunity } = useCommunityStore();
+  const router = useRouter();
+
 
 
   const governanceIcons = {
@@ -70,7 +74,24 @@ export default function CommunityDirectory() {
        //route to community/communitId
   };
   return (
-    <div className="space-y-6">
+    <div className="p-6 space-y-6">
+                <Button
+          onClick={() => router.back()}
+          variant={'ghost'}
+          size="icon"
+          className="mb-9"
+        >
+          <LucideArrowLeft size={20} />
+        </Button>
+
+
+      <Alert className="mb-6">
+        <Info className="h-4 w-4" />
+        <AlertDescription>
+          IKMS Communities. For full community governance, user authentication, and secure knowledge storage please contact the relevant authorities using our community contact list.
+        </AlertDescription>
+      </Alert>
+
       <div className="text-center">
         <h2 className="text-2xl mb-2">Community Directory</h2>
         <p className="text-muted-foreground">
@@ -144,10 +165,10 @@ export default function CommunityDirectory() {
         <p className="text-sm text-muted-foreground">
           {filteredCommunities.length} communities found
         </p>
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <Button variant="outline" size="sm">Map View</Button>
           <Button variant="outline" size="sm">List View</Button>
-        </div>
+        </div> */}
       </div>
 
       {/* Community Cards */}
