@@ -1,4 +1,4 @@
-import { FileAudio, FileText, FileVideo, ImageIcon } from "lucide-react";
+import { CheckCheckIcon, FileAudio, FileText, FileVideo, ImageIcon } from "lucide-react";
 
 export enum CommunityGovernanceSteps {
   BASIC = 'BASIC',
@@ -98,7 +98,8 @@ export const contentTypeIcons = {
   video: FileVideo,
   text: FileText,
   image: ImageIcon,
-  document: FileText
+  document: FileText,
+  all: CheckCheckIcon,
 };
 
 export const accessLevelColors = {

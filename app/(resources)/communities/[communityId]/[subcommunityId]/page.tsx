@@ -8,10 +8,12 @@ import { Label } from '@/app/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs';
 import { useCommunityStore } from '@/lib/store/communityStore';
 import { Collection } from '@/lib/types/community';
-import { formatProtocolText, getProtocolColor } from '@/lib/utils';
+import { cn, formatProtocolText, getProtocolColor } from '@/lib/utils';
 import { ArrowLeft, BookOpen, Crown, Database, FolderOpen, Globe, Info, MapPin, Settings, Shield, ShieldBanIcon, UserPlus, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
+import Link from 'next/link'
+
 
 export default function SubCommunityView() {
 
@@ -32,9 +34,6 @@ export default function SubCommunityView() {
     }
 
         const handleViewCollection = (collection: Partial<Collection>) => {
-                // setCurrentCommunity(currentCommunity)
-                // setCurrentSubCommunity(community);
-
                 setCurrentCollectionMetaData(collection)
 
         };
@@ -150,24 +149,6 @@ export default function SubCommunityView() {
 
             </div>
 
-                        {/* Cultural Context Alert */}
-
-                        {/* Management Section */}
-            <Card className="border-primary/20">
-                <CardHeader>
-                    <CardTitle className="flex items-center space-x-2">
-                        <Settings className="w-5 h-5" />
-                        <span>Sub-Community Management</span>
-                    </CardTitle>
-                    <CardDescription>
-                        Quick access to management tools and actions
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-
-                </CardContent>
-            </Card>
-
             {/* Main content area */}
             <Tabs value={activeTab} onValueChange={setActiveTab}>
                 <TabsList>
@@ -188,12 +169,7 @@ export default function SubCommunityView() {
                                     <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
                                         <Crown className="w-5 h-5 text-secondary" />
                                     </div>
-                                    <div>
-                                        {/* <p className="font-medium">{subCommunity.indigenousAuthority.name}</p>
-                    <p className="text-sm text-muted-foreground font-cultural">
-                      {subCommunity.indigenousAuthority.culturalTitle}
-                    </p> */}
-                                    </div>
+
                                 </div>
                                 <p className="text-sm text-muted-foreground">
                                     Responsible for maintaining cultural protocols and community governance.
@@ -258,18 +234,22 @@ export default function SubCommunityView() {
                 <TabsContent value="knowledge" className="space-y-6">
                     {/* Collections Section */}
                     <div className="space-y-4">
-                        {/* <div className="flex justify-between items-center">
-                            <h3>Collections</h3>
-                            <Button onClick={() => setShowCollectionDialog(true)}>
-                                <Plus className="w-4 h-4 mr-2" />
-                                Create Collection
-                            </Button>
-                        </div> */}
-
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {(currentSubCommunity?.collections?.length ?? 0) > 0 ? (
-                                currentSubCommunity?.collections?.map((collection) => (
-                                    <Card key={collection.collectionMetadataIdentifier} className="hover:shadow-lg transition-shadow">
+                                currentSubCommunity?.collections?.map((collection) => {
+                              const linkUrl = `/collections/${collection.collectionMetadataIdentifier}/`
+                                    const isActive = collection.isActive
+                                    return(
+
+                                        <Link
+                                            onClick={() => handleViewCollection(collection)}
+                                            href={linkUrl}
+                                            className={cn(
+                                                'block',
+                                                'group relative overflow-hidden transition-all duration-300',
+                                                isActive && 'border-primary shadow-lg hover:shadow-xl'
+                                            )}>
+                                             <Card key={collection.collectionMetadataIdentifier} className="hover:shadow-lg transition-shadow">
                                         <CardHeader>
                                             <CardTitle className="text-lg">{collection.title}</CardTitle>
                                             <CardDescription>{collection.description}</CardDescription>
@@ -298,7 +278,12 @@ export default function SubCommunityView() {
                                             </Button>
                                         </CardContent>
                                     </Card>
-                                ))
+                                    </Link>
+                                    )
+
+                                }
+
+                                )
                             ) : (
                                 <Card className="col-span-full">
                                     <CardContent className="p-8 text-center">

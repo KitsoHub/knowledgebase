@@ -47,7 +47,7 @@ export interface RightsMetadata {
   restrictions?: string;
 }
 
-export type ContentType = 'audio' | 'video' | 'text' | 'image' | 'document';
+export type ContentType = 'all' | 'audio' | 'video' | 'text' | 'image' | 'document';
 export interface KnowledgeItem {
   knowledgeItemIdentier: string;
   createdBy: Person;
@@ -179,6 +179,7 @@ export interface Collection {
   parentCollectionId?: string;
   createdAt: Date;
   updatedAt: Date;
+  isActive: true;
 }
 export interface Community {
   communityIdentifier: string;
