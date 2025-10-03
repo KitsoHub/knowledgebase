@@ -1,5 +1,6 @@
 "use client"
 import ContentTypeSelection from '@/app/components/community/contentTypeSelection';
+import KnowledgeItemViewer from '@/app/components/community/itemViewer';
 import { Alert, AlertDescription } from '@/app/components/ui/alert';
 import { Badge } from '@/app/components/ui/badge';
 import { Button } from '@/app/components/ui/button';
@@ -15,6 +16,7 @@ import { ArrowLeft, Calendar, CheckCheckIcon, CheckSquare, Crown, ExternalLink, 
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 
+
 export default function CollectionView() {
     const router = useRouter();
     const [activeTab, setActiveTab] = useState('overview');
@@ -24,7 +26,6 @@ export default function CollectionView() {
     const [selectedContentType, setSelectedContentType] = useState<ContentType>("all");
     const [selectedAccessLevel, setSelectedAccessLevel] = useState<string>("all");
     const [selectedItem, setSelectedItem] = useState<Partial<KnowledgeItem> | null>(null);
-    const [selectMode, setSelectMode] = useState(false);
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
 
     if (!currentCommunity) {
@@ -78,7 +79,7 @@ export default function CollectionView() {
                             Browse and discover traditional knowledge shared by Indigenous communities
                         </p>
                     </div> */}
-                    <div className="flex items-center space-x-2">
+                    {/* <div className="flex items-center space-x-2">
                         <Button
                             variant="outline"
                             onClick={() => setViewMode('grid')}
@@ -87,7 +88,7 @@ export default function CollectionView() {
                             <Grid className="w-4 h-4" />
                             <span>Browse All</span>
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
 
                 <ContentTypeSelection
@@ -98,6 +99,17 @@ export default function CollectionView() {
         );
     }
 
+
+
+    if (selectedItem) {
+    return (
+      <KnowledgeItemViewer
+        item={selectedItem}
+        onBack={() => setSelectedItem(null)}
+
+      />
+    );
+  }
 
     return (
         <div className='p-6 space-y-6'>
@@ -164,7 +176,7 @@ export default function CollectionView() {
                 </Button>
 
                 <div>
-                    <h3>Knowledg3e Base</h3>
+                    <h3>Knowledge Base</h3>
                     <p className="text-muted-foreground">
                         {filteredItems && filteredItems.length} traditional knowledge items
                     </p>
@@ -254,37 +266,15 @@ export default function CollectionView() {
         </div>
       </div>
 
-      {/* Results Summary and Bulk Actions */}
+
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <p className="text-sm text-muted-foreground">
             {filteredItems?.length} knowledge items found
           </p>
-          {selectMode && (
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={()=>{}}
-                className="flex items-center space-x-2"
-              >
-                <CheckSquare className="w-4 h-4" />
-                <span>
-                  {selectedItems.length === filteredItems?.length ? 'Deselect All' : 'Select All'}
-                </span>
-              </Button>
-              {selectedItems.length > 0 && (
-                <Badge variant="secondary">
-                  {selectedItems.length} selected
-                </Badge>
-              )}
-            </div>
-          )}
+
         </div>
-        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-          <Filter className="w-4 h-4" />
-          <span>Filters active</span>
-        </div>
+
       </div>
 
             {/* Knowledge Items Grid */}
@@ -322,7 +312,7 @@ export default function CollectionView() {
 
                   </div>
 
-                  <div onClick={() => !selectMode && setSelectedItem(item)}>
+                  <div onClick={() =>  setSelectedItem(item)}>
                     <CardTitle className="text-lg leading-tight">{item.title}</CardTitle>
                     <CardDescription className="line-clamp-2">
                       {item.description}
@@ -332,7 +322,7 @@ export default function CollectionView() {
 
                 <CardContent
                   className="space-y-4"
-                  onClick={() => !selectMode && setSelectedItem(item)}
+                  onClick={() => setSelectedItem(item)}
                 >
                   {/* Content Metadata */}
                   <div className="space-y-2 text-sm">
@@ -385,13 +375,13 @@ export default function CollectionView() {
                     ))}
                   </div>
 
-                  {/* Action Button */}
-                  {!selectMode && (
+
+
                     <Button className="w-full" variant="outline">
                       <ExternalLink className="w-4 h-4 mr-2" />
                       View Details
                     </Button>
-                  )}
+
                 </CardContent>
               </Card>
             );
@@ -431,7 +421,7 @@ export default function CollectionView() {
 
                     <div
                       className="flex-1 space-y-2"
-                      onClick={() => !selectMode && setSelectedItem(item)}
+                      onClick={() => setSelectedItem(item)}
                     >
                       <div className="flex items-start justify-between">
                         <div className="space-y-1">
