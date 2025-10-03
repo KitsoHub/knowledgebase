@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react';
+import { motion, AnimatePresence } from "framer-motion";
 import { mockPlants } from '@/app/utils/mock/botanical';
 import { MedicinalPlant } from '@/lib/types/botanical';
 import PlantCard from './plant-card';

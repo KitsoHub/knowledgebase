@@ -47,7 +47,7 @@ export interface RightsMetadata {
   restrictions?: string;
 }
 
-export type ContentType = 'audio' | 'video' | 'text' | 'image' | 'document';
+export type ContentType = 'all' | 'audio' | 'video' | 'text' | 'image' | 'document';
 export interface KnowledgeItem {
   knowledgeItemIdentier: string;
   createdBy: Person;
@@ -114,10 +114,6 @@ export interface CommunityIdentity {
   establishedDate: Date;
 }
 
-
-
-
-// Zustand Store Types
 export interface CommunityCreationState {
   step: 'TYPE' | 'BASIC' | 'GOVERNANCE' | 'PROTOCOLS' | 'REVIEW';
   communityData: Partial<CommunityIdentity>;
@@ -157,7 +153,8 @@ export interface SubCommunityData {
     restrictedItems?: number;
     memberCount?: number;
     collectionCount?: number;
-  }
+  };
+  isActive?: true;
 }
 
 
@@ -182,6 +179,7 @@ export interface Collection {
   parentCollectionId?: string;
   createdAt: Date;
   updatedAt: Date;
+  isActive: true;
 }
 export interface Community {
   communityIdentifier: string;
@@ -199,6 +197,7 @@ export interface Community {
     collectionCount: number;
     subCommunityCount: number;
   };
+  isActive?: true;
 }
 
 export interface AppState {

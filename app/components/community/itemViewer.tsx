@@ -11,8 +11,8 @@ import { useCommunityStore } from '@/lib/store/communityStore';
 
 interface KnowledgeItemViewerProps {
     item: Partial<KnowledgeItem>;
-    onBack: () => void;
-    onExport: () => void;
+    onBack?: () => void;
+    onExport?: () => void;
 }
 
 export default function KnowledgeItemViewer({ item, onBack, onExport }: KnowledgeItemViewerProps) {
@@ -248,12 +248,12 @@ export default function KnowledgeItemViewer({ item, onBack, onExport }: Knowledg
 
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto p-6 space-y-6">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <Button variant="ghost" onClick={onBack} className="flex items-center space-x-2">
                     <ArrowLeft className="w-4 h-4" />
-                    <span>Back to Knowledge Base</span>
+                    <span>Back</span>
                 </Button>
 
                 <div className="flex items-center space-x-2">
