@@ -1,0 +1,184 @@
+import { TeamMember } from '@/lib/types/aboutUs';
+import { useState } from 'react';
+import { Card, CardContent } from '../ui/card';
+import { ImageWithFallback } from '../shared/image-with-fallback';
+import { Button } from '../ui/button';
+import { ChevronRight, Globe, Linkedin, Mail } from 'lucide-react';
+import { Badge } from '../ui/badge';
+
+
+
+interface TeamMemberCardProps {
+  member: TeamMember;
+  onViewDetails: () => void;
+}
+
+export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  // Get initials for avatar fallback
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  // Placeholder images for team members
+  const placeholderImages: Record<string, string> = {
+    'team-1': 'https://images.unsplash.com/photo-1660906863391-4191c6877cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpdmUlMjBhbWVyaWNhbiUyMHdvbWFufGVufDF8fHx8MTc1OTUzNjQ5MXww&ixlib=rb-4.1.0&q=80&w=1080',
+    'team-2': 'https://images.unsplash.com/photo-1582140161498-41c99a3721e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZ2Vub3VzJTIwZWxkZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NTk1MzY0OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    'team-3': 'https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTQ0ODg3OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    'team-4': 'https://images.unsplash.com/photo-1652471949169-9c587e8898cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1OTUzNDE5NHww&ixlib=rb-4.1.0&q=80&w=1080',
+  };
+
+  const imageUrl = member.imageUrl || placeholderImages[member.ikmsTeamIdentifier];
+
+  return (
+    <Card
+      className="overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <CardContent className="p-0">
+        {/* Image Header */}
+        <div className="relative h-48 bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden">
+          {imageUrl ? (
+            <ImageWithFallback
+              src={imageUrl}
+              alt={member.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-4xl font-medium text-primary">
+                  {getInitials(member.name)}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Hover Overlay */}
+          <div
+            className={`absolute inset-0 bg-black/60 flex items-center justify-center transition-opacity duration-300 ${
+              isHovered ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <Button
+              onClick={onViewDetails}
+              variant="secondary"
+              className="gap-2"
+            >
+              View Profile
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+
+          {/* Status Badge */}
+          {!member.isActive && (
+            <div className="absolute top-2 right-2">
+              <Badge variant="secondary">Former Member</Badge>
+            </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="p-4 space-y-3">
+          {/* Name & Title */}
+          <div>
+            <h4 className="mb-1">{member.name}</h4>
+            <p className="text-sm text-muted-foreground">{member.title}</p>
+            {member.culturalAffiliation && (
+              <p className="text-sm text-primary font-cultural mt-1">
+                {member.culturalAffiliation}
+              </p>
+            )}
+          </div>
+
+          {/* Role */}
+          <div className="flex items-start space-x-2">
+            <Badge variant="outline" className="flex-shrink-0">
+              {member.role}
+            </Badge>
+          </div>
+
+          {/* Quick Bio Preview */}
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {member.bio}
+          </p>
+
+          {/* Expertise Tags */}
+          {member.expertise && member.expertise.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {member.expertise.slice(0, 2).map((skill, index) => (
+                <Badge key={index} variant="secondary" className="text-xs">
+                  {skill}
+                </Badge>
+              ))}
+              {member.expertise.length > 2 && (
+                <Badge variant="secondary" className="text-xs">
+                  +{member.expertise.length - 2} more
+                </Badge>
+              )}
+            </div>
+          )}
+
+          {/* Quick Actions */}
+          <div className="flex items-center space-x-2 pt-2 border-t">
+            {member.email && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 px-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.location.href = `mailto:${member.email}`;
+                }}
+              >
+                <Mail className="h-4 w-4" />
+              </Button>
+            )}
+            {member.linkedIn && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 px-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(member.linkedIn, '_blank');
+                }}
+              >
+                <Linkedin className="h-4 w-4" />
+              </Button>
+            )}
+            {member.website && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 px-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(member.website, '_blank');
+                }}
+              >
+                <Globe className="h-4 w-4" />
+              </Button>
+            )}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="ml-auto h-8"
+              onClick={onViewDetails}
+            >
+              Full Profile
+              <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
