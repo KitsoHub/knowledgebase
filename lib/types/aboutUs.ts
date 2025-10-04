@@ -2,8 +2,9 @@
 
 export interface TeamMember {
   ikmsTeamIdentifier: string;
-  firstName: string;
-  lastName: string;
+  name:string;
+//   firstName: string;
+//   lastName: string;
   email: string;
   title: string; // e.g., "Director of Technology"
   role: string; // e.g., "Lead Developer"
@@ -24,8 +25,9 @@ export interface TeamMember {
 
 export interface PastContributor {
     ikmsTeamIdentifier: string;
-    firstName: string;
-    lastName: string;
+    name:string;
+    // firstName: string;
+    // lastName: string;
     culturalAffiliation?: string;
     role:string;
     contributionPeriod:{
@@ -40,7 +42,8 @@ export interface AboutContent {
     ikms:{
         mission: string;
         vision: string;
-        lastUpdated:string;
+        overview:string;
+        lastUpdated:Date;
     };
     governance:{
         structure: string;
@@ -57,7 +60,7 @@ export interface AboutContent {
             culturalRequirements?: string[];
             postedDate: Date;
             applicationEmail:string;
-            applicationPhhoneNumber: string;
+            applicationPhoneNumber?: string;
        }[];
         volunteerOpportunities: string;
         internshipInfo: string;
@@ -67,7 +70,7 @@ export interface AboutContent {
 export interface AboutState{
     teamMembers: TeamMember[];
     pastContributors: PastContributor[];
-    aboutContent: AboutContent;
+    aboutUsContent: AboutContent;
     addTeamMember: (member: TeamMember) => void;
     updateTeamMember:(id: string, member: Partial<TeamMember>)=> void;
     removeTeamMember: (id: string) => void;
