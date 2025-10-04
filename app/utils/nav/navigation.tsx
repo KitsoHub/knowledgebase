@@ -463,6 +463,28 @@ const Navigation = memo(() => {
                             </NavigationMenuItem>
 
 
+                            {/* About */}
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-sky-50 hover:text-sky-900 focus:bg-sky-50 focus:text-sky-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-sky-50/50 data-[state=open]:bg-sky-50/50">
+                                    About
+                                </NavigationMenuTrigger>
+                                <NavigationMenuContent>
+                                    <div className="grid gap-3 p-6 w-[300px]">
+                                        <MenuItemCard href="/about" title="About IKMS" description="about IKMS" />
+                                    </div>
+                                    <div className="grid gap-3 p-6 w-[300px]">
+                                        <MenuItemCard href="/about" title="Mission & Governance" description="mission" />
+                                    </div>
+                                    <div className="grid gap-3 p-6 w-[300px]">
+                                        <MenuItemCard href="/about" title="Meet the team" description="team" />
+                                    </div>
+                                    <div className="grid gap-3 p-6 w-[300px]">
+                                        <MenuItemCard href="/about" title="Join the team" description="join" />
+                                    </div>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
+
+
                             {/* <NavigationMenuItem>
                                 <NavigationMenuLink
                                     className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-sky-50 hover:text-sky-900 focus:bg-sky-50 focus:text-sky-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
