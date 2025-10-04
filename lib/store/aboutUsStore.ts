@@ -4,21 +4,22 @@ import { AboutContent, AboutState, PastContributor, TeamMember } from "../types/
 
 
 const initialTeamMembers: TeamMember[] = [
-  {
-    ikmsTeamIdentifier: 'team-1',
-    name: 'Dr. Maria Kingbird',
-    email: 'maria@anishinaabe.org',
-    title: 'Executive Director',
-    role: 'Cultural Coordinator & Knowledge Keeper',
-    culturalAffiliation: 'Anishinaabe Nation',
-    imageUrl: undefined,
-    bio: 'Dr. Maria Kingbird is a respected Knowledge Keeper with over 20 years of experience in Indigenous cultural preservation and digital archiving. She has dedicated her career to ensuring that traditional knowledge is protected and shared according to cultural protocols.',
-    expertise: ['Traditional Knowledge Systems', 'Digital Preservation', 'Community Governance', 'Cultural Protocol Development'],
-    joinedDate: new Date('2015-03-15'),
-    linkedIn: 'https://linkedin.com/in/mariakingbird',
-    website: 'https://mariakingbird.com',
-    isActive: true,
-  },
+ {
+  ikmsTeamIdentifier: 'team-1',
+  name: 'Ogaufi Mokopakgosi',
+  email: 'ogaufimokopakgosi3@gmail.com',
+  title: 'AI Researcher & Front-End Developer',
+  role: 'Self-Taught Coder | AI Researcher | Electrical Engineering Student',
+  culturalAffiliation: 'Botswana',
+  imageUrl: 'assets/team/ogaufi.jpg', // you can add a profile image URL later
+  bio: 'Ogaufi Mokopakgosi is a self-taught coder, AI researcher, and a final-year Electrical Engineering student at the University of Botswana. Passionate about advancing indigenous language technology, Ogaufi focuses on AI development, front-end design, and promoting cultural innovation through technology.',
+  expertise: ['Artificial Intelligence', 'Front-End Development', 'Electrical Engineering', 'Cultural Innovation', 'Language Technology'],
+  joinedDate: new Date('2025-01-01'),
+  linkedIn: 'https://linkedin.com/in/ogaufimokopakgosi',
+  website: undefined,
+  isActive: true
+},
+
   {
     ikmsTeamIdentifier: 'team-2',
     name: 'Elder James Crow',
