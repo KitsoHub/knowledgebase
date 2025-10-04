@@ -173,7 +173,7 @@ export function TeamMemberDialog({ member, open, onOpenChange }: TeamMemberDialo
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-sm">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
-                <span className="text-muted-foreground">Years with Portal:</span>
+                <span className="text-muted-foreground">Years with IKMS:</span>
                 <span>
                   {Math.floor((new Date().getTime() - member.joinedDate.getTime()) / (1000 * 60 * 60 * 24 * 365))} years
                 </span>
