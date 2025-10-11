@@ -1,10 +1,10 @@
-// app/page.tsx
-'use client';
 
+'use client';
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { culturalSites } from '@/app/utils/map/locations';
 import { CulturalSite } from '@/lib/types/culturalSites';
+import { motion } from 'framer-motion';
 
 // Dynamically load map (SSR-safe)
 const SiteMap = dynamic(() => import('@/app/components/shared/map'), {
@@ -70,14 +70,36 @@ export default function ExplorerPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="text-center py-8 bg-gradient-to-r from-blue-50 to-purple-50">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Cultural Heritage Explorer</h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+    <div className="max-w-7xl mx-auto p-6 space-y-6 mt-28">
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-primary/5 p-8 md:p-12 text-center"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(30,64,175,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(202,138,4,0.1),transparent_50%)]" />
+
+        <motion.div
+          animate={{
+            rotate: [0, 10, -10, 0],
+            scale: [1, 1.1, 1.1, 1]
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 4,
+            ease: "easeInOut"
+          }}
+          className="inline-block mb-4"
+        >
+        </motion.div>
+
+        <h1 className="text-4xl md:text-5xl mb-4">Cultural Heritage Explorer</h1>
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Discover and explore publicly accessible cultural heritage sites in Botswana.
         </p>
-      </header>
+      </motion.div>
 
       <div className="flex flex-col lg:flex-row gap-6 p-6 max-w-7xl mx-auto">
         {/* Left Panel: Filters & List */}

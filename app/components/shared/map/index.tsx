@@ -21,13 +21,13 @@ const ChangeView = ({ center, zoom }: { center: LatLngExpression; zoom: number }
   return null;
 };
 
-export default function SiteMap({ 
-  sites, 
-  center = [0, 0], 
-  zoom = 3 
+export default function SiteMap({
+  sites,
+  center = [0, 0],
+  zoom = 3
 }: MapProps) {
-  const mapCenter = sites.length > 0 
-    ? [sites[0].latitude, sites[0].longitude]
+  const mapCenter = sites.length > 0
+    ? [sites[0].latitude, sites[0].longitude] as LatLngExpression
     : center;
 
   return (
@@ -46,8 +46,8 @@ export default function SiteMap({
       <ChangeView center={center} zoom={zoom} />
 
       {sites.map((site) => (
-        <Marker 
-          position={[site.latitude, site.longitude]} 
+        <Marker
+          position={[site.latitude, site.longitude]}
           key={site.id}
         >
           <Popup>
@@ -66,11 +66,11 @@ export default function SiteMap({
                 <h2 style={{ margin: '0 0 6px 0', fontSize: '1.1em', color: '#1a1a1a' }}>
                   {site.name}
                 </h2>
-                <p style={{ 
-                  margin: '0', 
-                  fontSize: '0.9em', 
-                  color: '#444', 
-                  lineHeight: '1.5' 
+                <p style={{
+                  margin: '0',
+                  fontSize: '0.9em',
+                  color: '#444',
+                  lineHeight: '1.5'
                 }}>
                 {site.description.substring(0, 120)}...
               </p>
