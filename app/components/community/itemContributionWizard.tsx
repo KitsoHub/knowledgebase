@@ -37,7 +37,9 @@ export default function ItemContributionWizard({ onComplete, collectionMetadataI
         culturalMetadata: {
             culturalNarrative: '',
             tkLabels: [],
-            culturalContext: ''
+            culturalContext: {
+                culturalMeaning: ''
+            },
         },
         rightsMetadata: {
             accessLevel: CulturalProtocol.PUBLIC

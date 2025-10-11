@@ -24,11 +24,11 @@ export interface CulturalMetadata {
   }[];
   traditionalPlaceNames?: string[];
   culturalContext?: {
-    ceremony:string;
-    region:string;
-    language:string;
-    season:string;
-    uses: string[];
+    ceremony?:string;
+    region?:string;
+    language?:string;
+    season?:string;
+    uses?: string[];
     culturalMeaning: string;
   };
 }
