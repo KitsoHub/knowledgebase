@@ -23,7 +23,7 @@ import React, { useState } from 'react'
 export default function Analytics() {
     const [timeRange, setTimeRange] = useState('month');
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen mt-28">
             <HomeNavigation />
             <main className="flex-grow pt-28 pb-16">
                 <div className="container px-4 mx-auto">

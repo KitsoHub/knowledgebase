@@ -262,6 +262,15 @@
   border-color: var(--color-tk-men);
 }
 
+.avatar {
+  width: 225px;
+  height: 225px;
+  object-fit: cover;
+  border-radius: 50%;
+  overflow: hidden;
+  display: block;
+}
+
 @keyframes fall {
     to {
         transform: translateY(100vh) rotate(720deg);

@@ -3,6 +3,9 @@ import { ClerkProvider } from '@clerk/nextjs'
 
 import './globals.css'
 import { Inter } from 'next/font/google'
+import { Main } from 'next/document'
+import MainFooter from './components/layout/footer'
+import Navigation from './utils/nav/navigation'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -28,7 +31,9 @@ export default function RootLayout({
                 <UserButton />
               </SignedIn>
             </header> */}
+              <Navigation />
                     {children}
+                    <MainFooter />
                 </body>
             </html>
         </ClerkProvider>

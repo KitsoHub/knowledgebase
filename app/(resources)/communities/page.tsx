@@ -14,6 +14,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useRouter } from 'next/navigation';
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
+import { motion } from "framer-motion";
 
 export default function CommunityDirectory() {
 
@@ -51,8 +52,8 @@ export default function CommunityDirectory() {
     const language = community.identity.language || '';
 
     const matchesSearch = title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         region.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         language.toLowerCase().includes(searchTerm.toLowerCase());
+      region.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      language.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesGovernance = selectedGovernance === "all" || community.identity.governanceModel === selectedGovernance;
     const matchesRegion = selectedRegion === "all" || region.includes(selectedRegion);
@@ -68,36 +69,43 @@ export default function CommunityDirectory() {
 
 
 
-    const handleViewCommunity = (community: Community) => {
-      console.log("To View community:", community.communityIdentifier);
-       setCurrentCommunity(community);
-       //route to community/communitId
+  const handleViewCommunity = (community: Community) => {
+    console.log("To View community:", community.communityIdentifier);
+    setCurrentCommunity(community);
+    //route to community/communitId
   };
   return (
-    <div className="p-6 space-y-6">
-                <Button
-          onClick={() => router.back()}
-          variant={'ghost'}
-          size="icon"
-          className="mb-9"
+    <div className="max-w-7xl mx-auto p-6 space-y-6 mt-28">
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-primary/5 p-8 md:p-12 text-center"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(30,64,175,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(202,138,4,0.1),transparent_50%)]" />
+
+        <motion.div
+          animate={{
+            rotate: [0, 10, -10, 0],
+            scale: [1, 1.1, 1.1, 1]
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 4,
+            ease: "easeInOut"
+          }}
+          className="inline-block mb-4"
         >
-          <LucideArrowLeft size={20} />
-        </Button>
+        </motion.div>
 
-
-      <Alert className="mb-6">
-        <Info className="h-4 w-4" />
-        <AlertDescription>
-          IKMS Communities. For full community governance, user authentication, and secure knowledge storage please contact the relevant authorities using our community contact list.
-        </AlertDescription>
-      </Alert>
-
-      <div className="text-center">
-        <h2 className="text-2xl mb-2">Community Directory</h2>
-        <p className="text-muted-foreground">
+        <h1 className="text-4xl md:text-5xl mb-4"> Community Directory</h1>
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
           Discover communities sharing traditional knowledge and cultural practices research
         </p>
-      </div>
+      </motion.div>
+
 
       {/* Search and Filters */}
       <Card>
@@ -173,126 +181,133 @@ export default function CommunityDirectory() {
 
       {/* Community Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredCommunities.map((community) => {
-                const isActive = community.isActive
-                const linkUrl = `/communities/${community.communityIdentifier}/`
+        {filteredCommunities.map((community, index) => {
+          const isActive = community.isActive
+          const linkUrl = `/communities/${community.communityIdentifier}/`
           const GovernanceIcon = community.identity.governanceModel
 
             ? governanceIcons[community.identity.governanceModel]
             : Crown;
 
           return (
-                    <Link
-                    onClick={() => handleViewCommunity(community)}
-            href={linkUrl}
-            className={cn(
+            <Link
+               key={index}
+              onClick={() => handleViewCommunity(community)}
+              href={linkUrl}
+              className={cn(
                 'block',
                 'group relative overflow-hidden transition-all duration-300',
                 isActive && 'border-primary shadow-lg hover:shadow-xl'
-            )}
-        >
-            <Card key={community.communityIdentifier} className="hover:shadow-lg transition-shadow cursor-pointer">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg mb-2 font-cultural">
-                      {community.identity.title}
-                    </CardTitle>
-                    <CardDescription className="text-sm">
-                      {community.identity.description}
-                    </CardDescription>
-                  </div>
-                  <Badge className={`${governanceColors[community.identity.governanceModel ?? CommunityGovernance.ELDER_COUNCIL]} flex items-center space-x-1`}>
-                    <GovernanceIcon className="w-3 h-3" />
-                    <span className="text-xs">
-                      {community.identity.governanceModel === CommunityGovernance.ELDER_COUNCIL ? 'Elder' :
-                       community.identity.governanceModel === CommunityGovernance.INDIGENOUS_COUNCIL ? 'Council' :
-                       'Steward'}
-                    </span>
-                  </Badge>
-                </div>
-              </CardHeader>
-
-              <CardContent className="space-y-4">
-                {/* Location and Language */}
-                <div className="space-y-2">
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    {community.identity.region}
-                  </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Calendar className="w-4 h-4 mr-2" />
-                Est. {community.identity.establishedDate
-                  ? typeof community.identity.establishedDate === "string"
-                    ? community.identity.establishedDate
-                    : community.identity.establishedDate.toLocaleDateString()
-                  : ''}
-                  </div>
-                </div>
-
-                {/* Languages */}
-                <div>
-                  <p className="text-xs text-muted-foreground mb-1">Languages:</p>
-                  <div className="flex flex-wrap gap-1">
-                    {community.identity.language?.split(', ').map((lang, index) => (
-                      <Badge key={index} variant="outline" className="text-xs font-cultural">
-                        {lang}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Cultural Protocols */}
-                <div>
-                  <p className="text-xs text-muted-foreground mb-1">Cultural Protocols:</p>
-                  <div className="flex flex-wrap gap-1">
-                    {community.protocols.map((protocol, index) => (
-                      <Badge
-                        key={index}
-                        variant="outline"
-                        className={`text-xs ${protocolColors[protocol] || ''}`}
-                      >
-                        {protocol.replace(/_/g, ' ')}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Leadership */}
-                <div>
-                  <p className="text-xs text-muted-foreground mb-1">Leadership:</p>
-                  <div className="text-sm">
-                    <p className="font-medium">{community.identity.leadership?.primaryContact.name}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {community.identity.leadership?.primaryContact.culturalTitle || community.identity.leadership?.primaryContact.role}
-                    </p>
-                  </div>
-
-                  {community.identity.leadership?.eldersCouncil && community.identity.leadership.eldersCouncil?.length > 0 && (
-                    <div className="mt-2 flex items-center text-xs text-muted-foreground">
-                      <Crown className="w-3 h-3 mr-1" />
-                      {community.identity.leadership.eldersCouncil.length} Elder{community.identity.leadership.eldersCouncil.length > 1 ? 's' : ''} in Council
+              )}
+            >
+              <Card key={community.communityIdentifier} className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardHeader>
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg mb-2 font-cultural">
+                        {community.identity.title}
+                      </CardTitle>
+                      <CardDescription className="text-sm">
+                        {community.identity.description}
+                      </CardDescription>
                     </div>
-                  )}
-                </div>
-
-                {/* Stats */}
-                <div className="grid grid-cols-2 gap-4 pt-4 border-t text-center">
-                  <div>
-                    <p className="text-lg font-semibold text-primary">{community.stats.totalItems}</p>
-                    <p className="text-xs text-muted-foreground">Knowledge Items</p>
+                    <Badge className={`${governanceColors[community.identity.governanceModel ?? CommunityGovernance.ELDER_COUNCIL]} flex items-center space-x-1`}>
+                      <GovernanceIcon className="w-3 h-3" />
+                      <span className="text-xs">
+                        {community.identity.governanceModel === CommunityGovernance.ELDER_COUNCIL ? 'Elder' :
+                          community.identity.governanceModel === CommunityGovernance.INDIGENOUS_COUNCIL ? 'Council' :
+                            'Steward'}
+                      </span>
+                    </Badge>
                   </div>
-                  <div>
-                    <p className="text-lg font-semibold text-primary">{community.stats.memberCount}</p>
-                    <p className="text-xs text-muted-foreground">Members</p>
-                  </div>
-                </div>
+                </CardHeader>
 
-                <Button className="w-full" variant="outline"  onClick={() => handleViewCommunity(community)}>
-                  View Community
-                </Button>
-              </CardContent>
-            </Card>
+                <CardContent className="space-y-4">
+                  {/* Location and Language */}
+                  <div className="space-y-2">
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <MapPin className="w-4 h-4 mr-2" />
+                      {community.identity.region}
+                    </div>
+                  <div className="flex items-center text-sm text-muted-foreground">
+                      <Calendar className="w-4 h-4 mr-2" />
+                      {community?.identity?.establishedDate ? (
+                        <>
+                          Est. {new Date(community.identity.establishedDate).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                          })}
+                        </>
+                      ) : (
+                        <span>Est. N/A</span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Languages */}
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Languages:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {community.identity.language?.split(', ').map((lang, index) => (
+                        <Badge key={index} variant="outline" className="text-xs font-cultural">
+                          {lang}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Cultural Protocols */}
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Cultural Protocols:</p>
+                    <div className="flex flex-wrap gap-1">
+                      {community.protocols.map((protocol, index) => (
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className={`text-xs ${protocolColors[protocol] || ''}`}
+                        >
+                          {protocol.replace(/_/g, ' ')}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Leadership */}
+                  <div>
+                    <p className="text-xs text-muted-foreground mb-1">Leadership:</p>
+                    <div className="text-sm">
+                      <p className="font-medium">{community.identity.leadership?.primaryContact.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {community.identity.leadership?.primaryContact.culturalTitle || community.identity.leadership?.primaryContact.role}
+                      </p>
+                    </div>
+
+                    {community.identity.leadership?.eldersCouncil && community.identity.leadership.eldersCouncil?.length > 0 && (
+                      <div className="mt-2 flex items-center text-xs text-muted-foreground">
+                        <Crown className="w-3 h-3 mr-1" />
+                        {community.identity.leadership.eldersCouncil.length} Elder{community.identity.leadership.eldersCouncil.length > 1 ? 's' : ''} in Council
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Stats */}
+                  <div className="grid grid-cols-2 gap-4 pt-4 border-t text-center">
+                    <div>
+                      <p className="text-lg font-semibold text-primary">{community.stats.totalItems}</p>
+                      <p className="text-xs text-muted-foreground">Knowledge Items</p>
+                    </div>
+                    <div>
+                      <p className="text-lg font-semibold text-primary">{community.stats.memberCount}</p>
+                      <p className="text-xs text-muted-foreground">Members</p>
+                    </div>
+                  </div>
+
+                  <Button className="w-full" variant="outline" onClick={() => handleViewCommunity(community)}>
+                    View Community
+                  </Button>
+                </CardContent>
+              </Card>
 
             </Link>
           );

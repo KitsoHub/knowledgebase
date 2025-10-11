@@ -42,7 +42,7 @@ export default function PublicationsBrowse() {
     };
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background mt-28">
             {/* Header */}
             <section className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-12">
                 {pathname === '/publications34' && (

@@ -54,7 +54,7 @@ export default async function Home() {
 
                     {/* Contact */}
                     <ContributionSection />
-                    <MainFooter />
+                    {/* <MainFooter /> */}
                     {/* <Chatbot /> */}
                 </main>
             </div>
