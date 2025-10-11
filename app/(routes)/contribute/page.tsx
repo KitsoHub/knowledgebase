@@ -166,7 +166,7 @@ export default function ContributionPage() {
   };
   return (
 
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen mt-28'>
       <HomeNavigation />
       <section>
         <div className='mb-1 text-center bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-16'>

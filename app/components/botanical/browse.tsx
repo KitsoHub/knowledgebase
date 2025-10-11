@@ -79,7 +79,7 @@ export default function BotanicalBrowse() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20 mt-28">
 
 
       <div className="container mx-auto px-4 py-8">

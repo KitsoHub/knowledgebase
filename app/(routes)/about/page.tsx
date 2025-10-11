@@ -97,7 +97,7 @@ function SectionHeader({ title, subtitle, index }: SectionHeaderProps) {
 export default function AboutPage() {
         const { aboutUsContent } = useAboutUsStore();
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6">
+    <div className="max-w-7xl mx-auto p-6 space-y-6 mt-28">
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}

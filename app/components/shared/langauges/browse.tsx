@@ -2,7 +2,7 @@
 import { publicationsData } from '@/app/utils/mock/publications'
 import { useState, useEffect } from 'react'
 
-import { ArrowLeft, BookOpen, Globe } from 'lucide-react'
+import { ArrowLeft, BookOpen, Crown, Globe } from 'lucide-react'
 
 import { usePathname } from 'next/navigation'
 
@@ -12,6 +12,7 @@ import { Button } from '../../ui/button'
 
 import { Separator } from '../../ui/separator'
 import LanguageCard from './language-card'
+import { motion } from 'framer-motion'
 
 
 export default function LanguagesBrowse() {
@@ -47,36 +48,38 @@ export default function LanguagesBrowse() {
     // };
 
     return (
-        <div className="min-h-screen bg-background">
+    <div className="max-w-7xl mx-auto p-6 space-y-6 mt-28">
             {/* Header */}
-            <section className="bg-gradient-to-r from-blue-50 to-indigo-100 dark:from-blue-590/50 dark:hover:to-indigo-950/50 py-8">
-                {pathname === '/learn' && (
-                    <Button
-                        asChild
-                        variant="link"
-                        className="mt-4 sm:mt-0 ml-4 sm:ml-0"
-                    >
-                        <Link href="/" className="flex items-center">
-                            <ArrowLeft className="ml-2 h-4 w-4" />
-                            Back
-                        </Link>
-                    </Button>
-                )}
 
-                <div className="container mx-auto px-4 text-center">
-                    <div className="max-w-2xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-primary/5 p-8 md:p-12 text-center"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(30,64,175,0.1),transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(202,138,4,0.1),transparent_50%)]" />
 
-                        <h1 className="text-2xl font-bold">
-                             Practice local languages with Puo.io
-                        </h1>
-                        <br />
-                        <p className="mt-4 text-xl text-gray-600 dark:text-gray-400">
-                            Learn smarter, not harder with our simple and
-                            interactive tools, Start speaking confidently today!
-                        </p>
-                    </div>
-                </div>
-            </section>
+        <motion.div
+          animate={{
+            rotate: [0, 10, -10, 0],
+            scale: [1, 1.1, 1.1, 1]
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 4,
+            ease: "easeInOut"
+          }}
+          className="inline-block mb-4"
+        >
+        </motion.div>
+
+        <h1 className="text-4xl md:text-5xl mb-4"> Practice local languages with Puo.io</h1>
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            Learn smarter, not harder with our simple and interactive tools, Start speaking confidently today!
+        </p>
+      </motion.div>
+
 
             {/* Main Content */}
             <main className="pt-10 pb-16 px-4 mx-auto">

@@ -5,7 +5,7 @@ import { AboutContent, AboutState, PastContributor, TeamMember } from "../types/
 
 const initialTeamMembers: TeamMember[] = [
  {
-  ikmsTeamIdentifier: 'project-team-1',
+  ikmsTeamIdentifier: 'project-team-5',
   name: 'Ogaufi Mokopakgosi',
   email: 'ogaufimokopakgosi3@gmail.com',
   title: 'AI Researcher & Front-End Developer',
@@ -21,7 +21,7 @@ const initialTeamMembers: TeamMember[] = [
 },
 
   {
-    ikmsTeamIdentifier: 'project-team-2',
+    ikmsTeamIdentifier: 'project-team-6',
     name: 'Kgosi Thembani',
     email: 'kgosithembani@gmail.com',
     title: 'Project Manager',
@@ -36,12 +36,12 @@ const initialTeamMembers: TeamMember[] = [
     isActive: true,
   },
     {
-    ikmsTeamIdentifier: 'project-team-3',
+    ikmsTeamIdentifier: 'project-team-7',
     name: 'Tumani Modimo',
     email: 'ntombimodimo@gmail.com',
     title: 'Cloud Engineer',
     role: 'Lingustics Lead',
-    culturalAffiliation: 'Botswana, Ikalanga',
+    culturalAffiliation: 'Botswana, Bukalanga tribe',
     imageUrl: "assets/team/tumaniModimo.jpg",
     bio: 'Tumani Modimo is a Cloud Professional certified as an Aviatrix ACE Multicloud Network Associate and currently completing the AWS re/Start Cloud Practitioner program. I design and implement scalable, secure, high-performance cloud solutions across AWS, Azure, GCP, and OCI. Passionate about social impact, I have adopted four junior secondary schools in marginalized areas, providing sanitary towels, stationery, and educational support to empower students. I am seeking opportunities in cloud engineering, architecture, and multicloud networking, where I can combine technical expertise with meaningful impact.',
     expertise: ['Multicloud Networking Specialist','Project Management'],

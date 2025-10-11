@@ -48,25 +48,25 @@ const MenuItemCard = memo(
 MenuItemCard.displayName = "MenuItemCard"
 
 const CulturalProtocol = {
-  COMMUNITY_ONLY: "community_only",
-  ELDERS_APPROVAL: "elders_approval",
-  SEASONAL_RESTRICTIONS: "seasonal_restrictions",
-  GENDER_RESTRICTED: "gender_restricted"
+    COMMUNITY_ONLY: "community_only",
+    ELDERS_APPROVAL: "elders_approval",
+    SEASONAL_RESTRICTIONS: "seasonal_restrictions",
+    GENDER_RESTRICTED: "gender_restricted"
 };
 
 const TKLabel = {
-  SECRET_SACRED: "secret_sacred",
-  CULTURAL_INFLUENCE: "cultural_influence",
-  FAMILY_SOCIETY: "family_society",
-  LOCALIZED_TO_PLACE: "localized_to_place"
+    SECRET_SACRED: "secret_sacred",
+    CULTURAL_INFLUENCE: "cultural_influence",
+    FAMILY_SOCIETY: "family_society",
+    LOCALIZED_TO_PLACE: "localized_to_place"
 };
 
 const ContentType = {
-  AUDIO: "audio",
-  VIDEO: "video",
-  TEXT: "text",
-  IMAGE: "image",
-  DOCUMENT: "document"
+    AUDIO: "audio",
+    VIDEO: "video",
+    TEXT: "text",
+    IMAGE: "image",
+    DOCUMENT: "document"
 };
 
 const Navigation = memo(() => {
@@ -124,155 +124,154 @@ const Navigation = memo(() => {
 
                             </NavigationMenuItem>
 
-    {/* Communities (with cultural structure) */}
-    <NavigationMenuItem>
-      <NavigationMenuTrigger className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-sky-50 hover:text-sky-900 focus:bg-sky-50 focus:text-sky-900">
-        Communities
-      </NavigationMenuTrigger>
-      <NavigationMenuContent className="left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out md:absolute md:w-auto">
-        <div className="grid gap-6 p-6 w-[650px] grid-cols-1 bg-white border border-gray-200 rounded-lg shadow-lg">
-          <div className="col-span-2 space-y-6">
-            {/* Community Structure */}
-            <div className="grid gap-4 grid-cols-3">
-              <NavigationMenuLink asChild>
-                <a
-                  href="/communities"
-                  className="flex items-start space-x-4 p-4 rounded-lg hover:bg-sky-50 transition-colors group border border-gray-200 hover:border-sky-300"
-                >
-                  <div className="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center group-hover:bg-sky-200">
-                    <Users className="h-6 w-6 text-sky-600" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900 mb-1">Communities</div>
-                    <p className="text-sm text-slate-600">Nation-level knowledge systems</p>
-                  </div>
-                </a>
-              </NavigationMenuLink>
+                            {/* Communities (with cultural structure) */}
+                            <NavigationMenuItem>
+                                <NavigationMenuTrigger className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-sky-50 hover:text-sky-900 focus:bg-sky-50 focus:text-sky-900">
+                                    Communities
+                                </NavigationMenuTrigger>
+                                <NavigationMenuContent className="left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out md:absolute md:w-auto">
+                                    <div className="grid gap-6 p-6 w-[650px] grid-cols-1 bg-white border border-gray-200 rounded-lg shadow-lg">
+                                        <div className="col-span-2 space-y-6">
+                                            {/* Community Structure */}
+                                            <div className="grid gap-4 grid-cols-3">
+                                                <NavigationMenuLink asChild>
+                                                    <a
+                                                        href="/communities"
+                                                        className="flex items-start space-x-4 p-4 rounded-lg hover:bg-sky-50 transition-colors group border border-gray-200 hover:border-sky-300"
+                                                    >
+                                                        <div className="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center group-hover:bg-sky-200">
+                                                            <Users className="h-6 w-6 text-sky-600" />
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-semibold text-slate-900 mb-1">Communities</div>
+                                                            <p className="text-sm text-slate-600">Nation-level knowledge systems</p>
+                                                        </div>
+                                                    </a>
+                                                </NavigationMenuLink>
 
-              <NavigationMenuLink asChild>
-                <a
-                  href="/sub-communities"
-                  className="flex items-start space-x-4 p-4 rounded-lg hover:bg-sky-50 transition-colors group border border-gray-200 hover:border-sky-300"
-                >
-                  <div className="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center group-hover:bg-sky-200">
-                    <Landmark className="h-6 w-6 text-sky-600" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900 mb-1">Sub-Communities</div>
-                    <p className="text-sm text-slate-600">Regional knowledge keepers</p>
-                  </div>
-                </a>
-              </NavigationMenuLink>
+                                                <NavigationMenuLink asChild>
+                                                    <a
+                                                        href="/sub-communities"
+                                                        className="flex items-start space-x-4 p-4 rounded-lg hover:bg-sky-50 transition-colors group border border-gray-200 hover:border-sky-300"
+                                                    >
+                                                        <div className="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center group-hover:bg-sky-200">
+                                                            <Landmark className="h-6 w-6 text-sky-600" />
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-semibold text-slate-900 mb-1">Sub-Communities</div>
+                                                            <p className="text-sm text-slate-600">Regional knowledge keepers</p>
+                                                        </div>
+                                                    </a>
+                                                </NavigationMenuLink>
 
-              <NavigationMenuLink asChild>
-                <a
-                  href="/collections"
-                  className="flex items-start space-x-4 p-4 rounded-lg hover:bg-sky-50 transition-colors group border border-gray-200 hover:border-sky-300"
-                >
-                  <div className="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center group-hover:bg-sky-200">
-                    <Library className="h-6 w-6 text-sky-600" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900 mb-1">Collections</div>
-                    <p className="text-sm text-slate-600">Curated knowledge repositories</p>
-                  </div>
-                </a>
-              </NavigationMenuLink>
-            </div>
+                                                <NavigationMenuLink asChild>
+                                                    <a
+                                                        href="/collections"
+                                                        className="flex items-start space-x-4 p-4 rounded-lg hover:bg-sky-50 transition-colors group border border-gray-200 hover:border-sky-300"
+                                                    >
+                                                        <div className="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center group-hover:bg-sky-200">
+                                                            <Library className="h-6 w-6 text-sky-600" />
+                                                        </div>
+                                                        <div>
+                                                            <div className="font-semibold text-slate-900 mb-1">Collections</div>
+                                                            <p className="text-sm text-slate-600">Curated knowledge repositories</p>
+                                                        </div>
+                                                    </a>
+                                                </NavigationMenuLink>
+                                            </div>
 
-            {/* Cultural Protocols */}
-            <div>
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-2">
-                CULTURAL PROTOCOLS
-              </h4>
-              <div className="space-y-2">
-                {Object.values(CulturalProtocol).map((protocol) => (
-                  <NavigationMenuLink key={protocol} asChild>
-                    <a
-                      href={`/protocols?protocol=${protocol}`}
-                      className="flex items-center space-x-3 p-2.5 rounded-md hover:bg-sky-50 transition-colors group"
-                    >
-                      <div className="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center group-hover:bg-sky-200">
-                        <Shield className="h-4 w-4 text-sky-600" />
-                      </div>
-                      <span className="text-sm font-medium text-slate-800 capitalize">
-                        {protocol.replace(/_/g, ' ')}
-                      </span>
-                    </a>
-                  </NavigationMenuLink>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
+                                            {/* Cultural Protocols */}
+                                            <div>
+                                                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 mt-2">
+                                                    CULTURAL PROTOCOLS
+                                                </h4>
+                                                <div className="space-y-2">
+                                                    {Object.values(CulturalProtocol).map((protocol) => (
+                                                        <NavigationMenuLink key={protocol} asChild>
+                                                            <a
+                                                                href={`/protocols?protocol=${protocol}`}
+                                                                className="flex items-center space-x-3 p-2.5 rounded-md hover:bg-sky-50 transition-colors group"
+                                                            >
+                                                                <div className="w-8 h-8 bg-sky-100 rounded-full flex items-center justify-center group-hover:bg-sky-200">
+                                                                    <Shield className="h-4 w-4 text-sky-600" />
+                                                                </div>
+                                                                <span className="text-sm font-medium text-slate-800 capitalize">
+                                                                    {protocol.replace(/_/g, ' ')}
+                                                                </span>
+                                                            </a>
+                                                        </NavigationMenuLink>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem>
 
-    {/* Knowledge Resources */}
-    <NavigationMenuItem>
-      <NavigationMenuTrigger className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-sky-50 hover:text-sky-900 focus:bg-sky-50 focus:text-sky-900">
-        Knowledge Resources
-      </NavigationMenuTrigger>
-      <NavigationMenuContent className="left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out md:absolute md:w-auto">
-        <div className="grid gap-6 p-6 w-[650px] grid-cols-1 bg-white border border-gray-200 rounded-lg shadow-lg">
-          <div className="col-span-2 space-y-6">
-            {/* Content Types */}
-            <div className="grid gap-4 grid-cols-3">
-              {Object.values(ContentType).map((type) => (
-                <NavigationMenuLink key={type} asChild>
-                  <a
-                    href={`/resources?type=${type}`}
-                    className="flex flex-col items-start space-y-3 p-4 rounded-lg hover:bg-sky-50 transition-colors group border border-gray-200 hover:border-sky-300"
-                  >
-                    <div className="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center group-hover:bg-sky-200">
-                      {type === 'audio' && <Mic className="h-6 w-6 text-sky-600" />}
-                      {type === 'video' && <Video className="h-6 w-6 text-sky-600" />}
-                      {type === 'text' && <BookOpen className="h-6 w-6 text-sky-600" />}
-                      {type === 'image' && <ImagesIcon className="h-6 w-6 text-sky-600" />}
-                      {type === 'document' && <FileText className="h-6 w-6 text-sky-600" />}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-slate-900 capitalize mb-1">
-                        {type} Resources
-                      </div>
-                      <p className="text-sm text-slate-600">
-                        {type === 'audio' && 'Oral histories and songs'}
-                        {type === 'video' && 'Ceremonial recordings'}
-                        {type === 'text' && 'Written knowledge'}
-                        {type === 'image' && 'Cultural documentation'}
-                        {type === 'document' && 'Academic materials'}
-                      </p>
-                    </div>
-                  </a>
-                </NavigationMenuLink>
-              ))}
-            </div>
+                            {/* Knowledge Resources */}
+                            {/* <NavigationMenuItem>
+                                <NavigationMenuTrigger className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-sky-50 hover:text-sky-900 focus:bg-sky-50 focus:text-sky-900">
+                                    Knowledge Resources
+                                </NavigationMenuTrigger>
+                                <NavigationMenuContent className="left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out md:absolute md:w-auto">
+                                    <div className="grid gap-6 p-6 w-[650px] grid-cols-1 bg-white border border-gray-200 rounded-lg shadow-lg">
+                                        <div className="col-span-2 space-y-6">
 
-            {/* TK Labels */}
-            <div>
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
-                TRADITIONAL KNOWLEDGE LABELS
-              </h4>
-              <div className="grid grid-cols-2 gap-2">
-                {Object.values(TKLabel).map((label) => (
-                  <NavigationMenuLink key={label} asChild>
-                    <a
-                      href={`/tk-labels?label=${label}`}
-                      className="flex items-center space-x-2 p-2.5 rounded-md hover:bg-sky-50 transition-colors group"
-                    >
-                      <div className="w-2 h-2 rounded-full bg-sky-500" />
-                      <span className="text-sm text-slate-700 capitalize">
-                        {label.replace(/_/g, ' ')}
-                      </span>
-                    </a>
-                  </NavigationMenuLink>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
+                                            <div className="grid gap-4 grid-cols-3">
+                                                {Object.values(ContentType).map((type) => (
+                                                    <NavigationMenuLink key={type} asChild>
+                                                        <a
+                                                            href={`/resources?type=${type}`}
+                                                            className="flex flex-col items-start space-y-3 p-4 rounded-lg hover:bg-sky-50 transition-colors group border border-gray-200 hover:border-sky-300"
+                                                        >
+                                                            <div className="w-12 h-12 bg-sky-100 rounded-lg flex items-center justify-center group-hover:bg-sky-200">
+                                                                {type === 'audio' && <Mic className="h-6 w-6 text-sky-600" />}
+                                                                {type === 'video' && <Video className="h-6 w-6 text-sky-600" />}
+                                                                {type === 'text' && <BookOpen className="h-6 w-6 text-sky-600" />}
+                                                                {type === 'image' && <ImagesIcon className="h-6 w-6 text-sky-600" />}
+                                                                {type === 'document' && <FileText className="h-6 w-6 text-sky-600" />}
+                                                            </div>
+                                                            <div>
+                                                                <div className="font-semibold text-slate-900 capitalize mb-1">
+                                                                    {type} Resources
+                                                                </div>
+                                                                <p className="text-sm text-slate-600">
+                                                                    {type === 'audio' && 'Oral histories and songs'}
+                                                                    {type === 'video' && 'Ceremonial recordings'}
+                                                                    {type === 'text' && 'Written knowledge'}
+                                                                    {type === 'image' && 'Cultural documentation'}
+                                                                    {type === 'document' && 'Academic materials'}
+                                                                </p>
+                                                            </div>
+                                                        </a>
+                                                    </NavigationMenuLink>
+                                                ))}
+                                            </div>
+
+                                            <div>
+                                                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+                                                    TRADITIONAL KNOWLEDGE LABELS
+                                                </h4>
+                                                <div className="grid grid-cols-2 gap-2">
+                                                    {Object.values(TKLabel).map((label) => (
+                                                        <NavigationMenuLink key={label} asChild>
+                                                            <a
+                                                                href={`/tk-labels?label=${label}`}
+                                                                className="flex items-center space-x-2 p-2.5 rounded-md hover:bg-sky-50 transition-colors group"
+                                                            >
+                                                                <div className="w-2 h-2 rounded-full bg-sky-500" />
+                                                                <span className="text-sm text-slate-700 capitalize">
+                                                                    {label.replace(/_/g, ' ')}
+                                                                </span>
+                                                            </a>
+                                                        </NavigationMenuLink>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </NavigationMenuContent>
+                            </NavigationMenuItem> */}
 
 
 
@@ -455,8 +454,8 @@ const Navigation = memo(() => {
                                 <NavigationMenuTrigger className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-sky-50 hover:text-sky-900 focus:bg-sky-50 focus:text-sky-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-sky-50/50 data-[state=open]:bg-sky-50/50">
                                     Games
                                 </NavigationMenuTrigger>
-                                <NavigationMenuContent>
-                                    <div className="grid gap-3 p-6 w-[300px]">
+                                <NavigationMenuContent className="left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto">
+                                    <div className="grid gap-3 p-6 w-[650px] grid-cols-3 bg-white border border-gray-200 rounded-lg shadow-lg">
                                         <MenuItemCard href="/games/maele" title="Idioms" description="Idioms games" />
                                     </div>
                                 </NavigationMenuContent>
@@ -465,6 +464,14 @@ const Navigation = memo(() => {
 
                             {/* About */}
                             <NavigationMenuItem>
+                                <NavigationMenuLink
+                                    className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-sky-50 hover:text-sky-900 focus:bg-sky-50 focus:text-sky-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                                    asChild
+                                >
+                                    <NavLink href="/about">AboutUs </NavLink>
+                                </NavigationMenuLink>
+                            </NavigationMenuItem>
+                            {/* <NavigationMenuItem>
                                 <NavigationMenuTrigger className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-transparent px-4 py-2 text-sm font-medium transition-colors hover:bg-sky-50 hover:text-sky-900 focus:bg-sky-50 focus:text-sky-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-sky-50/50 data-[state=open]:bg-sky-50/50">
                                     About
                                 </NavigationMenuTrigger>
@@ -482,7 +489,7 @@ const Navigation = memo(() => {
                                         <MenuItemCard href="/about" title="Join the team" description="join" />
                                     </div>
                                 </NavigationMenuContent>
-                            </NavigationMenuItem>
+                            </NavigationMenuItem> */}
 
 
                             {/* <NavigationMenuItem>
