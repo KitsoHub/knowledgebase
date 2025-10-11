@@ -28,28 +28,28 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
 
   // Placeholder images for team members
   const placeholderImages: Record<string, string> = {
-    'team-1': 'https://images.unsplash.com/photo-1660906863391-4191c6877cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpdmUlMjBhbWVyaWNhbiUyMHdvbWFufGVufDF8fHx8MTc1OTUzNjQ5MXww&ixlib=rb-4.1.0&q=80&w=1080',
-    'team-2': 'https://images.unsplash.com/photo-1582140161498-41c99a3721e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZ2Vub3VzJTIwZWxkZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NTk1MzY0OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    'team-3': 'https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTQ0ODg3OHww&ixlib=rb-4.1.0&q=80&w=1080',
-    'team-4': 'https://images.unsplash.com/photo-1652471949169-9c587e8898cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1OTUzNDE5NHww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-1': 'https://images.unsplash.com/photo-1660906863391-4191c6877cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpdmUlMjBhbWVyaWNhbiUyMHdvbWFufGVufDF8fHx8MTc1OTUzNjQ5MXww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-2': 'https://images.unsplash.com/photo-1582140161498-41c99a3721e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZ2Vub3VzJTIwZWxkZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NTk1MzY0OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-3': 'https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTQ0ODg3OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-4': 'https://images.unsplash.com/photo-1652471949169-9c587e8898cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1OTUzNDE5NHww&ixlib=rb-4.1.0&q=80&w=1080',
   };
 
   const imageUrl = member.imageUrl || placeholderImages[member.ikmsTeamIdentifier];
 
   return (
     <Card
-      className="overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer"
+      className="overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer border-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <CardContent className="p-0">
+      <CardContent className="item-center content-center ">
         {/* Image Header */}
-        <div className="relative h-48 bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden">
+        <div className="relative h-56 w-56 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden justify-center mx-auto">
           {imageUrl ? (
             <ImageWithFallback
               src={imageUrl}
               alt={member.name}
-              className="w-full h-full object-cover"
+              className="w-full h-full avatar "
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -106,12 +106,12 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
           </div>
 
           {/* Quick Bio Preview */}
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          {/* <p className="text-sm text-muted-foreground line-clamp-2">
             {member.bio}
-          </p>
+          </p> */}
 
           {/* Expertise Tags */}
-          {member.expertise && member.expertise.length > 0 && (
+          {/* {member.expertise && member.expertise.length > 0 && (
             <div className="flex flex-wrap gap-1">
               {member.expertise.slice(0, 2).map((skill, index) => (
                 <Badge key={index} variant="secondary" className="text-xs">
@@ -124,9 +124,8 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
                 </Badge>
               )}
             </div>
-          )}
+          )} */}
 
-          {/* Quick Actions */}
           <div className="flex items-center space-x-2 pt-2 border-t">
             {member.email && (
               <Button

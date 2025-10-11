@@ -71,7 +71,7 @@ export default function TeamDirectory() {
             </div>
 
             {/* Past Contributors */}
-            {pastContributors.length > 0 && (
+            {pastContributors && pastContributors.length > 0 && (
                 <>
                     <Separator className="my-8" />
 

@@ -15,10 +15,10 @@ interface TeamMemberDialogProps {
 export function TeamMemberDialog({ member, open, onOpenChange }: TeamMemberDialogProps) {
   // Placeholder images for team members
   const placeholderImages: Record<string, string> = {
-    'team-1': 'https://images.unsplash.com/photo-1660906863391-4191c6877cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpdmUlMjBhbWVyaWNhbiUyMHdvbWFufGVufDF8fHx8MTc1OTUzNjQ5MXww&ixlib=rb-4.1.0&q=80&w=1080',
-    'team-2': 'https://images.unsplash.com/photo-1582140161498-41c99a3721e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZ2Vub3VzJTIwZWxkZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NTk1MzY0OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    'team-3': 'https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTQ0ODg3OHww&ixlib=rb-4.1.0&q=80&w=1080',
-    'team-4': 'https://images.unsplash.com/photo-1652471949169-9c587e8898cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1OTUzNDE5NHww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-1': 'https://images.unsplash.com/photo-1660906863391-4191c6877cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpdmUlMjBhbWVyaWNhbiUyMHdvbWFufGVufDF8fHx8MTc1OTUzNjQ5MXww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-2': 'https://images.unsplash.com/photo-1582140161498-41c99a3721e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZ2Vub3VzJTIwZWxkZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NTk1MzY0OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-3': 'https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTQ0ODg3OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-4': 'https://images.unsplash.com/photo-1652471949169-9c587e8898cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1OTUzNDE5NHww&ixlib=rb-4.1.0&q=80&w=1080',
   };
 
   const imageUrl = member.imageUrl || placeholderImages[member.ikmsTeamIdentifier];

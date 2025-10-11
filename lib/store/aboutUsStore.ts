@@ -5,15 +5,15 @@ import { AboutContent, AboutState, PastContributor, TeamMember } from "../types/
 
 const initialTeamMembers: TeamMember[] = [
  {
-  ikmsTeamIdentifier: 'team-1',
+  ikmsTeamIdentifier: 'project-team-1',
   name: 'Ogaufi Mokopakgosi',
   email: 'ogaufimokopakgosi3@gmail.com',
   title: 'AI Researcher & Front-End Developer',
-  role: 'Self-Taught Coder | AI Researcher | Electrical Engineering Student',
+  role: 'AI Researcher',
   culturalAffiliation: 'Botswana',
-  imageUrl: 'assets/team/ogaufi.jpg', // you can add a profile image URL later
+  imageUrl: 'assets/team/ogaufiMokopakgosi.jpg',
   bio: 'Ogaufi Mokopakgosi is a self-taught coder, AI researcher, and a final-year Electrical Engineering student at the University of Botswana. Passionate about advancing indigenous language technology, Ogaufi focuses on AI development, front-end design, and promoting cultural innovation through technology.',
-  expertise: ['Artificial Intelligence', 'Front-End Development', 'Electrical Engineering', 'Cultural Innovation', 'Language Technology'],
+  expertise: ['Artificial Intelligence', 'Front-End Development', 'Electrical Engineering', 'Language Technology'],
   joinedDate: new Date('2025-01-01'),
   linkedIn: 'https://linkedin.com/in/ogaufimokopakgosi',
   website: undefined,
@@ -21,46 +21,36 @@ const initialTeamMembers: TeamMember[] = [
 },
 
   {
-    ikmsTeamIdentifier: 'team-2',
-    name: 'Elder James Crow',
-    email: 'james@anishinaabe.org',
-    title: 'Cultural Advisor',
-    role: 'Traditional Elder & Wisdom Keeper',
-    culturalAffiliation: 'Anishinaabe Nation',
-    imageUrl: undefined,
-    bio: 'Elder James Crow has served as a spiritual leader and cultural advisor for over 40 years. His deep knowledge of traditional practices and ceremonial protocols guides the ethical framework of the portal.',
-    expertise: ['Ceremonial Practices', 'Traditional Hunting', 'Oral History', 'Spiritual Leadership'],
-    joinedDate: new Date('2016-01-10'),
+    ikmsTeamIdentifier: 'project-team-2',
+    name: 'Kgosi Thembani',
+    email: 'kgosithembani@gmail.com',
+    title: 'Project Manager',
+    role: 'Researcher',
+    culturalAffiliation: 'Botswana',
+    imageUrl: "assets/team/kgosiThembani.jpg",
+    bio: 'Kgosi Thembani is a Botswana-based project manager, researcher, and innovation strategist dedicated to leveraging digital transformation and indigenous knowledge for sustainable national development. I blend ethical, thoughtful research with hands-on innovation, always looking for ways to bridge the gap between legacy systems and modern solutions.',
+    expertise: ['Project Management', 'Business Analysis', 'Leadership'],
+    joinedDate: new Date('2025-01-01'),
+    linkedIn: 'https://www.linkedin.com/in/kgosi-thembani-87695ba9/',
+    website: undefined,
     isActive: true,
   },
-  {
-    ikmsTeamIdentifier: 'team-3',
-    name: 'Mary Jourdain',
-    email: 'mary@ojibwe.org',
-    title: 'Language Preservation Lead',
-    role: 'Language Keeper',
-    culturalAffiliation: 'Ojibwe Nation',
-    imageUrl: undefined,
-    bio: 'Mary Jourdain (Gichi-manidoo-ikwe) is dedicated to preserving the Ojibwe language through innovative teaching methods and digital resources. She leads language revitalization initiatives across multiple communities.',
-    expertise: ['Ojibwe Language', 'Language Revitalization', 'Educational Technology', 'Community Teaching'],
-    joinedDate: new Date('2018-09-01'),
-    linkedIn: 'https://linkedin.com/in/maryjourdain',
+    {
+    ikmsTeamIdentifier: 'project-team-3',
+    name: 'Tumani Modimo',
+    email: 'ntombimodimo@gmail.com',
+    title: 'Cloud Engineer',
+    role: 'Lingustics Lead',
+    culturalAffiliation: 'Botswana, Ikalanga',
+    imageUrl: "assets/team/tumaniModimo.jpg",
+    bio: 'Tumani Modimo is a Cloud Professional certified as an Aviatrix ACE Multicloud Network Associate and currently completing the AWS re/Start Cloud Practitioner program. I design and implement scalable, secure, high-performance cloud solutions across AWS, Azure, GCP, and OCI. Passionate about social impact, I have adopted four junior secondary schools in marginalized areas, providing sanitary towels, stationery, and educational support to empower students. I am seeking opportunities in cloud engineering, architecture, and multicloud networking, where I can combine technical expertise with meaningful impact.',
+    expertise: ['Multicloud Networking Specialist','Project Management'],
+    joinedDate: new Date('2025-01-01'),
+    linkedIn: 'https://www.linkedin.com/in/tumanimodimo/',
+    website: undefined,
     isActive: true,
   },
-  {
-    ikmsTeamIdentifier: 'team-4',
-    name: 'Dr. Sarah White Eagle',
-    email: 'sarah@ikportal.org',
-    title: 'Technology Director',
-    role: 'Lead Developer & Systems Architect',
-    culturalAffiliation: 'Lakota Nation',
-    imageUrl: undefined,
-    bio: 'Dr. White Eagle bridges traditional knowledge with modern technology. She specializes in building culturally-responsive digital platforms and has published extensively on Indigenous data sovereignty.',
-    expertise: ['Software Development', 'Data Sovereignty', 'Digital Ethics', 'System Architecture'],
-    joinedDate: new Date('2017-06-20'),
-    website: 'https://sarahwhiteeagle.com',
-    isActive: true,
-  },
+
 ];
 
 
@@ -164,31 +154,26 @@ export const useAboutUsStore = create<AboutState>()(
     persist(
         (set,get)=>({
                   teamMembers: initialTeamMembers,
-      pastContributors: initialPastContributors,
+      // pastContributors: initialPastContributors,
       aboutUsContent: initialAboutContent,
 
-
-    //   add
     addTeamMember:(member)=>set((state)=>({
         teamMembers: [...state.teamMembers, member],
     })),
 
-    // update
     updateTeamMember:(id, updatedMember)=>set((state)=>({
         teamMembers: state.teamMembers.map((member)=> member.ikmsTeamIdentifier === id ?
          {...member, ...updatedMember }: member)
     })),
 
-    // remove
     removeTeamMember:(id)=>set((state)=>({
         teamMembers: state.teamMembers.filter((member)=> member.ikmsTeamIdentifier != id),
     })),
 
-    //add past contributor
-    addPastContributor:(contributor)=>set((state)=>({
-        pastContributors: [...state.pastContributors, contributor],
-    })),
-    //update content
+    // addPastContributor:(contributor)=>set((state)=>({
+    //     pastContributors: [...state.pastContributors, contributor],
+    // })),
+
     updateAboutUsContent:(content)=>set((state)=>({
         aboutUsContent:{
             ...state.aboutUsContent,

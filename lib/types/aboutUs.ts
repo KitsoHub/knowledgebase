@@ -1,5 +1,4 @@
 
-
 export interface TeamMember {
   ikmsTeamIdentifier: string;
   name:string;
@@ -69,12 +68,12 @@ export interface AboutContent {
 
 export interface AboutState{
     teamMembers: TeamMember[];
-    pastContributors: PastContributor[];
+    pastContributors?: PastContributor[];
     aboutUsContent: AboutContent;
     addTeamMember: (member: TeamMember) => void;
     updateTeamMember:(id: string, member: Partial<TeamMember>)=> void;
     removeTeamMember: (id: string) => void;
-    addPastContributor: (contributor: PastContributor)=>void;
+    // addPastContributor: (contributor: PastContributor)=>void;
     updateAboutUsContent: (conten: Partial<AboutContent>)=> void;
 
 }
