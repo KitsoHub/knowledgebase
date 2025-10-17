@@ -3,11 +3,12 @@
 import PatentAdminSidebar from '@/app/utils/nav/patentAdminSidebar'
 import Topbar from '@/app/utils/nav/topbar'
 import { useState } from 'react'
+import AdminSidebar from '../utils/nav/adminSidebar'
 
 interface LayoutProps {
     children: React.ReactNode
 }
-const PatentAppLayout: React.FC<LayoutProps> = ({ children }) => {
+const AdminAppLayout: React.FC<LayoutProps> = ({ children }) => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen)
@@ -16,7 +17,8 @@ const PatentAppLayout: React.FC<LayoutProps> = ({ children }) => {
 
         <div className="flex flex-1 min-h-screen bg-background">
             {/* Sidebar */}
-            <PatentAdminSidebar isCollapsed={isSidebarOpen} onToggle={toggleSidebar} />
+            {/* <PatentAdminSidebar isCollapsed={isSidebarOpen} onToggle={toggleSidebar} /> */}
+             <AdminSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
             {/* Main content area */}
             <div
@@ -45,4 +47,4 @@ const PatentAppLayout: React.FC<LayoutProps> = ({ children }) => {
     )
 }
 
-export default PatentAppLayout
+export default AdminAppLayout

@@ -7,11 +7,11 @@ import { HeroSection } from '@/app/components/shared/hero-section'
 //import { auth, currentUser } from '@clerk/nextjs/server'
 import React from 'react'
 
-import MainFooter from './components/layout/footer'
+import MainFooter from '../components/layout/footer'
 import FairUsageProvider from '@/lib/providers/fair-usage-provider'
 // import MapPage from './(routes)/map/page'
-import Navigation from './utils/nav/navigation'
-import ContributionSection from './components/shared/landing/contribution-section'
+import Navigation from '../utils/nav/navigation'
+import ContributionSection from '../components/shared/landing/contribution-section'
 //import prisma from '@/lib/prisma'
 
 export default async function Home() {
@@ -33,7 +33,7 @@ export default async function Home() {
         <FairUsageProvider>
            <div className="min-h-screen flex flex-col ">
                 {/* <HomeNavigation/> */}
-                <Navigation />
+                {/* <Navigation /> */}
                 <main className="flex-grow">
 
                     {/* TODO: update the hero section */}
@@ -57,6 +57,7 @@ export default async function Home() {
                     {/* <MainFooter /> */}
                     {/* <Chatbot /> */}
                 </main>
+                {/* <MainFooter /> */}
             </div>
         </FairUsageProvider>
     )
