@@ -91,7 +91,7 @@ const initialPastContributors: PastContributor[] = [
 
 const initialAboutContent: AboutContent = {
   ikms: {
-    mission: 'The Indigenous Knowledge Portal is dedicated to preserving, protecting, and sharing traditional knowledge in a manner that respects Indigenous cultural protocols and supports community sovereignty over cultural heritage.',
+    mission: 'The Indigenous Knowledge Management System is dedicated to preserving, protecting, and sharing traditional knowledge in a manner that respects Indigenous cultural protocols and supports community sovereignty over cultural heritage.',
     vision: 'We envision a digital future where Indigenous communities have full control over their traditional knowledge, where cultural protocols are embedded in technology, and where knowledge sharing strengthens both individual communities and intercultural understanding.',
     overview: 'Built on the principles of community governance and cultural respect, our portal provides Indigenous communities with tools to manage their traditional knowledge according to their own cultural protocols. We implement Traditional Knowledge (TK) Labels, support multiple governance models, and ensure that access to sensitive cultural information is controlled by the communities themselves.',
     lastUpdated: new Date('2025-10-04'),
