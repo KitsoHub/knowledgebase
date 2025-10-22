@@ -24,7 +24,7 @@ export default function PublicLayout({
             <html lang="en" suppressHydrationWarning>
                 <body className={inter.className}>
 
-                <Navigation />
+                  <Navigation />
                     {children}
                     <MainFooter />
                 </body>

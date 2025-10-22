@@ -8,7 +8,7 @@ import Container from '@/app/components/shared/games/container'
 
 export default function Games() {
     return (
-        <section className=" from-[#b87a4a] to-[#4a2b18] h-screen w-screen p-6">
+        <section className=" from-[#b87a4a] to-[#4a2b18] h-400 w-screen p-6 ">
             <div className="max-w-6xl mx-auto">
                 <div className="mb-4">
                     <Button asChild variant="link" className="mt-4 sm:mt-0 text-white-600">
