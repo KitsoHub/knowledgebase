@@ -263,10 +263,7 @@
 }
 
 .avatar {
-  width: 225px;
-  height: 225px;
-  object-fit: cover;
-  border-radius: 50%;
+  height: 360px;
   overflow: hidden;
   display: block;
 }
