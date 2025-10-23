@@ -166,7 +166,7 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   }
 
   return (
-    <div className="flex items-center justify-center mt-12 bg-white relative overflow-hidden">
+    <div className="flex items-center justify-center mt-16 pt-50 bg-white relative overflow-hidden">
       <Background />
       {audio}
       {wrong_audio}
@@ -264,17 +264,17 @@ export default function GamePage() {
   const [activeTab, setActiveTab] = useState('game');
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100  mb-10 relative overflow-hidden">
       <div className="max-w-3xl mx-auto pt-6">
         <div className="flex justify-center mb-6">
-          <div className="flex space-x-4 bg-white rounded-lg shadow-md p-1">
+          <div className="flex space-x-4 bg-white rounded-lg shadow-md p-1 mt-20">
             <Button
               variant={activeTab === 'game' ? 'default' : 'outline'}
               className={`${
                 activeTab === 'game'
-                  ? 'bg-purple-600 text-white hover:bg-purple-700'
+                  ? 'bg-[#81593f] text-white hover:bg-[#4a2b18]'
                   : 'text-gray-700'
-              } px-6 py-2 rounded-md`}
+              } px-6 py-2 rounded-md `}
               onClick={() => setActiveTab('game')}
             >
               Game
@@ -283,7 +283,7 @@ export default function GamePage() {
               variant={activeTab === 'leaderboard' ? 'default' : 'outline'}
               className={`${
                 activeTab === 'leaderboard'
-                  ? 'bg-purple-600 text-white hover:bg-purple-700'
+                  ? 'bg-[#81593f] text-white hover:bg-[#4a2b18]'
                   : 'text-gray-700'
               } px-6 py-2 rounded-md`}
               onClick={() => setActiveTab('leaderboard')}

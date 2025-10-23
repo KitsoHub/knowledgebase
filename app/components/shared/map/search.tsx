@@ -54,10 +54,10 @@ export function PublicView({ sites }: PublicViewProps) {
                          site.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          site.tribe?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          site.language?.toLowerCase().includes(searchQuery.toLowerCase());
-    
+
     const matchesCategory = categoryFilter === 'all' || site.category === categoryFilter;
     const matchesLanguage = languageFilter === 'all' || site.language === languageFilter;
-    
+
     return matchesSearch && matchesCategory && matchesLanguage;
   });
 
@@ -86,14 +86,14 @@ export function PublicView({ sites }: PublicViewProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mt-28">
       {/* Header */}
       <div className="text-center py-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">
           Cultural Heritage Explorer
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Discover and explore publicly accessible cultural heritage sites, languages, 
+          Discover and explore publicly accessible cultural heritage sites, languages,
           botanical knowledge, and migration trails from indigenous communities worldwide.
         </p>
         <div className="flex justify-center items-center gap-6 mt-6 text-sm text-gray-600">
@@ -127,7 +127,7 @@ export function PublicView({ sites }: PublicViewProps) {
                 />
               </div>
             </div>
-            
+
             <Select value={categoryFilter} onValueChange={setCategoryFilter}>
               <SelectTrigger className="w-48">
                 <SelectValue placeholder="All categories" />
@@ -173,7 +173,7 @@ export function PublicView({ sites }: PublicViewProps) {
               </Button>
             </div>
           </div>
-          
+
           <div className="flex items-center justify-between mt-4 pt-4 border-t">
             <p className="text-sm text-gray-600">
               Showing {filteredSites.length} of {publicSites.length} sites
@@ -217,16 +217,16 @@ export function PublicView({ sites }: PublicViewProps) {
                   </div>
                 </div>
               </CardHeader>
-              
+
               <CardContent className="space-y-4">
                 <p className="text-sm text-gray-600 line-clamp-3">{site.description}</p>
-                
+
                 <div className="flex items-center gap-4 text-sm text-gray-500">
                   <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
                     <span>{site.latitude.toFixed(2)}, {site.longitude.toFixed(2)}</span>
                   </div>
-                  
+
                   {site.tribe && (
                     <div className="flex items-center gap-1">
                       <Users className="h-4 w-4" />
@@ -256,7 +256,7 @@ export function PublicView({ sites }: PublicViewProps) {
                       </div>
                     )}
                   </div>
-                  
+
                   <Button
                     variant="outline"
                     size="sm"
@@ -300,35 +300,35 @@ export function PublicView({ sites }: PublicViewProps) {
                         </div>
                       </div>
                     </div>
-                    
+
                     <p className="text-gray-600 mb-3 line-clamp-2">{site.description}</p>
-                    
+
                     <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-3">
                       <div className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" />
                         <span>{site.latitude.toFixed(4)}, {site.longitude.toFixed(4)}</span>
                       </div>
-                      
+
                       {site.tribe && (
                         <div className="flex items-center gap-1">
                           <Users className="h-4 w-4" />
                           <span>{site.tribe}</span>
                         </div>
                       )}
-                      
+
                       <div className="flex items-center gap-1">
                         <Calendar className="h-4 w-4" />
                         <span>Added {site.dateCreated}</span>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center justify-between">
                       <div className="flex flex-wrap gap-1">
                         {site.metadata.unesco && <Badge className="text-xs bg-blue-50 text-blue-700">UNESCO</Badge>}
                         {site.metadata.undp && <Badge className="text-xs bg-green-50 text-green-700">UNDP</Badge>}
                         {site.metadata.unicef && <Badge className="text-xs bg-purple-50 text-purple-700">UNICEF</Badge>}
                       </div>
-                      
+
                       <div className="flex items-center gap-3 text-xs text-gray-500">
                         {site.images.length > 0 && (
                           <div className="flex items-center gap-1">
@@ -351,7 +351,7 @@ export function PublicView({ sites }: PublicViewProps) {
                       </div>
                     </div>
                   </div>
-                  
+
                   <Button
                     variant="outline"
                     size="sm"
@@ -416,7 +416,7 @@ export function PublicView({ sites }: PublicViewProps) {
                 </Button>
               </div>
             </CardHeader>
-            
+
             <CardContent className="space-y-6">
               <div>
                 <h4 className="font-medium mb-2">Description</h4>

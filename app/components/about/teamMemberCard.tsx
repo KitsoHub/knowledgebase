@@ -38,18 +38,21 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
 
   return (
     <Card
-      className="overflow-hidden transition-all duration-300 hover:shadow-lg cursor-pointer border-none"
+      className="group block overflow-hidden hover:shadow-lg cursor-pointer border-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+       onClick={onViewDetails}
     >
-      <CardContent className="item-center content-center ">
+      <CardContent className="item-center content-center">
         {/* Image Header */}
-        <div className="relative h-56 w-56 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden justify-center mx-auto">
+        {/* <div className="relative h-56 w-56 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden justify-center mx-auto"> */}
+        <div className="relative h-full w-full overflow-hidden justify-center mx-auto rounded-[8px] transition-transform duration-300 ease-out group-hover:scale-105 group-focus:scale-105 mt-4">
+
           {imageUrl ? (
             <ImageWithFallback
               src={imageUrl}
               alt={member.name}
-              className="w-full h-full avatar "
+              className="aspect-[173/192.22] rounded-[8px] w-full h-full avatar object-cover lg:aspect-[9/10] lg:h-[360px]"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -68,7 +71,6 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
             }`}
           >
             <Button
-              onClick={onViewDetails}
               variant="secondary"
               className="gap-2"
             >
@@ -85,25 +87,30 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
           )}
         </div>
 
+        {/* <div className='flex basis-1/2 flex-col gap-2'>
+        <p className='text-web3-20 lg:text-web3-24 font-body'>{member.name}</p>
+        <p className='text-web3-16 lg:text-web3-18 font-body'>{member.title}</p>
+        </div> */}
+
         {/* Content */}
-        <div className="p-4 space-y-3">
+        <div className="space-y-1 mt-4 text-center">
           {/* Name & Title */}
           <div>
             <h4 className="mb-1">{member.name}</h4>
             <p className="text-sm text-muted-foreground">{member.title}</p>
-            {member.culturalAffiliation && (
+            {/* {member.culturalAffiliation && (
               <p className="text-sm text-primary font-cultural mt-1">
                 {member.culturalAffiliation}
               </p>
-            )}
+            )} */}
           </div>
 
           {/* Role */}
-          <div className="flex items-start space-x-2">
+          {/* <div className="flex items-start space-x-2">
             <Badge variant="outline" className="flex-shrink-0">
               {member.role}
             </Badge>
-          </div>
+          </div> */}
 
           {/* Quick Bio Preview */}
           {/* <p className="text-sm text-muted-foreground line-clamp-2">
@@ -126,8 +133,8 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
             </div>
           )} */}
 
-          <div className="flex items-center space-x-2 pt-2 border-t">
-            {member.email && (
+          {/* <div className="flex items-center space-x-2 pt-2 border-t"> */}
+            {/* {member.email && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -139,8 +146,8 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
               >
                 <Mail className="h-4 w-4" />
               </Button>
-            )}
-            {member.linkedIn && (
+            )} */}
+            {/* {member.linkedIn && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -165,8 +172,8 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
               >
                 <Globe className="h-4 w-4" />
               </Button>
-            )}
-            <Button
+            )} */}
+            {/* <Button
               variant="ghost"
               size="sm"
               className="ml-auto h-8"
@@ -174,8 +181,8 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
             >
               Full Profile
               <ChevronRight className="h-4 w-4 ml-1" />
-            </Button>
-          </div>
+            </Button> */}
+          {/* </div> */}
         </div>
       </CardContent>
     </Card>
