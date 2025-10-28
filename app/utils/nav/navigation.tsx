@@ -8,7 +8,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Button } from "@/app/components/ui/button"
 import { BookOpen, Calendar, FileText, GraduationCap, ImagesIcon, Landmark, Library, Menu, Mic, PenTool, ScrollText, Settings, Shield, UploadCloud, Users, Utensils, Video } from "lucide-react"
 import Link from "next/link"
-
+import ImageLogo from "@/assets/partnerLogos/WeThemba.jpeg"
 
 
 const NavLink = memo((
@@ -75,7 +75,7 @@ const Navigation = memo(() => {
             {/* Logo */}
             <div className="flex items-center space-x-2">
 
-                <img src="assets/communityvector.jpeg" alt="WeThemba Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+                <img src="/assets/communityvector.jpeg" alt="WeThemba Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 {/* <Image className="rounded-full aspect-square object-cover" src="assets/partnerLogos/WeThemba.jpeg" alt="logo" width={50} height={50} /> */}
                 <span className="text-xl font-bold text-slate-900">IKMS</span>
             </div>

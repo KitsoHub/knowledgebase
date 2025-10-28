@@ -24,9 +24,9 @@ export default function NameEntry({ onSubmit}: NameEntryProps) {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4">
+    <div className="h-600 mt-40 relative flex items-center justify-center p-4  overflow-hidden shadow-lg">
       {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#b87a4a] to-[#4a2b18]"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#b87a4a] to-[#4a2b18] rounded-md"></div>
       {/* Basket pattern overlay */}
       <div className="absolute inset-0 bg-[url('/assets/game/morabaraba.png')] bg-repeat opacity-10"></div>
 
@@ -39,7 +39,7 @@ export default function NameEntry({ onSubmit}: NameEntryProps) {
             </div>
           </div>
           <h1 className="text-3xl font-bold tracking-tight text-[#f4e1c1]">
-            Welcome to Traditional Game
+            Welcome to Traditional Idioms Game
           </h1>
           <p className="text-[#f7e9d7]">
             Enter your name to join the leaderboard and compete in traditional games

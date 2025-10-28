@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import React from 'react'
-// import Image from 'next/image'
+import Image from 'next/image'
 
 export default function MainFooter() {
   return (
@@ -42,7 +42,7 @@ export default function MainFooter() {
 
               <div className="flex flex-col items-center space-y-2">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center">
-                    <img src="assets/partnerLogos/WeThemba.jpeg" alt="WeThemba Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+                    <img src="/assets/partnerLogos/WeThemba.jpeg" alt="WeThemba Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
                   <div className="text-xs sm:text-sm font-semibold text-gray-300">WeThemba</div>
@@ -54,7 +54,7 @@ export default function MainFooter() {
 
               <div className="flex flex-col items-center space-y-2">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center">
-                    <img src="assets/partnerLogos/UNIPOD.png" alt="UNIPOD Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+                    <img src="/assets/partnerLogos/UNIPOD.png" alt="UNIPOD Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
                   <div className="text-xs sm:text-sm font-semibold text-gray-300">UNIPOD</div>
@@ -66,7 +66,7 @@ export default function MainFooter() {
 
               <div className="flex flex-col items-center space-y-2">
                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center">
-                    <img src="assets/partnerLogos/UB-logo.png" alt="UB Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+                    <img src="/assets/partnerLogos/UB-logo.png" alt="UB Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
                   <div className="text-xs sm:text-sm font-semibold text-gray-300">Research and Innovation</div>
@@ -78,7 +78,7 @@ export default function MainFooter() {
 
               <div className="flex flex-col items-center space-y-2">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center">
-                    <img src="assets/partnerLogos/UB-logo.png" alt="San Center Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+                    <img src="/assets/partnerLogos/UB-logo.png" alt="San Center Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
                   <div className="text-xs sm:text-sm font-semibold text-gray-300">The San Research Centre</div>
