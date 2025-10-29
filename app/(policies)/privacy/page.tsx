@@ -8,7 +8,7 @@ import React from 'react'
 export default function PrivacyPolicy() {
   const router = useRouter()
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6 mt-28">
+    <div className="max-w-7xl mx-auto p-6 space-y-6">
 
           <Button
                 onClick={() => router.back()}

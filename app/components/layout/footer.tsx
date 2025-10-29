@@ -98,12 +98,12 @@ export default function MainFooter() {
               <Link href="/terms" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
                 Terms of Service
               </Link>
-              <Link href="/accessibility" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
+              {/* <Link href="/accessibility" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
                 Accessibility
               </Link>
               <Link href="/contact" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
                 Contact Us
-              </Link>
+              </Link> */}
             </div>
           </div>
 
