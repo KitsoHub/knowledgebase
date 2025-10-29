@@ -49,3 +49,30 @@ export const fairUsagePolicy = {
         }
     ]
 };
+
+
+export const contactUsData = {
+    title: "Contact Us",
+    personnel: [
+
+        {
+            name: 'Mr Samuel Kabelo',
+            phone: '+267 75457867',
+            emailAddress: 'samuelkabelo1@gmail.com',
+            role: 'Technical Support Team',
+        },
+
+        {
+            name: 'Mr Ogaufi Mokopakgosi',
+            phone: '',
+            emailAddress: 'ogaufimokopakgosi3@gmail.com',
+            role: 'Knowledge Content Manager, Technical Support Team',
+        },
+        // {
+        //     name: 'General Inquiries',
+        //     phone: '',
+        //     emailAddress: 'support@kitsohub.org',
+        //     role: 'Support Team',
+        // },
+    ]
+};
