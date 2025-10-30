@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { createContext, useContext, useState, type ReactNode } from "react"
-import { DndProvider } from "react-dnd"
-import { HTML5Backend } from "react-dnd-html5-backend"
-import type { Application } from "@/lib/data"
+import { createContext, useContext, useState, type ReactNode } from 'react'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import type { Application } from '@/lib/data'
 
 type DndContextType = {
   moveToWorkspace: (application: Application) => void
@@ -13,15 +13,17 @@ type DndContextType = {
 const DndContext = createContext<DndContextType | undefined>(undefined)
 
 export function DndContextProvider({ children }: { children: ReactNode }) {
-  const [workspaceApplications, setWorkspaceApplications] = useState<Application[]>([])
+  const [workspaceApplications, setWorkspaceApplications] = useState<
+    Application[]
+  >([])
 
   const moveToWorkspace = (application: Application) => {
-    setWorkspaceApplications((prev) => {
+    setWorkspaceApplications(prev => {
       // Check if application is already in workspace
-      if (prev.some((app) => app.id === application.id)) {
+      if (prev.some(app => app.id === application.id)) {
         return prev
       }
-      return [...prev, { ...application, status: "Verification" }]
+      return [...prev, { ...application, status: 'Verification' }]
     })
   }
 
@@ -35,7 +37,7 @@ export function DndContextProvider({ children }: { children: ReactNode }) {
 export function useDnd() {
   const context = useContext(DndContext)
   if (context === undefined) {
-    throw new Error("useDnd must be used within a DndContextProvider")
+    throw new Error('useDnd must be used within a DndContextProvider')
   }
   return context
 }

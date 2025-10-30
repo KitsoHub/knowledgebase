@@ -1,27 +1,50 @@
-import { TeamMember } from "@/lib/types/aboutUs";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../ui/dialog";
-import { ImageWithFallback } from "../shared/image-with-fallback";
-import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
-import { Award, Briefcase, Calendar, ExternalLink, Globe, Linkedin, Mail } from "lucide-react";
-import { Separator } from "../ui/separator";
+import { TeamMember } from '@/lib/types/aboutUs'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '../ui/dialog'
+import { ImageWithFallback } from '../shared/image-with-fallback'
+import { Badge } from '../ui/badge'
+import { Button } from '../ui/button'
+import {
+  Award,
+  Briefcase,
+  Calendar,
+  ExternalLink,
+  Globe,
+  Linkedin,
+  Mail,
+} from 'lucide-react'
+import { Separator } from '../ui/separator'
 
 interface TeamMemberDialogProps {
-  member: TeamMember;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
+  member: TeamMember
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
-export function TeamMemberDialog({ member, open, onOpenChange }: TeamMemberDialogProps) {
+export function TeamMemberDialog({
+  member,
+  open,
+  onOpenChange,
+}: TeamMemberDialogProps) {
   // Placeholder images for team members
   const placeholderImages: Record<string, string> = {
-    'project-team-1': 'https://images.unsplash.com/photo-1660906863391-4191c6877cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpdmUlMjBhbWVyaWNhbiUyMHdvbWFufGVufDF8fHx8MTc1OTUzNjQ5MXww&ixlib=rb-4.1.0&q=80&w=1080',
-    'project-team-2': 'https://images.unsplash.com/photo-1582140161498-41c99a3721e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZ2Vub3VzJTIwZWxkZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NTk1MzY0OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    'project-team-3': 'https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTQ0ODg3OHww&ixlib=rb-4.1.0&q=80&w=1080',
-    'project-team-4': 'https://images.unsplash.com/photo-1652471949169-9c587e8898cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1OTUzNDE5NHww&ixlib=rb-4.1.0&q=80&w=1080',
-  };
+    'project-team-1':
+      'https://images.unsplash.com/photo-1660906863391-4191c6877cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpdmUlMjBhbWVyaWNhbiUyMHdvbWFufGVufDF8fHx8MTc1OTUzNjQ5MXww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-2':
+      'https://images.unsplash.com/photo-1582140161498-41c99a3721e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZ2Vub3VzJTIwZWxkZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NTk1MzY0OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-3':
+      'https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTQ0ODg3OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-4':
+      'https://images.unsplash.com/photo-1652471949169-9c587e8898cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1OTUzNDE5NHww&ixlib=rb-4.1.0&q=80&w=1080',
+  }
 
-  const imageUrl = member.imageUrl || placeholderImages[member.ikmsTeamIdentifier];
+  const imageUrl =
+    member.imageUrl || placeholderImages[member.ikmsTeamIdentifier]
 
   // Get initials for avatar fallback
   const getInitials = (name: string) => {
@@ -30,14 +53,16 @@ export function TeamMemberDialog({ member, open, onOpenChange }: TeamMemberDialo
       .map(part => part[0])
       .join('')
       .toUpperCase()
-      .slice(0, 2);
-  };
+      .slice(0, 2)
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="sr-only">{member.name} - Team Profile</DialogTitle>
+          <DialogTitle className="sr-only">
+            {member.name} - Team Profile
+          </DialogTitle>
           <DialogDescription className="sr-only">
             Detailed profile information for {member.name}
           </DialogDescription>
@@ -46,7 +71,6 @@ export function TeamMemberDialog({ member, open, onOpenChange }: TeamMemberDialo
         <div className="space-y-6">
           {/* Header Section with Image */}
           <div className="flex flex-col md:flex-row gap-6">
-
             <div className="flex-shrink-0">
               <div className="w-32 h-32 rounded-lg overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20">
                 {imageUrl ? (
@@ -89,7 +113,9 @@ export function TeamMemberDialog({ member, open, onOpenChange }: TeamMemberDialo
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => window.location.href = `mailto:${member.email}`}
+                    onClick={() =>
+                      (window.location.href = `mailto:${member.email}`)
+                    }
                   >
                     <Mail className="h-4 w-4 mr-2" />
                     Email
@@ -129,7 +155,9 @@ export function TeamMemberDialog({ member, open, onOpenChange }: TeamMemberDialo
               <Briefcase className="h-4 w-4 text-primary" />
               <h3>Biography</h3>
             </div>
-            <p className="text-muted-foreground leading-relaxed">{member.bio}</p>
+            <p className="text-muted-foreground leading-relaxed">
+              {member.bio}
+            </p>
           </div>
 
           <Separator />
@@ -164,7 +192,7 @@ export function TeamMemberDialog({ member, open, onOpenChange }: TeamMemberDialo
                   {member.joinedDate.toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
-                    day: 'numeric'
+                    day: 'numeric',
                   })}
                 </span>
               </div>
@@ -175,14 +203,17 @@ export function TeamMemberDialog({ member, open, onOpenChange }: TeamMemberDialo
                 <Calendar className="h-4 w-4 text-muted-foreground" />
                 <span className="text-muted-foreground">Years with IKMS:</span>
                 <span>
-                  {Math.floor((new Date().getTime() - member.joinedDate.getTime()) / (1000 * 60 * 60 * 24 * 365))} years
+                  {Math.floor(
+                    (new Date().getTime() - member.joinedDate.getTime()) /
+                      (1000 * 60 * 60 * 24 * 365)
+                  )}{' '}
+                  years
                 </span>
               </div>
             </div>
           </div>
-
         </div>
       </DialogContent>
     </Dialog>
-  );
+  )
 }

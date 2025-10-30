@@ -1,14 +1,33 @@
-'use client';
+'use client'
 
-import type React from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { getApplicationsByStage } from '@/app/utils/mock/patent-data';
+import type React from 'react'
+import {
+  PieChart,
+  Pie,
+  Cell,
+  ResponsiveContainer,
+  Legend,
+  Tooltip,
+} from 'recharts'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
+import { getApplicationsByStage } from '@/app/utils/mock/patent-data'
 
-const COLORS = ['#0EA5E9', '#1E40AF', '#8B5CF6', '#F59E0B', '#10B981', '#64748B'];
+const COLORS = [
+  '#0EA5E9',
+  '#1E40AF',
+  '#8B5CF6',
+  '#F59E0B',
+  '#10B981',
+  '#64748B',
+]
 
 const StatusDistributionChart: React.FC = () => {
-  const data = getApplicationsByStage();
+  const data = getApplicationsByStage()
 
   const renderCustomizedLabel = ({
     cx,
@@ -19,10 +38,10 @@ const StatusDistributionChart: React.FC = () => {
     percent,
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    }: any) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-    const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
-    const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
+  }: any) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+    const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180))
+    const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180))
 
     return percent > 0.05 ? (
       <text
@@ -35,8 +54,8 @@ const StatusDistributionChart: React.FC = () => {
       >
         {`${(percent * 100).toFixed(0)}%`}
       </text>
-    ) : null;
-  };
+    ) : null
+  }
 
   return (
     <Card className="col-span-1 row-span-1">
@@ -59,14 +78,20 @@ const StatusDistributionChart: React.FC = () => {
                 label={renderCustomizedLabel}
               >
                 {data.map((_, index) => (
-                  <Cell key={`cell-${// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${
+                      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                      index
+                    }`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
               <Tooltip
-
-
-                formatter={(value: unknown) => [`${value} Applications`, 'Count']}
+                formatter={(value: unknown) => [
+                  `${value} Applications`,
+                  'Count',
+                ]}
               />
               <Legend />
             </PieChart>
@@ -74,7 +99,7 @@ index}`} fill={COLORS[index % COLORS.length]} />
         </div>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default StatusDistributionChart;
+export default StatusDistributionChart

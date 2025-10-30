@@ -1,16 +1,15 @@
 import React from 'react'
 
-import { MedicinalPlant } from '@/lib/types/botanical';
-import { motion } from "framer-motion";
-import { Badge } from '../ui/badge';
-import { Card, CardContent } from '../ui/card';
-import { ImageWithFallback } from '../shared/image-with-fallback';
-import { cn } from '@/lib/utils';
-
+import { MedicinalPlant } from '@/lib/types/botanical'
+import { motion } from 'framer-motion'
+import { Badge } from '../ui/badge'
+import { Card, CardContent } from '../ui/card'
+import { ImageWithFallback } from '../shared/image-with-fallback'
+import { cn } from '@/lib/utils'
 
 interface PlantCardProps {
-  plant: MedicinalPlant;
-  onCardClick: (plant: MedicinalPlant) => void;
+  plant: MedicinalPlant
+  onCardClick: (plant: MedicinalPlant) => void
 }
 export default function PlantCard({ plant, onCardClick }: PlantCardProps) {
   return (
@@ -19,22 +18,25 @@ export default function PlantCard({ plant, onCardClick }: PlantCardProps) {
       //   scale: 1.02,
       //   boxShadow: "0 10px 30px rgba(0,0,0,0.15)"
       // }}
-           whileHover={{
+      whileHover={{
         scale: 1.03,
-        y: -4
+        y: -4,
       }}
       transition={{
-        type: "spring",
+        type: 'spring',
         stiffness: 400,
-        damping: 20
+        damping: 20,
       }}
       className="cursor-pointer"
       onClick={() => onCardClick(plant)}
     >
-      <Card className={cn("glass-card leaf-shadow rounded-3xl overflow-hidden group relative"
-        // "group relative overflow-hidden transition-all duration-300",
-        // "hover:shadow-lg hover:shadow-gray-200 dark:hover:shadow-gray-800"
-      )}>
+      <Card
+        className={cn(
+          'glass-card leaf-shadow rounded-3xl overflow-hidden group relative'
+          // "group relative overflow-hidden transition-all duration-300",
+          // "hover:shadow-lg hover:shadow-gray-200 dark:hover:shadow-gray-800"
+        )}
+      >
         <div className="relative overflow-hidden">
           <ImageWithFallback
             src={plant.image}
@@ -58,9 +60,12 @@ export default function PlantCard({ plant, onCardClick }: PlantCardProps) {
           <div className="space-y-3">
             <div>
               <h3 className="text-lg font-semibold">{plant.name}</h3>
-              <p className="text-sm text-muted-foreground italic">{plant.scientificName}</p>
               <p className="text-sm text-muted-foreground italic">
-                {plant.localNames && `Also known as: ${plant.localNames.join(', ')}`}
+                {plant.scientificName}
+              </p>
+              <p className="text-sm text-muted-foreground italic">
+                {plant.localNames &&
+                  `Also known as: ${plant.localNames.join(', ')}`}
               </p>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <span>🌍</span>
@@ -71,14 +76,16 @@ export default function PlantCard({ plant, onCardClick }: PlantCardProps) {
             <motion.div
               className="overflow-hidden"
               initial={{ height: 0, opacity: 0 }}
-              whileHover={{ height: "auto", opacity: 1 }}
+              whileHover={{ height: 'auto', opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
               <div className="pt-2 border-t space-y-2">
                 <div>
-                  <p className="text-xs font-medium text-muted-foreground mb-1">Parts Used:</p>
+                  <p className="text-xs font-medium text-muted-foreground mb-1">
+                    Parts Used:
+                  </p>
                   <div className="flex flex-wrap gap-1">
-                    {plant.partsUsed.slice(0, 3).map((part) => (
+                    {plant.partsUsed.slice(0, 3).map(part => (
                       <Badge key={part} variant="outline" className="text-xs">
                         {part}
                       </Badge>
@@ -92,10 +99,16 @@ export default function PlantCard({ plant, onCardClick }: PlantCardProps) {
                 </div>
 
                 <div>
-                  <p className="text-xs font-medium text-muted-foreground mb-1">Key Properties:</p>
+                  <p className="text-xs font-medium text-muted-foreground mb-1">
+                    Key Properties:
+                  </p>
                   <div className="flex flex-wrap gap-1">
-                    {plant.medicinalQualities.slice(0, 2).map((quality) => (
-                      <Badge key={quality} variant="default" className="text-xs">
+                    {plant.medicinalQualities.slice(0, 2).map(quality => (
+                      <Badge
+                        key={quality}
+                        variant="default"
+                        className="text-xs"
+                      >
                         {quality}
                       </Badge>
                     ))}

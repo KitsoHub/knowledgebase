@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { AILogo } from "@/app/components/ui/icons";
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { AILogo } from '@/app/components/ui/icons'
 
 export const Overview = () => {
   return (
@@ -22,7 +22,7 @@ export const Overview = () => {
           How can I help you today?
         </p>
         <p className="gap-1 items-center">
-          This is an indigenous knowledge AI made by KitsoAI. Learn more at{" "}
+          This is an indigenous knowledge AI made by KitsoAI. Learn more at{' '}
           <Link
             className="font-medium underline underline-offset-4"
             href="https://kitsoai.com/"
@@ -34,5 +34,5 @@ export const Overview = () => {
         </p>
       </div>
     </motion.div>
-  );
-};
+  )
+}

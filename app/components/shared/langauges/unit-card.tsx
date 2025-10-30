@@ -1,13 +1,12 @@
-"use client"
+'use client'
 
-import Link from "next/link"
-import { ChevronRight } from "lucide-react"
-import { useProgressStore } from "@/lib/store/progress-store"
-import { unitsByLanguage } from "@/lib/languages/config/units"
-
+import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
+import { useProgressStore } from '@/lib/store/progress-store'
+import { unitsByLanguage } from '@/lib/languages/config/units'
 
 interface UnitCardProps {
-  languageId:string
+  languageId: string
   unitId: string
   title: string
   animal: string
@@ -18,52 +17,58 @@ interface UnitCardProps {
   }[]
 }
 
-export function UnitCard({languageId, unitId, title, animal, color, lessons }: UnitCardProps) {
+export function UnitCard({
+  languageId,
+  unitId,
+  title,
+  animal,
+  color,
+  lessons,
+}: UnitCardProps) {
   const { progress } = useProgressStore()
   const unitProgress = progress.unitProgress[unitId]
 
-  const unitData = unitsByLanguage[languageId].find((unit) => unit.id === unitId)
-
+  const unitData = unitsByLanguage[languageId].find(unit => unit.id === unitId)
 
   const getAnimalIcon = (animal: string) => {
     switch (animal.toLowerCase()) {
-      case "owl":
-        return "🦉"
-      case "fox":
-        return "🦊"
-      case "turtle":
-        return "🐢"
-      case "parrot":
-        return "🦜"
-      case "beaver":
-        return "🦫"
-      case "flamingo":
-        return "🦩"
-      case "eagle":
-        return "🦅"
-      case "lion":
-        return "🦁"
-      case "dolphin":
-        return "🐬"
+      case 'owl':
+        return '🦉'
+      case 'fox':
+        return '🦊'
+      case 'turtle':
+        return '🐢'
+      case 'parrot':
+        return '🦜'
+      case 'beaver':
+        return '🦫'
+      case 'flamingo':
+        return '🦩'
+      case 'eagle':
+        return '🦅'
+      case 'lion':
+        return '🦁'
+      case 'dolphin':
+        return '🐬'
       default:
-        return "🐾"
+        return '🐾'
     }
   }
 
   const getColorClass = (color: string) => {
     const colorMap: Record<string, string> = {
-      yellow: "text-yellow-500",
-      orange: "text-orange-500",
-      green: "text-green-500",
-      purple: "text-purple-500",
-      pink: "text-pink-500",
-      red: "text-red-500",
-      cyan: "text-cyan-500",
-      emerald: "text-emerald-500",
-      blue: "text-blue-500",
+      yellow: 'text-yellow-500',
+      orange: 'text-orange-500',
+      green: 'text-green-500',
+      purple: 'text-purple-500',
+      pink: 'text-pink-500',
+      red: 'text-red-500',
+      cyan: 'text-cyan-500',
+      emerald: 'text-emerald-500',
+      blue: 'text-blue-500',
     }
 
-    return colorMap[color] || "text-primary"
+    return colorMap[color] || 'text-primary'
   }
 
   // Calculate which lessons are completed and which is the current one
@@ -71,14 +76,17 @@ export function UnitCard({languageId, unitId, title, animal, color, lessons }: U
     const lessonKey = `${unitId}-${lesson.id}`
     const isCompleted = progress.lessonProgress[lessonKey]?.completed || false
     const isCurrent =
-      !isCompleted && (index === 0 || progress.lessonProgress[`${unitId}-${lessons[index - 1].id}`]?.completed)
+      !isCompleted &&
+      (index === 0 ||
+        progress.lessonProgress[`${unitId}-${lessons[index - 1].id}`]
+          ?.completed)
 
     // Get the lesson data to show phrase counts
-    const lessonData = unitData?.lessons.find((l) => l.id === lesson.id)
+    const lessonData = unitData?.lessons.find(l => l.id === lesson.id)
     const phraseCount = lessonData
       ? lessonData.vocabulary.length +
         (lessonData.phrases ? lessonData.phrases.length : 0) +
-        (lessonData.numbers? lessonData.numbers.length : 0)
+        (lessonData.numbers ? lessonData.numbers.length : 0)
       : 0
 
     return {
@@ -100,14 +108,17 @@ export function UnitCard({languageId, unitId, title, animal, color, lessons }: U
         {lessonStatus.map((lesson, index) => (
           <Link
             key={index}
-            href={lesson.completed || lesson.current ? `/languages/${languageId}/${unitId}/${lesson.id}` : "#"}
-
+            href={
+              lesson.completed || lesson.current
+                ? `/languages/${languageId}/${unitId}/${lesson.id}`
+                : '#'
+            }
             className={`flex items-center justify-between p-3 rounded-lg ${
               lesson.completed
-                ? "bg-green-100 dark:bg-green-900/20"
+                ? 'bg-green-100 dark:bg-green-900/20'
                 : lesson.current
-                  ? "bg-primary/10 border-2 border-primary"
-                  : "bg-muted cursor-not-allowed opacity-70"
+                  ? 'bg-primary/10 border-2 border-primary'
+                  : 'bg-muted cursor-not-allowed opacity-70'
             }`}
           >
             <div className="flex items-center gap-3">
@@ -130,11 +141,15 @@ export function UnitCard({languageId, unitId, title, animal, color, lessons }: U
                   </svg>
                 </div>
               ) : (
-                <div className="h-6 w-6 rounded-full border-2 flex items-center justify-center">{index + 1}</div>
+                <div className="h-6 w-6 rounded-full border-2 flex items-center justify-center">
+                  {index + 1}
+                </div>
               )}
               <div>
                 <span className="font-medium">{lesson.title}</span>
-                <p className="text-xs text-muted-foreground">{lesson.phraseCount} phrases</p>
+                <p className="text-xs text-muted-foreground">
+                  {lesson.phraseCount} phrases
+                </p>
               </div>
             </div>
             <ChevronRight className="h-5 w-5 text-muted-foreground" />

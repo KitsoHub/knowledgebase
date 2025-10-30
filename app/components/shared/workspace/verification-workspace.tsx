@@ -1,14 +1,25 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs"
-import { Button } from "@/app/components/ui/button"
-import { Badge } from "@/app/components/ui/badge"
-import { Separator } from "@/app/components/ui/separator"
-import { Textarea } from "@/app/components/ui/textarea"
-import { Input } from "@/app/components/ui/input"
-import { Label } from "@/app/components/ui/label"
+import { useState, useEffect } from 'react'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/app/components/ui/tabs'
+import { Button } from '@/app/components/ui/button'
+import { Badge } from '@/app/components/ui/badge'
+import { Separator } from '@/app/components/ui/separator'
+import { Textarea } from '@/app/components/ui/textarea'
+import { Input } from '@/app/components/ui/input'
+import { Label } from '@/app/components/ui/label'
 import {
   Search,
   FileText,
@@ -24,58 +35,61 @@ import {
   Briefcase,
   InboxIcon,
   BrainCircuit,
-} from "lucide-react"
-import { getApplicationsForWorkspace, type Application } from "@/lib/data"
-import { useToast } from "@/app/hooks/use-toast"
+} from 'lucide-react'
+import { getApplicationsForWorkspace, type Application } from '@/lib/data'
+import { useToast } from '@/app/hooks/use-toast'
 // import { useDnd } from "@/lib/dnd-context"
 // import { useDrop } from "react-dnd"
 
 export function VerificationWorkspace() {
   const { toast } = useToast()
-//   const { workspaceApplications } = useDnd()
+  //   const { workspaceApplications } = useDnd()
   const [applications, setApplications] = useState<Application[]>([])
-  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null)
-  const [activeTab, setActiveTab] = useState("details")
+  const [selectedApplication, setSelectedApplication] =
+    useState<Application | null>(null)
+  const [activeTab, setActiveTab] = useState('details')
 
   // Initialize with both local and context applications
   useEffect(() => {
-        // const initialApps = [...getApplicationsForWorkspace(), ...workspaceApplications ]
-    const initialApps = [...getApplicationsForWorkspace(), ]
+    // const initialApps = [...getApplicationsForWorkspace(), ...workspaceApplications ]
+    const initialApps = [...getApplicationsForWorkspace()]
 
-    const uniqueApps = initialApps.filter((app, index, self) => index === self.findIndex((a) => a.id === app.id))
+    const uniqueApps = initialApps.filter(
+      (app, index, self) => index === self.findIndex(a => a.id === app.id)
+    )
     setApplications(uniqueApps)
 
     if (uniqueApps.length > 0 && !selectedApplication) {
       setSelectedApplication(uniqueApps[0])
     }
-  }, [ selectedApplication])
+  }, [selectedApplication])
 
-//   const [{ isOver, canDrop }, drop] = useDrop(() => ({
-//     accept: "APPLICATION",
-//     drop: () => ({ moved: true }),
-//     collect: (monitor) => ({
-//       isOver: monitor.isOver(),
-//       canDrop: monitor.canDrop(),
-//     }),
-//   }))
+  //   const [{ isOver, canDrop }, drop] = useDrop(() => ({
+  //     accept: "APPLICATION",
+  //     drop: () => ({ moved: true }),
+  //     collect: (monitor) => ({
+  //       isOver: monitor.isOver(),
+  //       canDrop: monitor.canDrop(),
+  //     }),
+  //   }))
 
   const handleVerify = () => {
     toast({
-      title: "Application verified",
+      title: 'Application verified',
       description: `${selectedApplication?.id} has been verified and moved to the next stage.`,
     })
   }
 
   const handleReject = () => {
     toast({
-      title: "Application rejected",
+      title: 'Application rejected',
       description: `${selectedApplication?.id} has been rejected.`,
     })
   }
 
   const handleRequestInfo = () => {
     toast({
-      title: "Information requested",
+      title: 'Information requested',
       description: `Additional information has been requested for ${selectedApplication?.id}.`,
     })
   }
@@ -83,8 +97,8 @@ export function VerificationWorkspace() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
       {/* Left panel - Application list with drop target */}
-            {/* <Card className={`md:col-span-1 ${isOver && canDrop ? "ring-2 ring-primary" : ""}`} ref={drop}></Card> */}
-      <Card className={`md:col-span-1`} >
+      {/* <Card className={`md:col-span-1 ${isOver && canDrop ? "ring-2 ring-primary" : ""}`} ref={drop}></Card> */}
+      <Card className={`md:col-span-1`}>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             Applications
@@ -95,24 +109,29 @@ export function VerificationWorkspace() {
             )} */}
           </CardTitle>
           <CardDescription>
-            Applications in your verification workspace. Drag applications here from the queue.
+            Applications in your verification workspace. Drag applications here
+            from the queue.
           </CardDescription>
         </CardHeader>
         <CardContent>
           {applications.length > 0 ? (
             <div className="space-y-4">
-              {applications.map((application) => (
+              {applications.map(application => (
                 <div
                   key={application.id}
                   className={`p-3 rounded-lg border cursor-pointer transition-colors ${
-                    selectedApplication?.id === application.id ? "bg-primary/10 border-primary" : "hover:bg-muted"
+                    selectedApplication?.id === application.id
+                      ? 'bg-primary/10 border-primary'
+                      : 'hover:bg-muted'
                   }`}
                   onClick={() => setSelectedApplication(application)}
                 >
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="font-medium">{application.id}</h3>
-                      <p className="text-sm text-muted-foreground line-clamp-1">{application.title}</p>
+                      <p className="text-sm text-muted-foreground line-clamp-1">
+                        {application.title}
+                      </p>
                     </div>
                     <Badge>{application.status}</Badge>
                   </div>
@@ -143,7 +162,8 @@ export function VerificationWorkspace() {
               <div>
                 <CardTitle>{selectedApplication.title}</CardTitle>
                 <CardDescription>
-                  {selectedApplication.id} • Filed on {selectedApplication.filingDate}
+                  {selectedApplication.id} • Filed on{' '}
+                  {selectedApplication.filingDate}
                 </CardDescription>
               </div>
               <div className="flex gap-2">
@@ -202,9 +222,11 @@ export function VerificationWorkspace() {
                   <Label>Abstract</Label>
                   <div className="p-3 border rounded-md bg-muted/50">
                     <p>
-                      This invention relates to an innovative system and method in the field of{" "}
-                      {selectedApplication.technologyArea}. The system comprises multiple interconnected components that
-                      work together to solve technical challenges in the industry.
+                      This invention relates to an innovative system and method
+                      in the field of {selectedApplication.technologyArea}. The
+                      system comprises multiple interconnected components that
+                      work together to solve technical challenges in the
+                      industry.
                     </p>
                   </div>
                 </div>
@@ -214,24 +236,26 @@ export function VerificationWorkspace() {
                   <div className="p-3 border rounded-md bg-muted/50 max-h-40 overflow-y-auto">
                     <ol className="list-decimal pl-5 space-y-2">
                       <li>
-                        A system for processing data, comprising: a processor; a memory; and instructions stored in the
-                        memory that, when executed by the processor, cause the system to perform operations.
+                        A system for processing data, comprising: a processor; a
+                        memory; and instructions stored in the memory that, when
+                        executed by the processor, cause the system to perform
+                        operations.
                       </li>
                       <li>
-                        The system of claim 1, wherein the operations include receiving input data from a user
-                        interface.
+                        The system of claim 1, wherein the operations include
+                        receiving input data from a user interface.
                       </li>
                       <li>
-                        The system of claim 1, wherein the operations include analyzing the input data using a machine
-                        learning model.
+                        The system of claim 1, wherein the operations include
+                        analyzing the input data using a machine learning model.
                       </li>
                       <li>
-                        The system of claim 1, wherein the operations include generating output data based on the
-                        analysis.
+                        The system of claim 1, wherein the operations include
+                        generating output data based on the analysis.
                       </li>
                       <li>
-                        The system of claim 1, wherein the operations include displaying the output data on a user
-                        interface.
+                        The system of claim 1, wherein the operations include
+                        displaying the output data on a user interface.
                       </li>
                     </ol>
                   </div>
@@ -254,28 +278,37 @@ export function VerificationWorkspace() {
                     <div className="p-3 border rounded-md hover:bg-muted/50 cursor-pointer">
                       <div className="flex justify-between">
                         <h4 className="font-medium">US10123456B2</h4>
-                        <span className="text-sm text-muted-foreground">2020-05-12</span>
+                        <span className="text-sm text-muted-foreground">
+                          2020-05-12
+                        </span>
                       </div>
                       <p className="text-sm line-clamp-2">
-                        System and method for data processing using artificial intelligence techniques
+                        System and method for data processing using artificial
+                        intelligence techniques
                       </p>
                     </div>
                     <div className="p-3 border rounded-md hover:bg-muted/50 cursor-pointer">
                       <div className="flex justify-between">
                         <h4 className="font-medium">EP3456789A1</h4>
-                        <span className="text-sm text-muted-foreground">2019-11-23</span>
+                        <span className="text-sm text-muted-foreground">
+                          2019-11-23
+                        </span>
                       </div>
                       <p className="text-sm line-clamp-2">
-                        Method and apparatus for processing information in a computing environment
+                        Method and apparatus for processing information in a
+                        computing environment
                       </p>
                     </div>
                     <div className="p-3 border rounded-md hover:bg-muted/50 cursor-pointer">
                       <div className="flex justify-between">
                         <h4 className="font-medium">WO2021/123456</h4>
-                        <span className="text-sm text-muted-foreground">2021-02-15</span>
+                        <span className="text-sm text-muted-foreground">
+                          2021-02-15
+                        </span>
                       </div>
                       <p className="text-sm line-clamp-2">
-                        Advanced techniques for data analysis and processing in networked systems
+                        Advanced techniques for data analysis and processing in
+                        networked systems
                       </p>
                     </div>
                   </div>
@@ -283,7 +316,10 @@ export function VerificationWorkspace() {
 
                 <div className="space-y-2">
                   <Label>Search Notes</Label>
-                  <Textarea placeholder="Add notes about your prior art search findings..." className="min-h-[100px]" />
+                  <Textarea
+                    placeholder="Add notes about your prior art search findings..."
+                    className="min-h-[100px]"
+                  />
                 </div>
               </TabsContent>
 
@@ -302,22 +338,41 @@ export function VerificationWorkspace() {
 
                 <div className="space-y-2">
                   <Label>Examiner Notes</Label>
-                  <Textarea placeholder="Add your examination notes here..." className="min-h-[100px]" />
+                  <Textarea
+                    placeholder="Add your examination notes here..."
+                    className="min-h-[100px]"
+                  />
                 </div>
 
                 <div className="space-y-2">
                   <Label>Decision</Label>
                   <div className="flex gap-2">
-                    <Button variant="default" className="flex-1" onClick={handleVerify}>
+                    <Button
+                      variant="default"
+                      className="flex-1"
+                      onClick={handleVerify}
+                    >
                       <CheckCircle className="h-4 w-4 mr-1" /> Verify & Proceed
                     </Button>
-                    <Button variant="destructive" className="flex-1" onClick={handleReject}>
+                    <Button
+                      variant="destructive"
+                      className="flex-1"
+                      onClick={handleReject}
+                    >
                       <XCircle className="h-4 w-4 mr-1" /> Reject
                     </Button>
-                    <Button variant="secondary" className="flex-1" onClick={handleRequestInfo}>
+                    <Button
+                      variant="secondary"
+                      className="flex-1"
+                      onClick={handleRequestInfo}
+                    >
                       <HelpCircle className="h-4 w-4 mr-1" /> Request Info
                     </Button>
-                    <Button variant="default" className="flex-1" onClick={handleVerify}>
+                    <Button
+                      variant="default"
+                      className="flex-1"
+                      onClick={handleVerify}
+                    >
                       <BrainCircuit className="h-4 w-4 mr-1" /> AI Verification
                     </Button>
                   </div>
@@ -331,8 +386,12 @@ export function VerificationWorkspace() {
           <CardContent className="flex items-center justify-center h-full min-h-[400px]">
             <div className="text-center">
               <FileText className="h-16 w-16 mx-auto text-muted-foreground/50" />
-              <h3 className="mt-4 text-lg font-medium">No Application Selected</h3>
-              <p className="text-muted-foreground">Select an application from the list to view details</p>
+              <h3 className="mt-4 text-lg font-medium">
+                No Application Selected
+              </h3>
+              <p className="text-muted-foreground">
+                Select an application from the list to view details
+              </p>
             </div>
           </CardContent>
         </Card>

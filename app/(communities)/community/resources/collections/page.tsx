@@ -1,5 +1,4 @@
-import CommunityBase from "@/app/components/community/communityBase";
-
+import CommunityBase from '@/app/components/community/communityBase'
 
 export default function CollectionResourcePage() {
   return (
@@ -7,5 +6,5 @@ export default function CollectionResourcePage() {
       <h1 className="text-2xl font-bold">Collection Resource Page</h1>
       <p>Only admin, moderators, viewers can access this page</p>
     </CommunityBase>
-  );
+  )
 }

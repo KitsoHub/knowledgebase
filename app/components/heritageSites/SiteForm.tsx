@@ -1,44 +1,69 @@
-import React, { useState } from 'react';
-import { Button } from '@/app/components/ui/button';
-import { Input } from '@/app/components/ui/input';
-import { Textarea } from '@/app/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { Label } from '@/app/components/ui/label';
-import { Checkbox } from '@/app/components/ui/checkbox';
-import { Badge } from '@/app/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs';
-import { Plus, X, Upload, MapPin, Globe, Shield, FileText, Users } from 'lucide-react';
+import React, { useState } from 'react'
+import { Button } from '@/app/components/ui/button'
+import { Input } from '@/app/components/ui/input'
+import { Textarea } from '@/app/components/ui/textarea'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/app/components/ui/select'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
+import { Label } from '@/app/components/ui/label'
+import { Checkbox } from '@/app/components/ui/checkbox'
+import { Badge } from '@/app/components/ui/badge'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/app/components/ui/tabs'
+import {
+  Plus,
+  X,
+  Upload,
+  MapPin,
+  Globe,
+  Shield,
+  FileText,
+  Users,
+} from 'lucide-react'
 
 interface CulturalSite {
-  name: string;
-  latitude: number;
-  longitude: number;
-  description: string;
-  category: 'heritage' | 'language' | 'botanical' | 'tribal' | 'migration';
-  language?: string;
-  tribe?: string;
-  images: string[];
-  videos: string[];
-  audio: string[];
+  name: string
+  latitude: number
+  longitude: number
+  description: string
+  category: 'heritage' | 'language' | 'botanical' | 'tribal' | 'migration'
+  language?: string
+  tribe?: string
+  images: string[]
+  videos: string[]
+  audio: string[]
   metadata: {
-    unesco: boolean;
-    undp: boolean;
-    unicef: boolean;
-    localContext: string;
-    indigenousSystem: string;
-    rights: string;
-    ipMetadata: string;
-    sensitivityLevel: 'public' | 'restricted' | 'closed';
-    accessProtocol: string;
-  };
-  populationDensity?: number;
-  migrationRoute?: string;
+    unesco: boolean
+    undp: boolean
+    unicef: boolean
+    localContext: string
+    indigenousSystem: string
+    rights: string
+    ipMetadata: string
+    sensitivityLevel: 'public' | 'restricted' | 'closed'
+    accessProtocol: string
+  }
+  populationDensity?: number
+  migrationRoute?: string
 }
 
 interface SiteFormProps {
-  onSubmit: (site: CulturalSite) => void;
-  initialData?: Partial<CulturalSite>;
+  onSubmit: (site: CulturalSite) => void
+  initialData?: Partial<CulturalSite>
 }
 
 export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
@@ -66,42 +91,49 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
     },
     populationDensity: initialData?.populationDensity || 0,
     migrationRoute: initialData?.migrationRoute || '',
-  });
+  })
 
-  const [newMedia, setNewMedia] = useState({ images: '', videos: '', audio: '' });
+  const [newMedia, setNewMedia] = useState({
+    images: '',
+    videos: '',
+    audio: '',
+  })
 
   const handleInputChange = (field: keyof CulturalSite, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
+    setFormData(prev => ({ ...prev, [field]: value }))
+  }
 
-  const handleMetadataChange = (field: keyof CulturalSite['metadata'], value: any) => {
+  const handleMetadataChange = (
+    field: keyof CulturalSite['metadata'],
+    value: any
+  ) => {
     setFormData(prev => ({
       ...prev,
-      metadata: { ...prev.metadata, [field]: value }
-    }));
-  };
+      metadata: { ...prev.metadata, [field]: value },
+    }))
+  }
 
   const addMedia = (type: 'images' | 'videos' | 'audio') => {
     if (newMedia[type].trim()) {
       setFormData(prev => ({
         ...prev,
-        [type]: [...prev[type], newMedia[type].trim()]
-      }));
-      setNewMedia(prev => ({ ...prev, [type]: '' }));
+        [type]: [...prev[type], newMedia[type].trim()],
+      }))
+      setNewMedia(prev => ({ ...prev, [type]: '' }))
     }
-  };
+  }
 
   const removeMedia = (type: 'images' | 'videos' | 'audio', index: number) => {
     setFormData(prev => ({
       ...prev,
-      [type]: prev[type].filter((_, i) => i !== index)
-    }));
-  };
+      [type]: prev[type].filter((_, i) => i !== index),
+    }))
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-    
+    e.preventDefault()
+    onSubmit(formData)
+
     // Reset form
     setFormData({
       name: '',
@@ -127,9 +159,9 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
       },
       populationDensity: 0,
       migrationRoute: '',
-    });
-    setNewMedia({ images: '', videos: '', audio: '' });
-  };
+    })
+    setNewMedia({ images: '', videos: '', audio: '' })
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -170,14 +202,19 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                   <Input
                     id="name"
                     value={formData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    onChange={e => handleInputChange('name', e.target.value)}
                     placeholder="Enter site name"
                     required
                   />
                 </div>
                 <div>
                   <Label htmlFor="category">Category *</Label>
-                  <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
+                  <Select
+                    value={formData.category}
+                    onValueChange={value =>
+                      handleInputChange('category', value)
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
@@ -200,7 +237,12 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                     type="number"
                     step="any"
                     value={formData.latitude}
-                    onChange={(e) => handleInputChange('latitude', parseFloat(e.target.value) || 0)}
+                    onChange={e =>
+                      handleInputChange(
+                        'latitude',
+                        parseFloat(e.target.value) || 0
+                      )
+                    }
                     placeholder="e.g., 40.7128"
                     required
                   />
@@ -212,7 +254,12 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                     type="number"
                     step="any"
                     value={formData.longitude}
-                    onChange={(e) => handleInputChange('longitude', parseFloat(e.target.value) || 0)}
+                    onChange={e =>
+                      handleInputChange(
+                        'longitude',
+                        parseFloat(e.target.value) || 0
+                      )
+                    }
                     placeholder="e.g., -74.0060"
                     required
                   />
@@ -224,7 +271,9 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                 <Textarea
                   id="description"
                   value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
+                  onChange={e =>
+                    handleInputChange('description', e.target.value)
+                  }
                   placeholder="Provide a detailed description of the site"
                   rows={4}
                   required
@@ -237,19 +286,28 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                   <Input
                     id="migrationRoute"
                     value={formData.migrationRoute}
-                    onChange={(e) => handleInputChange('migrationRoute', e.target.value)}
+                    onChange={e =>
+                      handleInputChange('migrationRoute', e.target.value)
+                    }
                     placeholder="e.g., Eastern Woodland Trail"
                   />
                 </div>
               )}
 
               <div>
-                <Label htmlFor="populationDensity">Population Density (per km²)</Label>
+                <Label htmlFor="populationDensity">
+                  Population Density (per km²)
+                </Label>
                 <Input
                   id="populationDensity"
                   type="number"
                   value={formData.populationDensity}
-                  onChange={(e) => handleInputChange('populationDensity', parseInt(e.target.value) || 0)}
+                  onChange={e =>
+                    handleInputChange(
+                      'populationDensity',
+                      parseInt(e.target.value) || 0
+                    )
+                  }
                   placeholder="e.g., 250"
                 />
               </div>
@@ -270,7 +328,9 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                   <Input
                     id="language"
                     value={formData.language}
-                    onChange={(e) => handleInputChange('language', e.target.value)}
+                    onChange={e =>
+                      handleInputChange('language', e.target.value)
+                    }
                     placeholder="e.g., Mohawk, Ojibwe, Cherokee"
                   />
                 </div>
@@ -279,7 +339,7 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                   <Input
                     id="tribe"
                     value={formData.tribe}
-                    onChange={(e) => handleInputChange('tribe', e.target.value)}
+                    onChange={e => handleInputChange('tribe', e.target.value)}
                     placeholder="e.g., Haudenosaunee, Anishinaabe"
                   />
                 </div>
@@ -290,18 +350,24 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                 <Textarea
                   id="localContext"
                   value={formData.metadata.localContext}
-                  onChange={(e) => handleMetadataChange('localContext', e.target.value)}
+                  onChange={e =>
+                    handleMetadataChange('localContext', e.target.value)
+                  }
                   placeholder="Describe the local cultural context and traditional knowledge systems"
                   rows={3}
                 />
               </div>
 
               <div>
-                <Label htmlFor="indigenousSystem">Indigenous Knowledge System</Label>
+                <Label htmlFor="indigenousSystem">
+                  Indigenous Knowledge System
+                </Label>
                 <Textarea
                   id="indigenousSystem"
                   value={formData.metadata.indigenousSystem}
-                  onChange={(e) => handleMetadataChange('indigenousSystem', e.target.value)}
+                  onChange={e =>
+                    handleMetadataChange('indigenousSystem', e.target.value)
+                  }
                   placeholder="Describe relevant indigenous knowledge systems and protocols"
                   rows={3}
                 />
@@ -326,16 +392,26 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                 <div className="flex gap-2 mt-2">
                   <Input
                     value={newMedia.images}
-                    onChange={(e) => setNewMedia(prev => ({ ...prev, images: e.target.value }))}
+                    onChange={e =>
+                      setNewMedia(prev => ({ ...prev, images: e.target.value }))
+                    }
                     placeholder="Image URL or filename"
                   />
-                  <Button type="button" onClick={() => addMedia('images')} size="sm">
+                  <Button
+                    type="button"
+                    onClick={() => addMedia('images')}
+                    size="sm"
+                  >
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {formData.images.map((image, index) => (
-                    <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="flex items-center gap-1"
+                    >
                       {image}
                       <button
                         type="button"
@@ -355,16 +431,26 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                 <div className="flex gap-2 mt-2">
                   <Input
                     value={newMedia.videos}
-                    onChange={(e) => setNewMedia(prev => ({ ...prev, videos: e.target.value }))}
+                    onChange={e =>
+                      setNewMedia(prev => ({ ...prev, videos: e.target.value }))
+                    }
                     placeholder="Video URL or filename"
                   />
-                  <Button type="button" onClick={() => addMedia('videos')} size="sm">
+                  <Button
+                    type="button"
+                    onClick={() => addMedia('videos')}
+                    size="sm"
+                  >
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {formData.videos.map((video, index) => (
-                    <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="flex items-center gap-1"
+                    >
                       {video}
                       <button
                         type="button"
@@ -384,16 +470,26 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                 <div className="flex gap-2 mt-2">
                   <Input
                     value={newMedia.audio}
-                    onChange={(e) => setNewMedia(prev => ({ ...prev, audio: e.target.value }))}
+                    onChange={e =>
+                      setNewMedia(prev => ({ ...prev, audio: e.target.value }))
+                    }
                     placeholder="Audio URL or filename"
                   />
-                  <Button type="button" onClick={() => addMedia('audio')} size="sm">
+                  <Button
+                    type="button"
+                    onClick={() => addMedia('audio')}
+                    size="sm"
+                  >
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {formData.audio.map((audio, index) => (
-                    <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="flex items-center gap-1"
+                    >
                       {audio}
                       <button
                         type="button"
@@ -416,7 +512,8 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
             <CardHeader>
               <CardTitle>International Standards Compliance</CardTitle>
               <p className="text-sm text-gray-600">
-                Align with UNESCO, UNDP, UNICEF, and other international standards
+                Align with UNESCO, UNDP, UNICEF, and other international
+                standards
               </p>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -425,7 +522,9 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                   <Checkbox
                     id="unesco"
                     checked={formData.metadata.unesco}
-                    onCheckedChange={(checked) => handleMetadataChange('unesco', checked)}
+                    onCheckedChange={checked =>
+                      handleMetadataChange('unesco', checked)
+                    }
                   />
                   <Label htmlFor="unesco" className="flex items-center gap-2">
                     <Badge className="bg-blue-100 text-blue-800">UNESCO</Badge>
@@ -437,7 +536,9 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                   <Checkbox
                     id="undp"
                     checked={formData.metadata.undp}
-                    onCheckedChange={(checked) => handleMetadataChange('undp', checked)}
+                    onCheckedChange={checked =>
+                      handleMetadataChange('undp', checked)
+                    }
                   />
                   <Label htmlFor="undp" className="flex items-center gap-2">
                     <Badge className="bg-green-100 text-green-800">UNDP</Badge>
@@ -449,10 +550,14 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                   <Checkbox
                     id="unicef"
                     checked={formData.metadata.unicef}
-                    onCheckedChange={(checked) => handleMetadataChange('unicef', checked)}
+                    onCheckedChange={checked =>
+                      handleMetadataChange('unicef', checked)
+                    }
                   />
                   <Label htmlFor="unicef" className="flex items-center gap-2">
-                    <Badge className="bg-purple-100 text-purple-800">UNICEF</Badge>
+                    <Badge className="bg-purple-100 text-purple-800">
+                      UNICEF
+                    </Badge>
                     Complies with UNICEF child protection standards
                   </Label>
                 </div>
@@ -460,26 +565,41 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
 
               <div>
                 <Label htmlFor="rights">Rights & Ownership</Label>
-                <Select value={formData.metadata.rights} onValueChange={(value) => handleMetadataChange('rights', value)}>
+                <Select
+                  value={formData.metadata.rights}
+                  onValueChange={value => handleMetadataChange('rights', value)}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select rights classification" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Community Owned">Community Owned</SelectItem>
-                    <SelectItem value="Tribal Sovereignty">Tribal Sovereignty</SelectItem>
-                    <SelectItem value="Shared Cultural Heritage">Shared Cultural Heritage</SelectItem>
+                    <SelectItem value="Community Owned">
+                      Community Owned
+                    </SelectItem>
+                    <SelectItem value="Tribal Sovereignty">
+                      Tribal Sovereignty
+                    </SelectItem>
+                    <SelectItem value="Shared Cultural Heritage">
+                      Shared Cultural Heritage
+                    </SelectItem>
                     <SelectItem value="Public Domain">Public Domain</SelectItem>
-                    <SelectItem value="Restricted Access">Restricted Access</SelectItem>
+                    <SelectItem value="Restricted Access">
+                      Restricted Access
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
-                <Label htmlFor="ipMetadata">Intellectual Property Metadata</Label>
+                <Label htmlFor="ipMetadata">
+                  Intellectual Property Metadata
+                </Label>
                 <Textarea
                   id="ipMetadata"
                   value={formData.metadata.ipMetadata}
-                  onChange={(e) => handleMetadataChange('ipMetadata', e.target.value)}
+                  onChange={e =>
+                    handleMetadataChange('ipMetadata', e.target.value)
+                  }
                   placeholder="Describe intellectual property considerations, traditional knowledge protections, etc."
                   rows={3}
                 />
@@ -500,9 +620,11 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
             <CardContent className="space-y-4">
               <div>
                 <Label htmlFor="sensitivityLevel">Sensitivity Level</Label>
-                <Select 
-                  value={formData.metadata.sensitivityLevel} 
-                  onValueChange={(value) => handleMetadataChange('sensitivityLevel', value)}
+                <Select
+                  value={formData.metadata.sensitivityLevel}
+                  onValueChange={value =>
+                    handleMetadataChange('sensitivityLevel', value)
+                  }
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select sensitivity level" />
@@ -535,7 +657,9 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                 <Textarea
                   id="accessProtocol"
                   value={formData.metadata.accessProtocol}
-                  onChange={(e) => handleMetadataChange('accessProtocol', e.target.value)}
+                  onChange={e =>
+                    handleMetadataChange('accessProtocol', e.target.value)
+                  }
                   placeholder="Describe the protocol for accessing this information, including any permissions required, attribution requirements, or usage restrictions"
                   rows={4}
                 />
@@ -547,8 +671,10 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
                     ⚠️ Closed Access Material
                   </p>
                   <p className="text-sm text-red-700 mt-1">
-                    This material will not be visible on the public interface and requires special permissions to access.
-                    Ensure proper consultation with community elders and traditional knowledge holders.
+                    This material will not be visible on the public interface
+                    and requires special permissions to access. Ensure proper
+                    consultation with community elders and traditional knowledge
+                    holders.
                   </p>
                 </div>
               )}
@@ -566,5 +692,5 @@ export function SiteForm({ onSubmit, initialData }: SiteFormProps) {
         </Button>
       </div>
     </form>
-  );
+  )
 }

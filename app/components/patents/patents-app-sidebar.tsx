@@ -1,6 +1,6 @@
-"use client"
+'use client'
 
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 import {
   Sidebar,
   SidebarContent,
@@ -14,7 +14,7 @@ import {
   SidebarFooter,
   useSidebar,
   SidebarGroupLabel,
-} from "@/app/components/ui/sidebar"
+} from '@/app/components/ui/sidebar'
 
 import {
   LayoutDashboard,
@@ -31,11 +31,11 @@ import {
   ChevronUp,
   BookOpenIcon,
   ChevronRightIcon,
-} from "lucide-react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { Button } from "@/app/components/ui/button"
-import { ModeToggle } from "../ui/mode-toggle"
+} from 'lucide-react'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { Button } from '@/app/components/ui/button'
+import { ModeToggle } from '../ui/mode-toggle'
 
 export function PatentsAppSidebar() {
   const pathname = usePathname()
@@ -58,19 +58,19 @@ export function PatentsAppSidebar() {
     )
   }
 
-  const isCollapsed = state === "collapsed" // or however your sidebar’s “collapsed / expanded” state is defined
+  const isCollapsed = state === 'collapsed' // or however your sidebar’s “collapsed / expanded” state is defined
   // Toggle the submenu open/close
   const toggleWorkspace = () => {
-    setWorkspaceOpen((prev) => !prev)
+    setWorkspaceOpen(prev => !prev)
   }
 
-    const isOpen = state === "expanded" ? false : true
+  const isOpen = state === 'expanded' ? false : true
 
   // Determine if "WorkSpace" should be highlighted (active) if any child route matches
   const workSpaceActive =
-    pathname.startsWith("/workspace") ||
-    pathname.startsWith("/verifications") ||
-    pathname.startsWith("/applications")
+    pathname.startsWith('/workspace') ||
+    pathname.startsWith('/verifications') ||
+    pathname.startsWith('/applications')
 
   return (
     <Sidebar collapsible="icon">
@@ -100,17 +100,22 @@ export function PatentsAppSidebar() {
             <ChevronRight className="h-5 w-5" />
           </Button>
         )} */}
-        {isOpen && (<Button size="icon" variant="ghost" className="group-data-[collapsible=icon]:visible " onClick={toggleSidebar}>
+        {isOpen && (
+          <Button
+            size="icon"
+            variant="ghost"
+            className="group-data-[collapsible=icon]:visible "
+            onClick={toggleSidebar}
+          >
             <ChevronRightIcon className="h-5 w-5" />
-          </Button>)}
+          </Button>
+        )}
       </SidebarHeader>
 
       <SidebarSeparator />
 
       <SidebarContent>
-        <SidebarGroup>
-          {/* (Optional) admin-only items */}
-        </SidebarGroup>
+        <SidebarGroup>{/* (Optional) admin-only items */}</SidebarGroup>
 
         <SidebarGroup>
           <SidebarGroupContent>
@@ -119,7 +124,7 @@ export function PatentsAppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={pathname === "/community"}
+                  isActive={pathname === '/community'}
                   tooltip="Dashboard"
                 >
                   <Link href="/community">
@@ -133,7 +138,7 @@ export function PatentsAppSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
-                  isActive={pathname === "/community/admin"}
+                  isActive={pathname === '/community/admin'}
                   tooltip="AdminOverview"
                 >
                   <Link href="/community/admin">
@@ -169,7 +174,7 @@ export function PatentsAppSidebar() {
                   <SidebarMenuItem className="pl-6">
                     <SidebarMenuButton
                       asChild
-                      isActive={pathname === "/patents/applications"}
+                      isActive={pathname === '/patents/applications'}
                       tooltip="Aapplications"
                     >
                       <Link href="/patents/applications">
@@ -180,7 +185,7 @@ export function PatentsAppSidebar() {
                   <SidebarMenuItem className="pl-6">
                     <SidebarMenuButton
                       asChild
-                      isActive={pathname === "/patents/verification"}
+                      isActive={pathname === '/patents/verification'}
                       tooltip="Verification"
                     >
                       <Link href="/patents/verification">
@@ -188,7 +193,6 @@ export function PatentsAppSidebar() {
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-
                 </>
               )}
 

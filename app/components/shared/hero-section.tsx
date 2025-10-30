@@ -1,18 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-"use client"
-import React from 'react';
+'use client'
+import React from 'react'
 import { Button } from '@/app/components/ui/button'
 import { heroData } from '@/lib/hero_data'
 import { Heart, Star } from 'lucide-react'
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 
 // import { motion } from 'motion/react';
 interface FloatingElementProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
-  speed?: number; // duration in seconds
-  distance?: number; // distance in pixels
-  delay?: number; // delay in seconds
-  className?: string;
+  children: React.ReactNode
+  speed?: number // duration in seconds
+  distance?: number // distance in pixels
+  delay?: number // delay in seconds
+  className?: string
 }
 
 const FloatingElement: React.FC<FloatingElementProps> = ({
@@ -20,20 +20,16 @@ const FloatingElement: React.FC<FloatingElementProps> = ({
   speed = 3, // duration in seconds
   distance = 10, // distance in pixels
   delay = 0, // delay in seconds
-  className = "",
+  className = '',
   ...props
 }) => {
   const floatingStyle = {
     animation: `floatCustom ${speed}s ease-in-out ${delay}s infinite`,
-    '--float-distance': `${distance}px`
-  };
+    '--float-distance': `${distance}px`,
+  }
 
   return (
-    <div
-      className={className}
-      style={floatingStyle}
-      {...props}
-    >
+    <div className={className} style={floatingStyle} {...props}>
       <style>{`
         @keyframes floatCustom {
           0%, 100% {
@@ -46,12 +42,11 @@ const FloatingElement: React.FC<FloatingElementProps> = ({
       `}</style>
       {children}
     </div>
-  );
-};
+  )
+}
 export function HeroSection() {
   return (
     <section className="relative pt-32 pb-24 md:pt-48 md:pd-32 overflow-hidden">
-
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-0 left-1/4 w-64 h-64 rounded-full bg-accent/30 filter blur-3xl"></div>
         <div className="absolute bottom-0 right-1/4 w-96 h-96 rounded-full bg-primary/10 filter blur-3xl"></div>
@@ -73,14 +68,21 @@ export function HeroSection() {
                 <Star key={i} className="h-4 w-4 fill-orange-400 text-accent" />
               ))}
             </div>
-            <span className="text-sm text-muted-foreground">{heroData.titleTag}</span>
+            <span className="text-sm text-muted-foreground">
+              {heroData.titleTag}
+            </span>
           </FloatingElement>
 
-
-          <h1 className="mb-6 animate-slide-down" style={{ animationDelay: '0.1s' }}>
+          <h1
+            className="mb-6 animate-slide-down"
+            style={{ animationDelay: '0.1s' }}
+          >
             {heroData.title}
           </h1>
-          <p className="text-xl text-foreground/80 mb-10 max-w-2xl mx-auto animate-slide-down" style={{ animationDelay: '0.2s' }}>
+          <p
+            className="text-xl text-foreground/80 mb-10 max-w-2xl mx-auto animate-slide-down"
+            style={{ animationDelay: '0.2s' }}
+          >
             {heroData.subDescription}
           </p>
 
@@ -93,7 +95,7 @@ export function HeroSection() {
           >
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
-                onClick={() => { }}
+                onClick={() => {}}
                 size="lg"
                 className="gap-3 bg-gradient-to-r from-amber-700 to-amber-300 hover:from-primary/90 hover:to-emerald-500/90 text-white rounded-full px-8 py-4 shadow-lg hover:shadow-xl transition-all"
               >
@@ -109,7 +111,6 @@ export function HeroSection() {
               </Button>
             </div>
           </motion.div>
-
         </div>
       </div>
 

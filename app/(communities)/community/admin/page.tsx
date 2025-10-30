@@ -1,18 +1,26 @@
-import AdminOverviewGridMetrics from "@/app/components/community/admin/community-metrics";
-import CommunityBase from "@/app/components/community/communityBase";
-import { CategoryBreakdown } from "@/app/components/shared/overview/category-breakdown";
-import { DataDistributionChart } from "@/app/components/shared/overview/data-distribution-chart";
-import { Button } from "@/app/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
-import { BookOpen, DownloadIcon, UsersIcon } from "lucide-react";
-
+import AdminOverviewGridMetrics from '@/app/components/community/admin/community-metrics'
+import CommunityBase from '@/app/components/community/communityBase'
+import { CategoryBreakdown } from '@/app/components/shared/overview/category-breakdown'
+import { DataDistributionChart } from '@/app/components/shared/overview/data-distribution-chart'
+import { Button } from '@/app/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/app/components/ui/tabs'
+import { BookOpen, DownloadIcon, UsersIcon } from 'lucide-react'
 
 export default function AdminPage() {
   return (
     <CommunityBase>
-
-
       <div className="flex min-h-screen flex-col bg-card ">
         <header className="sticky top-0 z-10 border-b bg-background">
           <div className="flex items-center justify-between p-6 border-b bg-card">
@@ -21,7 +29,9 @@ export default function AdminPage() {
               <h1 className="text-xl font-semibold">
                 Community Admin Dashboard
               </h1>
-              <p className="text-muted-foreground">Manage your communities, collections, and content</p>
+              <p className="text-muted-foreground">
+                Manage your communities, collections, and content
+              </p>
             </div>
             <div className="flex gap-2">
               <Button variant="outline" className="flex items-center space-x-2">
@@ -39,11 +49,7 @@ export default function AdminPage() {
         </header>
         <main className="flex-1 space-y-4 p-4 md:p-8">
           <AdminOverviewGridMetrics />
-          <Tabs
-            defaultValue="overview"
-            className="w-full rounded-sm space-y-4"
-          >
-
+          <Tabs defaultValue="overview" className="w-full rounded-sm space-y-4">
             <TabsList>
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="community">Communities</TabsTrigger>
@@ -55,13 +61,10 @@ export default function AdminPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Card>
                   <CardHeader>
-                    <CardTitle>
-                      Data Distribution by Category
-                    </CardTitle>
+                    <CardTitle>Data Distribution by Category</CardTitle>
 
                     <CardDescription>
-                      Breakdown of entries across different
-                      knowledge categories
+                      Breakdown of entries across different knowledge categories
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -74,8 +77,7 @@ export default function AdminPage() {
                     <CardTitle>Category Distribution</CardTitle>
 
                     <CardDescription>
-                      Detailed view of data categories and
-                      their composition
+                      Detailed view of data categories and their composition
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -83,14 +85,10 @@ export default function AdminPage() {
                   </CardContent>
                 </Card>
               </div>
-
             </TabsContent>
-
           </Tabs>
-
         </main>
-
       </div>
     </CommunityBase>
-  );
+  )
 }

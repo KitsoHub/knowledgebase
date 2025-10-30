@@ -11,32 +11,33 @@ import { ThemeProvider } from 'next-themes'
 import { useState } from 'react'
 
 interface LayoutProps {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 const AdminAppLayout: React.FC<LayoutProps> = ({ children }) => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen)
-    }
-    return (
-
-
-                <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange >
-                    <SidebarProvider>
-
-                        <div className="flex-1 flex min-h-screen">
-                            <PatentsAppSidebar />
-                            <div className="flex-1 flex flex-col bg-card ">
-                                <PatentsBase>
-
-                                    <main className="flex-1 h-full overflow-y-auto p-4 ">{children}</main>
-
-                                </PatentsBase>
-                            </div>
-                        </div>
-                    </SidebarProvider>
-                </ThemeProvider>
-    )
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="light"
+      disableTransitionOnChange
+    >
+      <SidebarProvider>
+        <div className="flex-1 flex min-h-screen">
+          <PatentsAppSidebar />
+          <div className="flex-1 flex flex-col bg-card ">
+            <PatentsBase>
+              <main className="flex-1 h-full overflow-y-auto p-4 ">
+                {children}
+              </main>
+            </PatentsBase>
+          </div>
+        </div>
+      </SidebarProvider>
+    </ThemeProvider>
+  )
 }
 
 export default AdminAppLayout

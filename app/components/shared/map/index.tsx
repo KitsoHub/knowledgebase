@@ -1,34 +1,41 @@
 // app/components/shared/map/index.tsx
-'use client';
+'use client'
 
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { LatLngExpression } from 'leaflet';
-import { CulturalSite } from '@/lib/types/culturalSites';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
+import { LatLngExpression } from 'leaflet'
+import { CulturalSite } from '@/lib/types/culturalSites'
 
-import 'leaflet/dist/leaflet.css';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
-import 'leaflet-defaulticon-compatibility';
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
+import 'leaflet-defaulticon-compatibility'
 
 interface MapProps {
-  sites: CulturalSite[];
-  center?: LatLngExpression;
-  zoom?: number;
+  sites: CulturalSite[]
+  center?: LatLngExpression
+  zoom?: number
 }
 
-const ChangeView = ({ center, zoom }: { center: LatLngExpression; zoom: number }) => {
-  const map = useMap();
-  map.setView(center, zoom); // Dynamically update the map's center and zoom level
-  return null;
-};
+const ChangeView = ({
+  center,
+  zoom,
+}: {
+  center: LatLngExpression
+  zoom: number
+}) => {
+  const map = useMap()
+  map.setView(center, zoom) // Dynamically update the map's center and zoom level
+  return null
+}
 
 export default function SiteMap({
   sites,
   center = [0, 0],
-  zoom = 3
+  zoom = 3,
 }: MapProps) {
-  const mapCenter = sites.length > 0
-    ? [sites[0].latitude, sites[0].longitude] as LatLngExpression
-    : center;
+  const mapCenter =
+    sites.length > 0
+      ? ([sites[0].latitude, sites[0].longitude] as LatLngExpression)
+      : center
 
   return (
     <MapContainer
@@ -45,13 +52,16 @@ export default function SiteMap({
       {/* Dynamically update the map's view */}
       <ChangeView center={center} zoom={zoom} />
 
-      {sites.map((site) => (
-        <Marker
-          position={[site.latitude, site.longitude]}
-          key={site.id}
-        >
+      {sites.map(site => (
+        <Marker position={[site.latitude, site.longitude]} key={site.id}>
           <Popup>
-            <div style={{ maxWidth: '300px', fontFamily: 'Arial, sans-serif', margin: 0 }}>
+            <div
+              style={{
+                maxWidth: '300px',
+                fontFamily: 'Arial, sans-serif',
+                margin: 0,
+              }}
+            >
               <img
                 src={site.images[0]}
                 alt={site.name}
@@ -63,26 +73,34 @@ export default function SiteMap({
                 }}
               />
               <div style={{ padding: '10px' }}>
-                <h2 style={{ margin: '0 0 6px 0', fontSize: '1.1em', color: '#1a1a1a' }}>
+                <h2
+                  style={{
+                    margin: '0 0 6px 0',
+                    fontSize: '1.1em',
+                    color: '#1a1a1a',
+                  }}
+                >
                   {site.name}
                 </h2>
-                <p style={{
-                  margin: '0',
-                  fontSize: '0.9em',
-                  color: '#444',
-                  lineHeight: '1.5'
-                }}>
-                {site.description.substring(0, 120)}...
-              </p>
-              <div style={{ fontSize: '0.8em', color: '#666' }}>
-                {site.language && <div>🗣️ {site.language}</div>}
-                {site.tribe && <div>👥 {site.tribe}</div>}
-              </div>
+                <p
+                  style={{
+                    margin: '0',
+                    fontSize: '0.9em',
+                    color: '#444',
+                    lineHeight: '1.5',
+                  }}
+                >
+                  {site.description.substring(0, 120)}...
+                </p>
+                <div style={{ fontSize: '0.8em', color: '#666' }}>
+                  {site.language && <div>🗣️ {site.language}</div>}
+                  {site.tribe && <div>👥 {site.tribe}</div>}
+                </div>
               </div>
             </div>
           </Popup>
         </Marker>
       ))}
     </MapContainer>
-  );
+  )
 }
