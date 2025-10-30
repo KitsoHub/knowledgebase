@@ -1,20 +1,18 @@
-import { TeamMember } from '@/lib/types/aboutUs';
-import { useState } from 'react';
-import { Card, CardContent } from '../ui/card';
-import { ImageWithFallback } from '../shared/image-with-fallback';
-import { Button } from '../ui/button';
-import { ChevronRight, Globe, Linkedin, Mail } from 'lucide-react';
-import { Badge } from '../ui/badge';
-
-
+import { TeamMember } from '@/lib/types/aboutUs'
+import { useState } from 'react'
+import { Card, CardContent } from '../ui/card'
+import { ImageWithFallback } from '../shared/image-with-fallback'
+import { Button } from '../ui/button'
+import { ChevronRight, Globe, Linkedin, Mail } from 'lucide-react'
+import { Badge } from '../ui/badge'
 
 interface TeamMemberCardProps {
-  member: TeamMember;
-  onViewDetails: () => void;
+  member: TeamMember
+  onViewDetails: () => void
 }
 
 export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(false)
 
   // Get initials for avatar fallback
   const getInitials = (name: string) => {
@@ -23,31 +21,35 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
       .map(part => part[0])
       .join('')
       .toUpperCase()
-      .slice(0, 2);
-  };
+      .slice(0, 2)
+  }
 
   // Placeholder images for team members
   const placeholderImages: Record<string, string> = {
-    'project-team-1': 'https://images.unsplash.com/photo-1660906863391-4191c6877cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpdmUlMjBhbWVyaWNhbiUyMHdvbWFufGVufDF8fHx8MTc1OTUzNjQ5MXww&ixlib=rb-4.1.0&q=80&w=1080',
-    'project-team-2': 'https://images.unsplash.com/photo-1582140161498-41c99a3721e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZ2Vub3VzJTIwZWxkZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NTk1MzY0OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
-    'project-team-3': 'https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTQ0ODg3OHww&ixlib=rb-4.1.0&q=80&w=1080',
-    'project-team-4': 'https://images.unsplash.com/photo-1652471949169-9c587e8898cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1OTUzNDE5NHww&ixlib=rb-4.1.0&q=80&w=1080',
-  };
+    'project-team-1':
+      'https://images.unsplash.com/photo-1660906863391-4191c6877cbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYXRpdmUlMjBhbWVyaWNhbiUyMHdvbWFufGVufDF8fHx8MTc1OTUzNjQ5MXww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-2':
+      'https://images.unsplash.com/photo-1582140161498-41c99a3721e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpZ2Vub3VzJTIwZWxkZXIlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NTk1MzY0OTB8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-3':
+      'https://images.unsplash.com/photo-1581065178026-390bc4e78dad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1OTQ0ODg3OHww&ixlib=rb-4.1.0&q=80&w=1080',
+    'project-team-4':
+      'https://images.unsplash.com/photo-1652471949169-9c587e8898cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBoZWFkc2hvdCUyMHdvbWFufGVufDF8fHx8MTc1OTUzNDE5NHww&ixlib=rb-4.1.0&q=80&w=1080',
+  }
 
-  const imageUrl = member.imageUrl || placeholderImages[member.ikmsTeamIdentifier];
+  const imageUrl =
+    member.imageUrl || placeholderImages[member.ikmsTeamIdentifier]
 
   return (
     <Card
       className="group block overflow-hidden hover:shadow-lg cursor-pointer border-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-       onClick={onViewDetails}
+      onClick={onViewDetails}
     >
       <CardContent className="item-center content-center">
         {/* Image Header */}
         {/* <div className="relative h-56 w-56 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 overflow-hidden justify-center mx-auto"> */}
         <div className="relative h-full w-full overflow-hidden justify-center mx-auto rounded-[8px] transition-transform duration-300 ease-out group-hover:scale-105 group-focus:scale-105 mt-4">
-
           {imageUrl ? (
             <ImageWithFallback
               src={imageUrl}
@@ -70,10 +72,7 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
               isHovered ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <Button
-              variant="secondary"
-              className="gap-2"
-            >
+            <Button variant="secondary" className="gap-2">
               View Profile
               <ChevronRight className="h-4 w-4" />
             </Button>
@@ -134,7 +133,7 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
           )} */}
 
           {/* <div className="flex items-center space-x-2 pt-2 border-t"> */}
-            {/* {member.email && (
+          {/* {member.email && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -147,7 +146,7 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
                 <Mail className="h-4 w-4" />
               </Button>
             )} */}
-            {/* {member.linkedIn && (
+          {/* {member.linkedIn && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -173,7 +172,7 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
                 <Globe className="h-4 w-4" />
               </Button>
             )} */}
-            {/* <Button
+          {/* <Button
               variant="ghost"
               size="sm"
               className="ml-auto h-8"
@@ -186,5 +185,5 @@ export function TeamMemberCard({ member, onViewDetails }: TeamMemberCardProps) {
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

@@ -1,205 +1,247 @@
-import { AIToolUsage, TranslationContributor, TranslationEntry, TranslationRepositoryMetadata } from "@/lib/types/translationContribution";
+import {
+  AIToolUsage,
+  TranslationContributor,
+  TranslationEntry,
+  TranslationRepositoryMetadata,
+} from '@/lib/types/translationContribution'
 
 export const mockAIUsage: AIToolUsage = {
-  toolName: "MedTranslate AI",
-  version: "2.1.3",
-  humanInvolvement: "moderate",
-  verificationDate: "2024-01-15",
+  toolName: 'MedTranslate AI',
+  version: '2.1.3',
+  humanInvolvement: 'moderate',
+  verificationDate: '2024-01-15',
   isHumanVerified: true,
   affectedTermsCount: 47,
   affectedTerms: [
-    "hypertension", "diabetes mellitus", "myocardial infarction", "pneumonia",
-    "bronchitis", "gastroenteritis", "osteoporosis", "arthritis", "migraine",
-    "asthma", "epilepsy", "anemia", "hepatitis", "nephritis", "dermatitis",
-    "conjunctivitis", "sinusitis", "tonsillitis", "appendicitis", "cholecystitis",
-    "pancreatitis", "colitis", "cystitis", "prostatitis", "mastitis",
-    "endocarditis", "pericarditis", "meningitis", "encephalitis", "myelitis",
-    "neuritis", "phlebitis", "thrombosis", "embolism", "ischemia",
-    "hemorrhage", "edema", "fibrosis", "stenosis", "prolapse",
-    "rupture", "fracture", "dislocation", "sprain", "contusion",
-    "laceration", "abrasion"
-  ]
-};
+    'hypertension',
+    'diabetes mellitus',
+    'myocardial infarction',
+    'pneumonia',
+    'bronchitis',
+    'gastroenteritis',
+    'osteoporosis',
+    'arthritis',
+    'migraine',
+    'asthma',
+    'epilepsy',
+    'anemia',
+    'hepatitis',
+    'nephritis',
+    'dermatitis',
+    'conjunctivitis',
+    'sinusitis',
+    'tonsillitis',
+    'appendicitis',
+    'cholecystitis',
+    'pancreatitis',
+    'colitis',
+    'cystitis',
+    'prostatitis',
+    'mastitis',
+    'endocarditis',
+    'pericarditis',
+    'meningitis',
+    'encephalitis',
+    'myelitis',
+    'neuritis',
+    'phlebitis',
+    'thrombosis',
+    'embolism',
+    'ischemia',
+    'hemorrhage',
+    'edema',
+    'fibrosis',
+    'stenosis',
+    'prolapse',
+    'rupture',
+    'fracture',
+    'dislocation',
+    'sprain',
+    'contusion',
+    'laceration',
+    'abrasion',
+  ],
+}
 export const mockContributors: TranslationContributor[] = [
-
   // TODO: Expand with more diverse and realistic mock contributors + proper titles
   {
-    id: "contrib-002",
-    name: "Ms Tumani Ntombi Modimo",
-    email: "tmodimo@gmail.com",
-    affiliation: "Bukalanga Community",
-    country: "Botswana",
-    roles: ["cultural_advisor", "terminology_specialist"],
-    languageIds: ["ikalanga"],
-    contributionDate: "10/09/2025",
-    verificationStatus: "verified"
+    id: 'contrib-002',
+    name: 'Ms Tumani Ntombi Modimo',
+    email: 'tmodimo@gmail.com',
+    affiliation: 'Bukalanga Community',
+    country: 'Botswana',
+    roles: ['cultural_advisor', 'terminology_specialist'],
+    languageIds: ['ikalanga'],
+    contributionDate: '10/09/2025',
+    verificationStatus: 'verified',
   },
   {
-    id: "contrib-003",
-    name: "Prof. Andy Wilson",
-    email: "a.wilson@oxfordmed.uk",
-    affiliation: "University of Botswana",
-    country: "Botswana",
-    roles: ["reviewer", "quality_controller"],
-    orcidId: "0000-0003-9876-5432",
-    languageIds: ["ikalanga"],
-    contributionDate: "10/09/2025",
-    verificationStatus: "pending"
+    id: 'contrib-003',
+    name: 'Prof. Andy Wilson',
+    email: 'a.wilson@oxfordmed.uk',
+    affiliation: 'University of Botswana',
+    country: 'Botswana',
+    roles: ['reviewer', 'quality_controller'],
+    orcidId: '0000-0003-9876-5432',
+    languageIds: ['ikalanga'],
+    contributionDate: '10/09/2025',
+    verificationStatus: 'pending',
   },
   {
-    id: "contrib-004",
-    name: "Mr Samuel Kabelo",
-    email: "skadmin@kitohub.com",
-    affiliation: "OpenSource Botswana",
-    country: "Botswana",
-    roles: ["quality_controller"],
-    contributionDate: "2024-01-16",
-    verificationStatus: "verified"
+    id: 'contrib-004',
+    name: 'Mr Samuel Kabelo',
+    email: 'skadmin@kitohub.com',
+    affiliation: 'OpenSource Botswana',
+    country: 'Botswana',
+    roles: ['quality_controller'],
+    contributionDate: '2024-01-16',
+    verificationStatus: 'verified',
   },
-
-];
+]
 
 export const mockTranslationEntries: TranslationEntry[] = [
   {
-    id: "term-001",
-    sourceLanguage: "EN",
-    targetLanguage: "ES",
-    sourceTerm: "hypertension",
-    targetTerm: "hipertensión",
-    context: "High blood pressure condition affecting cardiovascular system",
+    id: 'term-001',
+    sourceLanguage: 'EN',
+    targetLanguage: 'ES',
+    sourceTerm: 'hypertension',
+    targetTerm: 'hipertensión',
+    context: 'High blood pressure condition affecting cardiovascular system',
     confidence: 95,
-    status: "verified",
+    status: 'verified',
     aiAssisted: true,
     aiTool: mockAIUsage,
-    lastUpdated: "2024-01-15",
+    lastUpdated: '2024-01-15',
     usageExamples: [
-      "The patient presents with essential hypertension.",
-      "Hypertension is a major risk factor for stroke."
+      'The patient presents with essential hypertension.',
+      'Hypertension is a major risk factor for stroke.',
     ],
     verificationHistory: [
       {
-        date: "2024-01-10",
-        reviewer: "Dr. Maria González",
-        action: "Initial translation",
-        notes: "Standard medical terminology"
+        date: '2024-01-10',
+        reviewer: 'Dr. Maria González',
+        action: 'Initial translation',
+        notes: 'Standard medical terminology',
       },
       {
-        date: "2024-01-12",
-        reviewer: "Prof. James Wilson",
-        action: "Reviewed and approved",
-        notes: "Accurate translation, commonly used"
-      }
-    ]
+        date: '2024-01-12',
+        reviewer: 'Prof. James Wilson',
+        action: 'Reviewed and approved',
+        notes: 'Accurate translation, commonly used',
+      },
+    ],
   },
   {
-    id: "term-002",
-    sourceLanguage: "EN",
-    targetLanguage: "ES",
-    sourceTerm: "myocardial infarction",
-    targetTerm: "infarto de miocardio",
-    context: "Heart attack caused by blocked coronary artery",
+    id: 'term-002',
+    sourceLanguage: 'EN',
+    targetLanguage: 'ES',
+    sourceTerm: 'myocardial infarction',
+    targetTerm: 'infarto de miocardio',
+    context: 'Heart attack caused by blocked coronary artery',
     confidence: 88,
-    status: "reviewed",
+    status: 'reviewed',
     aiAssisted: true,
     aiTool: mockAIUsage,
-    lastUpdated: "2024-01-14",
+    lastUpdated: '2024-01-14',
     usageExamples: [
-      "The patient suffered an acute myocardial infarction.",
-      "ST-elevation myocardial infarction requires immediate intervention."
+      'The patient suffered an acute myocardial infarction.',
+      'ST-elevation myocardial infarction requires immediate intervention.',
     ],
     verificationHistory: [
       {
-        date: "2024-01-11",
-        reviewer: "Dr. Carlos Mendoza",
-        action: "Initial translation",
-        notes: "Technical medical term"
+        date: '2024-01-11',
+        reviewer: 'Dr. Carlos Mendoza',
+        action: 'Initial translation',
+        notes: 'Technical medical term',
       },
       {
-        date: "2024-01-14",
-        reviewer: "Dr. Aisha Patel",
-        action: "Cultural review",
-        notes: "Appropriate for Latin American context"
-      }
-    ]
+        date: '2024-01-14',
+        reviewer: 'Dr. Aisha Patel',
+        action: 'Cultural review',
+        notes: 'Appropriate for Latin American context',
+      },
+    ],
   },
   {
-    id: "term-003",
-    sourceLanguage: "EN",
-    targetLanguage: "ES",
-    sourceTerm: "pneumonia",
-    targetTerm: "neumonía",
-    context: "Infection that inflames air sacs in one or both lungs",
+    id: 'term-003',
+    sourceLanguage: 'EN',
+    targetLanguage: 'ES',
+    sourceTerm: 'pneumonia',
+    targetTerm: 'neumonía',
+    context: 'Infection that inflames air sacs in one or both lungs',
     confidence: 92,
-    status: "disputed",
+    status: 'disputed',
     aiAssisted: false,
-    lastUpdated: "2024-01-16",
-    disputeReason: "Regional variations in pronunciation and spelling need clarification",
+    lastUpdated: '2024-01-16',
+    disputeReason:
+      'Regional variations in pronunciation and spelling need clarification',
     usageExamples: [
-      "Community-acquired pneumonia is common in elderly patients.",
-      "Pneumonia can be caused by bacteria, viruses, or fungi."
+      'Community-acquired pneumonia is common in elderly patients.',
+      'Pneumonia can be caused by bacteria, viruses, or fungi.',
     ],
     verificationHistory: [
       {
-        date: "2024-01-12",
-        reviewer: "Dr. Maria González",
-        action: "Initial translation",
-        notes: "Standard translation"
+        date: '2024-01-12',
+        reviewer: 'Dr. Maria González',
+        action: 'Initial translation',
+        notes: 'Standard translation',
       },
       {
-        date: "2024-01-16",
-        reviewer: "Dr. Carlos Mendoza",
-        action: "Flagged for dispute",
-        notes: "Regional spelling differences noted"
-      }
-    ]
+        date: '2024-01-16',
+        reviewer: 'Dr. Carlos Mendoza',
+        action: 'Flagged for dispute',
+        notes: 'Regional spelling differences noted',
+      },
+    ],
   },
   {
-    id: "term-004",
-    sourceLanguage: "EN",
-    targetLanguage: "ES",
-    sourceTerm: "diabetes mellitus",
-    targetTerm: "diabetes mellitus",
-    context: "Group of metabolic disorders characterized by high blood sugar",
+    id: 'term-004',
+    sourceLanguage: 'EN',
+    targetLanguage: 'ES',
+    sourceTerm: 'diabetes mellitus',
+    targetTerm: 'diabetes mellitus',
+    context: 'Group of metabolic disorders characterized by high blood sugar',
     confidence: 78,
-    status: "pending",
+    status: 'pending',
     aiAssisted: true,
     aiTool: mockAIUsage,
-    lastUpdated: "2024-01-18",
+    lastUpdated: '2024-01-18',
     usageExamples: [
-      "Type 2 diabetes mellitus is increasingly common worldwide.",
-      "Diabetes mellitus requires careful blood glucose monitoring."
+      'Type 2 diabetes mellitus is increasingly common worldwide.',
+      'Diabetes mellitus requires careful blood glucose monitoring.',
     ],
     verificationHistory: [
       {
-        date: "2024-01-18",
-        reviewer: "Dr. Sarah Chen",
-        action: "Initial submission",
-        notes: "Latin term preserved across languages"
-      }
-    ]
-  }
-];
+        date: '2024-01-18',
+        reviewer: 'Dr. Sarah Chen',
+        action: 'Initial submission',
+        notes: 'Latin term preserved across languages',
+      },
+    ],
+  },
+]
 
 export const mockRepositoryMetadata: TranslationRepositoryMetadata = {
-  id: "repo-001",
-  title: "Spanish Medical Terminology Translation Repository",
-  sourceLanguage: "English",
-  targetLanguage: "Spanish",
+  id: 'repo-001',
+  title: 'Spanish Medical Terminology Translation Repository',
+  sourceLanguage: 'English',
+  targetLanguage: 'Spanish',
   contributors: mockContributors,
   qualityControl: {
-    methodology: "Native Speaker Panel",
+    methodology: 'Native Speaker Panel',
     reviewersCount: 3,
-    verificationDate: "2024-01-15",
+    verificationDate: '2024-01-15',
     disputes: [
       {
-        termId: "term-003",
-        reason: "Regional variations in pronunciation and spelling need clarification",
-        status: "open"
-      }
+        termId: 'term-003',
+        reason:
+          'Regional variations in pronunciation and spelling need clarification',
+        status: 'open',
+      },
     ],
-    complianceStatus: "verified"
+    complianceStatus: 'verified',
   },
   aiUsage: mockAIUsage,
-  createdAt: "2024-01-10",
-  lastUpdated: "2024-01-18"
-};
+  createdAt: '2024-01-10',
+  lastUpdated: '2024-01-18',
+}

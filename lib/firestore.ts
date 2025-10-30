@@ -12,8 +12,8 @@ import {
   getDoc,
   serverTimestamp,
   increment,
-} from "firebase/firestore"
-import { db } from "./firebase"
+} from 'firebase/firestore'
+import { db } from './firebase'
 
 export interface Player {
   id?: string
@@ -31,7 +31,7 @@ export interface GameResult {
   id?: string
   playerId: string
   playerName: string
-  gameType: "morabaraba" | "diketo" | "ntimo"
+  gameType: 'morabaraba' | 'diketo' | 'ntimo'
   score: number
   won: boolean
   createdAt: any
@@ -41,7 +41,7 @@ export interface QuizResult {
   id?: string
   playerId: string
   playerName: string
-  gameType: "maele-quiz" | "morabaraba" | "diketo" | "ntimo"
+  gameType: 'maele-quiz' | 'morabaraba' | 'diketo' | 'ntimo'
   score: number
   correctAnswers: number
   wrongAnswers: number
@@ -63,23 +63,25 @@ export interface LeaderboardEntry {
 }
 
 // Player functions
-export const createPlayer = async (playerData: Omit<Player, "id" | "createdAt" | "lastActive">) => {
+export const createPlayer = async (
+  playerData: Omit<Player, 'id' | 'createdAt' | 'lastActive'>
+) => {
   try {
-    const docRef = await addDoc(collection(db, "players"), {
+    const docRef = await addDoc(collection(db, 'players'), {
       ...playerData,
       createdAt: serverTimestamp(),
       lastActive: serverTimestamp(),
     })
     return docRef.id
   } catch (error) {
-    console.error("Error creating player:", error)
+    console.error('Error creating player:', error)
     throw error
   }
 }
 
 export const getPlayer = async (playerId: string): Promise<Player | null> => {
   try {
-    const docRef = doc(db, "players", playerId)
+    const docRef = doc(db, 'players', playerId)
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
@@ -87,14 +89,18 @@ export const getPlayer = async (playerId: string): Promise<Player | null> => {
     }
     return null
   } catch (error) {
-    console.error("Error getting player:", error)
+    console.error('Error getting player:', error)
     throw error
   }
 }
 
 export const getPlayerByName = async (name: string): Promise<Player | null> => {
   try {
-    const q = query(collection(db, "players"), where("name", "==", name), limit(1))
+    const q = query(
+      collection(db, 'players'),
+      where('name', '==', name),
+      limit(1)
+    )
     const querySnapshot = await getDocs(q)
 
     if (!querySnapshot.empty) {
@@ -103,14 +109,17 @@ export const getPlayerByName = async (name: string): Promise<Player | null> => {
     }
     return null
   } catch (error) {
-    console.error("Error getting player by name:", error)
+    console.error('Error getting player by name:', error)
     throw error
   }
 }
 
-export const updatePlayerStats = async (playerId: string, gameResult: { score: number; won: boolean }) => {
+export const updatePlayerStats = async (
+  playerId: string,
+  gameResult: { score: number; won: boolean }
+) => {
   try {
-    const playerRef = doc(db, "players", playerId)
+    const playerRef = doc(db, 'players', playerId)
     await updateDoc(playerRef, {
       totalGames: increment(1),
       totalWins: increment(gameResult.won ? 1 : 0),
@@ -118,15 +127,17 @@ export const updatePlayerStats = async (playerId: string, gameResult: { score: n
       lastActive: serverTimestamp(),
     })
   } catch (error) {
-    console.error("Error updating player stats:", error)
+    console.error('Error updating player stats:', error)
     throw error
   }
 }
 
 // Game result functions
-export const addGameResult = async (gameResult: Omit<GameResult, "id" | "createdAt">) => {
+export const addGameResult = async (
+  gameResult: Omit<GameResult, 'id' | 'createdAt'>
+) => {
   try {
-    const docRef = await addDoc(collection(db, "gameResults"), {
+    const docRef = await addDoc(collection(db, 'gameResults'), {
       ...gameResult,
       createdAt: serverTimestamp(),
     })
@@ -139,14 +150,16 @@ export const addGameResult = async (gameResult: Omit<GameResult, "id" | "created
 
     return docRef.id
   } catch (error) {
-    console.error("Error adding game result:", error)
+    console.error('Error adding game result:', error)
     throw error
   }
 }
 
-export const addQuizResult = async (quizResult: Omit<QuizResult, "id" | "createdAt">) => {
+export const addQuizResult = async (
+  quizResult: Omit<QuizResult, 'id' | 'createdAt'>
+) => {
   try {
-    const docRef = await addDoc(collection(db, "gameResults"), {
+    const docRef = await addDoc(collection(db, 'gameResults'), {
       ...quizResult,
       createdAt: serverTimestamp(),
     })
@@ -159,28 +172,35 @@ export const addQuizResult = async (quizResult: Omit<QuizResult, "id" | "created
 
     return docRef.id
   } catch (error) {
-    console.error("Error adding quiz result:", error)
+    console.error('Error adding quiz result:', error)
     throw error
   }
 }
 
 // Leaderboard functions
-export const getLeaderboard = async (gameType: string, limitCount = 10): Promise<LeaderboardEntry[]> => {
+export const getLeaderboard = async (
+  gameType: string,
+  limitCount = 10
+): Promise<LeaderboardEntry[]> => {
   try {
     // Get all game results for the specific game type
-    const q = query(collection(db, "gameResults"), where("gameType", "==", gameType), orderBy("createdAt", "desc"))
+    const q = query(
+      collection(db, 'gameResults'),
+      where('gameType', '==', gameType),
+      orderBy('createdAt', 'desc')
+    )
 
     const querySnapshot = await getDocs(q)
     const gameResults: GameResult[] = []
 
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(doc => {
       gameResults.push({ id: doc.id, ...doc.data() } as GameResult)
     })
 
     // Group by player and calculate stats
     const playerStats: { [key: string]: LeaderboardEntry } = {}
 
-    gameResults.forEach((result) => {
+    gameResults.forEach(result => {
       if (!playerStats[result.playerId]) {
         playerStats[result.playerId] = {
           playerId: result.playerId,
@@ -207,24 +227,24 @@ export const getLeaderboard = async (gameType: string, limitCount = 10): Promise
 
     return leaderboard
   } catch (error) {
-    console.error("Error getting leaderboard:", error)
+    console.error('Error getting leaderboard:', error)
     throw error
   }
 }
 
 export const getAllPlayers = async (): Promise<Player[]> => {
   try {
-    const q = query(collection(db, "players"), orderBy("totalScore", "desc"))
+    const q = query(collection(db, 'players'), orderBy('totalScore', 'desc'))
     const querySnapshot = await getDocs(q)
     const players: Player[] = []
 
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(doc => {
       players.push({ id: doc.id, ...doc.data() } as Player)
     })
 
     return players
   } catch (error) {
-    console.error("Error getting all players:", error)
+    console.error('Error getting all players:', error)
     throw error
   }
 }

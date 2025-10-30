@@ -1,37 +1,44 @@
-"use client"
+'use client'
 
-import { useState, useEffect, useRef } from "react"
-import { useRouter, useParams } from "next/navigation"
-import Link from "next/link"
+import { useState, useEffect, useRef } from 'react'
+import { useRouter, useParams } from 'next/navigation'
+import Link from 'next/link'
 
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Mic,
+  MicOff,
+  Play,
+  Volume2,
+  XCircle,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
 
-import { ArrowLeft, CheckCircle2, Mic, MicOff, Play, Volume2, XCircle, ChevronLeft, ChevronRight } from "lucide-react"
+import { useProgressStore } from '@/lib/store/progress-store'
 
-import { useProgressStore } from "@/lib/store/progress-store"
-
-import confetti from "canvas-confetti"
-import { khoekhoegowabUnits } from "@/app/utils/mock/khoekhoegowab-vocabulary"
-import { Card, CardContent } from "@/app/components/ui/card"
-import { Button } from "@/app/components/ui/button"
-import React from "react"
-import { ikalangaUnits } from "@/app/utils/mock/ikalanga-vocabulary"
-
+import confetti from 'canvas-confetti'
+import { khoekhoegowabUnits } from '@/app/utils/mock/khoekhoegowab-vocabulary'
+import { Card, CardContent } from '@/app/components/ui/card'
+import { Button } from '@/app/components/ui/button'
+import React from 'react'
+import { ikalangaUnits } from '@/app/utils/mock/ikalanga-vocabulary'
 
 type LessonParams = {
-  unitId: string;
-  lessonId: string;
+  unitId: string
+  lessonId: string
 }
 
-
 export default function LessonPage() {
-  const params = useParams<LessonParams>();
-  const { unitId, lessonId } = params;
+  const params = useParams<LessonParams>()
+  const { unitId, lessonId } = params
 
   const [step, setStep] = useState(0)
   const [progress, setProgress] = useState(0)
   const [isListening, setIsListening] = useState(false)
-  const [transcript, setTranscript] = useState("")
-  const [result, setResult] = useState<"correct" | "incorrect" | null>(null)
+  const [transcript, setTranscript] = useState('')
+  const [result, setResult] = useState<'correct' | 'incorrect' | null>(null)
   const [lessonComplete, setLessonComplete] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
   const [phrasesPerPage] = useState(10) // Show 10 phrases per page
@@ -41,14 +48,12 @@ export default function LessonPage() {
 
   const recognitionRef = useRef<any>(null)
 
-
-  const unit = ikalangaUnits.find((u) => u.id === unitId)
-  const lesson = unit?.lessons.find((l) => l.id === lessonId)
-
+  const unit = ikalangaUnits.find(u => u.id === unitId)
+  const lesson = unit?.lessons.find(l => l.id === lessonId)
 
   useEffect(() => {
     if (!unit || !lesson) {
-      router.push("/")
+      router.push('/')
       return
     }
 
@@ -61,23 +66,23 @@ export default function LessonPage() {
     if (!lesson) return []
 
     type ListenOrSpeakStep = {
-      type: "listen" | "speak";
-      phrase: string;
-      translation: string;
-      example?: string;
-      exampleTranslation?: string;
-    };
+      type: 'listen' | 'speak'
+      phrase: string
+      translation: string
+      example?: string
+      exampleTranslation?: string
+    }
 
     type ConversationStep = {
-      type: "conversation";
+      type: 'conversation'
       phrases: {
-        speaker: string;
-        text: string;
-        translation: string;
-      }[];
-    };
+        speaker: string
+        text: string
+        translation: string
+      }[]
+    }
 
-    type LessonStep = ListenOrSpeakStep | ConversationStep;
+    type LessonStep = ListenOrSpeakStep | ConversationStep
 
     const steps: LessonStep[] = []
 
@@ -88,9 +93,9 @@ export default function LessonPage() {
     // Use the current page of vocabulary items
     const currentVocabulary = lesson.vocabulary.slice(startIndex, endIndex)
 
-    currentVocabulary.forEach((vocab) => {
+    currentVocabulary.forEach(vocab => {
       steps.push({
-        type: "listen",
+        type: 'listen',
         phrase: vocab.word,
         translation: vocab.english,
         example: vocab.example,
@@ -101,9 +106,9 @@ export default function LessonPage() {
     // Add speaking practice steps - also paginated
     const currentPhrases = (lesson.phrases ?? []).slice(startIndex, endIndex)
 
-    currentPhrases.forEach((phrase) => {
+    currentPhrases.forEach(phrase => {
       steps.push({
-        type: "speak",
+        type: 'speak',
         phrase: phrase.word,
         translation: phrase.english,
         example: phrase.example,
@@ -114,8 +119,8 @@ export default function LessonPage() {
     // Add conversation practice if available
     if (lesson.conversations && lesson.conversations.length > 0) {
       steps.push({
-        type: "conversation",
-        phrases: lesson.conversations[0].speakers.map((speaker) => ({
+        type: 'conversation',
+        phrases: lesson.conversations[0].speakers.map(speaker => ({
           speaker: speaker.role,
           text: speaker.text,
           translation: speaker.translation,
@@ -130,31 +135,43 @@ export default function LessonPage() {
   const currentStep = lessonSteps[step]
 
   // Calculate total pages
-  const totalPages = lesson ? Math.ceil(lesson.vocabulary.length / phrasesPerPage) : 0
+  const totalPages = lesson
+    ? Math.ceil(lesson.vocabulary.length / phrasesPerPage)
+    : 0
 
   useEffect(() => {
-    setProgress(Math.round(((currentPage * phrasesPerPage + step) / (lesson?.vocabulary.length || 1)) * 100))
+    setProgress(
+      Math.round(
+        ((currentPage * phrasesPerPage + step) /
+          (lesson?.vocabulary.length || 1)) *
+          100
+      )
+    )
 
     // Initialize speech recognition
-    if ((typeof window !== "undefined" && "SpeechRecognition" in window) || "webkitSpeechRecognition" in window) {
+    if (
+      (typeof window !== 'undefined' && 'SpeechRecognition' in window) ||
+      'webkitSpeechRecognition' in window
+    ) {
       const SpeechRecognition =
-        (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+        (window as any).SpeechRecognition ||
+        (window as any).webkitSpeechRecognition
       recognitionRef.current = new SpeechRecognition()
       recognitionRef.current.continuous = false
       recognitionRef.current.interimResults = true
-      recognitionRef.current.lang = "en-UK"
+      recognitionRef.current.lang = 'en-UK'
 
       recognitionRef.current.onresult = (event: any) => {
         const transcript = Array.from(event.results)
           .map((result: any) => result[0])
-          .map((result) => result.transcript)
-          .join("")
+          .map(result => result.transcript)
+          .join('')
 
         setTranscript(transcript)
       }
 
       recognitionRef.current.onerror = (event: any) => {
-        console.error("Speech recognition error", event.error)
+        console.error('Speech recognition error', event.error)
         setIsListening(false)
         // toast({
         //   title: "Error",
@@ -167,7 +184,7 @@ export default function LessonPage() {
         setIsListening(false)
       }
     } else {
-      console.error("Not supported")
+      console.error('Not supported')
       // toast({
       //   title: "Not supported",
       //   description: "Speech recognition is not supported in your browser.",
@@ -180,10 +197,16 @@ export default function LessonPage() {
         recognitionRef.current.stop()
       }
     }
-  }, [step, lessonSteps.length, currentPage, lesson?.vocabulary.length, phrasesPerPage])
+  }, [
+    step,
+    lessonSteps.length,
+    currentPage,
+    lesson?.vocabulary.length,
+    phrasesPerPage,
+  ])
 
   const startListening = () => {
-    setTranscript("")
+    setTranscript('')
     setResult(null)
     setIsListening(true)
     recognitionRef.current.start()
@@ -196,33 +219,36 @@ export default function LessonPage() {
 
       // add sophisticated matching
       const expectedPhrase =
-        currentStep.type === "speak"
+        currentStep.type === 'speak'
           ? currentStep.phrase.toLowerCase()
-          : currentStep.type === "conversation"
-            ? currentStep.phrases.find((p) => p.speaker === "You" || p.speaker === "Person B")?.text.toLowerCase()
-            : ""
+          : currentStep.type === 'conversation'
+            ? currentStep.phrases
+                .find(p => p.speaker === 'You' || p.speaker === 'Person B')
+                ?.text.toLowerCase()
+            : ''
 
       const userSaid = transcript.toLowerCase()
 
       // add sophisticated matching
       if (
         expectedPhrase &&
-        (userSaid.includes(expectedPhrase.toLowerCase()) || expectedPhrase.toLowerCase().includes(userSaid))
+        (userSaid.includes(expectedPhrase.toLowerCase()) ||
+          expectedPhrase.toLowerCase().includes(userSaid))
       ) {
-        setResult("correct")
+        setResult('correct')
       } else {
-        setResult("incorrect")
+        setResult('incorrect')
       }
     }
   }
 
   const playAudio = (text: string) => {
-    if ("speechSynthesis" in window) {
+    if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text)
-      utterance.lang = "es-ES" // Set to Spanish
+      utterance.lang = 'es-ES' // Set to Spanish
       window.speechSynthesis.speak(utterance)
     } else {
-      console.log("Not supported")
+      console.log('Not supported')
       // toast({
       //   title: "Not supported",
       //   description: "Text-to-speech is not supported in your browser.",
@@ -234,14 +260,14 @@ export default function LessonPage() {
   const nextStep = () => {
     if (step < lessonSteps.length - 1) {
       setStep(step + 1)
-      setTranscript("")
+      setTranscript('')
       setResult(null)
     } else {
       // Check if there are more pages
       if (currentPage < totalPages - 1) {
         setCurrentPage(currentPage + 1)
         setStep(0)
-        setTranscript("")
+        setTranscript('')
         setResult(null)
       } else {
         // Lesson complete
@@ -266,7 +292,7 @@ export default function LessonPage() {
   }
 
   const handleFinishLesson = () => {
-    router.push("/")
+    router.push('/')
   }
 
   if (!unit || !lesson) {
@@ -292,7 +318,8 @@ export default function LessonPage() {
           Page {currentPage + 1} of {totalPages}
         </span>
         <span className="text-sm text-muted-foreground">
-          {currentPage * phrasesPerPage + step + 1} of {lesson.vocabulary.length + (lesson.phrases?.length ?? 0)} phrases
+          {currentPage * phrasesPerPage + step + 1} of{' '}
+          {lesson.vocabulary.length + (lesson.phrases?.length ?? 0)} phrases
         </span>
       </div>
 
@@ -301,7 +328,7 @@ export default function LessonPage() {
       {!lessonComplete ? (
         <Card className="mb-6">
           <CardContent className="p-6">
-            {currentStep.type === "listen" && (
+            {currentStep.type === 'listen' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-semibold">Listen and Learn</h2>
                 <div className="flex justify-center">
@@ -311,11 +338,15 @@ export default function LessonPage() {
                 </div>
                 <div className="text-center space-y-2">
                   <p className="text-xl font-medium">{currentStep.phrase}</p>
-                  <p className="text-muted-foreground">{currentStep.translation}</p>
+                  <p className="text-muted-foreground">
+                    {currentStep.translation}
+                  </p>
                   {currentStep.example && (
                     <div className="mt-4 p-3 bg-muted rounded-lg">
                       <p className="italic">{currentStep.example}</p>
-                      <p className="text-sm text-muted-foreground mt-1">{currentStep.exampleTranslation}</p>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {currentStep.exampleTranslation}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -328,16 +359,20 @@ export default function LessonPage() {
               </div>
             )}
 
-            {currentStep.type === "speak" && (
+            {currentStep.type === 'speak' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-semibold">Repeat the Phrase</h2>
                 <div className="text-center space-y-2">
                   <p className="text-xl font-medium">{currentStep.phrase}</p>
-                  <p className="text-muted-foreground">{currentStep.translation}</p>
+                  <p className="text-muted-foreground">
+                    {currentStep.translation}
+                  </p>
                   {currentStep.example && (
                     <div className="mt-4 p-3 bg-muted rounded-lg">
                       <p className="italic">{currentStep.example}</p>
-                      <p className="text-sm text-muted-foreground mt-1">{currentStep.exampleTranslation}</p>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {currentStep.exampleTranslation}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -345,10 +380,14 @@ export default function LessonPage() {
                 <div className="flex justify-center">
                   <Button
                     onClick={isListening ? stopListening : startListening}
-                    variant={isListening ? "destructive" : "default"}
+                    variant={isListening ? 'destructive' : 'default'}
                     className="rounded-full h-16 w-16"
                   >
-                    {isListening ? <MicOff className="h-6 w-6" /> : <Mic className="h-6 w-6" />}
+                    {isListening ? (
+                      <MicOff className="h-6 w-6" />
+                    ) : (
+                      <Mic className="h-6 w-6" />
+                    )}
                   </Button>
                 </div>
 
@@ -360,10 +399,11 @@ export default function LessonPage() {
 
                 {result && (
                   <div
-                    className={`flex items-center justify-center gap-2 ${result === "correct" ? "text-green-600" : "text-red-600"
-                      }`}
+                    className={`flex items-center justify-center gap-2 ${
+                      result === 'correct' ? 'text-green-600' : 'text-red-600'
+                    }`}
                   >
-                    {result === "correct" ? (
+                    {result === 'correct' ? (
                       <>
                         <CheckCircle2 className="h-5 w-5" />
                         <span>Correct! Well done.</span>
@@ -371,7 +411,9 @@ export default function LessonPage() {
                     ) : (
                       <>
                         <XCircle className="h-5 w-5" />
-                        <span>Try again. Listen carefully to the pronunciation.</span>
+                        <span>
+                          Try again. Listen carefully to the pronunciation.
+                        </span>
                       </>
                     )}
                   </div>
@@ -379,7 +421,7 @@ export default function LessonPage() {
               </div>
             )}
 
-            {currentStep.type === "conversation" && (
+            {currentStep.type === 'conversation' && (
               <div className="space-y-6">
                 <h2 className="text-lg font-semibold">Practice Conversation</h2>
 
@@ -387,17 +429,23 @@ export default function LessonPage() {
                   {currentStep.phrases.map((phrase, index) => (
                     <div
                       key={index}
-                      className={`flex ${phrase.speaker === "You" || phrase.speaker === "Person B" ? "justify-end" : "justify-start"}`}
+                      className={`flex ${phrase.speaker === 'You' || phrase.speaker === 'Person B' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[80%] p-3 rounded-lg ${phrase.speaker === "You" || phrase.speaker === "Person B"
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-muted"
-                          }`}
+                        className={`max-w-[80%] p-3 rounded-lg ${
+                          phrase.speaker === 'You' ||
+                          phrase.speaker === 'Person B'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-muted'
+                        }`}
                       >
-                        <p className="text-xs font-medium mb-1">{phrase.speaker}</p>
+                        <p className="text-xs font-medium mb-1">
+                          {phrase.speaker}
+                        </p>
                         <p>{phrase.text}</p>
-                        <p className="text-xs opacity-75 mt-1">{phrase.translation}</p>
+                        <p className="text-xs opacity-75 mt-1">
+                          {phrase.translation}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -406,10 +454,14 @@ export default function LessonPage() {
                 <div className="flex justify-center">
                   <Button
                     onClick={isListening ? stopListening : startListening}
-                    variant={isListening ? "destructive" : "default"}
+                    variant={isListening ? 'destructive' : 'default'}
                     className="rounded-full h-16 w-16"
                   >
-                    {isListening ? <MicOff className="h-6 w-6" /> : <Mic className="h-6 w-6" />}
+                    {isListening ? (
+                      <MicOff className="h-6 w-6" />
+                    ) : (
+                      <Mic className="h-6 w-6" />
+                    )}
                   </Button>
                 </div>
 
@@ -421,10 +473,11 @@ export default function LessonPage() {
 
                 {result && (
                   <div
-                    className={`flex items-center justify-center gap-2 ${result === "correct" ? "text-green-600" : "text-red-600"
-                      }`}
+                    className={`flex items-center justify-center gap-2 ${
+                      result === 'correct' ? 'text-green-600' : 'text-red-600'
+                    }`}
                   >
-                    {result === "correct" ? (
+                    {result === 'correct' ? (
                       <>
                         <CheckCircle2 className="h-5 w-5" />
                         <span>Good job! Your response was appropriate.</span>
@@ -450,7 +503,8 @@ export default function LessonPage() {
               </div>
               <h2 className="text-2xl font-bold">Good! Lesson Complete</h2>
               <p className="text-muted-foreground">
-                You've successfully completed this lesson with over {lesson.vocabulary.length + (lesson.phrases?.length ?? 0)}{" "}
+                You've successfully completed this lesson with over{' '}
+                {lesson.vocabulary.length + (lesson.phrases?.length ?? 0)}{' '}
                 phrases. Keep up the good work!
               </p>
               <div className="flex justify-center mt-4">
@@ -485,13 +539,17 @@ export default function LessonPage() {
               {currentPage + 1} / {totalPages}
             </span>
           </div>
-          <Button onClick={nextStep} disabled={currentStep.type !== "listen" && result !== "correct"}>
-            {currentPage === totalPages - 1 && step === lessonSteps.length - 1 ? "Complete Lesson" : "Continue"}
+          <Button
+            onClick={nextStep}
+            disabled={currentStep.type !== 'listen' && result !== 'correct'}
+          >
+            {currentPage === totalPages - 1 && step === lessonSteps.length - 1
+              ? 'Complete Lesson'
+              : 'Continue'}
             <ChevronRight className="h-4 w-4 ml-2" />
           </Button>
         </div>
       )}
-
     </div>
   )
 }

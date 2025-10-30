@@ -1,89 +1,125 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
-import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
-import { Badge } from '../../ui/badge';
-import { MapPin, Search, Filter, Eye, Users, Calendar, Globe, Image, Video, Music } from 'lucide-react';
+import React, { useState } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card'
+import { Button } from '../../ui/button'
+import { Input } from '../../ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../../ui/select'
+import { Badge } from '../../ui/badge'
+import {
+  MapPin,
+  Search,
+  Filter,
+  Eye,
+  Users,
+  Calendar,
+  Globe,
+  Image,
+  Video,
+  Music,
+} from 'lucide-react'
 
 interface CulturalSite {
-  id: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  description: string;
-  category: 'heritage' | 'language' | 'botanical' | 'tribal' | 'migration';
-  language?: string;
-  tribe?: string;
-  images: string[];
-  videos: string[];
-  audio: string[];
+  id: string
+  name: string
+  latitude: number
+  longitude: number
+  description: string
+  category: 'heritage' | 'language' | 'botanical' | 'tribal' | 'migration'
+  language?: string
+  tribe?: string
+  images: string[]
+  videos: string[]
+  audio: string[]
   metadata: {
-    unesco: boolean;
-    undp: boolean;
-    unicef: boolean;
-    localContext: string;
-    indigenousSystem: string;
-    rights: string;
-    ipMetadata: string;
-    sensitivityLevel: 'public' | 'restricted' | 'closed';
-    accessProtocol: string;
-  };
-  populationDensity?: number;
-  migrationRoute?: string;
-  dateCreated: string;
-  lastUpdated: string;
+    unesco: boolean
+    undp: boolean
+    unicef: boolean
+    localContext: string
+    indigenousSystem: string
+    rights: string
+    ipMetadata: string
+    sensitivityLevel: 'public' | 'restricted' | 'closed'
+    accessProtocol: string
+  }
+  populationDensity?: number
+  migrationRoute?: string
+  dateCreated: string
+  lastUpdated: string
 }
 
 interface PublicViewProps {
-  sites: CulturalSite[];
+  sites: CulturalSite[]
 }
 
 export function PublicView({ sites }: PublicViewProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('all');
-  const [languageFilter, setLanguageFilter] = useState('all');
-  const [selectedSite, setSelectedSite] = useState<CulturalSite | null>(null);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [searchQuery, setSearchQuery] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState('all')
+  const [languageFilter, setLanguageFilter] = useState('all')
+  const [selectedSite, setSelectedSite] = useState<CulturalSite | null>(null)
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
   // Only show public sites
-  const publicSites = sites.filter(site => site.metadata.sensitivityLevel === 'public');
+  const publicSites = sites.filter(
+    site => site.metadata.sensitivityLevel === 'public'
+  )
 
   const filteredSites = publicSites.filter(site => {
-    const matchesSearch = site.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         site.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         site.tribe?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         site.language?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch =
+      site.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      site.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      site.tribe?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      site.language?.toLowerCase().includes(searchQuery.toLowerCase())
 
-    const matchesCategory = categoryFilter === 'all' || site.category === categoryFilter;
-    const matchesLanguage = languageFilter === 'all' || site.language === languageFilter;
+    const matchesCategory =
+      categoryFilter === 'all' || site.category === categoryFilter
+    const matchesLanguage =
+      languageFilter === 'all' || site.language === languageFilter
 
-    return matchesSearch && matchesCategory && matchesLanguage;
-  });
+    return matchesSearch && matchesCategory && matchesLanguage
+  })
 
-  const uniqueLanguages = [...new Set(publicSites.map(site => site.language).filter(Boolean))];
+  const uniqueLanguages = [
+    ...new Set(publicSites.map(site => site.language).filter(Boolean)),
+  ]
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'heritage': return 'bg-amber-100 text-amber-800';
-      case 'language': return 'bg-blue-100 text-blue-800';
-      case 'botanical': return 'bg-green-100 text-green-800';
-      case 'tribal': return 'bg-purple-100 text-purple-800';
-      case 'migration': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'heritage':
+        return 'bg-amber-100 text-amber-800'
+      case 'language':
+        return 'bg-blue-100 text-blue-800'
+      case 'botanical':
+        return 'bg-green-100 text-green-800'
+      case 'tribal':
+        return 'bg-purple-100 text-purple-800'
+      case 'migration':
+        return 'bg-red-100 text-red-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
     }
-  };
+  }
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'heritage': return '🏛️';
-      case 'language': return '🗣️';
-      case 'botanical': return '🌿';
-      case 'tribal': return '👥';
-      case 'migration': return '🛤️';
-      default: return '📍';
+      case 'heritage':
+        return '🏛️'
+      case 'language':
+        return '🗣️'
+      case 'botanical':
+        return '🌿'
+      case 'tribal':
+        return '👥'
+      case 'migration':
+        return '🛤️'
+      default:
+        return '📍'
     }
-  };
+  }
 
   return (
     <div className="space-y-6 mt-28">
@@ -93,8 +129,9 @@ export function PublicView({ sites }: PublicViewProps) {
           Cultural Heritage Explorer
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-          Discover and explore publicly accessible cultural heritage sites, languages,
-          botanical knowledge, and migration trails from indigenous communities worldwide.
+          Discover and explore publicly accessible cultural heritage sites,
+          languages, botanical knowledge, and migration trails from indigenous
+          communities worldwide.
         </p>
         <div className="flex justify-center items-center gap-6 mt-6 text-sm text-gray-600">
           <div className="flex items-center gap-2">
@@ -122,7 +159,7 @@ export function PublicView({ sites }: PublicViewProps) {
                 <Input
                   placeholder="Search cultural sites, languages, tribes..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={e => setSearchQuery(e.target.value)}
                   className="pl-10"
                 />
               </div>
@@ -179,14 +216,18 @@ export function PublicView({ sites }: PublicViewProps) {
               Showing {filteredSites.length} of {publicSites.length} sites
             </p>
             <div className="flex gap-2">
-              {['heritage', 'language', 'botanical', 'tribal', 'migration'].map(category => {
-                const count = filteredSites.filter(site => site.category === category).length;
-                return count > 0 ? (
-                  <Badge key={category} variant="outline" className="text-xs">
-                    {getCategoryIcon(category)} {count}
-                  </Badge>
-                ) : null;
-              })}
+              {['heritage', 'language', 'botanical', 'tribal', 'migration'].map(
+                category => {
+                  const count = filteredSites.filter(
+                    site => site.category === category
+                  ).length
+                  return count > 0 ? (
+                    <Badge key={category} variant="outline" className="text-xs">
+                      {getCategoryIcon(category)} {count}
+                    </Badge>
+                  ) : null
+                }
+              )}
             </div>
           </div>
         </CardContent>
@@ -196,7 +237,10 @@ export function PublicView({ sites }: PublicViewProps) {
       {viewMode === 'grid' ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredSites.map(site => (
-            <Card key={site.id} className="hover:shadow-lg transition-shadow cursor-pointer group">
+            <Card
+              key={site.id}
+              className="hover:shadow-lg transition-shadow cursor-pointer group"
+            >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -219,12 +263,16 @@ export function PublicView({ sites }: PublicViewProps) {
               </CardHeader>
 
               <CardContent className="space-y-4">
-                <p className="text-sm text-gray-600 line-clamp-3">{site.description}</p>
+                <p className="text-sm text-gray-600 line-clamp-3">
+                  {site.description}
+                </p>
 
                 <div className="flex items-center gap-4 text-sm text-gray-500">
                   <div className="flex items-center gap-1">
                     <MapPin className="h-4 w-4" />
-                    <span>{site.latitude.toFixed(2)}, {site.longitude.toFixed(2)}</span>
+                    <span>
+                      {site.latitude.toFixed(2)}, {site.longitude.toFixed(2)}
+                    </span>
                   </div>
 
                   {site.tribe && (
@@ -269,9 +317,21 @@ export function PublicView({ sites }: PublicViewProps) {
                 </div>
 
                 <div className="flex flex-wrap gap-1">
-                  {site.metadata.unesco && <Badge className="text-xs bg-blue-50 text-blue-700">UNESCO</Badge>}
-                  {site.metadata.undp && <Badge className="text-xs bg-green-50 text-green-700">UNDP</Badge>}
-                  {site.metadata.unicef && <Badge className="text-xs bg-purple-50 text-purple-700">UNICEF</Badge>}
+                  {site.metadata.unesco && (
+                    <Badge className="text-xs bg-blue-50 text-blue-700">
+                      UNESCO
+                    </Badge>
+                  )}
+                  {site.metadata.undp && (
+                    <Badge className="text-xs bg-green-50 text-green-700">
+                      UNDP
+                    </Badge>
+                  )}
+                  {site.metadata.unicef && (
+                    <Badge className="text-xs bg-purple-50 text-purple-700">
+                      UNICEF
+                    </Badge>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -285,7 +345,9 @@ export function PublicView({ sites }: PublicViewProps) {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <span className="text-2xl">{getCategoryIcon(site.category)}</span>
+                      <span className="text-2xl">
+                        {getCategoryIcon(site.category)}
+                      </span>
                       <div>
                         <h3 className="font-semibold text-lg">{site.name}</h3>
                         <div className="flex items-center gap-2 mt-1">
@@ -301,12 +363,17 @@ export function PublicView({ sites }: PublicViewProps) {
                       </div>
                     </div>
 
-                    <p className="text-gray-600 mb-3 line-clamp-2">{site.description}</p>
+                    <p className="text-gray-600 mb-3 line-clamp-2">
+                      {site.description}
+                    </p>
 
                     <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-3">
                       <div className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" />
-                        <span>{site.latitude.toFixed(4)}, {site.longitude.toFixed(4)}</span>
+                        <span>
+                          {site.latitude.toFixed(4)},{' '}
+                          {site.longitude.toFixed(4)}
+                        </span>
                       </div>
 
                       {site.tribe && (
@@ -324,9 +391,21 @@ export function PublicView({ sites }: PublicViewProps) {
 
                     <div className="flex items-center justify-between">
                       <div className="flex flex-wrap gap-1">
-                        {site.metadata.unesco && <Badge className="text-xs bg-blue-50 text-blue-700">UNESCO</Badge>}
-                        {site.metadata.undp && <Badge className="text-xs bg-green-50 text-green-700">UNDP</Badge>}
-                        {site.metadata.unicef && <Badge className="text-xs bg-purple-50 text-purple-700">UNICEF</Badge>}
+                        {site.metadata.unesco && (
+                          <Badge className="text-xs bg-blue-50 text-blue-700">
+                            UNESCO
+                          </Badge>
+                        )}
+                        {site.metadata.undp && (
+                          <Badge className="text-xs bg-green-50 text-green-700">
+                            UNDP
+                          </Badge>
+                        )}
+                        {site.metadata.unicef && (
+                          <Badge className="text-xs bg-purple-50 text-purple-700">
+                            UNICEF
+                          </Badge>
+                        )}
                       </div>
 
                       <div className="flex items-center gap-3 text-xs text-gray-500">
@@ -374,9 +453,13 @@ export function PublicView({ sites }: PublicViewProps) {
             <div className="text-gray-400 mb-4">
               <Search className="h-12 w-12 mx-auto" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No sites found</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No sites found
+            </h3>
             <p className="text-gray-600">
-              {searchQuery || categoryFilter !== 'all' || languageFilter !== 'all'
+              {searchQuery ||
+              categoryFilter !== 'all' ||
+              languageFilter !== 'all'
                 ? 'Try adjusting your search criteria or filters.'
                 : 'No public sites are currently available.'}
             </p>
@@ -392,7 +475,9 @@ export function PublicView({ sites }: PublicViewProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="flex items-center gap-3 text-xl">
-                    <span className="text-2xl">{getCategoryIcon(selectedSite.category)}</span>
+                    <span className="text-2xl">
+                      {getCategoryIcon(selectedSite.category)}
+                    </span>
                     {selectedSite.name}
                   </CardTitle>
                   <div className="flex items-center gap-2 mt-2">
@@ -400,11 +485,11 @@ export function PublicView({ sites }: PublicViewProps) {
                       {selectedSite.category}
                     </Badge>
                     {selectedSite.language && (
-                      <Badge variant="outline">
-                        {selectedSite.language}
-                      </Badge>
+                      <Badge variant="outline">{selectedSite.language}</Badge>
                     )}
-                    <Badge className="bg-green-100 text-green-800">Public Access</Badge>
+                    <Badge className="bg-green-100 text-green-800">
+                      Public Access
+                    </Badge>
                   </div>
                 </div>
                 <Button
@@ -430,7 +515,9 @@ export function PublicView({ sites }: PublicViewProps) {
                     <p>Latitude: {selectedSite.latitude}</p>
                     <p>Longitude: {selectedSite.longitude}</p>
                     {selectedSite.populationDensity && (
-                      <p>Population Density: {selectedSite.populationDensity}/km²</p>
+                      <p>
+                        Population Density: {selectedSite.populationDensity}/km²
+                      </p>
                     )}
                   </div>
                 </div>
@@ -438,9 +525,15 @@ export function PublicView({ sites }: PublicViewProps) {
                 <div>
                   <h4 className="font-medium mb-2">Cultural Information</h4>
                   <div className="space-y-1 text-sm text-gray-600">
-                    {selectedSite.language && <p>Language: {selectedSite.language}</p>}
-                    {selectedSite.tribe && <p>Community: {selectedSite.tribe}</p>}
-                    {selectedSite.migrationRoute && <p>Migration Route: {selectedSite.migrationRoute}</p>}
+                    {selectedSite.language && (
+                      <p>Language: {selectedSite.language}</p>
+                    )}
+                    {selectedSite.tribe && (
+                      <p>Community: {selectedSite.tribe}</p>
+                    )}
+                    {selectedSite.migrationRoute && (
+                      <p>Migration Route: {selectedSite.migrationRoute}</p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -448,28 +541,50 @@ export function PublicView({ sites }: PublicViewProps) {
               {selectedSite.metadata.localContext && (
                 <div>
                   <h4 className="font-medium mb-2">Cultural Context</h4>
-                  <p className="text-sm text-gray-600">{selectedSite.metadata.localContext}</p>
+                  <p className="text-sm text-gray-600">
+                    {selectedSite.metadata.localContext}
+                  </p>
                 </div>
               )}
 
               <div>
                 <h4 className="font-medium mb-2">Standards & Compliance</h4>
                 <div className="flex flex-wrap gap-2">
-                  {selectedSite.metadata.unesco && <Badge className="bg-blue-50 text-blue-700">UNESCO Standards</Badge>}
-                  {selectedSite.metadata.undp && <Badge className="bg-green-50 text-green-700">UNDP Guidelines</Badge>}
-                  {selectedSite.metadata.unicef && <Badge className="bg-purple-50 text-purple-700">UNICEF Standards</Badge>}
+                  {selectedSite.metadata.unesco && (
+                    <Badge className="bg-blue-50 text-blue-700">
+                      UNESCO Standards
+                    </Badge>
+                  )}
+                  {selectedSite.metadata.undp && (
+                    <Badge className="bg-green-50 text-green-700">
+                      UNDP Guidelines
+                    </Badge>
+                  )}
+                  {selectedSite.metadata.unicef && (
+                    <Badge className="bg-purple-50 text-purple-700">
+                      UNICEF Standards
+                    </Badge>
+                  )}
                 </div>
               </div>
 
               <div>
                 <h4 className="font-medium mb-2">Rights & Access</h4>
                 <div className="space-y-2 text-sm text-gray-600">
-                  <p><span className="font-medium">Rights:</span> {selectedSite.metadata.rights}</p>
-                  <p><span className="font-medium">Access Protocol:</span> {selectedSite.metadata.accessProtocol}</p>
+                  <p>
+                    <span className="font-medium">Rights:</span>{' '}
+                    {selectedSite.metadata.rights}
+                  </p>
+                  <p>
+                    <span className="font-medium">Access Protocol:</span>{' '}
+                    {selectedSite.metadata.accessProtocol}
+                  </p>
                 </div>
               </div>
 
-              {(selectedSite.images.length > 0 || selectedSite.videos.length > 0 || selectedSite.audio.length > 0) && (
+              {(selectedSite.images.length > 0 ||
+                selectedSite.videos.length > 0 ||
+                selectedSite.audio.length > 0) && (
                 <div>
                   <h4 className="font-medium mb-3">Media Resources</h4>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -477,12 +592,18 @@ export function PublicView({ sites }: PublicViewProps) {
                       <div>
                         <div className="flex items-center gap-2 mb-2">
                           <Image className="h-4 w-4" />
-                          <span className="text-sm font-medium">Images ({selectedSite.images.length})</span>
+                          <span className="text-sm font-medium">
+                            Images ({selectedSite.images.length})
+                          </span>
                         </div>
                         <div className="text-xs text-gray-500 space-y-1">
-                          {selectedSite.images.slice(0, 3).map((image, index) => (
-                            <p key={index} className="truncate">{image}</p>
-                          ))}
+                          {selectedSite.images
+                            .slice(0, 3)
+                            .map((image, index) => (
+                              <p key={index} className="truncate">
+                                {image}
+                              </p>
+                            ))}
                           {selectedSite.images.length > 3 && (
                             <p>...and {selectedSite.images.length - 3} more</p>
                           )}
@@ -494,12 +615,18 @@ export function PublicView({ sites }: PublicViewProps) {
                       <div>
                         <div className="flex items-center gap-2 mb-2">
                           <Video className="h-4 w-4" />
-                          <span className="text-sm font-medium">Videos ({selectedSite.videos.length})</span>
+                          <span className="text-sm font-medium">
+                            Videos ({selectedSite.videos.length})
+                          </span>
                         </div>
                         <div className="text-xs text-gray-500 space-y-1">
-                          {selectedSite.videos.slice(0, 3).map((video, index) => (
-                            <p key={index} className="truncate">{video}</p>
-                          ))}
+                          {selectedSite.videos
+                            .slice(0, 3)
+                            .map((video, index) => (
+                              <p key={index} className="truncate">
+                                {video}
+                              </p>
+                            ))}
                           {selectedSite.videos.length > 3 && (
                             <p>...and {selectedSite.videos.length - 3} more</p>
                           )}
@@ -511,12 +638,18 @@ export function PublicView({ sites }: PublicViewProps) {
                       <div>
                         <div className="flex items-center gap-2 mb-2">
                           <Music className="h-4 w-4" />
-                          <span className="text-sm font-medium">Audio ({selectedSite.audio.length})</span>
+                          <span className="text-sm font-medium">
+                            Audio ({selectedSite.audio.length})
+                          </span>
                         </div>
                         <div className="text-xs text-gray-500 space-y-1">
-                          {selectedSite.audio.slice(0, 3).map((audio, index) => (
-                            <p key={index} className="truncate">{audio}</p>
-                          ))}
+                          {selectedSite.audio
+                            .slice(0, 3)
+                            .map((audio, index) => (
+                              <p key={index} className="truncate">
+                                {audio}
+                              </p>
+                            ))}
                           {selectedSite.audio.length > 3 && (
                             <p>...and {selectedSite.audio.length - 3} more</p>
                           )}
@@ -541,5 +674,5 @@ export function PublicView({ sites }: PublicViewProps) {
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -2,13 +2,13 @@
 
 import React from 'react'
 import {
-    HomeIcon,
-    Newspaper,
-    ChevronRight,
-    ChevronLeft,
-    FileSearch,
-    BarChart3,
-    Users,
+  HomeIcon,
+  Newspaper,
+  ChevronRight,
+  ChevronLeft,
+  FileSearch,
+  BarChart3,
+  Users,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/app/components/ui/button'
@@ -17,32 +17,59 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/app/components/ui/tooltip"
-
+} from '@/app/components/ui/tooltip'
 
 interface SidebarProps {
-    isCollapsed: boolean
-    onToggle: () => void
-    className?: string
+  isCollapsed: boolean
+  onToggle: () => void
+  className?: string
 }
-const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onToggle }) => {
-    // const [isDarkMode, setIsDarkMode] = useState(false)
+const PatentAdminSidebar: React.FC<SidebarProps> = ({
+  className,
+  isCollapsed,
+  onToggle,
+}) => {
+  // const [isDarkMode, setIsDarkMode] = useState(false)
 
-    // const toggleTheme = () => {
-    //     setIsDarkMode(!isDarkMode)
-    //     document.documentElement.classList.toggle('dark')
-    // }
+  // const toggleTheme = () => {
+  //     setIsDarkMode(!isDarkMode)
+  //     document.documentElement.classList.toggle('dark')
+  // }
 
-    const navigationItems = [
-        { icon: HomeIcon, label: 'Overview', href: '/admin/patents', active: true },
-        { icon: Newspaper, label: 'Applications', href: '/admin/patents/applications',  badge: 'Beta', active: false},
-        { icon: Users, label: 'WorkSpace', href: '/admin/patents/workspace',  badge: 'Beta', active: false },
-        { icon: FileSearch, label: 'Verification', href: '/admin/patents/verification',  badge: 'Beta', active: false},
-        { icon: BarChart3, label: 'Analytics',  href: '/patents',  badge: 'Beta', active: false },
-                // { icon: Users, label: 'Examiners', href: '/patents',  badge: 'Beta', active: false },
-        // { icon: Headphones, label: 'Support', href: '/support', badge: 'Beta', active: false},
-        // { icon: CogIcon, label: 'Settings', href: '/settings', badge: 'Beta', actie: false},
-    ]
+  const navigationItems = [
+    { icon: HomeIcon, label: 'Overview', href: '/admin/patents', active: true },
+    {
+      icon: Newspaper,
+      label: 'Applications',
+      href: '/admin/patents/applications',
+      badge: 'Beta',
+      active: false,
+    },
+    {
+      icon: Users,
+      label: 'WorkSpace',
+      href: '/admin/patents/workspace',
+      badge: 'Beta',
+      active: false,
+    },
+    {
+      icon: FileSearch,
+      label: 'Verification',
+      href: '/admin/patents/verification',
+      badge: 'Beta',
+      active: false,
+    },
+    {
+      icon: BarChart3,
+      label: 'Analytics',
+      href: '/patents',
+      badge: 'Beta',
+      active: false,
+    },
+    // { icon: Users, label: 'Examiners', href: '/patents',  badge: 'Beta', active: false },
+    // { icon: Headphones, label: 'Support', href: '/support', badge: 'Beta', active: false},
+    // { icon: CogIcon, label: 'Settings', href: '/settings', badge: 'Beta', actie: false},
+  ]
 
   //   const patentProcessItems = [
   //     { icon: HomeIcon, label: 'Draftings', href: '/overview', active: true },
@@ -52,12 +79,15 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
 
   // ]
 
-    return (
-        <div className={cn(
-            'bg-sidebar text-sidebar-foreground h-screen flex flex-col transition-all duration-300',
-            isCollapsed ? "w-16" : "w-64", className
-        )}>
-             <div className="p-4 border-b border-sidebar-border flex items-center justify-between">
+  return (
+    <div
+      className={cn(
+        'bg-sidebar text-sidebar-foreground h-screen flex flex-col transition-all duration-300',
+        isCollapsed ? 'w-16' : 'w-64',
+        className
+      )}
+    >
+      <div className="p-4 border-b border-sidebar-border flex items-center justify-between">
         {!isCollapsed && (
           <h1 className="text-xl font-bold text-sidebar-foreground flex items-center">
             <span className="text-patent-blue mr-2">●</span> IKMS Patents
@@ -66,43 +96,41 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
         <Button
           onClick={onToggle}
           className="p-1.5 rounded-md hover:bg-sidebar-accent text-sidebar-foreground"
-          aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
         </Button>
-
       </div>
-
 
       {/* nav list */}
       <nav className="flex-1 p-2">
         <TooltipProvider delayDuration={300}>
           <ul className="space-y-2">
-            {navigationItems.map((item) => (
+            {navigationItems.map(item => (
               <li key={item.label}>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <a
                       href={item.href}
                       className={cn(
-                        "flex items-center space-x-3 p-3 rounded-md transition-colors ",
+                        'flex items-center space-x-3 p-3 rounded-md transition-colors ',
                         item.active
-                          ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                          : "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                        isCollapsed && "justify-center"
+                          ? 'bg-sidebar-accent text-sidebar-accent-foreground'
+                          : 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+                        isCollapsed && 'justify-center'
                       )}
                     >
                       <item.icon className="h-5 w-5" />
                       {!isCollapsed && <span>{item.label}</span>}
                       {!isCollapsed && item.active && (
-                        <div className="ml-auto w-1.5 h-6 bg-patent-blue rounded-full"> </div>
+                        <div className="ml-auto w-1.5 h-6 bg-patent-blue rounded-full">
+                          {' '}
+                        </div>
                       )}
                     </a>
                   </TooltipTrigger>
                   {isCollapsed && (
-                    <TooltipContent side="right">
-                      {item.label}
-                    </TooltipContent>
+                    <TooltipContent side="right">{item.label}</TooltipContent>
                   )}
                 </Tooltip>
               </li>
@@ -110,7 +138,7 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
           </ul>
         </TooltipProvider>
         {/* {!isCollapsed &&(<span className="pt-14 pb-4 text-sidebar-foreground/70  flex h-8 shrink-0 items-center rounded-md px-2 text-xs font-medium outline-none transition-[margin,opa] duration-200 ease-linear focus-visible:ring-2 [&amp;>svg]:size-4 [&amp;>svg]:shrink-0 group-data-[collapsible=icon]:-mt-8 group-data-[collapsible=icon]:opacity-0" data-sidebar="group-label">Patent Process</span>)} */}
-{/*
+        {/*
         <TooltipProvider delayDuration={300}>
           <ul className="space-y-2">
             {patentProcessItems.map((item) => (
@@ -147,21 +175,24 @@ const PatentAdminSidebar: React.FC<SidebarProps> = ({className, isCollapsed, onT
       </nav>
 
       <div className="p-4 border-t border-sidebar-border">
-        <div className={cn("flex items-center", isCollapsed && "justify-center")}>
+        <div
+          className={cn('flex items-center', isCollapsed && 'justify-center')}
+        >
           <div className="w-10 h-10 rounded-full bg-patent-blue flex items-center justify-center text-white font-semibold">
             EX
           </div>
           {!isCollapsed && (
             <div className="ml-3">
               <p className="font-medium">Examiner 1</p>
-              <p className="text-sm text-sidebar-foreground/70">Patent Officer</p>
+              <p className="text-sm text-sidebar-foreground/70">
+                Patent Officer
+              </p>
             </div>
           )}
         </div>
       </div>
-        </div>
-
-    )
+    </div>
+  )
 }
 
 export default PatentAdminSidebar

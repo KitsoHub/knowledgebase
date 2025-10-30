@@ -2,18 +2,18 @@
 const createURL = (path: string) => window.location.origin + path
 
 export const newEntry = async () => {
-    const res = await fetch(
-        new Request(createURL('/api/onboarding'), {
-            method: 'POST',
-            // body: JSON.stringify({ content: 'new entry' }),
-        })
-    )
+  const res = await fetch(
+    new Request(createURL('/api/onboarding'), {
+      method: 'POST',
+      // body: JSON.stringify({ content: 'new entry' }),
+    })
+  )
 
-    if (res.ok) {
-        return res.json()
-    } else {
-        throw new Error('Something went wrong on API server!')
-    }
+  if (res.ok) {
+    return res.json()
+  } else {
+    throw new Error('Something went wrong on API server!')
+  }
 }
 
 // type OnboardingInput = {

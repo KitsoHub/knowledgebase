@@ -1,114 +1,168 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { Button } from '@/app/components/ui/button';
-import { Input } from '@/app/components/ui/input';
-import { Badge } from '@/app/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/app/components/ui/select';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/app/components/ui/alert-dialog';
-import { Edit, Trash2, Eye, MapPin, Calendar, Users, Globe, Shield } from 'lucide-react';
+import React, { useState } from 'react'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
+import { Button } from '@/app/components/ui/button'
+import { Input } from '@/app/components/ui/input'
+import { Badge } from '@/app/components/ui/badge'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/app/components/ui/select'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/app/components/ui/alert-dialog'
+import {
+  Edit,
+  Trash2,
+  Eye,
+  MapPin,
+  Calendar,
+  Users,
+  Globe,
+  Shield,
+} from 'lucide-react'
 
 interface CulturalSite {
-  id: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  description: string;
-  category: 'heritage' | 'language' | 'botanical' | 'tribal' | 'migration';
-  language?: string;
-  tribe?: string;
-  images: string[];
-  videos: string[];
-  audio: string[];
+  id: string
+  name: string
+  latitude: number
+  longitude: number
+  description: string
+  category: 'heritage' | 'language' | 'botanical' | 'tribal' | 'migration'
+  language?: string
+  tribe?: string
+  images: string[]
+  videos: string[]
+  audio: string[]
   metadata: {
-    unesco: boolean;
-    undp: boolean;
-    unicef: boolean;
-    localContext: string;
-    indigenousSystem: string;
-    rights: string;
-    ipMetadata: string;
-    sensitivityLevel: 'public' | 'restricted' | 'closed';
-    accessProtocol: string;
-  };
-  populationDensity?: number;
-  migrationRoute?: string;
-  dateCreated: string;
-  lastUpdated: string;
+    unesco: boolean
+    undp: boolean
+    unicef: boolean
+    localContext: string
+    indigenousSystem: string
+    rights: string
+    ipMetadata: string
+    sensitivityLevel: 'public' | 'restricted' | 'closed'
+    accessProtocol: string
+  }
+  populationDensity?: number
+  migrationRoute?: string
+  dateCreated: string
+  lastUpdated: string
 }
 
 interface SiteListProps {
-  sites: CulturalSite[];
-  onUpdateSite: (id: string, updates: Partial<CulturalSite>) => void;
-  onDeleteSite: (id: string) => void;
+  sites: CulturalSite[]
+  onUpdateSite: (id: string, updates: Partial<CulturalSite>) => void
+  onDeleteSite: (id: string) => void
 }
 
 export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('all');
-  const [sensitivityFilter, setSensitivityFilter] = useState('all');
-  const [sortBy, setSortBy] = useState('name');
-  const [selectedSite, setSelectedSite] = useState<CulturalSite | null>(null);
+  const [searchQuery, setSearchQuery] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState('all')
+  const [sensitivityFilter, setSensitivityFilter] = useState('all')
+  const [sortBy, setSortBy] = useState('name')
+  const [selectedSite, setSelectedSite] = useState<CulturalSite | null>(null)
 
   const filteredSites = sites
     .filter(site => {
-      const matchesSearch = site.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           site.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           site.tribe?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           site.language?.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesCategory = categoryFilter === 'all' || site.category === categoryFilter;
-      const matchesSensitivity = sensitivityFilter === 'all' || site.metadata.sensitivityLevel === sensitivityFilter;
-      
-      return matchesSearch && matchesCategory && matchesSensitivity;
+      const matchesSearch =
+        site.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        site.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        site.tribe?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        site.language?.toLowerCase().includes(searchQuery.toLowerCase())
+
+      const matchesCategory =
+        categoryFilter === 'all' || site.category === categoryFilter
+      const matchesSensitivity =
+        sensitivityFilter === 'all' ||
+        site.metadata.sensitivityLevel === sensitivityFilter
+
+      return matchesSearch && matchesCategory && matchesSensitivity
     })
     .sort((a, b) => {
       switch (sortBy) {
         case 'name':
-          return a.name.localeCompare(b.name);
+          return a.name.localeCompare(b.name)
         case 'category':
-          return a.category.localeCompare(b.category);
+          return a.category.localeCompare(b.category)
         case 'updated':
-          return new Date(b.lastUpdated).getTime() - new Date(a.lastUpdated).getTime();
+          return (
+            new Date(b.lastUpdated).getTime() -
+            new Date(a.lastUpdated).getTime()
+          )
         case 'created':
-          return new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime();
+          return (
+            new Date(b.dateCreated).getTime() -
+            new Date(a.dateCreated).getTime()
+          )
         default:
-          return 0;
+          return 0
       }
-    });
+    })
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'heritage': return 'bg-amber-100 text-amber-800';
-      case 'language': return 'bg-blue-100 text-blue-800';
-      case 'botanical': return 'bg-green-100 text-green-800';
-      case 'tribal': return 'bg-purple-100 text-purple-800';
-      case 'migration': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'heritage':
+        return 'bg-amber-100 text-amber-800'
+      case 'language':
+        return 'bg-blue-100 text-blue-800'
+      case 'botanical':
+        return 'bg-green-100 text-green-800'
+      case 'tribal':
+        return 'bg-purple-100 text-purple-800'
+      case 'migration':
+        return 'bg-red-100 text-red-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
     }
-  };
+  }
 
   const getSensitivityColor = (level: string) => {
     switch (level) {
-      case 'public': return 'bg-green-100 text-green-800';
-      case 'restricted': return 'bg-yellow-100 text-yellow-800';
-      case 'closed': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'public':
+        return 'bg-green-100 text-green-800'
+      case 'restricted':
+        return 'bg-yellow-100 text-yellow-800'
+      case 'closed':
+        return 'bg-red-100 text-red-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
     }
-  };
+  }
 
   const toggleSensitivityLevel = (site: CulturalSite) => {
-    const levels: ('public' | 'restricted' | 'closed')[] = ['public', 'restricted', 'closed'];
-    const currentIndex = levels.indexOf(site.metadata.sensitivityLevel);
-    const nextIndex = (currentIndex + 1) % levels.length;
-    const newLevel = levels[nextIndex];
-    
+    const levels: ('public' | 'restricted' | 'closed')[] = [
+      'public',
+      'restricted',
+      'closed',
+    ]
+    const currentIndex = levels.indexOf(site.metadata.sensitivityLevel)
+    const nextIndex = (currentIndex + 1) % levels.length
+    const newLevel = levels[nextIndex]
+
     onUpdateSite(site.id, {
       metadata: {
         ...site.metadata,
-        sensitivityLevel: newLevel
-      }
-    });
-  };
+        sensitivityLevel: newLevel,
+      },
+    })
+  }
 
   return (
     <div className="space-y-6">
@@ -126,10 +180,10 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
               <Input
                 placeholder="Search sites..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
               />
             </div>
-            
+
             <Select value={categoryFilter} onValueChange={setCategoryFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="All categories" />
@@ -144,7 +198,10 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
               </SelectContent>
             </Select>
 
-            <Select value={sensitivityFilter} onValueChange={setSensitivityFilter}>
+            <Select
+              value={sensitivityFilter}
+              onValueChange={setSensitivityFilter}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="All access levels" />
               </SelectTrigger>
@@ -168,15 +225,34 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
               </SelectContent>
             </Select>
           </div>
-          
+
           <div className="flex items-center justify-between mt-4 pt-4 border-t">
             <p className="text-sm text-gray-600">
               Showing {filteredSites.length} of {sites.length} sites
             </p>
             <div className="flex gap-2">
-              <Badge variant="outline">{sites.filter(s => s.metadata.sensitivityLevel === 'public').length} Public</Badge>
-              <Badge variant="outline">{sites.filter(s => s.metadata.sensitivityLevel === 'restricted').length} Restricted</Badge>
-              <Badge variant="outline">{sites.filter(s => s.metadata.sensitivityLevel === 'closed').length} Closed</Badge>
+              <Badge variant="outline">
+                {
+                  sites.filter(s => s.metadata.sensitivityLevel === 'public')
+                    .length
+                }{' '}
+                Public
+              </Badge>
+              <Badge variant="outline">
+                {
+                  sites.filter(
+                    s => s.metadata.sensitivityLevel === 'restricted'
+                  ).length
+                }{' '}
+                Restricted
+              </Badge>
+              <Badge variant="outline">
+                {
+                  sites.filter(s => s.metadata.sensitivityLevel === 'closed')
+                    .length
+                }{' '}
+                Closed
+              </Badge>
             </div>
           </div>
         </CardContent>
@@ -201,40 +277,56 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                       {site.metadata.sensitivityLevel}
                     </button>
                   </div>
-                  
-                  <p className="text-gray-600 mb-3 line-clamp-2">{site.description}</p>
-                  
+
+                  <p className="text-gray-600 mb-3 line-clamp-2">
+                    {site.description}
+                  </p>
+
                   <div className="flex flex-wrap gap-4 text-sm text-gray-500">
                     <div className="flex items-center gap-1">
                       <MapPin className="h-4 w-4" />
-                      <span>{site.latitude.toFixed(4)}, {site.longitude.toFixed(4)}</span>
+                      <span>
+                        {site.latitude.toFixed(4)}, {site.longitude.toFixed(4)}
+                      </span>
                     </div>
-                    
+
                     {site.language && (
                       <div className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
                         <span>{site.language}</span>
                       </div>
                     )}
-                    
+
                     {site.tribe && (
                       <div className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
                         <span>{site.tribe}</span>
                       </div>
                     )}
-                    
+
                     <div className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
                       <span>Updated {site.lastUpdated}</span>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2 mt-3">
-                    {site.metadata.unesco && <Badge className="text-xs bg-blue-50 text-blue-700">UNESCO</Badge>}
-                    {site.metadata.undp && <Badge className="text-xs bg-green-50 text-green-700">UNDP</Badge>}
-                    {site.metadata.unicef && <Badge className="text-xs bg-purple-50 text-purple-700">UNICEF</Badge>}
-                    
+                    {site.metadata.unesco && (
+                      <Badge className="text-xs bg-blue-50 text-blue-700">
+                        UNESCO
+                      </Badge>
+                    )}
+                    {site.metadata.undp && (
+                      <Badge className="text-xs bg-green-50 text-green-700">
+                        UNDP
+                      </Badge>
+                    )}
+                    {site.metadata.unicef && (
+                      <Badge className="text-xs bg-purple-50 text-purple-700">
+                        UNICEF
+                      </Badge>
+                    )}
+
                     <div className="flex items-center gap-1 text-xs text-gray-500">
                       <span>{site.images.length} images</span>
                       <span>•</span>
@@ -244,7 +336,7 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-2 ml-4">
                   <Button
                     variant="outline"
@@ -253,21 +345,25 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                   >
                     <Eye className="h-4 w-4" />
                   </Button>
-                  
+
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => {
                       // In a real app, this would open an edit modal/form
-                      console.log('Edit site:', site.id);
+                      console.log('Edit site:', site.id)
                     }}
                   >
                     <Edit className="h-4 w-4" />
                   </Button>
-                  
+
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button variant="outline" size="sm" className="text-red-600 hover:bg-red-50">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-red-600 hover:bg-red-50"
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </AlertDialogTrigger>
@@ -275,7 +371,8 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                       <AlertDialogHeader>
                         <AlertDialogTitle>Delete Site</AlertDialogTitle>
                         <AlertDialogDescription>
-                          Are you sure you want to delete "{site.name}"? This action cannot be undone.
+                          Are you sure you want to delete "{site.name}"? This
+                          action cannot be undone.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
@@ -302,9 +399,13 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
             <div className="text-gray-400 mb-4">
               <MapPin className="h-12 w-12 mx-auto" />
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No sites found</h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No sites found
+            </h3>
             <p className="text-gray-600">
-              {searchQuery || categoryFilter !== 'all' || sensitivityFilter !== 'all'
+              {searchQuery ||
+              categoryFilter !== 'all' ||
+              sensitivityFilter !== 'all'
                 ? 'Try adjusting your search criteria or filters.'
                 : 'Start by adding your first cultural heritage site.'}
             </p>
@@ -325,7 +426,9 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                       {selectedSite.category}
                     </Badge>
                   </CardTitle>
-                  <p className="text-sm text-gray-600 mt-1">{selectedSite.description}</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {selectedSite.description}
+                  </p>
                 </div>
                 <Button
                   variant="outline"
@@ -341,7 +444,8 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
               <div>
                 <h4 className="font-medium mb-2">Location</h4>
                 <p className="text-sm text-gray-600">
-                  Latitude: {selectedSite.latitude}, Longitude: {selectedSite.longitude}
+                  Latitude: {selectedSite.latitude}, Longitude:{' '}
+                  {selectedSite.longitude}
                 </p>
                 {selectedSite.populationDensity && (
                   <p className="text-sm text-gray-600">
@@ -355,9 +459,15 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                 <div>
                   <h4 className="font-medium mb-2">Cultural Information</h4>
                   <div className="space-y-1 text-sm text-gray-600">
-                    {selectedSite.language && <p>Language: {selectedSite.language}</p>}
-                    {selectedSite.tribe && <p>Tribal Group: {selectedSite.tribe}</p>}
-                    {selectedSite.migrationRoute && <p>Migration Route: {selectedSite.migrationRoute}</p>}
+                    {selectedSite.language && (
+                      <p>Language: {selectedSite.language}</p>
+                    )}
+                    {selectedSite.tribe && (
+                      <p>Tribal Group: {selectedSite.tribe}</p>
+                    )}
+                    {selectedSite.migrationRoute && (
+                      <p>Migration Route: {selectedSite.migrationRoute}</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -367,30 +477,46 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                 <h4 className="font-medium mb-2">Metadata & Standards</h4>
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2">
-                    {selectedSite.metadata.unesco && <Badge className="bg-blue-50 text-blue-700">UNESCO</Badge>}
-                    {selectedSite.metadata.undp && <Badge className="bg-green-50 text-green-700">UNDP</Badge>}
-                    {selectedSite.metadata.unicef && <Badge className="bg-purple-50 text-purple-700">UNICEF</Badge>}
+                    {selectedSite.metadata.unesco && (
+                      <Badge className="bg-blue-50 text-blue-700">UNESCO</Badge>
+                    )}
+                    {selectedSite.metadata.undp && (
+                      <Badge className="bg-green-50 text-green-700">UNDP</Badge>
+                    )}
+                    {selectedSite.metadata.unicef && (
+                      <Badge className="bg-purple-50 text-purple-700">
+                        UNICEF
+                      </Badge>
+                    )}
                   </div>
-                  
+
                   {selectedSite.metadata.localContext && (
                     <div>
                       <p className="text-sm font-medium">Local Context:</p>
-                      <p className="text-sm text-gray-600">{selectedSite.metadata.localContext}</p>
+                      <p className="text-sm text-gray-600">
+                        {selectedSite.metadata.localContext}
+                      </p>
                     </div>
                   )}
-                  
+
                   {selectedSite.metadata.indigenousSystem && (
                     <div>
                       <p className="text-sm font-medium">Indigenous System:</p>
-                      <p className="text-sm text-gray-600">{selectedSite.metadata.indigenousSystem}</p>
+                      <p className="text-sm text-gray-600">
+                        {selectedSite.metadata.indigenousSystem}
+                      </p>
                     </div>
                   )}
-                  
+
                   <div>
-                    <p className="text-sm font-medium">Rights: {selectedSite.metadata.rights}</p>
                     <p className="text-sm font-medium">
-                      Access Level: 
-                      <Badge className={`ml-2 ${getSensitivityColor(selectedSite.metadata.sensitivityLevel)}`}>
+                      Rights: {selectedSite.metadata.rights}
+                    </p>
+                    <p className="text-sm font-medium">
+                      Access Level:
+                      <Badge
+                        className={`ml-2 ${getSensitivityColor(selectedSite.metadata.sensitivityLevel)}`}
+                      >
                         {selectedSite.metadata.sensitivityLevel}
                       </Badge>
                     </p>
@@ -403,37 +529,55 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                 <h4 className="font-medium mb-2">Media Assets</h4>
                 <div className="grid grid-cols-3 gap-4 text-sm">
                   <div>
-                    <p className="font-medium">Images ({selectedSite.images.length})</p>
+                    <p className="font-medium">
+                      Images ({selectedSite.images.length})
+                    </p>
                     <div className="space-y-1 text-gray-600">
                       {selectedSite.images.slice(0, 3).map((image, index) => (
-                        <p key={index} className="truncate">{image}</p>
+                        <p key={index} className="truncate">
+                          {image}
+                        </p>
                       ))}
                       {selectedSite.images.length > 3 && (
-                        <p className="text-xs">...and {selectedSite.images.length - 3} more</p>
+                        <p className="text-xs">
+                          ...and {selectedSite.images.length - 3} more
+                        </p>
                       )}
                     </div>
                   </div>
-                  
+
                   <div>
-                    <p className="font-medium">Videos ({selectedSite.videos.length})</p>
+                    <p className="font-medium">
+                      Videos ({selectedSite.videos.length})
+                    </p>
                     <div className="space-y-1 text-gray-600">
                       {selectedSite.videos.slice(0, 3).map((video, index) => (
-                        <p key={index} className="truncate">{video}</p>
+                        <p key={index} className="truncate">
+                          {video}
+                        </p>
                       ))}
                       {selectedSite.videos.length > 3 && (
-                        <p className="text-xs">...and {selectedSite.videos.length - 3} more</p>
+                        <p className="text-xs">
+                          ...and {selectedSite.videos.length - 3} more
+                        </p>
                       )}
                     </div>
                   </div>
-                  
+
                   <div>
-                    <p className="font-medium">Audio ({selectedSite.audio.length})</p>
+                    <p className="font-medium">
+                      Audio ({selectedSite.audio.length})
+                    </p>
                     <div className="space-y-1 text-gray-600">
                       {selectedSite.audio.slice(0, 3).map((audio, index) => (
-                        <p key={index} className="truncate">{audio}</p>
+                        <p key={index} className="truncate">
+                          {audio}
+                        </p>
                       ))}
                       {selectedSite.audio.length > 3 && (
-                        <p className="text-xs">...and {selectedSite.audio.length - 3} more</p>
+                        <p className="text-xs">
+                          ...and {selectedSite.audio.length - 3} more
+                        </p>
                       )}
                     </div>
                   </div>
@@ -444,7 +588,9 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
               {selectedSite.metadata.accessProtocol && (
                 <div>
                   <h4 className="font-medium mb-2">Access Protocol</h4>
-                  <p className="text-sm text-gray-600">{selectedSite.metadata.accessProtocol}</p>
+                  <p className="text-sm text-gray-600">
+                    {selectedSite.metadata.accessProtocol}
+                  </p>
                 </div>
               )}
             </CardContent>
@@ -452,5 +598,5 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -1,21 +1,20 @@
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'
 import React from 'react'
-import { Card } from '../ui/card';
-import { ArrowRight, Crown, GraduationCap, Heart, Shield } from 'lucide-react';
-import { ImageWithFallback } from '../shared/image-with-fallback';
-import { Button } from '../ui/button';
-import { useAboutUsStore } from '@/lib/store/aboutUsStore';
-import { Badge } from '../ui/badge';
+import { Card } from '../ui/card'
+import { ArrowRight, Crown, GraduationCap, Heart, Shield } from 'lucide-react'
+import { ImageWithFallback } from '../shared/image-with-fallback'
+import { Button } from '../ui/button'
+import { useAboutUsStore } from '@/lib/store/aboutUsStore'
+import { Badge } from '../ui/badge'
 
-const MotionDiv = motion.div;
-const MotionCard = motion.create(Card);
+const MotionDiv = motion.div
+const MotionCard = motion.create(Card)
 
 export default function AboutNewsInsights() {
-    const {aboutUsContent} = useAboutUsStore();
-    const {ikms, governance, joinTeam} = aboutUsContent;
+  const { aboutUsContent } = useAboutUsStore()
+  const { ikms, governance, joinTeam } = aboutUsContent
   return (
     <>
-
       <section className="mb-24">
         <h2 className="text-3xl md:text-4xl mb-8">News and Insights</h2>
 
@@ -36,7 +35,8 @@ export default function AboutNewsInsights() {
               IK PORTAL TEAM • OCT 15, 2024
             </p>
             <h3 className="mb-3 group-hover:text-primary transition-colors">
-              Launching the Indigenous Knowledge Portal: Empowering community governance
+              Launching the Indigenous Knowledge Portal: Empowering community
+              governance
             </h3>
             <button className="inline-flex items-center text-sm hover:gap-3 gap-2 transition-all group">
               Read more
@@ -88,7 +88,8 @@ export default function AboutNewsInsights() {
               IK PORTAL TEAM • AUG 12, 2024
             </p>
             <h3 className="mb-3 group-hover:text-primary transition-colors">
-              Building with communities: Our approach to co-design and sovereignty
+              Building with communities: Our approach to co-design and
+              sovereignty
             </h3>
             <button className="inline-flex items-center text-sm hover:gap-3 gap-2 transition-all group">
               Read more
@@ -103,15 +104,27 @@ export default function AboutNewsInsights() {
           <div className="relative z-10 text-center max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl mb-4">Join our mission</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Help preserve and protect Indigenous knowledge for future generations
+              Help preserve and protect Indigenous knowledge for future
+              generations
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" onClick={() => window.location.href = 'mailto:volunteer@ikportal.org'}>
+              <Button
+                size="lg"
+                onClick={() =>
+                  (window.location.href = 'mailto:volunteer@ikportal.org')
+                }
+              >
                 <Heart className="h-4 w-4 mr-2" />
                 Volunteer with us
               </Button>
-              <Button size="lg" variant="outline" onClick={() => window.location.href = 'mailto:internships@ikportal.org'}>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() =>
+                  (window.location.href = 'mailto:internships@ikportal.org')
+                }
+              >
                 <GraduationCap className="h-4 w-4 mr-2" />
                 Apply for internship
               </Button>
@@ -120,7 +133,9 @@ export default function AboutNewsInsights() {
             {joinTeam.openPositions && joinTeam.openPositions.length > 0 && (
               <div className="mt-8 pt-8 border-t">
                 <span className="text-sm text-muted-foreground mb-4">
-                  <Badge variant="secondary" className="mr-2">{joinTeam.openPositions.length}</Badge>
+                  <Badge variant="secondary" className="mr-2">
+                    {joinTeam.openPositions.length}
+                  </Badge>
                   Open positions available
                 </span>
                 <button className="inline-flex items-center text-sm hover:gap-3 gap-2 transition-all group text-primary">
@@ -132,7 +147,6 @@ export default function AboutNewsInsights() {
           </div>
         </div>
       </section>
-
-      </>
+    </>
   )
 }

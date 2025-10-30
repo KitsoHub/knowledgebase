@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 // import { ReactNode } from "react";
 // import { useUser } from "@clerk/nextjs";
@@ -23,18 +23,21 @@
 //   );
 // }
 
-import { ReactNode } from "react";
+import { ReactNode } from 'react'
 // { useUser } from "@clerk/nextjs";
 
-
 interface PatentsBaseProps {
-  children: ReactNode;
-  allowedRoles?: string[];
+  children: ReactNode
+  allowedRoles?: string[]
 }
 
-export default function PatentsBase({ children, allowedRoles }: PatentsBaseProps) {
+export default function PatentsBase({
+  children,
+  allowedRoles,
+}: PatentsBaseProps) {
   //const { user } = useUser();
 
-  return <div className="flex-1 flex-col space-y-4 p-4 pt-6 md:p-8">{children}</div>
-
+  return (
+    <div className="flex-1 flex-col space-y-4 p-4 pt-6 md:p-8">{children}</div>
+  )
 }

@@ -1,59 +1,91 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { Button } from '@/app/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/tabs';
-import { Badge } from '@/app/components/ui/badge';
-import { MetricsPanel } from './MetricsPanel';
-import { SiteForm } from './SiteForm';
-import { SiteList } from './SiteList';
-import { TemplateManager } from './TemplateManager';
-import { BarChart3, Plus, List, FileText, Database, Users, Globe, Shield } from 'lucide-react';
+import React, { useState } from 'react'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
+import { Button } from '@/app/components/ui/button'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/app/components/ui/tabs'
+import { Badge } from '@/app/components/ui/badge'
+import { MetricsPanel } from './MetricsPanel'
+import { SiteForm } from './SiteForm'
+import { SiteList } from './SiteList'
+import { TemplateManager } from './TemplateManager'
+import {
+  BarChart3,
+  Plus,
+  List,
+  FileText,
+  Database,
+  Users,
+  Globe,
+  Shield,
+} from 'lucide-react'
 
 interface CulturalSite {
-  id: string;
-  name: string;
-  latitude: number;
-  longitude: number;
-  description: string;
-  category: 'heritage' | 'language' | 'botanical' | 'tribal' | 'migration';
-  language?: string;
-  tribe?: string;
-  images: string[];
-  videos: string[];
-  audio: string[];
+  id: string
+  name: string
+  latitude: number
+  longitude: number
+  description: string
+  category: 'heritage' | 'language' | 'botanical' | 'tribal' | 'migration'
+  language?: string
+  tribe?: string
+  images: string[]
+  videos: string[]
+  audio: string[]
   metadata: {
-    unesco: boolean;
-    undp: boolean;
-    unicef: boolean;
-    localContext: string;
-    indigenousSystem: string;
-    rights: string;
-    ipMetadata: string;
-    sensitivityLevel: 'public' | 'restricted' | 'closed';
-    accessProtocol: string;
-  };
-  populationDensity?: number;
-  migrationRoute?: string;
-  dateCreated: string;
-  lastUpdated: string;
+    unesco: boolean
+    undp: boolean
+    unicef: boolean
+    localContext: string
+    indigenousSystem: string
+    rights: string
+    ipMetadata: string
+    sensitivityLevel: 'public' | 'restricted' | 'closed'
+    accessProtocol: string
+  }
+  populationDensity?: number
+  migrationRoute?: string
+  dateCreated: string
+  lastUpdated: string
 }
 
 interface DashboardProps {
-  sites: CulturalSite[];
-  onAddSite: (site: Omit<CulturalSite, 'id' | 'dateCreated' | 'lastUpdated'>) => void;
-  onUpdateSite: (id: string, updates: Partial<CulturalSite>) => void;
-  onDeleteSite: (id: string) => void;
+  sites: CulturalSite[]
+  onAddSite: (
+    site: Omit<CulturalSite, 'id' | 'dateCreated' | 'lastUpdated'>
+  ) => void
+  onUpdateSite: (id: string, updates: Partial<CulturalSite>) => void
+  onDeleteSite: (id: string) => void
 }
 
-export function Dashboard({ sites, onAddSite, onUpdateSite, onDeleteSite }: DashboardProps) {
-  const [activeTab, setActiveTab] = useState('metrics');
-  
+export function Dashboard({
+  sites,
+  onAddSite,
+  onUpdateSite,
+  onDeleteSite,
+}: DashboardProps) {
+  const [activeTab, setActiveTab] = useState('metrics')
+
   // Dashboard statistics
   const stats = {
     totalSites: sites.length,
-    publicSites: sites.filter(site => site.metadata.sensitivityLevel === 'public').length,
-    restrictedSites: sites.filter(site => site.metadata.sensitivityLevel === 'restricted').length,
-    closedSites: sites.filter(site => site.metadata.sensitivityLevel === 'closed').length,
+    publicSites: sites.filter(
+      site => site.metadata.sensitivityLevel === 'public'
+    ).length,
+    restrictedSites: sites.filter(
+      site => site.metadata.sensitivityLevel === 'restricted'
+    ).length,
+    closedSites: sites.filter(
+      site => site.metadata.sensitivityLevel === 'closed'
+    ).length,
     unescoSites: sites.filter(site => site.metadata.unesco).length,
     undpSites: sites.filter(site => site.metadata.undp).length,
     unicefSites: sites.filter(site => site.metadata.unicef).length,
@@ -64,17 +96,22 @@ export function Dashboard({ sites, onAddSite, onUpdateSite, onDeleteSite }: Dash
       tribal: sites.filter(site => site.category === 'tribal').length,
       migration: sites.filter(site => site.category === 'migration').length,
     },
-    languages: [...new Set(sites.map(site => site.language).filter(Boolean))].length,
+    languages: [...new Set(sites.map(site => site.language).filter(Boolean))]
+      .length,
     tribes: [...new Set(sites.map(site => site.tribe).filter(Boolean))].length,
-  };
+  }
 
   return (
     <div className="space-y-6">
       {/* Dashboard Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Heritage Dashboard</h2>
-          <p className="text-gray-600">Manage cultural heritage sites and metadata</p>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Heritage Dashboard
+          </h2>
+          <p className="text-gray-600">
+            Manage cultural heritage sites and metadata
+          </p>
         </div>
         <div className="flex items-center space-x-4">
           <Badge className="bg-blue-100 text-blue-800">
@@ -174,7 +211,8 @@ export function Dashboard({ sites, onAddSite, onUpdateSite, onDeleteSite }: Dash
               <CardHeader>
                 <CardTitle>Add New Cultural Heritage Site</CardTitle>
                 <p className="text-sm text-gray-600">
-                  Add a new site with comprehensive metadata following international standards
+                  Add a new site with comprehensive metadata following
+                  international standards
                 </p>
               </CardHeader>
               <CardContent>
@@ -185,7 +223,7 @@ export function Dashboard({ sites, onAddSite, onUpdateSite, onDeleteSite }: Dash
         </TabsContent>
 
         <TabsContent value="manage-sites" className="mt-6">
-          <SiteList 
+          <SiteList
             sites={sites}
             onUpdateSite={onUpdateSite}
             onDeleteSite={onDeleteSite}
@@ -197,5 +235,5 @@ export function Dashboard({ sites, onAddSite, onUpdateSite, onDeleteSite }: Dash
         </TabsContent>
       </Tabs>
     </div>
-  );
+  )
 }

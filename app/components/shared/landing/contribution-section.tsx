@@ -1,9 +1,16 @@
-"use client"
+'use client'
 import React from 'react'
 // import { motion } from 'motion/react'
 import { Button } from '../../ui/button'
 import { Badge } from '../../ui/badge'
-import { BookOpen, Calendar, Heart, Target, TrendingUp, Users } from 'lucide-react'
+import {
+  BookOpen,
+  Calendar,
+  Heart,
+  Target,
+  TrendingUp,
+  Users,
+} from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card'
 import { motion } from 'framer-motion'
 
@@ -38,8 +45,10 @@ export default function ContributionSection() {
                 Join Our Knowledge-Sharing Community
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                We use culturally inclusive, land-based approaches to connect with us. We are excited to learn more about
-                what you wish to share and offer for the people in your local school, community, or organization.
+                We use culturally inclusive, land-based approaches to connect
+                with us. We are excited to learn more about what you wish to
+                share and offer for the people in your local school, community,
+                or organization.
               </p>
               <div className="flex flex-wrap gap-3 mb-6">
                 <Badge variant="outline" className="px-3 py-2">
@@ -55,7 +64,7 @@ export default function ContributionSection() {
                 </Badge>
               </div>
               <Button
-                onClick={() => { }}
+                onClick={() => {}}
                 className="self-start bg-gradient-to-r from-primary to-emerald-500 hover:from-primary/90 hover:to-emerald-500/90 text-white rounded-full px-6 py-3"
               >
                 Start Collaborating
@@ -79,27 +88,34 @@ export default function ContributionSection() {
                 Support the Mission
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                Join IKMS in creating new pathways with Indigenous Peoples that lead to a more just system by
-                addressing critical socio economic and representation issues to get there.
+                Join IKMS in creating new pathways with Indigenous Peoples that
+                lead to a more just system by addressing critical socio economic
+                and representation issues to get there.
               </p>
               <div className="space-y-4 mb-6">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
                     <Heart className="w-4 h-4 text-primary" />
                   </div>
-                  <span className="text-foreground">Fund indigenous-led research initiatives</span>
+                  <span className="text-foreground">
+                    Fund indigenous-led research initiatives
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
                     <Users className="w-4 h-4 text-primary" />
                   </div>
-                  <span className="text-foreground">Support community-based education programs</span>
+                  <span className="text-foreground">
+                    Support community-based education programs
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
                     🌱
                   </div>
-                  <span className="text-foreground">Preserve traditional medicinal knowledge</span>
+                  <span className="text-foreground">
+                    Preserve traditional medicinal knowledge
+                  </span>
                 </div>
               </div>
               <Button
@@ -112,7 +128,7 @@ export default function ContributionSection() {
             </div>
             <div className="relative h-64 lg:h-auto order-1 lg:order-2">
               <img
-                src='https://www.sundaystandard.info/wp-content/uploads/2020/09/THE-BASARWA.jpg'
+                src="https://www.sundaystandard.info/wp-content/uploads/2020/09/THE-BASARWA.jpg"
                 alt="Indigenous family standing together representing community support"
                 className="w-full h-94 object-cover"
               />
@@ -140,7 +156,8 @@ export default function ContributionSection() {
             Our Approach
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Building sustainable partnerships through education, measurement, and long-term planning
+            Building sustainable partnerships through education, measurement,
+            and long-term planning
           </p>
         </div>
 
@@ -160,7 +177,11 @@ export default function ContributionSection() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground leading-relaxed">
-                  We work with educators and Indigenous organizations and communities to build and deliver training, professional development and access to resources, and peer networks that empower Indigenous professionals in their efforts to work towards Indigenous well-being.
+                  We work with educators and Indigenous organizations and
+                  communities to build and deliver training, professional
+                  development and access to resources, and peer networks that
+                  empower Indigenous professionals in their efforts to work
+                  towards Indigenous well-being.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary" className="text-xs">
@@ -192,7 +213,12 @@ export default function ContributionSection() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground leading-relaxed">
-                  Honoring Indigenous principles regarding data ownership and control, we work with Indigenous communities and organizations to establish their own metrics of success. IKMS designs tools to support schools, organizations, and communities to collect and analyze data that helps track positive outcomes and measure impact over time.
+                  Honoring Indigenous principles regarding data ownership and
+                  control, we work with Indigenous communities and organizations
+                  to establish their own metrics of success. IKMS designs tools
+                  to support schools, organizations, and communities to collect
+                  and analyze data that helps track positive outcomes and
+                  measure impact over time.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary" className="text-xs">
@@ -220,11 +246,17 @@ export default function ContributionSection() {
                 <div className="w-16 h-16 bg-gradient-to-br from-green-600 to-primary rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
                   <Calendar className="w-8 h-8 text-white" />
                 </div>
-                <CardTitle className="text-xl">Long-term Operational Planning</CardTitle>
+                <CardTitle className="text-xl">
+                  Long-term Operational Planning
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <p className="text-muted-foreground leading-relaxed">
-                  To encourage sustained impact over the long term, our organizational and community leadership to identify and build supports that are forward-thinking and built to last. The future needs future resource planning, we work together to get ahead.
+                  To encourage sustained impact over the long term, our
+                  organizational and community leadership to identify and build
+                  supports that are forward-thinking and built to last. The
+                  future needs future resource planning, we work together to get
+                  ahead.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary" className="text-xs">
@@ -255,12 +287,13 @@ export default function ContributionSection() {
             Ready to Make a Difference?
           </h2>
           <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-            Join our community of knowledge keepers, researchers, and advocates working to preserve
-            traditional wisdom while building bridges to a unified and modern society.
+            Join our community of knowledge keepers, researchers, and advocates
+            working to preserve traditional wisdom while building bridges to a
+            unified and modern society.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
-              onClick={() => { }}
+              onClick={() => {}}
               size="lg"
               className="gap-3 bg-gradient-to-r from-primary to-emerald-500 hover:from-primary/90 hover:to-emerald-500/90 text-white rounded-full px-8 py-4 shadow-lg hover:shadow-xl transition-all"
             >

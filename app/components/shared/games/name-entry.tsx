@@ -1,27 +1,31 @@
-"use client";
+'use client'
 
-import type React from "react";
-import { useState } from "react";
-import { Button } from "@/app/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
-import { Input } from "@/app/components/ui/input";
-import { Trophy, Users } from "lucide-react";
-
+import type React from 'react'
+import { useState } from 'react'
+import { Button } from '@/app/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
+import { Input } from '@/app/components/ui/input'
+import { Trophy, Users } from 'lucide-react'
 
 interface NameEntryProps {
-  onSubmit: (username: string) => void;
-
+  onSubmit: (username: string) => void
 }
 
-export default function NameEntry({ onSubmit}: NameEntryProps) {
-  const [username, setUsername] = useState("");
+export default function NameEntry({ onSubmit }: NameEntryProps) {
+  const [username, setUsername] = useState('')
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (username.trim()) {
-      onSubmit(username.trim());
+      onSubmit(username.trim())
     }
-  };
+  }
 
   return (
     <div className="h-600 mt-40 relative flex items-center justify-center p-4  overflow-hidden shadow-lg">
@@ -42,7 +46,8 @@ export default function NameEntry({ onSubmit}: NameEntryProps) {
             Welcome to Traditional Idioms Game
           </h1>
           <p className="text-[#f7e9d7]">
-            Enter your name to join the leaderboard and compete in traditional games
+            Enter your name to join the leaderboard and compete in traditional
+            games
           </p>
         </div>
 
@@ -63,7 +68,7 @@ export default function NameEntry({ onSubmit}: NameEntryProps) {
                 type="text"
                 placeholder="Your name"
                 value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={e => setUsername(e.target.value)}
                 className="border-[#d1bfa7] focus:border-[#b87a4a] focus:ring-[#b87a4a]"
               />
               <Button
@@ -104,5 +109,5 @@ export default function NameEntry({ onSubmit}: NameEntryProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }

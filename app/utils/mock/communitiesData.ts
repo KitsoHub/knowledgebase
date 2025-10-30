@@ -1,56 +1,62 @@
-import { CommunityGovernance, CulturalProtocol } from "@/lib/constants/community";
-import { Community } from "@/lib/types/community";
-
+import {
+  CommunityGovernance,
+  CulturalProtocol,
+} from '@/lib/constants/community'
+import { Community } from '@/lib/types/community'
 
 export const mockCommunities: Community[] = [
   {
-    communityIdentifier: "1",
+    communityIdentifier: '1',
     identity: {
-      id: "1",
-      title: "Bamalete Cultural Preservation Society",
-      description: "Preserving traditional knowledge and practices of the Bamalete people",
+      id: '1',
+      title: 'Bamalete Cultural Preservation Society',
+      description:
+        'Preserving traditional knowledge and practices of the Bamalete people',
       governanceModel: CommunityGovernance.ELDER_COUNCIL,
       leadership: {
         primaryContact: {
-          id: "1",
-          name: "Kgosi Mosadi Seboko",
-          email: "demo@kitsohub.org.bw",
-          role: "Paramount Chief",
-          culturalTitle: "Knowledge Keeper"
+          id: '1',
+          name: 'Kgosi Mosadi Seboko',
+          email: 'demo@kitsohub.org.bw',
+          role: 'Paramount Chief',
+          culturalTitle: 'Knowledge Keeper',
         },
         eldersCouncil: [
           {
-            id: "2",
-            name: "Elder 1",
-            email: "demo@kitsohub.org.bw",
-            role: "Elder",
-            culturalTitle: "Spiritual Leader"
-          }
-        ]
+            id: '2',
+            name: 'Elder 1',
+            email: 'demo@kitsohub.org.bw',
+            role: 'Elder',
+            culturalTitle: 'Spiritual Leader',
+          },
+        ],
       },
-      region: "South-East District, Botswana",
-      language: "Selete, Setswana, English",
-      establishedDate: new Date("2025-09-20")
+      region: 'South-East District, Botswana',
+      language: 'Selete, Setswana, English',
+      establishedDate: new Date('2025-09-20'),
     },
     members: [
-       {
-          id: "3",
-          name: "Kgosi Puso Gaborone",
-          email: "demo@kitsohub.org.bw",
-          role: "Paramount Chief",
-          culturalTitle: "Lead Steward"
-        }
+      {
+        id: '3',
+        name: 'Kgosi Puso Gaborone',
+        email: 'demo@kitsohub.org.bw',
+        role: 'Paramount Chief',
+        culturalTitle: 'Lead Steward',
+      },
     ],
     knowledgeItems: [],
-    protocols: [CulturalProtocol.ELDER_APPROVAL_REQUIRED, CulturalProtocol.COMMUNITY_ONLY],
+    protocols: [
+      CulturalProtocol.ELDER_APPROVAL_REQUIRED,
+      CulturalProtocol.COMMUNITY_ONLY,
+    ],
     stats: {
       totalItems: 156,
       publicItems: 45,
       restrictedItems: 111,
       memberCount: 89,
-      collectionCount:0,
-      subCommunityCount: 0
-    }
+      collectionCount: 0,
+      subCommunityCount: 0,
+    },
   },
   // {
   //   communityIdentifier: "2",
@@ -117,4 +123,4 @@ export const mockCommunities: Community[] = [
   //     subCommunityCount: 0
   //   }
   // }
-];
+]

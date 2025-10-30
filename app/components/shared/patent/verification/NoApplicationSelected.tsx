@@ -1,5 +1,5 @@
-import React from 'react';
-import { FileText } from 'lucide-react';
+import React from 'react'
+import { FileText } from 'lucide-react'
 
 const NoApplicationSelected: React.FC = () => {
   return (
@@ -8,7 +8,7 @@ const NoApplicationSelected: React.FC = () => {
       <h3 className="text-xl font-medium mb-2">No Application Selected</h3>
       <p>Add applications to your workspace to begin verification</p>
     </div>
-  );
-};
+  )
+}
 
-export default NoApplicationSelected;
+export default NoApplicationSelected

@@ -1,55 +1,54 @@
-
 export interface LanguageFamily {
-    name: string;
-    description: string;
-    regions: string[];
+  name: string
+  description: string
+  regions: string[]
 }
 
-type ModalityType = 'written' | 'spoken' | 'signed';
+type ModalityType = 'written' | 'spoken' | 'signed'
 
 export interface Modality {
-    types: ModalityType[];
-    description: string;
+  types: ModalityType[]
+  description: string
 }
 export interface LanguageMetadata {
-    id: string;
-    name: string;
-    /** Native language name (e.g., "San") */
-    nativeName?: string;
+  id: string
+  name: string
+  /** Native language name (e.g., "San") */
+  nativeName?: string
   // ===== LINGUISTIC PROPERTIES =====
   /** Writing system used (e.g., "Latin", "Cyrillic", "Han") */
-  script?: string;
+  script?: string
   /** Text direction (LTR/RTL) */
-  writingDirection?: 'ltr' | 'rtl' | 'ttb';
+  writingDirection?: 'ltr' | 'rtl' | 'ttb'
   /** Primary modality taught */
-  modality?: Modality[];
+  modality?: Modality[]
   /** Regional variant identifier (BCP 47 tag) */
-  regionTag?: string;
+  regionTag?: string
   /** Language variety/dialect (e.g., "Latin American Spanish") */
-  variety?: string;
-  description: string;
+  variety?: string
+  description: string
 
-    // ===== TECHNICAL METADATA =====
+  // ===== TECHNICAL METADATA =====
   /** Whether RTL layout is needed */
-  isRtl?: boolean;
+  isRtl?: boolean
   /** Character set requirements */
-  characterSet?: 'latin' | 'cjk' | 'arabic' | 'cyrillic' | 'other';
+  characterSet?: 'latin' | 'cjk' | 'arabic' | 'cyrillic' | 'other'
   /** Minimum Unicode version required */
-  minUnicodeVersion?: string;
+  minUnicodeVersion?: string
 
-    // ===== REFERENCE METADATA (for academic use) =====
+  // ===== REFERENCE METADATA (for academic use) =====
   /** ISO 639-1 code (2-letter) */
-  iso639_1?: string;
+  iso639_1?: string
   /** Language family classification */
-  languageFamily: string | LanguageFamily;
+  languageFamily: string | LanguageFamily
   /** Total speakers (in millions) */
-  totalSpeakers?: number;
+  totalSpeakers?: number
   /** Geographic distribution */
-  regions?: string[];
+  regions?: string[]
 
-    // ===== PLATFORM-SPECIFIC =====
-  isActive: boolean;
-  launchDate?: string;
-  puoId?: string;
-  version?: string;
+  // ===== PLATFORM-SPECIFIC =====
+  isActive: boolean
+  launchDate?: string
+  puoId?: string
+  version?: string
 }

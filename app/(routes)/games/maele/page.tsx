@@ -1,66 +1,73 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { Button } from '@/app/components/ui/button';
-import Leaderboard from '@/app/components/shared/games/leaderboard';
+import { useState } from 'react'
+import { Button } from '@/app/components/ui/button'
+import Leaderboard from '@/app/components/shared/games/leaderboard'
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/app/components/ui/card';
-import { Background } from '@/app/components/shared/games/background';
-import { LevelIndicator } from '@/app/components/shared/games/level-indicator';
-import useRandomQuestion from '@/app/hooks/use-generate-question';
-import { useShuffledOptions } from '@/app/hooks/use-shuffle-options';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import { LucideArrowLeft } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useAudio } from 'react-use';
-import ConfettiButton from '@/app/components/shared/confetti';
-import NameEntry from '@/app/components/shared/games/name-entry';
-import { db } from '@/lib/firebase';
+} from '@/app/components/ui/card'
+import { Background } from '@/app/components/shared/games/background'
+import { LevelIndicator } from '@/app/components/shared/games/level-indicator'
+import useRandomQuestion from '@/app/hooks/use-generate-question'
+import { useShuffledOptions } from '@/app/hooks/use-shuffle-options'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { LucideArrowLeft } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { useAudio } from 'react-use'
+import ConfettiButton from '@/app/components/shared/confetti'
+import NameEntry from '@/app/components/shared/games/name-entry'
+import { db } from '@/lib/firebase'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { collection, addDoc, query, orderBy, limit, getDocs } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+} from 'firebase/firestore'
 
 function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
-  const [username, setUsername] = useState<string | null>(null);
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [currentLevel, setCurrentLevel] = useState(0);
-  const { chosenQuestion: question, options } = useRandomQuestion(currentLevel);
+  const [username, setUsername] = useState<string | null>(null)
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+  const [currentLevel, setCurrentLevel] = useState(0)
+  const { chosenQuestion: question, options } = useRandomQuestion(currentLevel)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [answerChecked, setAnswerChecked] = useState(false);
+  const [answerChecked, setAnswerChecked] = useState(false)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [showResults, setShowResults] = useState(false);
+  const [showResults, setShowResults] = useState(false)
   const [quizResult, setQuizResult] = useState({
     score: 0,
     correctAnswers: 0,
     wrongAnswers: 0,
-  });
-  const [isVisible, setIsVisible] = useState(false);
-  const maxLevel = 10;
-  const quizItem = question;
-  const quizQuestion = quizItem?.phrase;
+  })
+  const [isVisible, setIsVisible] = useState(false)
+  const maxLevel = 10
+  const quizItem = question
+  const quizQuestion = quizItem?.phrase
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [audio, _state, controls, _ref] = useAudio({
     src: '/Win sound.wav',
     autoPlay: false,
-  });
+  })
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [wrong_audio, _wrong_state, wrong_controls, _wrong_ref] = useAudio({
     src: '/wrong.mp3',
     autoPlay: false,
-  });
+  })
 
-  const router = useRouter();
-  const MySwal = withReactContent(Swal);
+  const router = useRouter()
+  const MySwal = withReactContent(Swal)
 
   const handleAnswerSelect = (answer: string) => {
-    setSelectedAnswer(answer);
-  };
+    setSelectedAnswer(answer)
+  }
 
   const saveToLeaderboard = async (username: string, score: number) => {
     try {
@@ -68,50 +75,50 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
         username,
         score,
         timestamp: new Date(),
-      });
-      console.log('Score saved to leaderboard');
+      })
+      console.log('Score saved to leaderboard')
       MySwal.fire({
         title: 'Success',
         text: 'Your score has been saved to the leaderboard!',
         icon: 'success',
         confirmButtonText: 'View Leaderboard',
       }).then(() => {
-        setActiveTab('leaderboard'); // Switch to leaderboard tab after saving
-      });
+        setActiveTab('leaderboard') // Switch to leaderboard tab after saving
+      })
     } catch (error) {
-      console.error('Error saving to leaderboard:', error);
+      console.error('Error saving to leaderboard:', error)
       MySwal.fire({
         title: 'Error',
         text: 'Failed to save score to leaderboard',
         icon: 'error',
         confirmButtonText: 'OK',
-      });
+      })
     }
-  };
+  }
 
   const showCorrectSwal = () => {
-    controls.play();
+    controls.play()
     MySwal.fire({
       title: 'Congratulations',
       text: 'You got the correct answer',
       icon: 'success',
       confirmButtonText: 'Next Question',
     }).then(() => {
-      setCurrentLevel((prev) => Math.min(prev + 1, maxLevel));
-    });
-  };
+      setCurrentLevel(prev => Math.min(prev + 1, maxLevel))
+    })
+  }
 
   const showIncorrectSwal = () => {
-    wrong_controls.play();
+    wrong_controls.play()
     MySwal.fire({
       title: 'Error',
       text: 'You got the answer wrong',
       icon: 'error',
       confirmButtonText: 'Next Question',
     }).then(() => {
-      setCurrentLevel((prev) => Math.min(prev + 1, maxLevel));
-    });
-  };
+      setCurrentLevel(prev => Math.min(prev + 1, maxLevel))
+    })
+  }
 
   const displayResults = () => {
     MySwal.fire({
@@ -125,44 +132,44 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
       confirmButtonText: 'OK',
     }).then(() => {
       if (username) {
-        saveToLeaderboard(username, quizResult.score);
+        saveToLeaderboard(username, quizResult.score)
       }
-    });
-  };
+    })
+  }
 
   const handleSubmit = () => {
     if (selectedAnswer) {
-      setAnswerChecked(true);
+      setAnswerChecked(true)
       if (selectedAnswer === question?.meaning) {
-        setQuizResult((prev) => ({
+        setQuizResult(prev => ({
           ...prev,
           correctAnswers: prev.correctAnswers + 1,
           score: prev.score + 1,
-        }));
-        showCorrectSwal();
+        }))
+        showCorrectSwal()
       } else {
-        setQuizResult((prev) => ({
+        setQuizResult(prev => ({
           ...prev,
           wrongAnswers: prev.wrongAnswers + 1,
-        }));
-        showIncorrectSwal();
+        }))
+        showIncorrectSwal()
       }
-      setSelectedAnswer(null);
+      setSelectedAnswer(null)
       if (currentLevel === maxLevel - 1) {
-        setShowResults(true);
+        setShowResults(true)
       }
     }
-  };
+  }
 
   const handleNameSubmit = (name: string) => {
-    setUsername(name);
-  };
+    setUsername(name)
+  }
 
-  const allOptions = useShuffledOptions(question, options);
-  const completed = currentLevel === maxLevel;
+  const allOptions = useShuffledOptions(question, options)
+  const completed = currentLevel === maxLevel
 
   if (!username) {
-    return <NameEntry onSubmit={handleNameSubmit} />;
+    return <NameEntry onSubmit={handleNameSubmit} />
   }
 
   return (
@@ -199,8 +206,8 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
               <p className="text-lg text-gray-700"></p>
               <Button
                 onClick={() => {
-                  setIsVisible(true);
-                  displayResults();
+                  setIsVisible(true)
+                  displayResults()
                 }}
                 className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-2 px-6 rounded-full transition-all"
               >
@@ -209,24 +216,17 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
             </div>
           ) : (
             <>
-              <LevelIndicator
-                currentLevel={currentLevel}
-                maxLevel={maxLevel}
-              />
+              <LevelIndicator currentLevel={currentLevel} maxLevel={maxLevel} />
               <p className="mb-6 text-lg font-medium text-center text-gray-700">
                 {quizQuestion}
-                <div className="text-white text-xs">
-                  {question?.meaning}
-                </div>
+                <div className="text-white text-xs">{question?.meaning}</div>
               </p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {allOptions.map((answer, index) => (
                   <Button
                     key={index}
                     variant={
-                      selectedAnswer === answer?.meaning
-                        ? 'default'
-                        : 'outline'
+                      selectedAnswer === answer?.meaning ? 'default' : 'outline'
                     }
                     className={`h-20 flex flex-col py-4 px-6 text-left transition-all text-wrap ${
                       selectedAnswer === answer?.meaning
@@ -255,13 +255,11 @@ function QuizApp({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
         </CardFooter>
       </Card>
     </div>
-  );
+  )
 }
 
-
-
 export default function GamePage() {
-  const [activeTab, setActiveTab] = useState('game');
+  const [activeTab, setActiveTab] = useState('game')
 
   return (
     <div className="min-h-screen bg-gray-100  mb-10 relative overflow-hidden">
@@ -299,5 +297,5 @@ export default function GamePage() {
         )}
       </div>
     </div>
-  );
+  )
 }

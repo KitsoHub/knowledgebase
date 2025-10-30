@@ -1,5 +1,5 @@
-import { create } from "zustand"
-import { persist } from "zustand/middleware"
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export type LessonProgress = {
   lessonId: string
@@ -32,7 +32,11 @@ type ProgressStore = {
   progress: UserProgress
   completeLesson: (unitId: string, lessonId: string, score: number) => void
   startLesson: (unitId: string, lessonId: string) => void
-  updateVocabularyMastery: (lessonId: string, vocabularyId: string, mastered: boolean) => void
+  updateVocabularyMastery: (
+    lessonId: string,
+    vocabularyId: string,
+    mastered: boolean
+  ) => void
   completeExercise: (lessonId: string, exerciseId: string) => void
   updateStreak: () => void
   addXP: (amount: number) => void
@@ -40,66 +44,66 @@ type ProgressStore = {
 
 // Initial progress state
 const initialProgress: UserProgress = {
-  currentUnitId: "beginner-unit-1",
-  currentLessonId: "greetings",
+  currentUnitId: 'beginner-unit-1',
+  currentLessonId: 'greetings',
   streak: 0,
-  lastStreak: "",
+  lastStreak: '',
   xp: 0,
   lessonProgress: {},
   unitProgress: {
-    "beginner-unit-1": {
-      unitId: "beginner-unit-1",
+    'beginner-unit-1': {
+      unitId: 'beginner-unit-1',
       lessonsCompleted: 0,
       totalLessons: 4,
       lastAccessed: new Date().toISOString(),
     },
-    "beginner-unit-2": {
-      unitId: "beginner-unit-2",
+    'beginner-unit-2': {
+      unitId: 'beginner-unit-2',
       lessonsCompleted: 0,
       totalLessons: 4,
-      lastAccessed: "",
+      lastAccessed: '',
     },
-    "beginner-unit-3": {
-      unitId: "beginner-unit-3",
+    'beginner-unit-3': {
+      unitId: 'beginner-unit-3',
       lessonsCompleted: 0,
       totalLessons: 4,
-      lastAccessed: "",
+      lastAccessed: '',
     },
-    "intermediate-unit-1": {
-      unitId: "intermediate-unit-1",
+    'intermediate-unit-1': {
+      unitId: 'intermediate-unit-1',
       lessonsCompleted: 0,
       totalLessons: 4,
-      lastAccessed: "",
+      lastAccessed: '',
     },
-    "intermediate-unit-2": {
-      unitId: "intermediate-unit-2",
+    'intermediate-unit-2': {
+      unitId: 'intermediate-unit-2',
       lessonsCompleted: 0,
       totalLessons: 4,
-      lastAccessed: "",
+      lastAccessed: '',
     },
-    "intermediate-unit-3": {
-      unitId: "intermediate-unit-3",
+    'intermediate-unit-3': {
+      unitId: 'intermediate-unit-3',
       lessonsCompleted: 0,
       totalLessons: 4,
-      lastAccessed: "",
+      lastAccessed: '',
     },
-    "advanced-unit-1": {
-      unitId: "advanced-unit-1",
+    'advanced-unit-1': {
+      unitId: 'advanced-unit-1',
       lessonsCompleted: 0,
       totalLessons: 4,
-      lastAccessed: "",
+      lastAccessed: '',
     },
-    "advanced-unit-2": {
-      unitId: "advanced-unit-2",
+    'advanced-unit-2': {
+      unitId: 'advanced-unit-2',
       lessonsCompleted: 0,
       totalLessons: 4,
-      lastAccessed: "",
+      lastAccessed: '',
     },
-    "advanced-unit-3": {
-      unitId: "advanced-unit-3",
+    'advanced-unit-3': {
+      unitId: 'advanced-unit-3',
       lessonsCompleted: 0,
       totalLessons: 4,
-      lastAccessed: "",
+      lastAccessed: '',
     },
   },
 }
@@ -112,7 +116,8 @@ export const useProgressStore = create<ProgressStore>()(
       completeLesson: (unitId, lessonId, score) => {
         const { progress } = get()
         const lessonKey = `${unitId}-${lessonId}`
-        const wasAlreadyCompleted = progress.lessonProgress[lessonKey]?.completed || false
+        const wasAlreadyCompleted =
+          progress.lessonProgress[lessonKey]?.completed || false
 
         // Update lesson progress
         const updatedLessonProgress = {
@@ -123,8 +128,10 @@ export const useProgressStore = create<ProgressStore>()(
             completed: true,
             score,
             lastAccessed: new Date().toISOString(),
-            vocabularyMastered: progress.lessonProgress[lessonKey]?.vocabularyMastered || [],
-            exercisesCompleted: progress.lessonProgress[lessonKey]?.exercisesCompleted || [],
+            vocabularyMastered:
+              progress.lessonProgress[lessonKey]?.vocabularyMastered || [],
+            exercisesCompleted:
+              progress.lessonProgress[lessonKey]?.exercisesCompleted || [],
           },
         }
 
@@ -133,14 +140,16 @@ export const useProgressStore = create<ProgressStore>()(
           unitId,
           lessonsCompleted: 0,
           totalLessons: 4, // Default
-          lastAccessed: "",
+          lastAccessed: '',
         }
 
         const updatedUnitProgress = {
           ...progress.unitProgress,
           [unitId]: {
             ...unitProgress,
-            lessonsCompleted: wasAlreadyCompleted ? unitProgress.lessonsCompleted : unitProgress.lessonsCompleted + 1,
+            lessonsCompleted: wasAlreadyCompleted
+              ? unitProgress.lessonsCompleted
+              : unitProgress.lessonsCompleted + 1,
             lastAccessed: new Date().toISOString(),
           },
         }
@@ -176,8 +185,9 @@ export const useProgressStore = create<ProgressStore>()(
       updateVocabularyMastery: (lessonId, vocabularyId, mastered) => {
         const { progress } = get()
         const unitId =
-          Object.keys(progress.unitProgress).find((id) => progress.unitProgress[id].lessonsCompleted > 0) ||
-          "beginner-unit-1"
+          Object.keys(progress.unitProgress).find(
+            id => progress.unitProgress[id].lessonsCompleted > 0
+          ) || 'beginner-unit-1'
 
         const lessonKey = `${unitId}-${lessonId}`
         const lessonProgress = progress.lessonProgress[lessonKey] || {
@@ -192,7 +202,7 @@ export const useProgressStore = create<ProgressStore>()(
 
         const vocabularyMastered = mastered
           ? [...lessonProgress.vocabularyMastered, vocabularyId]
-          : lessonProgress.vocabularyMastered.filter((id) => id !== vocabularyId)
+          : lessonProgress.vocabularyMastered.filter(id => id !== vocabularyId)
 
         set({
           progress: {
@@ -211,8 +221,9 @@ export const useProgressStore = create<ProgressStore>()(
       completeExercise: (lessonId, exerciseId) => {
         const { progress } = get()
         const unitId =
-          Object.keys(progress.unitProgress).find((id) => progress.unitProgress[id].lessonsCompleted > 0) ||
-          "beginner-unit-1"
+          Object.keys(progress.unitProgress).find(
+            id => progress.unitProgress[id].lessonsCompleted > 0
+          ) || 'beginner-unit-1'
 
         const lessonKey = `${unitId}-${lessonId}`
         const lessonProgress = progress.lessonProgress[lessonKey] || {
@@ -225,7 +236,10 @@ export const useProgressStore = create<ProgressStore>()(
           exercisesCompleted: [],
         }
 
-        const exercisesCompleted = [...lessonProgress.exercisesCompleted, exerciseId]
+        const exercisesCompleted = [
+          ...lessonProgress.exercisesCompleted,
+          exerciseId,
+        ]
 
         set({
           progress: {
@@ -244,7 +258,7 @@ export const useProgressStore = create<ProgressStore>()(
 
       updateStreak: () => {
         const { progress } = get()
-        const today = new Date().toISOString().split("T")[0]
+        const today = new Date().toISOString().split('T')[0]
 
         // If already logged in today, do nothing
         if (progress.lastStreak === today) {
@@ -254,9 +268,10 @@ export const useProgressStore = create<ProgressStore>()(
         // Check if the last streak was yesterday
         const yesterday = new Date()
         yesterday.setDate(yesterday.getDate() - 1)
-        const yesterdayString = yesterday.toISOString().split("T")[0]
+        const yesterdayString = yesterday.toISOString().split('T')[0]
 
-        const newStreak = progress.lastStreak === yesterdayString ? progress.streak + 1 : 1
+        const newStreak =
+          progress.lastStreak === yesterdayString ? progress.streak + 1 : 1
 
         set({
           progress: {
@@ -267,7 +282,7 @@ export const useProgressStore = create<ProgressStore>()(
         })
       },
 
-      addXP: (amount) => {
+      addXP: amount => {
         const { progress } = get()
 
         set({
@@ -279,7 +294,7 @@ export const useProgressStore = create<ProgressStore>()(
       },
     }),
     {
-      name: "lingua-leap-progress",
-    },
-  ),
+      name: 'lingua-leap-progress',
+    }
+  )
 )

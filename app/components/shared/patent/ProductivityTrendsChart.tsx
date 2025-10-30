@@ -1,26 +1,40 @@
-'use client';
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { mockWeeklyProductivity } from '@/app/utils/mock/patent-data';
-import { Tabs, TabsList, TabsTrigger } from '@/app/components/ui/tabs';
+'use client'
+import React, { useState } from 'react'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts'
+import { mockWeeklyProductivity } from '@/app/utils/mock/patent-data'
+import { Tabs, TabsList, TabsTrigger } from '@/app/components/ui/tabs'
 
 const ProductivityTrendsChart: React.FC = () => {
-  const [duration, setDuration] = useState('3m');
+  const [duration, setDuration] = useState('3m')
 
   // Filter data based on selected duration
   const getFilteredData = () => {
     switch (duration) {
       case '1m':
-        return mockWeeklyProductivity.slice(-4);
+        return mockWeeklyProductivity.slice(-4)
       case '3m':
-        return mockWeeklyProductivity.slice(-12);
+        return mockWeeklyProductivity.slice(-12)
       case '6m':
-        return mockWeeklyProductivity;
+        return mockWeeklyProductivity
       default:
-        return mockWeeklyProductivity;
+        return mockWeeklyProductivity
     }
-  };
+  }
 
   return (
     <Card className="col-span-2 row-span-1">
@@ -74,7 +88,7 @@ const ProductivityTrendsChart: React.FC = () => {
         </div>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default ProductivityTrendsChart;
+export default ProductivityTrendsChart

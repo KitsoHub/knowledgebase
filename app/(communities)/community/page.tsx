@@ -6,5 +6,5 @@ export default function CommunityPage() {
         Welcome to the community hub. Choose a section below:
       </p>
     </div>
-  );
+  )
 }

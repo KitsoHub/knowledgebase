@@ -1,23 +1,37 @@
-"use client"
+'use client'
 import AboutNewsInsights from '@/app/components/about/newsInsights'
 import TeamDirectory from '@/app/components/about/teamDirectory'
 import { ImageWithFallback } from '@/app/components/shared/image-with-fallback'
 import { Badge } from '@/app/components/ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/app/components/ui/card'
 import { useAboutUsStore } from '@/lib/store/aboutUsStore'
 import { motion } from 'framer-motion'
-import { ArrowRight, BookOpen, Calendar, Crown, Eye, Globe, Shield, Target, TrendingUp, Users } from 'lucide-react'
+import {
+  ArrowRight,
+  BookOpen,
+  Calendar,
+  Crown,
+  Eye,
+  Globe,
+  Shield,
+  Target,
+  TrendingUp,
+  Users,
+} from 'lucide-react'
 import React from 'react'
 
-
-const MotionCard = motion.create(Card);
+const MotionCard = motion.create(Card)
 
 interface SectionHeaderProps {
-  title: string;
-  subtitle?: string;
-  index: number;
+  title: string
+  subtitle?: string
+  index: number
 }
-
 
 function SectionHeader({ title, subtitle, index }: SectionHeaderProps) {
   return (
@@ -61,11 +75,12 @@ function SectionHeader({ title, subtitle, index }: SectionHeaderProps) {
           transition={{
             repeat: Infinity,
             duration: 20,
-            ease: "linear"
+            ease: 'linear',
           }}
           className="absolute inset-0 opacity-20"
           style={{
-            backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)',
+            backgroundImage:
+              'radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)',
             backgroundSize: '30px 30px',
           }}
         />
@@ -82,9 +97,7 @@ function SectionHeader({ title, subtitle, index }: SectionHeaderProps) {
               {title}
             </h2>
             {subtitle && (
-              <p className="text-center text-white/90 text-lg">
-                {subtitle}
-              </p>
+              <p className="text-center text-white/90 text-lg">{subtitle}</p>
             )}
           </motion.div>
         </div>
@@ -93,15 +106,14 @@ function SectionHeader({ title, subtitle, index }: SectionHeaderProps) {
         <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-background to-transparent" />
       </div>
     </motion.div>
-  );
+  )
 }
 
 export default function AboutPage() {
-  const { aboutUsContent } = useAboutUsStore();
-  const { ikms, governance } = aboutUsContent;
+  const { aboutUsContent } = useAboutUsStore()
+  const { ikms, governance } = aboutUsContent
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6 mt-28">
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -114,21 +126,25 @@ export default function AboutPage() {
         <motion.div
           animate={{
             rotate: [0, 10, -10, 0],
-            scale: [1, 1.1, 1.1, 1]
+            scale: [1, 1.1, 1.1, 1],
           }}
           transition={{
             repeat: Infinity,
             duration: 4,
-            ease: "easeInOut"
+            ease: 'easeInOut',
           }}
           className="inline-block mb-4"
         >
           {/* <Crown className="h-12 w-12 text-primary mx-auto" /> */}
         </motion.div>
 
-        <h1 className="text-4xl md:text-5xl mb-4"> National Indigenous Knowledge Management System</h1>
+        <h1 className="text-4xl md:text-5xl mb-4">
+          {' '}
+          National Indigenous Knowledge Management System
+        </h1>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Preserving, protecting, and sharing traditional knowledge with respect for Indigenous cultural protocols and community sovereignty.
+          Preserving, protecting, and sharing traditional knowledge with respect
+          for Indigenous cultural protocols and community sovereignty.
         </p>
       </motion.div>
 
@@ -136,9 +152,13 @@ export default function AboutPage() {
         {/* Our Story Hero */}
         <section className="mb-24">
           <div className="mb-8">
-            <p className="text-sm uppercase tracking-wider text-muted-foreground mb-2">OUR STORY</p>
+            <p className="text-sm uppercase tracking-wider text-muted-foreground mb-2">
+              OUR STORY
+            </p>
             <h1 className="text-4xl md:text-5xl lg:text-6xl mb-6">
-              From community vision to<br />Indigenous knowledge platform
+              From community vision to
+              <br />
+              Indigenous knowledge platform
             </h1>
           </div>
 
@@ -154,14 +174,17 @@ export default function AboutPage() {
                 <div className="inline-block px-3 py-1 bg-white/10 rounded-full text-sm mb-6">
                   2024
                 </div>
-                <h2 className="text-3xl md:text-4xl mb-6 text-white">Foundations</h2>
+                <h2 className="text-3xl md:text-4xl mb-6 text-white">
+                  Foundations
+                </h2>
                 <p className="text-lg leading-relaxed text-white/90 mb-4">
                   {ikms.mission}
                 </p>
                 <p className="text-white/80 leading-relaxed">
-                  Since then, we've remained focused on building a platform that respects Indigenous
-                  sovereignty and cultural protocols while enabling communities to preserve and share
-                  their traditional knowledge on their own terms.
+                  Since then, we've remained focused on building a platform that
+                  respects Indigenous sovereignty and cultural protocols while
+                  enabling communities to preserve and share their traditional
+                  knowledge on their own terms.
                 </p>
               </div>
 
@@ -221,14 +244,19 @@ export default function AboutPage() {
                 <div className="inline-block px-3 py-1 bg-[#ca8a04]/10 rounded-full text-sm mb-6 text-[#ca8a04]">
                   2024 - 2025
                 </div>
-                <h2 className="text-3xl md:text-4xl mb-6">Community governance</h2>
+                <h2 className="text-3xl md:text-4xl mb-6">
+                  Community governance
+                </h2>
                 <p className="text-lg leading-relaxed mb-4">
-                  In 2025, we launched our community governance framework, ensuring that Indigenous
-                  communities maintain full sovereignty over their knowledge and cultural heritage.
+                  In 2025, we launched our community governance framework,
+                  ensuring that Indigenous communities maintain full sovereignty
+                  over their knowledge and cultural heritage.
                 </p>
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  Today, our platform serves multiple communities with comprehensive TK Label management,
-                  protocol-based access control, and cultural context preservation across all content types.
+                  Today, our platform serves multiple communities with
+                  comprehensive TK Label management, protocol-based access
+                  control, and cultural context preservation across all content
+                  types.
                 </p>
                 <button className="inline-flex items-center text-[#ca8a04] hover:gap-3 gap-2 transition-all group">
                   Learn more
@@ -271,7 +299,6 @@ export default function AboutPage() {
             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1e40af] via-[#ca8a04] to-[#1e40af]" />
           </motion.div>
         </section>
-
 
         {/* Mission & Vision */}
         {/* <section>
@@ -327,7 +354,8 @@ export default function AboutPage() {
           <div className="mb-12">
             <h2 className="text-3xl md:text-4xl mb-4">Core Features</h2>
             <p className="text-lg text-muted-foreground max-w-3xl">
-              Built with respect for Indigenous knowledge and community sovereignty
+              Built with respect for Indigenous knowledge and community
+              sovereignty
             </p>
           </div>
 
@@ -343,7 +371,8 @@ export default function AboutPage() {
               </div>
               <h3 className="mb-2">Cultural Protocol Protection</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Traditional Knowledge Labels ensure cultural protocols are respected and enforced at every level
+                Traditional Knowledge Labels ensure cultural protocols are
+                respected and enforced at every level
               </p>
             </motion.div>
 
@@ -359,7 +388,8 @@ export default function AboutPage() {
               </div>
               <h3 className="mb-2">Community Governance</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Each community maintains full sovereignty over their knowledge and cultural heritage
+                Each community maintains full sovereignty over their knowledge
+                and cultural heritage
               </p>
             </motion.div>
 
@@ -375,7 +405,8 @@ export default function AboutPage() {
               </div>
               <h3 className="mb-2">Distributed Architecture</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Decentralized storage ensures no single entity controls Indigenous knowledge
+                Decentralized storage ensures no single entity controls
+                Indigenous knowledge
               </p>
             </motion.div>
 
@@ -391,12 +422,12 @@ export default function AboutPage() {
               </div>
               <h3 className="mb-2">Multi-Format Support</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                Preserve knowledge in audio, video, text, and image formats with cultural context
+                Preserve knowledge in audio, video, text, and image formats with
+                cultural context
               </p>
             </motion.div>
           </div>
         </section>
-
 
         {/* Vision Statement */}
         <section className="mb-24">
@@ -412,17 +443,18 @@ export default function AboutPage() {
           </motion.div>
         </section>
 
-
         {/* Governance */}
-        <section className='mb-24'>
+        <section className="mb-24">
           <div className="mb-12">
-            <h2 className='text-3xl md:text-4xl mb-4'>Our Principles</h2>
-            <p className="text-muted-foreground max-w-3xl">{governance.structure}</p>
+            <h2 className="text-3xl md:text-4xl mb-4">Our Principles</h2>
+            <p className="text-muted-foreground max-w-3xl">
+              {governance.structure}
+            </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24'>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
             {governance.principles.map((principle, index) => {
-              const [title, description] = principle.split(': ');
+              const [title, description] = principle.split(': ')
               return (
                 <motion.div
                   key={index}
@@ -434,13 +466,14 @@ export default function AboutPage() {
                 >
                   <h4 className="mb-2">{title}</h4>
                   {description && (
-                    <p className="text-sm text-muted-foreground">{description}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {description}
+                    </p>
                   )}
                 </motion.div>
               )
             })}
           </div>
-
         </section>
 
         <section className="mb-24">
@@ -452,16 +485,13 @@ export default function AboutPage() {
                 Meet the dedicated individuals preserving Indigenous knowledge
               </p>
             </div>
-
           </div>
           <div className="container mx-auto px-4 py-8 relative z-10 mb-24">
             <TeamDirectory />
           </div>
         </section>
         <AboutNewsInsights />
-
-
       </div>
     </div>
-      )
+  )
 }

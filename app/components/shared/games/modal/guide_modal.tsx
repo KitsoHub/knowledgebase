@@ -1,5 +1,5 @@
-import { useCallback } from "react"
-import { X } from "lucide-react"
+import { useCallback } from 'react'
+import { X } from 'lucide-react'
 
 interface GuidelineModalProps {
   isOpen: boolean
@@ -16,10 +16,7 @@ const GuidelineModal = ({ isOpen, onClose }: GuidelineModalProps) => {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center">
       {/* Overlay */}
-      <div
-        className="absolute inset-0 bg-black/50"
-        onClick={handleClose}
-      />
+      <div className="absolute inset-0 bg-black/50" onClick={handleClose} />
 
       {/* Modal Box */}
       <div className="relative mt-12 bg-muted p-10 rounded-lg mb-12 max-w-lg w-full shadow-lg">
@@ -34,12 +31,12 @@ const GuidelineModal = ({ isOpen, onClose }: GuidelineModalProps) => {
         {/* Header */}
         <h3 className="text-xl font-bold mb-4"> Guidelines</h3>
         <ul className="list-disc md:list-decimal space-y-2 pl-5">
-                <li>
-                  Names must not contain vulgar or inappropriate language, must not be
-                  excessively long, and violations will result in penalties for not
-                  following this guideline.
-                </li>
-             </ul>
+          <li>
+            Names must not contain vulgar or inappropriate language, must not be
+            excessively long, and violations will result in penalties for not
+            following this guideline.
+          </li>
+        </ul>
       </div>
     </div>
   )

@@ -1,0 +1,35 @@
+name: Continuous Integration
+on:
+  push:
+    branches:
+      - staging
+      - develop
+      - 'release/*'
+  pull_request:
+    branches:
+      - staging
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.12.0'
+      - name: Install dependencies
+        run: npm install
+      - name: Lint code
+        run: npm run lint
+      - name: Format check
+        run: npm run format
+        # run: npm run format:check
+
+      # - name: Run tests
+      #   run: npm test
+
+      - name: Build project
+        run: npm run build

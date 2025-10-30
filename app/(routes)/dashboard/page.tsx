@@ -1,7 +1,7 @@
 // import { Children } from 'react'
 
 export default function Dashboard() {
-    return <div></div>
+  return <div></div>
 }
 
 // "use client"

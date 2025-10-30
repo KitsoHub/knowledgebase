@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
-import { BrainCircuit, CheckCircle, XCircle } from 'lucide-react';
-import { Separator } from '@/app/components/ui/separator';
-import { Button } from '@/app/components/ui/button';
+import { BrainCircuit, CheckCircle, XCircle } from 'lucide-react'
+import { Separator } from '@/app/components/ui/separator'
+import { Button } from '@/app/components/ui/button'
 
 const VerificationTools: React.FC = () => {
   return (
@@ -34,10 +34,18 @@ const VerificationTools: React.FC = () => {
       <div>
         <h4 className="font-medium mb-2">Classification</h4>
         <div className="grid grid-cols-2 gap-2">
-          <Button variant="outline" size="sm" className="justify-start">Software Methods</Button>
-          <Button variant="outline" size="sm" className="justify-start">Data Processing</Button>
-          <Button variant="outline" size="sm" className="justify-start">User Interfaces</Button>
-          <Button variant="outline" size="sm" className="justify-start">System Architecture</Button>
+          <Button variant="outline" size="sm" className="justify-start">
+            Software Methods
+          </Button>
+          <Button variant="outline" size="sm" className="justify-start">
+            Data Processing
+          </Button>
+          <Button variant="outline" size="sm" className="justify-start">
+            User Interfaces
+          </Button>
+          <Button variant="outline" size="sm" className="justify-start">
+            System Architecture
+          </Button>
         </div>
       </div>
 
@@ -61,7 +69,7 @@ const VerificationTools: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default VerificationTools;
+export default VerificationTools
