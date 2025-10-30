@@ -2,9 +2,9 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - staging
       - develop
-      - 'release/*'
+      # - staging
+      # - 'release/*'
   pull_request:
     branches:
       - staging
