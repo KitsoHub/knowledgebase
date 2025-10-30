@@ -8,10 +8,11 @@ on:
   pull_request:
     branches:
       - staging
-      - develop
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - uses: actions/checkout@v3
         with:
