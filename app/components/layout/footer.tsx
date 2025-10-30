@@ -1,10 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-
+'use client'
 import Link from 'next/link'
-import React from 'react'
-// import Image from 'next/image'
+import React, { useState } from 'react'
+import Image from 'next/image'
+import ContactUsModal from '../ui/modals/contact-us-modal'
 
 export default function MainFooter() {
+    const [showModal, setShowModal] = useState(false)
+
+    const handleClodeModal = () => {
+        setShowModal(false);
+    }
+
+
   return (
     <footer className="bg-gray-800 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -42,7 +50,7 @@ export default function MainFooter() {
 
               <div className="flex flex-col items-center space-y-2">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center">
-                    <img src="assets/partnerLogos/WeThemba.jpeg" alt="WeThemba Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+                    <img src="/assets/partnerLogos/WeThemba.jpeg" alt="WeThemba Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
                   <div className="text-xs sm:text-sm font-semibold text-gray-300">WeThemba</div>
@@ -54,7 +62,7 @@ export default function MainFooter() {
 
               <div className="flex flex-col items-center space-y-2">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center">
-                    <img src="assets/partnerLogos/UNIPOD.png" alt="UNIPOD Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+                    <img src="/assets/partnerLogos/UNIPOD.png" alt="UNIPOD Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
                   <div className="text-xs sm:text-sm font-semibold text-gray-300">UNIPOD</div>
@@ -66,7 +74,7 @@ export default function MainFooter() {
 
               <div className="flex flex-col items-center space-y-2">
                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center">
-                    <img src="assets/partnerLogos/UB-logo.png" alt="UB Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+                    <img src="/assets/partnerLogos/UB-logo.png" alt="UB Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
                   <div className="text-xs sm:text-sm font-semibold text-gray-300">Research and Innovation</div>
@@ -78,7 +86,7 @@ export default function MainFooter() {
 
               <div className="flex flex-col items-center space-y-2">
                   <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center">
-                    <img src="assets/partnerLogos/UB-logo.png" alt="San Center Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+                    <img src="/assets/partnerLogos/UB-logo.png" alt="San Center Logo" className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
                 </div>
                 <div className="text-center">
                   <div className="text-xs sm:text-sm font-semibold text-gray-300">The San Research Centre</div>
@@ -98,10 +106,10 @@ export default function MainFooter() {
               <Link href="/terms" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
                 Terms of Service
               </Link>
-              <Link href="/accessibility" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
+              {/* <Link href="/accessibility" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
                 Accessibility
-              </Link>
-              <Link href="/contact" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
+              </Link> */}
+              <Link href="#" onClick={()=>setShowModal(true)} className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
                 Contact Us
               </Link>
             </div>
@@ -113,6 +121,11 @@ export default function MainFooter() {
           </div>
         </div>
       </div>
+
+
+              {/* contact Us */}
+                  <ContactUsModal isOpen={showModal} onClose={handleClodeModal} />
+
     </footer>
   )
 }

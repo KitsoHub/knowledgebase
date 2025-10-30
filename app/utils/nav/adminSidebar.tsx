@@ -14,6 +14,8 @@ import {
    // UsersRound,
     //Amphora,
     Newspaper,
+    Users2Icon,
+    MapPinCheckIcon,
     //BrainCircuit,
 } from 'lucide-react'
 
@@ -32,6 +34,8 @@ const AdminSidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
     const menuItems = [
         { icon: HomeIcon, label: 'Overview', href: '/admin/overview' },
         { icon: Newspaper, label: 'Patents', href: '/patents',  badge: 'Beta' },
+        { icon: Users2Icon, label: 'Communities', href: '/community/resources/communities',  badge: 'Beta' },
+        { icon: MapPinCheckIcon, label: 'Heritage Sites', href: '/community/maps',  badge: 'Beta' },
         // {
         //     icon: BrainCircuit,
         //     label: 'KitsoAI',
