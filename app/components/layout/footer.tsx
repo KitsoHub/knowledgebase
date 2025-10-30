@@ -1,10 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-
+'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
+import ContactUsModal from '../ui/modals/contact-us-modal'
 
 export default function MainFooter() {
+    const [showModal, setShowModal] = useState(false)
+
+    const handleClodeModal = () => {
+        setShowModal(false);
+    }
+
+
   return (
     <footer className="bg-gray-800 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -98,10 +106,10 @@ export default function MainFooter() {
               <Link href="/terms" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
                 Terms of Service
               </Link>
-              <Link href="/accessibility" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
+              {/* <Link href="/accessibility" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
                 Accessibility
-              </Link>
-              <Link href="/contact" className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
+              </Link> */}
+              <Link href="#" onClick={()=>setShowModal(true)} className="text-orange-400 hover:text-orange-300 transition-colors text-sm">
                 Contact Us
               </Link>
             </div>
@@ -113,6 +121,11 @@ export default function MainFooter() {
           </div>
         </div>
       </div>
+
+
+              {/* contact Us */}
+                  <ContactUsModal isOpen={showModal} onClose={handleClodeModal} />
+
     </footer>
   )
 }
