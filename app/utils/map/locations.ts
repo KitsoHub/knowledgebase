@@ -1,5 +1,5 @@
 // app/lib/locations.ts
-import { CulturalSite } from '@/lib/types/culturalSites'
+import { CulturalSite } from '@/lib/types/sitesData'
 
 export const culturalSites: CulturalSite[] = [
   {

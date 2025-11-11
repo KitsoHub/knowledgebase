@@ -59,18 +59,18 @@ interface CulturalSite {
 
 interface DashboardProps {
   sites: CulturalSite[]
-  onAddSite: (
-    site: Omit<CulturalSite, 'id' | 'dateCreated' | 'lastUpdated'>
-  ) => void
-  onUpdateSite: (id: string, updates: Partial<CulturalSite>) => void
-  onDeleteSite: (id: string) => void
+  // onAddSite: (
+  //   site: Omit<CulturalSite, 'id' | 'dateCreated' | 'lastUpdated'>
+  // ) => void
+  // onUpdateSite: (id: string, updates: Partial<CulturalSite>) => void
+  // onDeleteSite: (id: string) => void
 }
 
 export function Dashboard({
   sites,
-  onAddSite,
-  onUpdateSite,
-  onDeleteSite,
+  // onAddSite,
+  // onUpdateSite,
+  // onDeleteSite,
 }: DashboardProps) {
   const [activeTab, setActiveTab] = useState('metrics')
 
@@ -216,7 +216,7 @@ export function Dashboard({
                 </p>
               </CardHeader>
               <CardContent>
-                <SiteForm onSubmit={onAddSite} />
+                {/* <SiteForm onSubmit={onAddSite} /> */}
               </CardContent>
             </Card>
           </div>
@@ -225,8 +225,8 @@ export function Dashboard({
         <TabsContent value="manage-sites" className="mt-6">
           <SiteList
             sites={sites}
-            onUpdateSite={onUpdateSite}
-            onDeleteSite={onDeleteSite}
+            // onUpdateSite={onUpdateSite}
+            // onDeleteSite={onDeleteSite}
           />
         </TabsContent>
 

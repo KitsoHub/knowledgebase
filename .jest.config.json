@@ -1,0 +1,39 @@
+{
+    "bail": 1,
+    "preset": "ts-jest",
+    "clearMocks": true,
+    "verbose": true,
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": [
+        "ts",
+        "tsx",
+        "js"
+    ],
+    "transform": {},
+    "extensionsToTreatAsEsm": [
+        ".ts",
+        ".tsx"
+    ],
+    "moduleNameMapper": {
+        "^@/(.*)$": "<rootDir>/lib/$1"
+    },
+
+    "testPathIgnorePatterns": [
+        "/node_modules/",
+        "/.next/"
+    ],
+    "collectCoverageFrom": [
+        "lib/**/*.{ts,tsx}",
+        "!lib/**/index.{ts,tsx}",
+        "!lib/**/__tests__/*.{ts,tsx}"
+    ],
+    "coverageDirectory": "<rootDir>/coverage",
+    "coverageReporters": [
+        "text",
+        "lcov"
+    ],
+    "roots": [
+        "<rootDir>/lib"
+    ],
+    "testTimeout": 10000
+}

@@ -10,7 +10,10 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,json,css,scss,md,yml}\"",
-    "format:check": "prettier --check \"./**/*.{js,jsx,ts,tsx,json,css,scss,md,yml}\""
+    "format:check": "prettier --check \"./**/*.{js,jsx,ts,tsx,json,css,scss,md,yml}\"",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.22.0",
@@ -47,6 +50,8 @@
     "firebase": "^12.0.0",
     "framer-motion": "^12.23.12",
     "i": "^0.3.7",
+    "jest-environment-jsdom": "^30.2.0",
+    "jsdom": "^27.0.1",
     "langchain": "^0.3.19",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
@@ -74,12 +79,16 @@
     "sweetalert2-react-content": "^5.1.0",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
+    "ts-node": "^10.9.2",
     "ws": "^8.18.1",
     "zod": "^3.24.2",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^30.0.0",
     "@types/leaflet": "^1.9.20",
     "@types/node": "^20",
     "@types/normalize-package-data": "^2.4.4",
@@ -91,10 +100,15 @@
     "bufferutil": "^4.0.9",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
+    "jest": "^30.2.0",
+    "msw": "^2.12.1",
     "postcss": "^8",
     "prettier": "^3.5.2",
     "prisma": "^6.4.1",
+    "swr": "^2.3.6",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5"
+    "ts-jest": "^29.4.5",
+    "typescript": "^5",
+    "whatwg-fetch": "^3.6.20"
   }
 }

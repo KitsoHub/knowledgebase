@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { culturalSites } from '@/app/utils/map/locations'
-import { CulturalSite } from '@/lib/types/culturalSites'
+import { SiteData } from '@/lib/types/sitesData'
 import { motion } from 'framer-motion'
 
 // Dynamically load map (SSR-safe)
@@ -19,7 +19,7 @@ export default function ExplorerPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [languageFilter, setLanguageFilter] = useState<string>('all')
-  const [selectedSite, setSelectedSite] = useState<CulturalSite | null>(null)
+  const [selectedSite, setSelectedSite] = useState<SiteData | null>(null)
   const [mapCenter, setMapCenter] = useState<{
     latitude: number
     longitude: number
@@ -213,7 +213,7 @@ function SiteDetailModal({
   site,
   onClose,
 }: {
-  site: CulturalSite
+  site: SiteData
   onClose: () => void
 }) {
   return (
@@ -221,7 +221,7 @@ function SiteDetailModal({
       <div className="bg-white rounded-xl max-w-3xl max-h-[90vh] overflow-y-auto w-full">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold">{site.name}</h2>
+            <h2 className="text-2xl font-bold">{site.site_name}</h2>
             <button onClick={onClose} className="text-2xl">
               &times;
             </button>
@@ -232,10 +232,10 @@ function SiteDetailModal({
               <strong>Category:</strong> {site.category}
             </div>
             <div>
-              <strong>Language:</strong> {site.language || 'N/A'}
+              {/* <strong>Language:</strong> {site.language || 'N/A'} */}
             </div>
             <div>
-              <strong>Tribe:</strong> {site.tribe || 'N/A'}
+              {/* <strong>Tribe:</strong> {site.tribe || 'N/A'} */}
             </div>
             <div>
               <strong>Location:</strong> {site.latitude}, {site.longitude}

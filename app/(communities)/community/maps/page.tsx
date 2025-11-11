@@ -30,27 +30,27 @@ import {
   Globe,
   Shield,
 } from 'lucide-react'
-import { CulturalSite } from '@/lib/types/culturalSites'
+import { SiteData } from '@/lib/types/sitesData'
 import { Dashboard } from '@/app/components/heritageSites/dashboard'
 
 export default function DashboardPage() {
   const [sites, setSites] = useState(culturalSites) // Use culturalSites as the initial state
 
   // Add a new site
-  const handleAddSite = (
-    site: Omit<CulturalSite, 'id' | 'dateCreated' | 'lastUpdated'>
-  ) => {
-    const newSite = {
-      ...site,
-      id: `site${sites.length + 1}`, // Generate a unique ID
-      dateCreated: new Date().toISOString(),
-      lastUpdated: new Date().toISOString(),
-    }
-    setSites([...sites, newSite])
-  }
+  // const handleAddSite = (
+  //   site: Omit<CulturalSite, 'id' | 'dateCreated' | 'lastUpdated'>
+  // ) => {
+  //   const newSite = {
+  //     ...site,
+  //     id: `site${sites.length + 1}`, // Generate a unique ID
+  //     dateCreated: new Date().toISOString(),
+  //     lastUpdated: new Date().toISOString(),
+  //   }
+  //   setSites([...sites, newSite])
+  // }
 
   // Update an existing site
-  const handleUpdateSite = (id: string, updates: Partial<CulturalSite>) => {
+  const handleUpdateSite = (id: string, updates: Partial<SiteData>) => {
     setSites(
       sites.map(site =>
         site.id === id
@@ -68,9 +68,9 @@ export default function DashboardPage() {
   return (
     <Dashboard
       sites={sites}
-      onAddSite={handleAddSite}
-      onUpdateSite={handleUpdateSite}
-      onDeleteSite={handleDeleteSite}
+      // onAddSite={handleAddSite}
+      // onUpdateSite={handleUpdateSite}
+      // onDeleteSite={handleDeleteSite}
     />
   )
 }

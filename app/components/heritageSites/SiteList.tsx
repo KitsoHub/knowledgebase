@@ -68,11 +68,11 @@ interface CulturalSite {
 
 interface SiteListProps {
   sites: CulturalSite[]
-  onUpdateSite: (id: string, updates: Partial<CulturalSite>) => void
-  onDeleteSite: (id: string) => void
+  // onUpdateSite: (id: string, updates: Partial<CulturalSite>) => void
+  // onDeleteSite: (id: string) => void
 }
 
-export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
+export function SiteList({ sites}: SiteListProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [sensitivityFilter, setSensitivityFilter] = useState('all')
@@ -156,12 +156,12 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
     const nextIndex = (currentIndex + 1) % levels.length
     const newLevel = levels[nextIndex]
 
-    onUpdateSite(site.id, {
-      metadata: {
-        ...site.metadata,
-        sensitivityLevel: newLevel,
-      },
-    })
+    // onUpdateSite(site.id, {
+    //   metadata: {
+    //     ...site.metadata,
+    //     sensitivityLevel: newLevel,
+    //   },
+    // })
   }
 
   return (
@@ -378,7 +378,7 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
-                          onClick={() => onDeleteSite(site.id)}
+                          onClick={() => {}}
                           className="bg-red-600 hover:bg-red-700"
                         >
                           Delete
