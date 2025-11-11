@@ -1,6 +1,7 @@
 
 export const BASE_URL = process.env.DJANGO_BASE_URL || 'http://localhost:8000';
 export const API_BASE_URL = `${BASE_URL}/api/`;
+export const DTOKEN = process.env.DJANGO_BASE_ADMIN_TOKEN;
 
 
 export const API_ENDPOINTS = {

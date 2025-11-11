@@ -13,7 +13,7 @@ class TokenService {
         }
         try {
 
-            return localStorage.getItem(TokenService.DJANGO_TOKEN_KEY);
+            return localStorage.getItem(TokenService.DJANGO_TOKEN_KEY) || process.env.DJANGO_BASE_ADMIN_TOKEN || null;
         } catch (err) {
             console.error('Failed to read token from localStorage', err);
             return null;

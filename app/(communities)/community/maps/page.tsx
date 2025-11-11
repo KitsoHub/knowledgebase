@@ -31,7 +31,7 @@ import {
   Shield,
 } from 'lucide-react'
 import { SiteData } from '@/lib/types/sitesData'
-import { Dashboard } from '@/app/components/heritageSites/dashboard'
+import { SitesDashboard } from '@/app/components/heritageSites/dashboard'
 
 export default function DashboardPage() {
   const [sites, setSites] = useState(culturalSites) // Use culturalSites as the initial state
@@ -66,8 +66,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <Dashboard
-      sites={sites}
+    <SitesDashboard
       // onAddSite={handleAddSite}
       // onUpdateSite={handleUpdateSite}
       // onDeleteSite={handleDeleteSite}

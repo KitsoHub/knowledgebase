@@ -1,3 +1,4 @@
+import { id } from './../../node_modules/ci-info/index.d';
 // app/types/cultural-site.ts
 export type SensitivityLevel = 'public' | 'restricted' | 'closed'
 export type SiteCategory =
@@ -8,6 +9,7 @@ export type SiteCategory =
   | 'migration'
 
 export interface SiteData {
+  id: number,
   site_name: string,
   description: string
   category: SiteCategory,
