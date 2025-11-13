@@ -399,13 +399,13 @@ export function SiteList({ sites}: SiteListProps) {
                 <h4 className="font-medium mb-2">Metadata & Standards</h4>
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2">
-                    {selectedSite.metadata.unesco && (
+                    {selectedSite.metadata?.unesco && (
                       <Badge className="bg-blue-50 text-blue-700">UNESCO</Badge>
                     )}
-                    {selectedSite.metadata.undp && (
+                    {selectedSite.metadata?.undp && (
                       <Badge className="bg-green-50 text-green-700">UNDP</Badge>
                     )}
-                    {selectedSite.metadata.unicef && (
+                    {selectedSite.metadata?.unicef && (
                       <Badge className="bg-purple-50 text-purple-700">
                         UNICEF
                       </Badge>

@@ -31,7 +31,7 @@ import { SiteData } from '@/lib/types/sitesData'
 import { useSites } from '@/app/hooks/use-sites'
 
 export function SitesDashboard( ) {
-  const [activeTab, setActiveTab] = useState('list-sites')
+  const [activeTab, setActiveTab] = useState('overview')
 
   // Dashboard statistics
   // const stats = {
@@ -145,9 +145,15 @@ export function SitesDashboard( ) {
       {/* Dashboard Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-4">
+
+
+          <TabsTrigger  value="overview" className="flex items-center gap-2">
+            <List className="h-4 w-4" />
+            OverView
+          </TabsTrigger>
           <TabsTrigger  value="list-sites" className="flex items-center gap-2">
             <List className="h-4 w-4" />
-            Manage Sites
+            List Sites
           </TabsTrigger>
           {/* <TabsTrigger value="metrics" className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4" />

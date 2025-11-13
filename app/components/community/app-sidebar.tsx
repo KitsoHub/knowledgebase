@@ -126,7 +126,7 @@ export function AppSidebar() {
                   >
                     <Link href="/community/maps">
                       <ShieldBanIcon />
-                      <span>HeritageMaps</span>
+                      <span>Sites</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
