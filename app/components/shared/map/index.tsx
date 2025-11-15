@@ -3,14 +3,14 @@
 
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import { LatLngExpression } from 'leaflet'
-import { CulturalSite } from '@/lib/types/sitesData'
+import { SiteData } from '@/lib/types/sitesData'
 
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import 'leaflet-defaulticon-compatibility'
 
 interface MapProps {
-  sites: CulturalSite[]
+  sites: SiteData[]
   center?: LatLngExpression
   zoom?: number
 }
@@ -62,7 +62,7 @@ export default function SiteMap({
                 margin: 0,
               }}
             >
-              <img
+              {/* <img
                 src={site.images[0]}
                 alt={site.name}
                 style={{
@@ -71,7 +71,7 @@ export default function SiteMap({
                   objectFit: 'cover',
                   borderRadius: '8px 8px 0 0',
                 }}
-              />
+              /> */}
               <div style={{ padding: '10px' }}>
                 <h2
                   style={{
@@ -80,7 +80,7 @@ export default function SiteMap({
                     color: '#1a1a1a',
                   }}
                 >
-                  {site.name}
+                  {site.site_name}
                 </h2>
                 <p
                   style={{
@@ -90,12 +90,12 @@ export default function SiteMap({
                     lineHeight: '1.5',
                   }}
                 >
-                  {site.description.substring(0, 120)}...
+                  {site.description?.substring(0, 120)}...
                 </p>
-                <div style={{ fontSize: '0.8em', color: '#666' }}>
+                {/* <div style={{ fontSize: '0.8em', color: '#666' }}>
                   {site.language && <div>🗣️ {site.language}</div>}
                   {site.tribe && <div>👥 {site.tribe}</div>}
-                </div>
+                </div> */}
               </div>
             </div>
           </Popup>

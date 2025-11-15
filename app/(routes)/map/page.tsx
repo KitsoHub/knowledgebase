@@ -1,9 +1,10 @@
 'use client'
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
-import { culturalSites } from '@/app/utils/map/locations'
+
 import { SiteData } from '@/lib/types/sitesData'
 import { motion } from 'framer-motion'
+import { useSites } from '@/app/hooks/use-sites'
 
 // Dynamically load map (SSR-safe)
 const SiteMap = dynamic(() => import('@/app/components/shared/map'), {
@@ -16,10 +17,12 @@ const SiteMap = dynamic(() => import('@/app/components/shared/map'), {
 })
 
 export default function ExplorerPage() {
+  const { sites, isLoading, isError, refreshSites } = useSites();
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [languageFilter, setLanguageFilter] = useState<string>('all')
   const [selectedSite, setSelectedSite] = useState<SiteData | null>(null)
+  const [sortBy, setSortBy] = useState('name')
   const [mapCenter, setMapCenter] = useState<{
     latitude: number
     longitude: number
@@ -30,9 +33,9 @@ export default function ExplorerPage() {
   const [mapZoom, setMapZoom] = useState(6) // Default zoom level
 
   // Only show public sites in Botswana
-  const publicSites = culturalSites.filter(
+  const publicSites = sites.filter(
     site =>
-      site.metadata.sensitivityLevel === 'public' &&
+      site.metadata?.sensitivity_level === 'public' &&
       site.latitude >= -26.9 &&
       site.latitude <= -17.8 &&
       site.longitude >= 20.0 &&
@@ -41,27 +44,29 @@ export default function ExplorerPage() {
 
   // Extract unique categories and languages
   const uniqueCategories = [...new Set(publicSites.map(site => site.category))]
-  const uniqueLanguages = [
-    ...new Set(
-      publicSites.map(site => site.language).filter(Boolean) as string[]
-    ),
-  ]
 
-  // Filtered sites
-  const filteredSites = publicSites.filter(site => {
-    const matchesSearch =
-      site.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      site.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      site.tribe?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      site.language?.toLowerCase().includes(searchQuery.toLowerCase())
 
-    const matchesCategory =
-      categoryFilter === 'all' || site.category === categoryFilter
-    const matchesLanguage =
-      languageFilter === 'all' || site.language === languageFilter
+ const filteredSites = sites.filter(site => {
+      const matchesSearch =
+        site.site_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        site.description?.toLowerCase().includes(searchQuery.toLowerCase())
 
-    return matchesSearch && matchesCategory && matchesLanguage
-  })
+      const matchesCategory = categoryFilter === 'all' || site.category === categoryFilter
+
+
+
+      return matchesSearch && matchesCategory
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'name':
+          return a.site_name.localeCompare(b.site_name)
+        case 'category':
+          return a.category.localeCompare(b.category)
+        default:
+          return 0
+      }
+    })
 
   // Handle search query
   const handleSearch = (query: string) => {
@@ -70,10 +75,8 @@ export default function ExplorerPage() {
     // Find the first matching site and update the map center and zoom
     const matchingSite = publicSites.find(
       site =>
-        site.name.toLowerCase().includes(query.toLowerCase()) ||
-        site.description.toLowerCase().includes(query.toLowerCase()) ||
-        site.tribe?.toLowerCase().includes(query.toLowerCase()) ||
-        site.language?.toLowerCase().includes(query.toLowerCase())
+        site.site_name.toLowerCase().includes(query.toLowerCase()) ||
+        site.description.toLowerCase().includes(query.toLowerCase())
     )
 
     if (matchingSite) {
@@ -159,18 +162,6 @@ export default function ExplorerPage() {
               ))}
             </select>
 
-            <select
-              value={languageFilter}
-              onChange={e => setLanguageFilter(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-            >
-              <option value="all">All Languages</option>
-              {uniqueLanguages.map(language => (
-                <option key={language} value={language}>
-                  {language.charAt(0).toUpperCase() + language.slice(1)}
-                </option>
-              ))}
-            </select>
           </div>
 
           {/* Site List */}
@@ -185,9 +176,9 @@ export default function ExplorerPage() {
                   className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer"
                   onClick={() => setSelectedSite(site)}
                 >
-                  <h4 className="font-medium">{site.name}</h4>
+                  <h4 className="font-medium">{site.site_name}</h4>
                   <p className="text-sm text-gray-600">
-                    {site.description.substring(0, 100)}...
+                    {site.description?.substring(0, 100)}...
                   </p>
                 </div>
               ))
