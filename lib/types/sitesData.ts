@@ -18,9 +18,9 @@ export interface SiteData {
   population_density?: number | null,
   migration_route: string,
   metadata: {
-    unesco: true,
-    undp: true,
-    unicef: true,
+    unesco: boolean,
+    undp: boolean,
+    unicef: boolean,
     local_context: string,
     indigenous_system: string,
     rights: string,
@@ -31,4 +31,16 @@ export interface SiteData {
   uploaded_images: [
 
   ]
+}
+
+
+export interface SiteCreationState {
+  step: 'TYPE' | 'BASIC' | 'METADATA' | 'UPLOADS' | 'REVIEW'
+  siteData: Partial<SiteData>
+  currentStepValid: boolean
+  nextStep: () => void
+  prevStep: () => void
+  addSiteData: (data: SiteData) => void;
+  updateSiteData: (data: Partial<SiteData>) => void
+  resetForm: () => void
 }

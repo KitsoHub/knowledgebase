@@ -36,12 +36,14 @@ import {
 } from '@/lib/constants/community'
 import { useSites } from '@/app/hooks/use-sites'
 import { SiteData } from '@/lib/types/sitesData'
+import { useRouter } from 'next/navigation'
+
 
 interface DirectoryProps {
   onNavigate?: (view: string) => void
 }
 export function SitesDirectory({ onNavigate }: DirectoryProps) {
-
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
     const [sensitivityFilter, setSensitivityFilter] = useState<string>('all')
@@ -159,12 +161,10 @@ export function SitesDirectory({ onNavigate }: DirectoryProps) {
     )
   )
 
-  const handleViewSite= () => {
-        console.log('To View site:')
-    // console.log('To View site:', community.communityIdentifier)
-    // setCurrentCommunity(community)
-    // onNavigate?.('community-dashboard')
-  }
+    const handleViewSite = (id: number) => {
+      console.log('Viewing site', id);
+      router.push(`/sites/${id}`);
+    };
   return (
     <div className="space-y-6">
       <div className="text-center">
@@ -424,7 +424,7 @@ export function SitesDirectory({ onNavigate }: DirectoryProps) {
                 <Button
                   className="w-full"
                   variant="outline"
-                  onClick={() => handleViewSite()}
+                  onClick={() => handleViewSite(site.id)}
                 >
                   View
                 </Button>

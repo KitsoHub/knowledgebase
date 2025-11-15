@@ -79,7 +79,7 @@ export function SitesAppSidebar() {
         <div className="flex items-center space-x-2">
           <BookOpenIcon className="h-8 w-8 text-primary" />
           <span className="text-xl font-bold group-data-[collapsible=icon]:hidden">
-            Patents
+            Heritage Sites
           </span>
         </div>
         <Button

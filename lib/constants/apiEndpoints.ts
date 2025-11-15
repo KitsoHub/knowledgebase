@@ -1,7 +1,7 @@
 
 export const BASE_URL = process.env.DJANGO_BASE_URL || 'http://localhost:8000';
 export const API_BASE_URL = `${BASE_URL}/api/`;
-export const DTOKEN = process.env.DJANGO_BASE_ADMIN_TOKEN;
+export const DTOKEN = process.env.NEXT_PUBLIC_DJANGO_BASE_ADMIN_TOKEN;
 
 
 export const API_ENDPOINTS = {
@@ -11,7 +11,7 @@ user:{
 sites: {
     getAllSites: `${API_BASE_URL}sites/sites`,
     createSite: `${API_BASE_URL}sites/sites/`,
-    getSiteById: (id: string) => `${API_BASE_URL}sites/sites/${id}/`,
+    getSiteById: (id: number) => `${API_BASE_URL}sites/sites/${id}/`,
     updateSite: (id: string) => `${API_BASE_URL}sites/sites/${id}/`,
     deleteSite: (id: string) => `${API_BASE_URL}sites/sites/${id}/`,
 }

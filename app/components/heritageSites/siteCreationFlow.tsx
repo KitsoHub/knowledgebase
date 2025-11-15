@@ -1,10 +1,5 @@
-// TODO: Refactor this component to align with Site creation instead of Community creation
-// add the site store
 
-import { useCommunityCreationStore } from '@/lib/store/communityCreation'
-import React from 'react'
-
-import { Badge } from '../ui/badge'
+'use client'
 import { Progress } from '../ui/progress'
 import {
   Card,
@@ -19,94 +14,94 @@ import { Button } from '../ui/button'
 import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react'
 import { Label } from '../ui/label'
 import { v4 as uuidv4 } from 'uuid'
-
-import { useCommunityStore } from '@/lib/store/communityStore'
-import {
-  CommunityGovernance,
-  CulturalProtocol,
-  SiteCategory,
-} from '@/lib/constants/community'
+import { Badge } from '../ui/badge'
 import { SiteTypeSelector } from './siteTypeSelector'
-
-
-interface CommunityCreationFlowProps {
+import { useSiteCreationStore } from '@/lib/store/siteStore'
+import { siteService } from '@/lib/services/api/sitesService'
+import { useCreateSite, useSites } from '@/app/hooks/use-sites'
+import { SensitivityLevel } from '@/lib/types/sitesData'
+interface SiteCreationFlowProps {
   onComplete?: () => void
   onCancel?: () => void
 }
+
 export default function SiteCreationFlow({
   onComplete,
   onCancel,
-}: CommunityCreationFlowProps) {
+}: SiteCreationFlowProps) {
   const {
     step,
-    communityData,
+    siteData,
     nextStep,
     prevStep,
-    updateCommunityData,
+    addSiteData,
+    updateSiteData,
     resetForm,
-  } = useCommunityCreationStore()
+  } = useSiteCreationStore()
 
-  const generateCommunityIdentifier = () => {
-    return uuidv4()
-  }
-  const { addCommunity } = useCommunityStore()
+  const {createSite, isCreating, errorCreating} = useCreateSite()
+  const { refreshSites } = useSites();
+
+
   const steps = [
-    {
-      key: 'TYPE',
-      title: 'Site Type',
-      description: 'Select type model',
-    },
-    {
-      key: 'BASIC',
-      title: 'Basic Information',
-      description: 'Community details and identity',
-    },
-    {
-      key: 'GOVERNANCE',
-      title: 'Leadership',
-      description: 'Define leadership structure',
-    },
-    {
-      key: 'PROTOCOLS',
-      title: 'Cultural Protocols',
-      description: 'Set access and sharing protocols',
-    },
-    {
-      key: 'REVIEW',
-      title: 'Review',
-      description: 'Confirm and create community',
-    },
+    { key: 'TYPE', title: 'Site Type', description: 'Select the site category' },
+    { key: 'BASIC', title: 'Basic Information', description: 'Site details and identity' },
+    { key: 'METADATA', title: 'Metadata', description: 'Cultural and contextual metadata' },
+    { key: 'UPLOADS', title: 'Uploads', description: 'Images & file uploads' },
+    { key: 'REVIEW', title: 'Review', description: 'Confirm before creation' },
   ]
+
+  const options: { label: string; value: SensitivityLevel }[] = [
+    { label: 'Public', value: 'public' },
+    { label: 'Restricted', value: 'restricted' },
+    { label: 'Closed', value: 'closed' },
+  ];
 
   const currentStepIndex = steps.findIndex(s => s.key === step)
   const progressPercentage = ((currentStepIndex + 1) / steps.length) * 100
+
+  // ---------- VALIDATION PER STEP ----------
   const canProceed = () => {
     switch (step) {
       case 'TYPE':
-        return !!communityData.governanceModel
+        return !!siteData.category
+
       case 'BASIC':
-        return !!(
-          communityData.title &&
-          communityData.description &&
-          communityData.region &&
-          communityData.language
+        return (
+          !!siteData.site_name &&
+          !!siteData.description &&
+          siteData.latitude !== undefined &&
+          siteData.longitude !== undefined
         )
-      case 'GOVERNANCE':
-        return !!communityData.leadership?.primaryContact
-      case 'PROTOCOLS':
-        return true // Protocols are optional initially
+
+      case 'METADATA':
+        return (
+          !!siteData.metadata?.local_context &&
+          !!siteData.metadata?.indigenous_system &&
+          !!siteData.metadata?.rights &&
+          !!siteData.metadata?.ip_metadata &&
+          !!siteData.metadata?.access_protocol
+        )
+
+      case 'UPLOADS':
+        return true
+
+      case 'REVIEW':
+        return true
+
       default:
         return true
     }
   }
 
+  // ---------- RENDER STEPS ----------
   const renderStepContent = () => {
-    switch (step) {
+    switch (steps[currentStepIndex].key) {
       case 'TYPE':
         return (
           <SiteTypeSelector
-            selectedType={SiteCategory.HERITAGE || null}
-            // onSelect={type => updateCommunityData({ governanceModel: type })}
+            selectedType={siteData.category || 'heritage'}
+            onSelect={(type) => updateSiteData({ category: type })}
           />
         )
 
@@ -114,20 +109,16 @@ export default function SiteCreationFlow({
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h3 className="text-xl mb-2">Community Information</h3>
-              <p className="text-muted-foreground">
-                Provide basic details about your community
-              </p>
+              <h3 className="text-xl mb-2">Site Information</h3>
             </div>
 
             <div className="space-y-4 max-w-2xl mx-auto">
               <div>
-                <Label>Community Name *</Label>
+                <Label>Site Name *</Label>
                 <Input
-                  id="title"
-                  value={communityData.title || ''}
-                  onChange={e => updateCommunityData({ title: e.target.value })}
-                  placeholder="Enter your community's name"
+                  value={siteData.site_name || ''}
+                  onChange={e => updateSiteData({ site_name: e.target.value })}
+                  placeholder="Enter Site name"
                   className="font-cultural"
                 />
               </div>
@@ -135,302 +126,254 @@ export default function SiteCreationFlow({
               <div>
                 <Label>Description *</Label>
                 <Textarea
-                  id="description"
-                  value={communityData.description || ''}
-                  onChange={e =>
-                    updateCommunityData({ description: e.target.value })
-                  }
-                  placeholder="Describe your community's mission and cultural focus"
+                  value={siteData.description || ''}
+                  onChange={e => updateSiteData({ description: e.target.value })}
+                  placeholder="Describe the site"
                   rows={4}
-                  className="font-cultural"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label>Region *</Label>
+                  <Label>Latitude *</Label>
                   <Input
-                    id="region"
-                    value={communityData.region || ''}
+                    value={siteData.latitude || ''}
                     onChange={e =>
-                      updateCommunityData({ region: e.target.value })
+                      updateSiteData({ latitude: Number(e.target.value) })
                     }
-                    placeholder="Geographic region or territory"
+                    placeholder="Latitude"
                   />
                 </div>
 
                 <div>
-                  <Label>Languages *</Label>
+                  <Label>Longitude *</Label>
                   <Input
-                    id="language"
-                    value={communityData.language || ''}
+                    value={siteData.longitude || ''}
                     onChange={e =>
-                      updateCommunityData({ language: e.target.value })
+                      updateSiteData({ longitude: Number(e.target.value) })
                     }
-                    placeholder="Traditional and working languages"
-                    className="font-cultural"
+                    placeholder="Longitude"
+                  />
+                </div>
+
+                <div>
+                  <Label>Population Density</Label>
+                  <Input
+                    value={siteData.population_density || ''}
+                    onChange={e =>
+                      updateSiteData({ population_density: Number(e.target.value) })
+                    }
+                    placeholder="Population density"
+                  />
+                </div>
+
+                <div>
+                  <Label>Migration Route *</Label>
+                  <Input
+                    value={siteData.migration_route || ''}
+                    onChange={e => updateSiteData({ migration_route: e.target.value })}
+                    placeholder="Migration Route"
                   />
                 </div>
               </div>
             </div>
           </div>
         )
-      case 'GOVERNANCE':
+
+      case 'METADATA':
         return (
-          <div className="space-y-6">
+          <div className="space-y-6 max-w-2xl mx-auto">
             <div className="text-center mb-6">
-              <h3 className="text-xl mb-2">Leadership Structure</h3>
-              <p className="text-muted-foreground">
-                Define your community's leadership and governance
-              </p>
+              <h3 className="text-xl mb-2">Metadata</h3>
             </div>
 
-            <div className="space-y-6 max-w-2xl mx-auto">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg">Primary Contact</CardTitle>
-                  <CardDescription>
-                    Main representative and community coordinator
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="contact-name">Name *</Label>
-                      <Input
-                        id="contact-name"
-                        value={
-                          communityData.leadership?.primaryContact?.name || ''
-                        }
-                        onChange={e =>
-                          updateCommunityData({
-                            leadership: {
-                              ...communityData.leadership,
-                              primaryContact: {
-                                ...communityData.leadership?.primaryContact,
-                                id:
-                                  communityData.leadership?.primaryContact
-                                    ?.id || 'temp-id',
-                                name: e.target.value,
-                                email:
-                                  communityData.leadership?.primaryContact
-                                    ?.email || '',
-                                role:
-                                  communityData.leadership?.primaryContact
-                                    ?.role || '',
-                              },
-                            },
-                          })
-                        }
-                        placeholder="Contact person name"
-                      />
-                    </div>
+            <div className="space-y-4">
+              {/* UNESCO */}
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={siteData.metadata?.unesco || false}
+                  onChange={e =>
+                    updateSiteData({
+                      metadata: {
+                        ...(siteData.metadata as any),
+                        unesco: e.target.checked,
+                      },
+                    })
+                  }
+                />
+                <Label>UNESCO Site</Label>
+              </div>
 
-                    <div>
-                      <Label htmlFor="contact-email">Email *</Label>
-                      <Input
-                        id="contact-email"
-                        type="email"
-                        value={
-                          communityData.leadership?.primaryContact?.email || ''
-                        }
-                        onChange={e =>
-                          updateCommunityData({
-                            leadership: {
-                              ...communityData.leadership,
-                              primaryContact: {
-                                ...communityData.leadership?.primaryContact,
-                                id:
-                                  communityData.leadership?.primaryContact
-                                    ?.id || 'temp-id',
-                                name:
-                                  communityData.leadership?.primaryContact
-                                    ?.name || '',
-                                email: e.target.value,
-                                role:
-                                  communityData.leadership?.primaryContact
-                                    ?.role || '',
-                              },
-                            },
-                          })
-                        }
-                        placeholder="contact@community.org"
-                      />
-                    </div>
-                  </div>
+                            <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={siteData.metadata?.unicef || false}
+                  onChange={e =>
+                    updateSiteData({
+                      metadata: {
+                        ...(siteData.metadata as any),
+                        unicef: e.target.checked,
+                      },
+                    })
+                  }
+                />
+                <Label>UNICEF Site</Label>
+              </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="contact-role">Role</Label>
-                      <Input
-                        id="contact-role"
-                        value={
-                          communityData.leadership?.primaryContact?.role || ''
-                        }
-                        onChange={e =>
-                          updateCommunityData({
-                            leadership: {
-                              ...communityData.leadership,
-                              primaryContact: {
-                                ...communityData.leadership?.primaryContact,
-                                id:
-                                  communityData.leadership?.primaryContact
-                                    ?.id || 'temp-id',
-                                name:
-                                  communityData.leadership?.primaryContact
-                                    ?.name || '',
-                                email:
-                                  communityData.leadership?.primaryContact
-                                    ?.email || '',
-                                role: e.target.value,
-                              },
-                            },
-                          })
-                        }
-                        placeholder="Cultural Coordinator, Elder, etc."
-                      />
-                    </div>
+                                          <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={siteData.metadata?.undp || false}
+                  onChange={e =>
+                    updateSiteData({
+                      metadata: {
+                        ...(siteData.metadata as any),
+                        undp: e.target.checked,
+                      },
+                    })
+                  }
+                />
+                <Label>UNDP Site</Label>
+              </div>
 
-                    <div>
-                      <Label htmlFor="cultural-title">Cultural Title</Label>
-                      <Input
-                        id="cultural-title"
-                        value={
-                          communityData.leadership?.primaryContact
-                            ?.culturalTitle || ''
-                        }
-                        onChange={e =>
-                          updateCommunityData({
-                            leadership: {
-                              ...communityData.leadership,
-                              primaryContact: {
-                                ...communityData.leadership?.primaryContact,
-                                id:
-                                  communityData.leadership?.primaryContact
-                                    ?.id || 'temp-id',
-                                name:
-                                  communityData.leadership?.primaryContact
-                                    ?.name || '',
-                                email:
-                                  communityData.leadership?.primaryContact
-                                    ?.email || '',
-                                role:
-                                  communityData.leadership?.primaryContact
-                                    ?.role || '',
-                                culturalTitle: e.target.value,
-                              },
-                            },
-                          })
-                        }
-                        placeholder="Traditional title or position"
-                        className="font-cultural"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
 
-              {communityData.governanceModel ===
-                CommunityGovernance.ELDER_COUNCIL && (
-                <Card className="border-secondary">
-                  <CardHeader>
-                    <CardTitle className="text-lg flex items-center space-x-2">
-                      <span>Elder Council</span>
-                      <Badge className="bg-secondary">Special Authority</Badge>
-                    </CardTitle>
-                    <CardDescription>
-                      Elders with traditional authority and cultural guidance
-                      responsibilities
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Elder council members can be added after community
-                      creation
-                    </p>
-                    <Button variant="outline" disabled>
-                      Add Elder Council Members (Available After Setup)
-                    </Button>
-                  </CardContent>
-                </Card>
-              )}
+
+              <div>
+                <Label>Local Context *</Label>
+                <Input
+                  value={siteData.metadata?.local_context || ''}
+                  onChange={e =>
+                    updateSiteData({
+                      metadata: {
+                        ...(siteData.metadata as any),
+                        local_context: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
+
+              <div>
+                <Label>Indigenous System *</Label>
+                <Input
+                  value={siteData.metadata?.indigenous_system || ''}
+                  onChange={e =>
+                    updateSiteData({
+                      metadata: {
+                        ...(siteData.metadata as any),
+                        indigenous_system: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
+
+              <div>
+                <Label>Rights *</Label>
+                <Input
+                  value={siteData.metadata?.rights || ''}
+                  onChange={e =>
+                    updateSiteData({
+                      metadata: {
+                        ...(siteData.metadata as any),
+                        rights: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
+
+              <div>
+                <Label>IP Metadata *</Label>
+                <Input
+                  value={siteData.metadata?.ip_metadata || ''}
+                  onChange={e =>
+                    updateSiteData({
+                      metadata: {
+                        ...(siteData.metadata as any),
+                        ip_metadata: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
+
+              <div>
+                <Label>Sensitivity Level *</Label>
+
+                <div className="space-y-3">
+      {options.map((option) => (
+        <div
+          key={option.value}
+          className="flex items-center ps-4 border border-default bg-neutral-primary-soft rounded-base"
+        >
+          <input
+            id={`sensitivity-${option.value}`}
+            type="radio"
+            name="sensitivity_level"
+            value={option.value}
+            checked={siteData.metadata?.sensitivity_level === option.value}
+            onChange={() =>
+                    updateSiteData({
+                      metadata: {
+                        ...(siteData.metadata as any),
+                        sensitivity_level: option.value,
+                      },
+                    })
+                  }
+            className="
+              w-4 h-4
+              text-neutral-primary
+              border-default-medium
+              bg-neutral-secondary-medium
+              rounded-full
+              checked:border-brand
+              focus:ring-2
+              focus:outline-none
+              focus:ring-brand-subtle
+              border
+              border-default
+              appearance-none
+            "
+          />
+          <label
+            htmlFor={`sensitivity-${option.value}`}
+            className="w-full py-4 select-none ms-2 text-sm font-medium text-heading"
+          >
+            {option.label}
+          </label>
+        </div>
+      ))}
+    </div>
+
+              </div>
+
+
+
+              <div>
+                <Label>Access Protocol *</Label>
+                <Input
+                  value={siteData.metadata?.access_protocol || ''}
+                  onChange={e =>
+                    updateSiteData({
+                      metadata: {
+                        ...(siteData.metadata as any),
+                        access_protocol: e.target.value,
+                      },
+                    })
+                  }
+                />
+              </div>
             </div>
           </div>
         )
 
-      case 'PROTOCOLS':
-        const protocolOptions = [
-          {
-            protocol: CulturalProtocol.PUBLIC,
-            title: 'Public Access',
-            description: 'Content available to all visitors',
-            color: 'protocol-public',
-          },
-          {
-            protocol: CulturalProtocol.COMMUNITY_ONLY,
-            title: 'Community Members Only',
-            description: 'Restricted to verified community members',
-            color: 'protocol-community',
-          },
-          {
-            protocol: CulturalProtocol.ELDER_APPROVAL_REQUIRED,
-            title: 'Elder Approval Required',
-            description: 'Content requires elder council approval',
-            color: 'protocol-restricted',
-          },
-          {
-            protocol: CulturalProtocol.GENDER_RESTRICTED,
-            title: 'Gender-Specific Protocols',
-            description: 'Traditional gender-based access restrictions',
-            color: 'protocol-restricted',
-          },
-        ]
-
+      case 'UPLOADS':
         return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <h3 className="text-xl mb-2">Cultural Protocols</h3>
-              <p className="text-muted-foreground">
-                Configure access levels and cultural protection protocols
-              </p>
-            </div>
-
-            <div className="space-y-4 max-w-4xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {protocolOptions.map(option => (
-                  <Card
-                    key={option.protocol}
-                    className="cursor-pointer hover:shadow-md transition-all"
-                  >
-                    <CardHeader>
-                      <CardTitle className="text-base flex items-center justify-between">
-                        {option.title}
-                        <Badge className={option.color} variant="outline">
-                          Protocol
-                        </Badge>
-                      </CardTitle>
-                      <CardDescription>{option.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <Button variant="outline" size="sm" className="w-full">
-                        Configure
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              <Card className="border-orange-200 bg-orange-50">
-                <CardContent className="p-4">
-                  <p className="text-sm text-orange-800">
-                    <strong>Note:</strong> Detailed protocol configuration can
-                    be completed after community creation. These settings
-                    establish your community's approach to knowledge sharing and
-                    cultural protection.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+          <div className="text-center py-10">
+            <h3 className="text-xl mb-2">Media Uploads</h3>
+            <p>Upload images or files (coming soon)</p>
           </div>
         )
 
@@ -438,56 +381,25 @@ export default function SiteCreationFlow({
         return (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h3 className="text-xl mb-2">Review Community Setup</h3>
-              <p className="text-muted-foreground">
-                Verify all information before creating your community
-              </p>
+              <h3 className="text-xl mb-2">Review Site</h3>
+              <p className="text-muted-foreground">Confirm all information</p>
             </div>
 
             <div className="space-y-4 max-w-2xl mx-auto">
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center space-x-2">
-                    <span>{communityData.title}</span>
-                    <Badge
-                      className={
-                        communityData.governanceModel ===
-                        CommunityGovernance.ELDER_COUNCIL
-                          ? 'bg-secondary'
-                          : 'bg-primary'
-                      }
-                    >
-                      {communityData.governanceModel?.replace(/_/g, ' ')}
-                    </Badge>
-                  </CardTitle>
-                  <CardDescription>{communityData.description}</CardDescription>
+                  <CardTitle>{siteData.site_name}</CardTitle>
+                  <CardDescription>{siteData.description}</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <Label>Region</Label>
-                      <p>{communityData.region}</p>
+                      <Label>Latitude</Label>
+                      <p>{siteData.latitude}</p>
                     </div>
                     <div>
-                      <Label>Languages</Label>
-                      <p className="font-cultural">{communityData.language}</p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label>Primary Contact</Label>
-                    <div className="text-sm">
-                      <p className="font-medium">
-                        {communityData.leadership?.primaryContact?.name}
-                      </p>
-                      <p className="text-muted-foreground">
-                        {communityData.leadership?.primaryContact?.email}
-                      </p>
-                      <p className="text-muted-foreground">
-                        {communityData.leadership?.primaryContact
-                          ?.culturalTitle ||
-                          communityData.leadership?.primaryContact?.role}
-                      </p>
+                      <Label>Longitude</Label>
+                      <p>{siteData.longitude}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -497,15 +409,8 @@ export default function SiteCreationFlow({
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-2 text-green-800">
                     <CheckCircle className="h-5 w-5" />
-                    <span className="font-medium">
-                      Ready to Create Community
-                    </span>
+                    <span className="font-medium">Ready to Create Site</span>
                   </div>
-                  <p className="text-sm text-green-700 mt-2">
-                    Your community will be created with the selected governance
-                    model and protocols. You can invite members and begin
-                    sharing knowledge immediately after creation.
-                  </p>
                 </CardContent>
               </Card>
             </div>
@@ -517,9 +422,25 @@ export default function SiteCreationFlow({
     }
   }
 
+    async function handleCreateSite() {
+    try {
+      console.log("🚀 Creating site with data:", siteData);
+      await createSite(siteData);
+      await refreshSites(); // refresh the dashboard list
+
+      alert("Site created successfully!");
+
+      resetForm();
+      onComplete?.();
+    } catch (err) {
+      console.error("❌ Failed to create site:", err);
+      alert("Failed to create site. Check logs and backend.");
+    }
+  }
+
+  // ---------- MAIN RETURN ----------
   return (
     <div className="max-w-6xl mx-auto p-6">
-      {/* Progress header */}
       <div className="mb-8">
         <div className="flex items-center justify-between text-sm mb-4">
           <h2 className="text-2xl">Create New Site</h2>
@@ -531,31 +452,31 @@ export default function SiteCreationFlow({
         <Progress value={progressPercentage} className="mb-4" />
 
         <div className="flex items-center justify-between">
-          {steps.map((stepInfo, index) => {
-            const isActive = index === currentStepIndex
-            const isCompleted = index < currentStepIndex
-
-            return (
-              <div key={stepInfo.key} className="flex-1 text-center">
-                <div
-                  className={`text-sm ${isActive ? 'text-primary font-medium' : isCompleted ? 'text-green-600' : 'text-muted-foreground'}`}
-                >
-                  {stepInfo.title}
-                </div>
-                <div className="text-xs text-muted-foreground hidden md:block">
-                  {stepInfo.description}
-                </div>
+          {steps.map((stepInfo, index) => (
+            <div key={stepInfo.key} className="flex-1 text-center">
+              <div
+                className={`text-sm ${
+                  index === currentStepIndex
+                    ? 'text-primary font-medium'
+                    : index < currentStepIndex
+                    ? 'text-green-600'
+                    : 'text-muted-foreground'
+                }`}
+              >
+                {stepInfo.title}
               </div>
-            )
-          })}
+              <div className="text-xs text-muted-foreground hidden md:block">
+                {stepInfo.description}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Step Content */}
       <Card>
         <CardContent className="p-6">{renderStepContent()}</CardContent>
       </Card>
-      {/* Navigation */}
+
       <div className="flex justify-between items-center mt-6">
         <Button
           variant="outline"
@@ -568,43 +489,20 @@ export default function SiteCreationFlow({
         </Button>
 
         <Button
+          disabled={isCreating || !canProceed()}
           onClick={() => {
-            if (step === 'REVIEW') {
-              //  submit the community data to backend api
-              const newCommunity = {
-                communityIdentifier: generateCommunityIdentifier(),
-                identity: {
-                  ...communityData,
-                  id: Date.now().toString(),
-                  establishedDate: new Date(),
-                },
-                members: [],
-                knowledgeItems: [],
-                protocols: [],
-                stats: {
-                  totalItems: 0,
-                  publicItems: 0,
-                  restrictedItems: 0,
-                  memberCount: 0,
-                  collectionCount: 0,
-                  subCommunityCount: 0,
-                },
-              }
-
-              addCommunity(newCommunity)
-
-              alert('Community created successfully!')
-              resetForm()
-              onComplete?.()
+            if (step === "REVIEW") {
+              handleCreateSite();
             } else {
-              nextStep()
+              nextStep();
             }
           }}
-          disabled={!canProceed()}
           className="flex items-center space-x-2"
         >
-          <span>{step === 'REVIEW' ? 'Create Community' : 'Next'}</span>
-          {step !== 'REVIEW' && <ArrowRight className="w-4 h-4" />}
+          <span>
+            {step === "REVIEW" ? (isCreating ? "Creating..." : "Create Site") : "Next"}
+          </span>
+          {step !== "REVIEW" && <ArrowRight className="w-4 h-4" />}
         </Button>
       </div>
     </div>
