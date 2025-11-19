@@ -3,13 +3,16 @@ import { tokenService } from "../auth/token.service";
 
 
 export const DTOKEN = process.env.NEXT_PUBLIC_DJANGO_BASE_ADMIN_TOKEN;
+export const D_VERIFIER_1_TOKEN = process.env.NEXT_PUBLIC_DJANGO_BASE_VERIFIER_1_TOKEN
+
 
 export async function fetchWithAuth<T = unknown>(input: RequestInfo, init?: RequestInit): Promise<T> {
 
 
     let token = tokenService.getAccessToken();
     if (!token && DTOKEN) {
-        console.info("ℹ️ Using default admin token from env.");
+        // console.info("ℹ️ Using default admin token from env.");
+        console.info("ℹ️ Using default verifier token from env.");
         tokenService.setToken(DTOKEN);
         token = DTOKEN;
     }
@@ -44,3 +47,26 @@ export async function fetchWithAuth<T = unknown>(input: RequestInfo, init?: Requ
 
     return (await res.text()) as unknown as T;
 }
+
+
+export const swrFetcherWithAuth = async <T>(url: string): Promise<T> => {
+  const token = tokenService.getAccessToken() ?? DTOKEN;
+
+  if (!token) {
+    throw new Error("No auth token available");
+  }
+
+  const res = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`${res.status} ${res.statusText} - ${text}`);
+  }
+
+  return res.json();
+};

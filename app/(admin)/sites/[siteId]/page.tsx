@@ -1,18 +1,22 @@
 "use client";
 
 import { Button } from "@/app/components/ui/button";
-import { AlertCircleIcon, ArrowLeft, CheckCheckIcon, Database, Download, Edit, Info, MoreVertical, Plus, Settings, Shield, ShieldAlertIcon, Trash2, Users } from "lucide-react";
+import { AlertCircleIcon, ArrowLeft, Calendar, CheckCheckIcon, Database, Download, Edit, Info, MoreVertical, Plus, Settings, Shield, ShieldAlertIcon, Trash2, Users } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { SiteDetailView } from "@/app/components/heritageSites/sitesDetailView";
-import { useSiteById } from "@/app/hooks/use-sites";
+import { useSiteById, useVotesBySiteId } from "@/app/hooks/use-sites";
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/app/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/app/components/ui/dialog";
+import VerificationActionBar from "@/app/components/heritageSites/verificationActionBar";
+import { VerificationDialog } from "@/app/components/heritageSites/verificationDialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table";
+import { Badge } from "@/app/components/ui/badge";
 
 export default function SiteDetailPage() {
   const params = useParams();
@@ -23,10 +27,12 @@ export default function SiteDetailPage() {
 
 
   const { site, isLoading, isError } = useSiteById(siteId);
+  const { votes = [], isVotesLoading, isVotesError } = useVotesBySiteId(siteId);
   const [activeTab, setActiveTab] = useState('overview')
   const [showVerificationCreation, setVerificationCreation] =
     useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+  const [verificationDialogMode, setVerificationDialogMode] = useState<"approve" | "reject" | null>(null)
 
   const handleDeleteSite = () => {
     console.log('Delete community:', siteId)
@@ -47,6 +53,10 @@ export default function SiteDetailPage() {
     )
   }
 
+  const voteColorMap = {
+    reject: 'bg-blue-100 text-blue-800 border-blue-200',
+    approve: 'bg-green-100 text-green-800 border-green-200',
+  } as const
   return (
     <main className="container mx-auto px-4 py-6 pb-24 md:pb-6">
       <header className="flex justify-between items-center mb-6">
@@ -68,16 +78,22 @@ export default function SiteDetailPage() {
       </Alert>
 
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mb-4">
-        {/* Primary actions */}
+        {/* verification action bar */}
+        <VerificationActionBar
+          onApprove={() => setVerificationDialogMode('approve')}
+          onReject={() => setVerificationDialogMode('reject')}
+          onFeedback={() => console.log("Feedback to be implemented")}
+        />
+        {/* Primary actions
         <div className="flex items-center space-x-2">
           <Button onClick={() => {
-            //setShowContributeDialog(true)
+            setVerificationCreation(true)
           }}>
             <CheckCheckIcon className="w-4 h-4 mr-2" />
             Verify
           </Button>
           <Button className="bg-red-500" onClick={() => {
-            // setShowContributeDialog(true)
+             setVerificationCreation(true)
           }}>
             <ShieldAlertIcon className="w-4 h-4 mr-2" />
             Reject
@@ -86,13 +102,13 @@ export default function SiteDetailPage() {
           <Button
             variant="outline"
             onClick={() => {
-              // setShowSubCommunityCreation(true)
+              setShowSubCommunityCreation(true)
             }}
           >
             <Plus className="w-4 h-4 mr-2" />
             <span className="hidden sm:inline">Provide </span>Feedback
           </Button>
-        </div>
+        </div> */}
 
         {/* Secondary Actions Dropdown */}
         <DropdownMenu>
@@ -146,7 +162,8 @@ export default function SiteDetailPage() {
       >
         <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="verifications">Verification Log</TabsTrigger>
+          <TabsTrigger value="verifications">Verification Votes</TabsTrigger>
+          <TabsTrigger value="logs">Verification Logs</TabsTrigger>
           <TabsTrigger value="metadata">Metadata</TabsTrigger>
 
         </TabsList>
@@ -155,7 +172,7 @@ export default function SiteDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <>
 
-            {site && <SiteDetailView site={site} />}
+              {site && <SiteDetailView site={site} />}
             </>
 
             <Card>
@@ -271,67 +288,168 @@ export default function SiteDetailPage() {
           </Card>
         </TabsContent>
 
-         <TabsContent value="metadata" className="space-y-4">
+        <TabsContent value="verifications" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-blue-600" />
+                Verified Sites Verification Personnel
+                <Badge
+                  variant="outline"
+                  className="bg-green-50 text-green-700 border-green-200"
+                >
+                  IKMS Sites
+                </Badge>
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Non-verifiers contribution for site verification is not permitted per IKMS guideline.
+                Verifiers are declared by the community and  not IKMS Admins.
+              </p>
+            </CardHeader>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Site Metadata</CardTitle>
-                <CardDescription>
-                 Site Metadata
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Plus className="w-4 h-4 text-green-600" />
-                    <span>
-                               {site?.metadata?.unesco && (
-            <div className="mt-4">
-              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-                UNESCO Listed
-              </span>
-            </div>
-          )}
-                    </span>
-                    <span className="text-muted-foreground">1 day ago</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Users className="w-4 h-4 text-blue-600" />
-                    <span>New member joined: Sam Kenpachi</span>
-                    <span className="text-muted-foreground">1 day1 ago</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Shield className="w-4 h-4 text-yellow-600" />
-                    <span>Protocol updated: Elder approval required</span>
-                    <span className="text-muted-foreground">1 ady ago</span>
-                  </div>
+            <CardContent>
+              <div className="rounded-md border">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[200px]">Verifier</TableHead>
+                      <TableHead>Vote Status</TableHead>
+                      <TableHead>Comment</TableHead>
+                      <TableHead className="text-right">Vote Date</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {isVotesLoading && (
+                      <p className="text-muted-foreground text-center py-10">Loading…</p>
+                    )}
+                    {(votes as Array<any>).map(contributor => {
+
+                      return (
+                        <TableRow
+                          key={contributor.id}
+                          className="group hover:bg-muted/50"
+                        >
+                          <TableCell className="space-y-2">
+                            <div className="flex items-center gap-3">
+
+                              <div className="min-w-0">
+                                <div className="font-mono text-sm truncate">
+                                  {contributor.verifier.name}
+                                </div>
+                                {/* <div className="text-xs text-muted-foreground truncate">
+                            {contributor.affiliation}
+                          </div>
+                          {contributor.orcidId && (
+                            <div className="text-xs text-blue-600 font-mono">
+                              ORCID: {contributor.orcidId}
+                            </div>
+                          )} */}
+                              </div>
+                            </div>
+                          </TableCell>
+
+                          <TableCell className="space-y-2">
+                            <div className="flex items-center gap-3">
+
+                              <div className="min-w-0">
+                                <div className="font-mono text-sm truncate">
+                                  <Badge
+                                    key={contributor.id}
+                                    variant="outline"
+                                    className={`text-xs $voteColorMap[contributor.vote]}`}
+                                  >
+                                    {contributor.vote}
+                                  </Badge>
+
+                                </div>
+
+                              </div>
+                            </div>
+                          </TableCell>
+
+                          <TableCell className="space-y-2">
+                            <div className="flex items-center gap-3">
+
+                              <div className="min-w-0">
+                                <div className="font-mono text-sm truncate">
+
+                                  {contributor.comment}
+
+                                </div>
+
+                              </div>
+                            </div>
+                          </TableCell>
+
+                          <TableCell className="text-right">
+                            <div className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
+                              <Calendar className="w-3 h-3" />
+                              {new Date(
+                                contributor.created_at
+                              ).toLocaleDateString()}
+                            </div>
+                          </TableCell>
+
+
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="metadata" className="space-y-4">
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Site Metadata</CardTitle>
+              <CardDescription>
+                Site Metadata
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3 text-sm">
+                  <Plus className="w-4 h-4 text-green-600" />
+                  <span>
+                    {site?.metadata?.unesco && (
+                      <div className="mt-4">
+                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
+                          UNESCO Listed
+                        </span>
+                      </div>
+                    )}
+                  </span>
+                  <span className="text-muted-foreground">1 day ago</span>
                 </div>
-              </CardContent>
-            </Card>
-         </TabsContent>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Users className="w-4 h-4 text-blue-600" />
+                  <span>New member joined: Sam Kenpachi</span>
+                  <span className="text-muted-foreground">1 day1 ago</span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm">
+                  <Shield className="w-4 h-4 text-yellow-600" />
+                  <span>Protocol updated: Elder approval required</span>
+                  <span className="text-muted-foreground">1 ady ago</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
       </Tabs>
 
-      {/* Sub-Community Creation Dialog */}
-
-      <Dialog
-        open={showVerificationCreation}
-        onOpenChange={setVerificationCreation}
-      >
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Create Sub-Community</DialogTitle>
-            <DialogDescription>
-              Create a new verification under {siteId}
-            </DialogDescription>
-          </DialogHeader>
-          {/* <SubCommunityCreationFlow
-                  parentCommunity={currentCommunity}
-                  onComplete={() => setShowSubCommunityCreation(false)}
-                /> */}
-        </DialogContent>
-      </Dialog>
-
+      {verificationDialogMode && (
+        <VerificationDialog
+          open={!!verificationDialogMode}
+          onOpenChange={() => setVerificationDialogMode(null)}
+          siteId={siteId}
+          mode={verificationDialogMode}
+        />
+      )}
 
       {/* end of main content */}
 
