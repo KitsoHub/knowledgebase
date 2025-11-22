@@ -31,7 +31,24 @@ export interface SiteData {
   },
   uploaded_images: [
 
-  ]
+  ],
+  created_by?: {
+    email?: string,
+    name?: string,
+    is_staff?: boolean
+  },
+  last_updated?:string,
+  date_created?: string,
+  category_display?: string,
+  status_display?:string
+  verification_status?:{
+    approve_count?: number,
+    reject_count?: number,
+    total_votes?: number,
+    required_count?: number,
+    pending_verifiers?: number,
+    status?: string
+  }
 }
 
 

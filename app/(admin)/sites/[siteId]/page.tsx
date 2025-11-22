@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 import { SiteDetailView } from "@/app/components/heritageSites/sitesDetailView";
-import { useSiteById, useVotesBySiteId } from "@/app/hooks/use-sites";
+import { useSiteById, useVerificationLogsBySiteId, useVotesBySiteId } from "@/app/hooks/use-sites";
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/app/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
@@ -17,6 +17,9 @@ import VerificationActionBar from "@/app/components/heritageSites/verificationAc
 import { VerificationDialog } from "@/app/components/heritageSites/verificationDialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table";
 import { Badge } from "@/app/components/ui/badge";
+import { SiteData } from "@/lib/types/sitesData";
+import { Separator } from "@/app/components/ui/separator";
+import { differenceInDays, formatDistanceToNowStrict } from 'date-fns';
 
 export default function SiteDetailPage() {
   const params = useParams();
@@ -24,10 +27,12 @@ export default function SiteDetailPage() {
   const siteId = params.siteId as unknown as number;
 
 
-
-
+  // TODO: try using one call passing the siteId
   const { site, isLoading, isError } = useSiteById(siteId);
   const { votes = [], isVotesLoading, isVotesError } = useVotesBySiteId(siteId);
+  const { vlog, isVlogLoading, error} = useVerificationLogsBySiteId(siteId)
+  // get verification logs
+
   const [activeTab, setActiveTab] = useState('overview')
   const [showVerificationCreation, setVerificationCreation] =
     useState(false)
@@ -82,71 +87,9 @@ export default function SiteDetailPage() {
         <VerificationActionBar
           onApprove={() => setVerificationDialogMode('approve')}
           onReject={() => setVerificationDialogMode('reject')}
-          onFeedback={() => console.log("Feedback to be implemented")}
         />
-        {/* Primary actions
-        <div className="flex items-center space-x-2">
-          <Button onClick={() => {
-            setVerificationCreation(true)
-          }}>
-            <CheckCheckIcon className="w-4 h-4 mr-2" />
-            Verify
-          </Button>
-          <Button className="bg-red-500" onClick={() => {
-             setVerificationCreation(true)
-          }}>
-            <ShieldAlertIcon className="w-4 h-4 mr-2" />
-            Reject
-          </Button>
 
-          <Button
-            variant="outline"
-            onClick={() => {
-              setShowSubCommunityCreation(true)
-            }}
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">Provide </span>Feedback
-          </Button>
-        </div> */}
 
-        {/* Secondary Actions Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center space-x-2">
-              <Settings className="w-4 h-4" />
-              <span className="hidden sm:inline">Manage</span>
-              <MoreVertical className="w-4 h-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem onClick={() => {
-              //setShowEditCommunity(true)
-            }}>
-              <Edit className="w-4 h-4 mr-2" />
-              Edit Community Information
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleExportSiteData}>
-              <Download className="w-4 h-4 mr-2" />
-              Export Full Site Data
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleExportMetadata}>
-              <Database className="w-4 h-4 mr-2" />
-              Export Metadata Only
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                // setShowDeleteDialog(true)
-              }}
-              className="text-red-600 focus:text-red-600 focus:bg-red-50"
-            >
-              <Trash2 className="w-4 h-4 mr-2" />
-              Delete Community
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
 
       {isLoading && (
@@ -179,7 +122,7 @@ export default function SiteDetailPage() {
               <CardHeader>
                 <CardTitle>Recent Activity</CardTitle>
                 <CardDescription>
-                  Latest community activities and contributions
+                  Latest activities and contributions
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -187,19 +130,22 @@ export default function SiteDetailPage() {
                   <div className="flex items-center space-x-3 text-sm">
                     <Plus className="w-4 h-4 text-green-600" />
                     <span>
-                      New Protocol item added: "Traditional Healing Practices"
+                      Verification Status:
                     </span>
-                    <span className="text-muted-foreground">1 day ago</span>
+                    <span className="text-muted-foreground">{site?.status_display && site.status_display}</span>
                   </div>
                   <div className="flex items-center space-x-3 text-sm">
                     <Users className="w-4 h-4 text-blue-600" />
-                    <span>New member joined: Sam Kenpachi</span>
-                    <span className="text-muted-foreground">1 day1 ago</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-sm">
-                    <Shield className="w-4 h-4 text-yellow-600" />
-                    <span>Protocol updated: Elder approval required</span>
-                    <span className="text-muted-foreground">1 ady ago</span>
+                    <span>Last updated</span>
+                    <span className="text-muted-foreground">
+                      <Calendar className="w-3 h-3" />
+
+
+                              {/* {site?.last_updated && new Date(site?.last_updated).toLocaleDateString()} */}
+                             {/* {site?.date_created && site?.last_updated ? differenceInDays(new Date(site.date_created), new Date(site.last_updated)) : 'N/A'} days ago */}
+                                {site?.date_created ? formatDistanceToNowStrict(new Date(site.date_created), {addSuffix: true}) : 'N/A'}
+
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -401,44 +347,181 @@ export default function SiteDetailPage() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="metadata" className="space-y-4">
-
+                <TabsContent value="logs" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Site Metadata</CardTitle>
-              <CardDescription>
-                Site Metadata
-              </CardDescription>
+              <CardTitle className="flex items-center gap-2">
+                <Shield className="w-5 h-5 text-blue-600" />
+                Verification Logs
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Verication logs for {site?.site_name} site
+              </p>
             </CardHeader>
+
             <CardContent>
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-sm">
-                  <Plus className="w-4 h-4 text-green-600" />
-                  <span>
-                    {site?.metadata?.unesco && (
-                      <div className="mt-4">
-                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-                          UNESCO Listed
-                        </span>
-                      </div>
+              <div className="rounded-md border">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[200px]">Changed By</TableHead>
+                      <TableHead>Is Override</TableHead>
+                      <TableHead>Reason</TableHead>
+                      <TableHead className="text-right">Verification Date</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {isVlogLoading && (
+                      <p className="text-muted-foreground text-center py-10">Loading…</p>
                     )}
-                  </span>
-                  <span className="text-muted-foreground">1 day ago</span>
-                </div>
-                <div className="flex items-center space-x-3 text-sm">
-                  <Users className="w-4 h-4 text-blue-600" />
-                  <span>New member joined: Sam Kenpachi</span>
-                  <span className="text-muted-foreground">1 day1 ago</span>
-                </div>
-                <div className="flex items-center space-x-3 text-sm">
-                  <Shield className="w-4 h-4 text-yellow-600" />
-                  <span>Protocol updated: Elder approval required</span>
-                  <span className="text-muted-foreground">1 ady ago</span>
-                </div>
+                    {(vlog as Array<any>).map(item => {
+
+                      return (
+                        <TableRow
+                          key={item.id}
+                          className="group hover:bg-muted/50"
+                        >
+                          <TableCell className="space-y-2">
+                            <div className="flex items-center gap-3">
+
+                              <div className="min-w-0">
+                                <div className="font-mono text-sm truncate">
+                                  {item.changed_by.name}
+                                </div>
+                                <div className="text-xs text-muted-foreground truncate">
+
+                          </div>
+                          {item.changed_by && (
+                            <div className="text-xs text-blue-600 font-mono">
+                              Staff: {item.is_staff ? "TRUE": "FALSE"}
+                            </div>
+                          )}
+                              </div>
+                            </div>
+                          </TableCell>
+
+
+                          <TableCell className="space-y-2">
+                            <div className="flex items-center gap-3">
+
+                              <div className="min-w-0">
+                                <div className="font-mono text-sm truncate">
+
+                                  {item.is_override ? "TRUE": "FALSE"}
+
+                                </div>
+
+                              </div>
+                            </div>
+                          </TableCell>
+
+                          <TableCell className="space-y-2">
+                            <div className="flex items-center gap-3">
+
+                              <div className="min-w-0">
+                                <div className="font-mono text-sm truncate">
+
+                                  {item.reason}
+
+                                </div>
+
+                              </div>
+                            </div>
+                          </TableCell>
+
+                          <TableCell className="text-right">
+                            <div className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
+                              <Calendar className="w-3 h-3" />
+                              {new Date(
+                                item.timestamp
+                              ).toLocaleDateString()}
+                            </div>
+                          </TableCell>
+
+
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
+
+        <TabsContent value="metadata" className="space-y-4">
+
+                <Card>
+            <CardHeader>
+              <CardTitle>Technical Details</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* <div className="space-y-2">
+                  <h4 className="font-medium">File Information</h4>
+                  <div className="space-y-1 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Content Type:</span>
+                      <span className="capitalize">{site.contentType}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">File Size:</span>
+                      <span>{item.content.fileSize}</span>
+                    </div>
+                    {item.content.duration && (
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Duration:</span>
+                        <span>{item.content.duration}</span>
+                      </div>
+                    )}
+                    {item.content.dimensions && (
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Dimensions:</span>
+                        <span>{item.content.dimensions}</span>
+                      </div>
+                    )}
+                  </div>
+                </div> */}
+
+                <div className="space-y-2">
+                  <h4 className="font-medium">Contribution Details</h4>
+                  <div className="space-y-1 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Contributor:</span>
+                      <span>{site?.created_by && site.created_by.name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Role:</span>
+                      <span>{site?.created_by?.is_staff ? "STAFF":"Other"}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Created:</span>
+                      <span>
+                        {site?.date_created && new Date(site?.date_created).toLocaleDateString()}
+
+
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {site?.metadata && (
+                <>
+                  <Separator />
+                  <div className="space-y-2">
+                    <h4 className="font-medium">Additional Metadata</h4>
+                    <pre className="text-xs bg-muted p-3 rounded overflow-auto">
+                      {JSON.stringify(site.metadata, null, 2)}
+                    </pre>
+                  </div>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+
 
       </Tabs>
 

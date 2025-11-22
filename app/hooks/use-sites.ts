@@ -51,7 +51,7 @@ export function useSiteById(siteId: number) {
         }
     );
     return {
-        site: data,
+        site: data as {} as Partial<SiteData>,
         isLoading,
         isError: error
     };
@@ -91,4 +91,26 @@ export function useVotesBySiteId(siteId: number | null) {
         isVotesError: error,
 
     };
+}
+
+
+export function useVerificationLogsBySiteId(siteId: number | null) {
+
+    const key = siteId ? API_ENDPOINTS.sites.getVerificationLogsBySiteId(siteId) : null;
+    const {data, error, isLoading} = useSWR(
+        key,
+        fetchWithAuth,
+        {
+            dedupingInterval: 10_000,
+            shouldRetryOnError: false,
+        }
+    )
+
+
+    return {
+        vlog: data ?? [],
+        isVlogLoading: isLoading,
+        error,
+    }
+
 }

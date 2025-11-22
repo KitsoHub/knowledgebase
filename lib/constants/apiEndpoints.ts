@@ -15,7 +15,8 @@ sites: {
     updateSite: (id: string) => `${API_BASE_URL}sites/sites/${id}/`,
     deleteSite: (id: string) => `${API_BASE_URL}sites/sites/${id}/`,
     submitVote: (id: number) => `${API_BASE_URL}sites/sites/${id}/submit_verification/`,
-    getVotesBySiteId: (id:number) => `${API_BASE_URL}sites/verification-votes/${id}/site/`
+    getVotesBySiteId: (id:number) => `${API_BASE_URL}sites/verification-votes/${id}/site/`,
+    getVerificationLogsBySiteId: (id:number) => `${API_BASE_URL}sites/verification-logs/${id}/verification-logs/`,
 }
 } as const;
 
