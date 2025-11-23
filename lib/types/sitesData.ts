@@ -1,3 +1,4 @@
+import { ExtendedFile } from '../types';
 import { id } from './../../node_modules/ci-info/index.d';
 // app/types/cultural-site.ts
 export type SensitivityLevel = 'public' | 'restricted' | 'closed'
@@ -29,9 +30,7 @@ export interface SiteData {
     sensitivity_level: SensitivityLevel,
     access_protocol: string
   },
-  uploaded_images: [
-
-  ],
+  uploaded_images: File[],
   created_by?: {
     email?: string,
     name?: string,

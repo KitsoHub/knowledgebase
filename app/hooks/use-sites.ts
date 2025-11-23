@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from '@/lib/constants/apiEndpoints';
-import { fetchWithAuth, swrFetcherWithAuth } from '@/lib/services/api/fetchService';
+import { fetchWithAuth } from '@/lib/services/api/fetchService';
 import { siteService } from '@/lib/services/api/sitesService';
 import { SiteData, SiteVoteType } from '@/lib/types/sitesData';
 import useSWR from 'swr';
