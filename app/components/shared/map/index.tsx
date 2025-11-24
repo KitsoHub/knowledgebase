@@ -62,16 +62,16 @@ export default function SiteMap({
                 margin: 0,
               }}
             >
-              {/* <img
-                src={site.images[0]}
-                alt={site.name}
+              <img
+                src={site.images?.[0]?.images ?? ''}
+                alt={site.site_name}
                 style={{
                   width: '100%',
                   height: '140px',
                   objectFit: 'cover',
                   borderRadius: '8px 8px 0 0',
                 }}
-              /> */}
+              />
               <div style={{ padding: '10px' }}>
                 <h2
                   style={{

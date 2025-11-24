@@ -2,61 +2,63 @@
 import { useState } from 'react'
 import dynamic from 'next/dynamic'
 
-import { SiteData } from '@/lib/types/sitesData'
+import { SiteData, SiteViewMode } from '@/lib/types/sitesData'
 import { motion } from 'framer-motion'
 import { useSites } from '@/app/hooks/use-sites'
+import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/card'
+import { Building2, Home, LocateFixedIcon, LocateIcon } from 'lucide-react'
+import { Badge } from '@/app/components/ui/badge'
+import { Button } from '@/app/components/ui/button'
+import Link from 'next/link'
 
 // Dynamically load map (SSR-safe)
-const SiteMap = dynamic(() => import('@/app/components/shared/map'), {
-  loading: () => (
-    <div className="bg-gray-100 rounded-lg flex items-center justify-center">
-      Loading map...
-    </div>
-  ),
+const BotswanaMap = dynamic(() => import('@/app/components/shared/map/botswana-map'), {
   ssr: false,
+  loading: () => (
+    <div className="w-full h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p className="text-gray-700 text-lg font-medium">Loading Heritage Site Map...</p>
+      </div>
+    </div>
+  )
 })
 
 export default function ExplorerPage() {
   const { sites, isLoading, isError, refreshSites } = useSites();
+  const [siteData, setSiteData] = useState<SiteData[]>([])
+  const [viewMode, setViewMode] = useState<SiteViewMode>("Heritage")
+  const [showLayer, setShowLayer] = useState(true)
+
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
-  const [languageFilter, setLanguageFilter] = useState<string>('all')
-  const [selectedSite, setSelectedSite] = useState<SiteData | null>(null)
-  const [sortBy, setSortBy] = useState('name')
-  const [mapCenter, setMapCenter] = useState<{
-    latitude: number
-    longitude: number
-  }>({
-    latitude: -22.3285, // Default to Botswana's center
-    longitude: 24.6849,
-  })
-  const [mapZoom, setMapZoom] = useState(6) // Default zoom level
 
-  // Only show public sites in Botswana
-  const publicSites = sites.filter(
+  const [selectedSite, setSelectedSite] = useState<Partial<SiteData> | null>(null)
+  const [sortBy, setSortBy] = useState('name')
+
+  const heritageSitesData = sites.filter(
     site =>
-      site.metadata?.sensitivity_level === 'public' &&
-      site.latitude >= -26.9 &&
-      site.latitude <= -17.8 &&
-      site.longitude >= 20.0 &&
-      site.longitude <= 29.4
+      // site.metadata?.sensitivity_level === 'public' &&
+      site.category_display === "Heritage"
   )
 
-  // Extract unique categories and languages
-  const uniqueCategories = [...new Set(publicSites.map(site => site.category))]
+  const tribalSitesData = sites.filter(
+    site =>
+      // site.metadata?.sensitivity_level === 'public' &&
+      site.category_display === "Tribal"
+  )
+  const currentData = viewMode === "Heritage" ? heritageSitesData : tribalSitesData
 
 
- const filteredSites = sites.filter(site => {
-      const matchesSearch =
-        site.site_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        site.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredSites = currentData.filter(site => {
+    const matchesSearch =
+      site.site_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      site.description?.toLowerCase().includes(searchQuery.toLowerCase())
 
-      const matchesCategory = categoryFilter === 'all' || site.category === categoryFilter
+    const matchesCategory = categoryFilter === 'all' || site.category === categoryFilter
 
-
-
-      return matchesSearch && matchesCategory
-    })
+    return matchesSearch && matchesCategory
+  })
     .sort((a, b) => {
       switch (sortBy) {
         case 'name':
@@ -68,25 +70,13 @@ export default function ExplorerPage() {
       }
     })
 
-  // Handle search query
-  const handleSearch = (query: string) => {
-    setSearchQuery(query)
+  const handleItemSelect = (item: Partial<SiteData> | null) => {
+    if (viewMode === "Heritage") {
+      setSelectedSite(item as unknown as Partial<SiteData>)
 
-    // Find the first matching site and update the map center and zoom
-    const matchingSite = publicSites.find(
-      site =>
-        site.site_name.toLowerCase().includes(query.toLowerCase()) ||
-        site.description.toLowerCase().includes(query.toLowerCase())
-    )
-
-    if (matchingSite) {
-      setMapCenter({
-        latitude: matchingSite.latitude,
-        longitude: matchingSite.longitude,
-      })
-      setMapZoom(12) // Zoom in closer to the site
     }
   }
+
 
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6 mt-28">
@@ -96,22 +86,9 @@ export default function ExplorerPage() {
         transition={{ duration: 0.6 }}
         className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-secondary/10 to-primary/5 p-8 md:p-12 text-center"
       >
+
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(30,64,175,0.1),transparent_50%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(202,138,4,0.1),transparent_50%)]" />
-
-        <motion.div
-          animate={{
-            rotate: [0, 10, -10, 0],
-            scale: [1, 1.1, 1.1, 1],
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 4,
-            ease: 'easeInOut',
-          }}
-          className="inline-block mb-4"
-        ></motion.div>
-
         <h1 className="text-4xl md:text-5xl mb-4">
           Cultural Heritage Explorer
         </h1>
@@ -120,127 +97,105 @@ export default function ExplorerPage() {
           Botswana.
         </p>
       </motion.div>
-
       <div className="flex flex-col lg:flex-row gap-6 p-6 max-w-7xl mx-auto">
-        {/* Left Panel: Filters & List */}
-        <div className="lg:w-1/3 space-y-6">
-          {/* Search & Filters */}
-          <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search sites, tribes, languages..."
-                value={searchQuery}
-                onChange={e => handleSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-              <svg
-                className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+        <BotswanaMap
+          viewMode={viewMode}
+          siteData={filteredSites}
+          onItemSelect={handleItemSelect}
+          selectedItem={selectedSite}
+          showLayer={showLayer}
+        />
+{selectedSite && (
+  <div className='absolute bottom-4 right-4 z-[1000]'>
+    <Card className="w-80 shadow-lg border-0 bg-white/95 backdrop-blur-sm">
+     <CardHeader className="pb-2">
+            <CardTitle className="text-base flex items-center gap-2 font-semibold">
+                {viewMode === "Heritage" ? (
+                  <LocateFixedIcon className="h-4 w-4 text-blue-500" />
+                ) : (
+                  <LocateIcon className="h-4 w-4 text-blue-500" />
+                )}
+                <span className="truncate">
+                  {viewMode === "Heritage" ? selectedSite.site_name : selectedSite.description}
+                </span>
+              </CardTitle>
+              <CardContent className='space-y-3'>
+                             {viewMode === "Heritage" ? (
+                <>
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="capitalize text-xs">
+                      {selectedSite.category_display}
+                    </Badge>
+
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600 font-medium">Description:</span>
+                     <span className="font-semibold text-lg">{selectedSite.description}</span>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">Population Density:</span>
+                      <span className="font-semibold text-lg">{selectedSite.population_density}</span>
+                    </div>
+
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">District:</span>
+                      <span className="font-medium text-sm">{selectedSite.migration_route}</span>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2">
+                      <Badge variant="outline" className="capitalize text-xs">
+                      {selectedSite.category_display}
+                    </Badge>
+
+                  </div>
+
+                  <div className="space-y-2">
+
+
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">Population Density:</span>
+                      <span className="font-semibold text-lg text-green-600">
+
+                        <span className="text-sm font-normal">{selectedSite.population_density}</span>
+                      </span>
+                    </div>
+
+                    <div className="pt-2 border-t">
+                      <p className="text-xs text-gray-600 leading-relaxed">{selectedSite.description}</p>
+                    </div>
+                  </div>
+                </>
+              )}
+
+                <div className="pt-2 border-t">
+                <div className="text-xs text-gray-500 font-mono">
+                         <div className="mt-6">
+              <Button
+                asChild
+                variant={'secondary'}
+                className="transition-all duration-300"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+                <Link href={`/map/${selectedSite.id}`}>View Details</Link>
+              </Button>
             </div>
-
-            <select
-              value={categoryFilter}
-              onChange={e => setCategoryFilter(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-            >
-              <option value="all">All Categories</option>
-              {uniqueCategories.map(category => (
-                <option key={category} value={category}>
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </option>
-              ))}
-            </select>
-
-          </div>
-
-          {/* Site List */}
-          <div className="bg-white rounded-xl shadow-sm p-6 space-y-4">
-            <h3 className="font-semibold text-lg">Filtered Sites</h3>
-            {filteredSites.length === 0 ? (
-              <p className="text-gray-500">No sites match your criteria.</p>
-            ) : (
-              filteredSites.map(site => (
-                <div
-                  key={site.id}
-                  className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 cursor-pointer"
-                  onClick={() => setSelectedSite(site)}
-                >
-                  <h4 className="font-medium">{site.site_name}</h4>
-                  <p className="text-sm text-gray-600">
-                    {site.description?.substring(0, 100)}...
-                  </p>
                 </div>
-              ))
-            )}
-          </div>
-        </div>
+                </div>
+              </CardContent>
+     </CardHeader>
+    </Card>
 
-        {/* Right Panel: Map */}
-        <div className="lg:w-2/3 h-[70vh] bg-white rounded-xl shadow-sm overflow-hidden">
-          <SiteMap
-            sites={filteredSites}
-            center={[mapCenter.latitude, mapCenter.longitude]}
-            zoom={mapZoom}
-          />
-        </div>
+  </div>
+) }
       </div>
-    </div>
-  )
-}
 
-// Reusable Modal Component
-function SiteDetailModal({
-  site,
-  onClose,
-}: {
-  site: SiteData
-  onClose: () => void
-}) {
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl max-w-3xl max-h-[90vh] overflow-y-auto w-full">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold">{site.site_name}</h2>
-            <button onClick={onClose} className="text-2xl">
-              &times;
-            </button>
-          </div>
-          <p className="text-gray-700 mb-4">{site.description}</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div>
-              <strong>Category:</strong> {site.category}
-            </div>
-            <div>
-              {/* <strong>Language:</strong> {site.language || 'N/A'} */}
-            </div>
-            <div>
-              {/* <strong>Tribe:</strong> {site.tribe || 'N/A'} */}
-            </div>
-            <div>
-              <strong>Location:</strong> {site.latitude}, {site.longitude}
-            </div>
-          </div>
-          {site.metadata.unesco && (
-            <div className="mt-4">
-              <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">
-                UNESCO Listed
-              </span>
-            </div>
-          )}
-        </div>
-      </div>
+
     </div>
   )
 }

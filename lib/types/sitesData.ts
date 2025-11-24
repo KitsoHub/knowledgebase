@@ -1,6 +1,7 @@
 import { ExtendedFile } from '../types';
 import { id } from './../../node_modules/ci-info/index.d';
 // app/types/cultural-site.ts
+// update sensitivity level to number
 export type SensitivityLevel = 'public' | 'restricted' | 'closed'
 export type SiteVote = 'approve' | 'reject'
 export type SiteCategory =
@@ -10,6 +11,8 @@ export type SiteCategory =
   | 'tribal'
   | 'migration'
 
+export type SiteViewMode = "Heritage" | "Tribal"
+// TODO: add type for public view
 export interface SiteData {
   id: number,
   site_name: string,

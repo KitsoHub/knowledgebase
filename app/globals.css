@@ -312,4 +312,26 @@
   h5 {
     @apply text-lg font-semibold md:text-xl;
   }
+
+  /* Leaflet Styles */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+
+.leaflet-popup-content {
+  margin: 16px 20px;
+  line-height: 1.5;
+}
+
+.leaflet-popup-tip {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 }
