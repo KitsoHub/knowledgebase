@@ -4,26 +4,22 @@ import { Button } from "@/app/components/ui/button";
 import { AlertCircleIcon, ArrowLeft, Calendar, CheckCheckIcon, Database, Download, Edit, Info, MoreVertical, Plus, Settings, Shield, ShieldAlertIcon, Trash2, Users } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-
 import { SiteDetailView } from "@/app/components/heritageSites/sitesDetailView";
 import { useSiteById, useVerificationLogsBySiteId, useVotesBySiteId } from "@/app/hooks/use-sites";
 import { Alert, AlertDescription } from "@/app/components/ui/alert";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/app/components/ui/dropdown-menu";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/app/components/ui/dialog";
+
 import VerificationActionBar from "@/app/components/heritageSites/verificationActionBar";
 import { VerificationDialog } from "@/app/components/heritageSites/verificationDialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/app/components/ui/table";
 import { Badge } from "@/app/components/ui/badge";
-import { SiteData } from "@/lib/types/sitesData";
 import { Separator } from "@/app/components/ui/separator";
-import { motion, AnimatePresence } from "framer-motion"
-import Image from "next/image"
-import { differenceInDays, formatDistanceToNowStrict } from 'date-fns';
-import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/app/components/ui/carousel";
-import { ImageWithFallback } from "@/app/components/shared/image-with-fallback";
+
+import { formatDistanceToNowStrict } from 'date-fns';
+
+import GalleryCarousel from "@/app/components/shared/gallery/gallery-carousel";
 
 export default function SiteDetailPage() {
   const params = useParams();
@@ -67,54 +63,8 @@ export default function SiteDetailPage() {
     approve: 'bg-green-100 text-green-800 border-green-200',
   } as const
 
-  const exhibitions = [
-    {
-      id: 1,
-      image: "https://images.unsplash.com/photo-1541512416146-3cf58d6b27cc?q=80&w=1600&auto=format&fit=crop",
-    },
-    {
-      id: 2,
-      image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop",
-    },
-    {
-      id: 3,
-      image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop",
-    },
-  ]
-
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === exhibitions.length - 1 ? 0 : prevIndex + 1))
-  }
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? exhibitions.length - 1 : prevIndex - 1))
-  }
-
-  const images = exhibitions.map((e) => e.image)
-  const [emblaApi, setEmblaApi] = useState<CarouselApi | null>(null)
-  const handleThumbnailClick = (index:number) =>{
-    setCurrentIndex(index)
-
-  }
-
-    const handleSelect = () => {
-    if (!emblaApi) return
-    setCurrentIndex(emblaApi.selectedScrollSnap())
-  }
-
-  const handleApi = (api: CarouselApi) => {
-    setEmblaApi(api)
-    api?.on("select", handleSelect)
-  }
-
-  const goToSlide = (index: number) => {
-    if (!emblaApi) return
-    emblaApi.scrollTo(index)
-    setCurrentIndex(index)
-  }
-
+const site_images = site?.images?.flatMap(img => img.images ? [img.images] : []) ?? []
+  // const site_images = site?.images?.map((img)=> img.images)
 
   return (
     <main className="container mx-auto px-4 py-6 pb-24 md:pb-6">
@@ -291,61 +241,7 @@ export default function SiteDetailPage() {
 
         <TabsContent value="gallery" className="space-y-4">
           <main className="container mx-auto px-4 py-12">
-            <div className="grid lg:grid-cols-2 gap-12">
-
-              <div className="space-y-4">
-                <Carousel className="w-full" setApi={handleApi}>
-                  <CarouselContent>
-                    {images.map((img, index) => (
-                      <CarouselItem key={index}>
-                        <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-gray-100">
-                          <ImageWithFallback
-                  src={img}
-                  alt={`Artwork ${index + 1}`}
-
-                  className="object-cover"
-                />
-                        </div>
-                      </CarouselItem>
-                    ))}
-
-                    {/* {images.map((i) => (
-                  <CarouselItem key={i}>
-                    <div className="relative aspect-[4/3]  overflow-hidden rounded-xl bg-gray-100">
-                      <Image
-                        src={`/placeholder.svg?height=400&width=400&text=Product${i}`}
-                        alt={`Product image ${i}`}
-                        fill
-                        objectFit="cover"
-                        className=" object-center object-cover"
-                      />
-                    </div>
-                  </CarouselItem>
-                ))} */}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
-                <div className="grid grid-cols-4 gap-4">
-              {images.map((img, index) => (
-          <div
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`relative aspect-square rounded-lg overflow-hidden cursor-pointer transition-all
-            duration-300 hover:ring-2 hover:ring-black ${
-              currentIndex === index ? "ring-2 ring-black" : ""
-            }`}
-          >
-            <ImageWithFallback
-              src={img}
-              alt={`Thumbnail ${index + 1}`}
-              className="object-cover h-full w-full"
-            />
-          </div>
-        ))}
-                </div>
-              </div>
-            </div>
+            <GalleryCarousel images={site_images}/>
           </main>
         </TabsContent>
 

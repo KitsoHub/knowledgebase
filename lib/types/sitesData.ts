@@ -31,6 +31,14 @@ export interface SiteData {
     access_protocol: string
   },
   uploaded_images: File[],
+  images?:[
+ {
+  id?:number,
+  images?: string,
+  uploaded_at?: string,
+  site?: number
+ }
+  ],
   created_by?: {
     email?: string,
     name?: string,
