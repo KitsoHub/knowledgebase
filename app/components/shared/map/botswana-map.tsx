@@ -91,50 +91,50 @@ export default function BotswanaMap({
                     // const size = 18 + (sensitivity_lvl / 130) * 12
                     const size = 18 + (60 / 130) * 12
 
-                    const siteIcon = L.divIcon({
-                        className: "house-marker",
-                        html: `
-              <div style="
-                width: ${size}px;
-                height: ${size}px;
-                background: ${color};
-                border: 2px solid white;
-                border-radius: 50%;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: ${Math.max(7, size * 0.35)}px;
-                font-weight: 700;
-                color: white;
-                text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
-                cursor: pointer;
-                transition: all 0.3s ease;
-                opacity: ${showLayer ? 1 : 0.3};
-                font-family: system-ui, -apple-system, sans-serif;
-              " onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'">
-                ${size.toFixed(1)}
-              </div>
-            `,
-                        iconSize: [size, size],
-                        iconAnchor: [size / 2, size / 2],
-                    })
+            //         const siteIcon = L.divIcon({
+            //             className: "house-marker",
+            //             html: `
+            //   <div style="
+            //     width: ${size}px;
+            //     height: ${size}px;
+            //     background: ${color};
+            //     border: 2px solid white;
+            //     border-radius: 50%;
+            //     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            //     display: flex;
+            //     align-items: center;
+            //     justify-content: center;
+            //     font-size: ${Math.max(7, size * 0.35)}px;
+            //     font-weight: 700;
+            //     color: white;
+            //     text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+            //     cursor: pointer;
+            //     transition: all 0.3s ease;
+            //     opacity: ${showLayer ? 1 : 0.3};
+            //     font-family: system-ui, -apple-system, sans-serif;
+            //   " onmouseover="this.style.transform='scale(1.15)'" onmouseout="this.style.transform='scale(1)'">
+            //     ${size.toFixed(1)}
+            //   </div>
+            // `,
+            //             iconSize: [size, size],
+            //             iconAnchor: [size / 2, size / 2],
+            //         })
 
                     const lat = Number(site?.latitude ?? 0)
                     const lng = Number(site?.longitude ?? 0)
 
-                    const marker2 = L.marker(latLng(lat, lng), { icon: siteIcon })
-                        .addTo(mapInstanceRef.current)
-                        .bindPopup(`
-              <div style="font-family: system-ui, -apple-system, sans-serif; min-width: 220px;">
-                <h3 style="margin: 0 0 8px 0; font-size: 15px; font-weight: 600; color: #1f2937;">${site.site_name}</h3>
-                <div style="margin: 4px 0; font-size: 12px; color: #6b7280;"><strong>Type:</strong> ${site.category_display}</div>
-                <div style="margin: 4px 0; font-size: 12px; color: #6b7280;"><strong>Quartier:</strong> ${site.latitude}</div>
-              </div>
-            `)
-                        .on("click", () => {
-                            onItemSelect(site)
-                        })
+            //         const marker2 = L.marker(latLng(lat, lng), { icon: siteIcon })
+            //             .addTo(mapInstanceRef.current)
+            //             .bindPopup(`
+            //   <div style="font-family: system-ui, -apple-system, sans-serif; min-width: 220px;">
+            //     <h3 style="margin: 0 0 8px 0; font-size: 15px; font-weight: 600; color: #1f2937;">${site.site_name}</h3>
+            //     <div style="margin: 4px 0; font-size: 12px; color: #6b7280;"><strong>Type:</strong> ${site.category_display}</div>
+            //     <div style="margin: 4px 0; font-size: 12px; color: #6b7280;"><strong>Quartier:</strong> ${site.latitude}</div>
+            //   </div>
+            // `)
+            //             .on("click", () => {
+            //                 onItemSelect(site)
+            //             })
 
                     const icon = L.divIcon({
                         className: "heritage-marker",

@@ -73,6 +73,11 @@ export interface SiteCreationState {
   resetForm: () => void
 }
 
+export interface SiteViewState {
+  currentSite: Partial<SiteData> | null
+  setCurrentSite: (siteData: Partial<SiteData> | null )=>void
+}
+
 export type SiteVoteType = {
   siteId?:number,
   vote: SiteVote,

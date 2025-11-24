@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { SiteCreationState, SiteData } from '../types/sitesData'
+import { SiteCreationState, SiteData, SiteViewState } from '../types/sitesData'
 
 export const useSiteCreationStore = create<SiteCreationState>()(
  persist(
@@ -42,7 +42,13 @@ export const useSiteCreationStore = create<SiteCreationState>()(
     }),
     { name: 'site-store-a00001a' }
 )
+)
 
-
-
+export const useSiteStore = create<SiteViewState>()(
+  persist(
+    (set,get)=>({
+      currentSite: null,
+      setCurrentSite: siteData => set({currentSite: siteData })
+    }),{name: 'site-store-view-a000001a'}
+  )
 )
