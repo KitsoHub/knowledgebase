@@ -49,3 +49,9 @@ export type TechnologyArea =
 
 // Priority levels
 export type PriorityLevel = 'Low' | 'Medium' | 'High' | 'Urgent'
+
+
+export interface ExtendedFile extends File {
+  preview?: string
+  progress?: number
+}

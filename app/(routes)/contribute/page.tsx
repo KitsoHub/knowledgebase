@@ -22,7 +22,7 @@ import {
 import { Textarea } from '@/app/components/ui/textarea'
 import HomeNavigation from '@/app/utils/nav/homeNavigation'
 import { createNewSubmit } from '@/lib/api'
-import { CategoryType } from '@/lib/types'
+import { CategoryType, ExtendedFile } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import { isDragActive } from 'framer-motion'
 import {
@@ -41,10 +41,6 @@ import Swal from 'sweetalert2'
 // import prisma from '@/lib/prisma'
 // import withReactContent from "sweetalert2-react-content";
 
-interface ExtendedFile extends File {
-  preview?: string
-  progress?: number
-}
 export default function ContributionPage() {
   //  const {toast} = useToast();
   const [isUploading, setIsUploading] = useState(false)
@@ -428,6 +424,9 @@ export default function ContributionPage() {
                                 variant="ghost"
                                 size="icon"
                                 className="ml-2 text-muted-foreground hover:text-destructive"
+                                onClick={()=>{
+                                  setFiles(files.filter((f) => f !== file))
+                                }}
                               >
                                 <Trash2 className="h-4 w-4" />
                                 <span className="sr-only">Remove file</span>
@@ -467,7 +466,6 @@ export default function ContributionPage() {
                 </CardContent>
 
                 <CardFooter className="flex justify-between">
-                  {/* <Button variant="outline" type="button">Save Draft</Button> */}
                   <Button type="submit">Submit Contribution</Button>
                 </CardFooter>
               </form>
@@ -475,7 +473,7 @@ export default function ContributionPage() {
           </Card>
         </div>
       </main>
-      \\\\\\\
+
     </div>
   )
 }

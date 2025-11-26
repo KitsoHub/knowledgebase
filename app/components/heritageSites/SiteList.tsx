@@ -36,81 +36,40 @@ import {
   Globe,
   Shield,
 } from 'lucide-react'
+import { SiteData } from '@/lib/types/sitesData'
 
-interface CulturalSite {
-  id: string
-  name: string
-  latitude: number
-  longitude: number
-  description: string
-  category: 'heritage' | 'language' | 'botanical' | 'tribal' | 'migration'
-  language?: string
-  tribe?: string
-  images: string[]
-  videos: string[]
-  audio: string[]
-  metadata: {
-    unesco: boolean
-    undp: boolean
-    unicef: boolean
-    localContext: string
-    indigenousSystem: string
-    rights: string
-    ipMetadata: string
-    sensitivityLevel: 'public' | 'restricted' | 'closed'
-    accessProtocol: string
-  }
-  populationDensity?: number
-  migrationRoute?: string
-  dateCreated: string
-  lastUpdated: string
-}
+
 
 interface SiteListProps {
-  sites: CulturalSite[]
-  onUpdateSite: (id: string, updates: Partial<CulturalSite>) => void
-  onDeleteSite: (id: string) => void
+  sites: SiteData[]
 }
 
-export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
+export function SiteList({ sites}: SiteListProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [categoryFilter, setCategoryFilter] = useState('all')
   const [sensitivityFilter, setSensitivityFilter] = useState('all')
   const [sortBy, setSortBy] = useState('name')
-  const [selectedSite, setSelectedSite] = useState<CulturalSite | null>(null)
+  const [selectedSite, setSelectedSite] = useState<SiteData | null>(null)
 
   const filteredSites = sites
     .filter(site => {
       const matchesSearch =
-        site.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        site.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        site.tribe?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        site.language?.toLowerCase().includes(searchQuery.toLowerCase())
+        site.site_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        site.description.toLowerCase().includes(searchQuery.toLowerCase())
 
-      const matchesCategory =
-        categoryFilter === 'all' || site.category === categoryFilter
+      const matchesCategory = categoryFilter === 'all' || site.category === categoryFilter
       const matchesSensitivity =
-        sensitivityFilter === 'all' ||
-        site.metadata.sensitivityLevel === sensitivityFilter
+        sensitivityFilter === 'all' || site.metadata?.sensitivity_level === sensitivityFilter
+
 
       return matchesSearch && matchesCategory && matchesSensitivity
     })
     .sort((a, b) => {
       switch (sortBy) {
         case 'name':
-          return a.name.localeCompare(b.name)
+          return a.site_name.localeCompare(b.site_name)
         case 'category':
           return a.category.localeCompare(b.category)
-        case 'updated':
-          return (
-            new Date(b.lastUpdated).getTime() -
-            new Date(a.lastUpdated).getTime()
-          )
-        case 'created':
-          return (
-            new Date(b.dateCreated).getTime() -
-            new Date(a.dateCreated).getTime()
-          )
         default:
           return 0
       }
@@ -146,22 +105,22 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
     }
   }
 
-  const toggleSensitivityLevel = (site: CulturalSite) => {
+  const toggleSensitivityLevel = (site: SiteData) => {
     const levels: ('public' | 'restricted' | 'closed')[] = [
       'public',
       'restricted',
       'closed',
     ]
-    const currentIndex = levels.indexOf(site.metadata.sensitivityLevel)
+    const currentIndex = levels.indexOf(site.metadata?.sensitivity_level)
     const nextIndex = (currentIndex + 1) % levels.length
     const newLevel = levels[nextIndex]
 
-    onUpdateSite(site.id, {
-      metadata: {
-        ...site.metadata,
-        sensitivityLevel: newLevel,
-      },
-    })
+    // onUpdateSite(site.id, {
+    //   metadata: {
+    //     ...site.metadata,
+    //     sensitivityLevel: newLevel,
+    //   },
+    // })
   }
 
   return (
@@ -230,10 +189,11 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
             <p className="text-sm text-gray-600">
               Showing {filteredSites.length} of {sites.length} sites
             </p>
-            <div className="flex gap-2">
+     {sensitivityFilter && (
+             <div className="flex gap-2">
               <Badge variant="outline">
                 {
-                  sites.filter(s => s.metadata.sensitivityLevel === 'public')
+                  sites.filter(s => s.metadata?.sensitivity_level === 'public')
                     .length
                 }{' '}
                 Public
@@ -241,19 +201,20 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
               <Badge variant="outline">
                 {
                   sites.filter(
-                    s => s.metadata.sensitivityLevel === 'restricted'
+                    s => s.metadata?.sensitivity_level === 'restricted'
                   ).length
                 }{' '}
                 Restricted
               </Badge>
               <Badge variant="outline">
                 {
-                  sites.filter(s => s.metadata.sensitivityLevel === 'closed')
+                  sites.filter(s => s.metadata?.sensitivity_level === 'closed')
                     .length
                 }{' '}
                 Closed
               </Badge>
             </div>
+     )}
           </div>
         </CardContent>
       </Card>
@@ -266,15 +227,15 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="font-semibold text-lg">{site.name}</h3>
+                    <h3 className="font-semibold text-lg">{site.site_name}</h3>
                     <Badge className={getCategoryColor(site.category)}>
                       {site.category}
                     </Badge>
                     <button
                       onClick={() => toggleSensitivityLevel(site)}
-                      className={`px-2 py-1 rounded-full text-xs font-medium cursor-pointer hover:opacity-80 ${getSensitivityColor(site.metadata.sensitivityLevel)}`}
+                      className={`px-2 py-1 rounded-full text-xs font-medium cursor-pointer hover:opacity-80 ${getSensitivityColor(site.metadata?.sensitivity_level)}`}
                     >
-                      {site.metadata.sensitivityLevel}
+                      {site.metadata?.sensitivity_level}
                     </button>
                   </div>
 
@@ -286,54 +247,30 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                     <div className="flex items-center gap-1">
                       <MapPin className="h-4 w-4" />
                       <span>
-                        {site.latitude.toFixed(4)}, {site.longitude.toFixed(4)}
+                        {site.latitude}, {site.longitude}
                       </span>
                     </div>
 
-                    {site.language && (
-                      <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        <span>{site.language}</span>
-                      </div>
-                    )}
 
-                    {site.tribe && (
-                      <div className="flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        <span>{site.tribe}</span>
-                      </div>
-                    )}
-
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      <span>Updated {site.lastUpdated}</span>
-                    </div>
                   </div>
 
                   <div className="flex items-center gap-2 mt-3">
-                    {site.metadata.unesco && (
+                    {site.metadata?.unesco && (
                       <Badge className="text-xs bg-blue-50 text-blue-700">
                         UNESCO
                       </Badge>
                     )}
-                    {site.metadata.undp && (
+                    {site.metadata?.undp && (
                       <Badge className="text-xs bg-green-50 text-green-700">
                         UNDP
                       </Badge>
                     )}
-                    {site.metadata.unicef && (
+                    {site.metadata?.unicef && (
                       <Badge className="text-xs bg-purple-50 text-purple-700">
                         UNICEF
                       </Badge>
                     )}
 
-                    <div className="flex items-center gap-1 text-xs text-gray-500">
-                      <span>{site.images.length} images</span>
-                      <span>•</span>
-                      <span>{site.videos.length} videos</span>
-                      <span>•</span>
-                      <span>{site.audio.length} audio</span>
-                    </div>
                   </div>
                 </div>
 
@@ -371,14 +308,14 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                       <AlertDialogHeader>
                         <AlertDialogTitle>Delete Site</AlertDialogTitle>
                         <AlertDialogDescription>
-                          Are you sure you want to delete "{site.name}"? This
+                          Are you sure you want to delete "{site.site_name}"? This
                           action cannot be undone.
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
-                          onClick={() => onDeleteSite(site.id)}
+                          onClick={() => {}}
                           className="bg-red-600 hover:bg-red-700"
                         >
                           Delete
@@ -421,7 +358,7 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="flex items-center gap-3">
-                    {selectedSite.name}
+                    {selectedSite.site_name}
                     <Badge className={getCategoryColor(selectedSite.category)}>
                       {selectedSite.category}
                     </Badge>
@@ -447,63 +384,48 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                   Latitude: {selectedSite.latitude}, Longitude:{' '}
                   {selectedSite.longitude}
                 </p>
-                {selectedSite.populationDensity && (
+                {selectedSite.population_density && (
                   <p className="text-sm text-gray-600">
-                    Population Density: {selectedSite.populationDensity}/km²
+                    Population Density: {selectedSite.population_density}/km²
                   </p>
                 )}
               </div>
 
               {/* Cultural Information */}
-              {(selectedSite.language || selectedSite.tribe) && (
-                <div>
-                  <h4 className="font-medium mb-2">Cultural Information</h4>
-                  <div className="space-y-1 text-sm text-gray-600">
-                    {selectedSite.language && (
-                      <p>Language: {selectedSite.language}</p>
-                    )}
-                    {selectedSite.tribe && (
-                      <p>Tribal Group: {selectedSite.tribe}</p>
-                    )}
-                    {selectedSite.migrationRoute && (
-                      <p>Migration Route: {selectedSite.migrationRoute}</p>
-                    )}
-                  </div>
-                </div>
-              )}
+
 
               {/* Metadata */}
               <div>
                 <h4 className="font-medium mb-2">Metadata & Standards</h4>
                 <div className="space-y-3">
                   <div className="flex flex-wrap gap-2">
-                    {selectedSite.metadata.unesco && (
+                    {selectedSite.metadata?.unesco && (
                       <Badge className="bg-blue-50 text-blue-700">UNESCO</Badge>
                     )}
-                    {selectedSite.metadata.undp && (
+                    {selectedSite.metadata?.undp && (
                       <Badge className="bg-green-50 text-green-700">UNDP</Badge>
                     )}
-                    {selectedSite.metadata.unicef && (
+                    {selectedSite.metadata?.unicef && (
                       <Badge className="bg-purple-50 text-purple-700">
                         UNICEF
                       </Badge>
                     )}
                   </div>
 
-                  {selectedSite.metadata.localContext && (
+                  {selectedSite.metadata.local_context && (
                     <div>
                       <p className="text-sm font-medium">Local Context:</p>
                       <p className="text-sm text-gray-600">
-                        {selectedSite.metadata.localContext}
+                        {selectedSite.metadata.local_context}
                       </p>
                     </div>
                   )}
 
-                  {selectedSite.metadata.indigenousSystem && (
+                  {selectedSite.metadata.indigenous_system && (
                     <div>
                       <p className="text-sm font-medium">Indigenous System:</p>
                       <p className="text-sm text-gray-600">
-                        {selectedSite.metadata.indigenousSystem}
+                        {selectedSite.metadata.indigenous_system}
                       </p>
                     </div>
                   )}
@@ -515,9 +437,9 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
                     <p className="text-sm font-medium">
                       Access Level:
                       <Badge
-                        className={`ml-2 ${getSensitivityColor(selectedSite.metadata.sensitivityLevel)}`}
+                        className={`ml-2 ${getSensitivityColor(selectedSite.metadata?.sensitivity_level)}`}
                       >
-                        {selectedSite.metadata.sensitivityLevel}
+                        {selectedSite.metadata?.sensitivity_level}
                       </Badge>
                     </p>
                   </div>
@@ -525,71 +447,14 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
               </div>
 
               {/* Media Assets */}
-              <div>
-                <h4 className="font-medium mb-2">Media Assets</h4>
-                <div className="grid grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <p className="font-medium">
-                      Images ({selectedSite.images.length})
-                    </p>
-                    <div className="space-y-1 text-gray-600">
-                      {selectedSite.images.slice(0, 3).map((image, index) => (
-                        <p key={index} className="truncate">
-                          {image}
-                        </p>
-                      ))}
-                      {selectedSite.images.length > 3 && (
-                        <p className="text-xs">
-                          ...and {selectedSite.images.length - 3} more
-                        </p>
-                      )}
-                    </div>
-                  </div>
 
-                  <div>
-                    <p className="font-medium">
-                      Videos ({selectedSite.videos.length})
-                    </p>
-                    <div className="space-y-1 text-gray-600">
-                      {selectedSite.videos.slice(0, 3).map((video, index) => (
-                        <p key={index} className="truncate">
-                          {video}
-                        </p>
-                      ))}
-                      {selectedSite.videos.length > 3 && (
-                        <p className="text-xs">
-                          ...and {selectedSite.videos.length - 3} more
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="font-medium">
-                      Audio ({selectedSite.audio.length})
-                    </p>
-                    <div className="space-y-1 text-gray-600">
-                      {selectedSite.audio.slice(0, 3).map((audio, index) => (
-                        <p key={index} className="truncate">
-                          {audio}
-                        </p>
-                      ))}
-                      {selectedSite.audio.length > 3 && (
-                        <p className="text-xs">
-                          ...and {selectedSite.audio.length - 3} more
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
 
               {/* Access Protocol */}
-              {selectedSite.metadata.accessProtocol && (
+              {selectedSite.metadata.access_protocol && (
                 <div>
                   <h4 className="font-medium mb-2">Access Protocol</h4>
                   <p className="text-sm text-gray-600">
-                    {selectedSite.metadata.accessProtocol}
+                    {selectedSite.metadata.access_protocol}
                   </p>
                 </div>
               )}
@@ -600,3 +465,5 @@ export function SiteList({ sites, onUpdateSite, onDeleteSite }: SiteListProps) {
     </div>
   )
 }
+
+export default SiteList;

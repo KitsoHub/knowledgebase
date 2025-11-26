@@ -7,6 +7,9 @@ import { Main } from 'next/document'
 import MainFooter from './components/layout/footer'
 import Navigation from './utils/nav/navigation'
 const inter = Inter({ subsets: ['latin'] })
+import "leaflet/dist/leaflet.css"
+
+
 
 export const metadata: Metadata = {
   title: 'Create Next App',

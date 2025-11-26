@@ -1,3 +1,4 @@
+
 import {
   CheckCheckIcon,
   FileAudio,
@@ -47,6 +48,20 @@ export enum CollectionGovernanceSteps {
   CURATION = 'CURATION',
   PROTOCOLS = 'PROTOCOLS',
   REVIEW = 'REVIEW',
+}
+
+export enum SiteSensitivityLevel {
+  PUBLIC = 'PUBLIC',
+  RESTRICTED = 'RESTRICTED',
+  CLOSED = 'CLOSED',
+}
+
+export enum SiteCategory {
+  HERITAGE = 'HERITAGE',
+  LANGUAGE = 'LANGUAGE',
+  BOTANICAL = 'BOTANICAL',
+  TRIBAL = 'TRIBAL',
+  MIGRATION = 'MIGRATION',
 }
 
 export const steps = [
