@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Shuffle } from "lucide-react"
-
+import Swal from 'sweetalert2'
 interface MatchingPair {
   id: string
   term: string
@@ -22,6 +22,17 @@ export function MatchingExercise({ pairs, onComplete }: MatchingExerciseProps) {
   const [selectedDefinition, setSelectedDefinition] = useState<string | null>(null)
   const [matches, setMatches] = useState<string[]>([])
   const [isComplete, setIsComplete] = useState(false)
+
+  const showSwal = () => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Exercise Complete',
+        text: 'Great job! You have matched all the pairs correctly.',
+        showConfirmButton: false,
+        timer: 2800,
+      })
+    }
 
   useEffect(() => {
     const termsWithSelected = pairs.map((pair) => ({ ...pair, selected: false }))
@@ -109,6 +120,7 @@ export function MatchingExercise({ pairs, onComplete }: MatchingExerciseProps) {
   useEffect(() => {
     if (matches.length === pairs.length && !isComplete) {
       setIsComplete(true)
+      showSwal()
       onComplete(matches.length)
     }
   }, [matches, pairs, isComplete, onComplete])
@@ -184,11 +196,6 @@ export function MatchingExercise({ pairs, onComplete }: MatchingExerciseProps) {
         </div>
       </div>
 
-      {isComplete && (
-        <div className="p-4 rounded-lg bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300">
-          Great job! You have matched all the pairs correctly.
-        </div>
-      )}
     </div>
   )
 }

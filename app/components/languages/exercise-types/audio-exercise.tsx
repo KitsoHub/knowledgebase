@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/app/components/ui/button"
 import { Mic, MicOff, Play, Pause, RotateCcw } from "lucide-react"
 import { Slider } from "@/app/components/ui/slider"
-
+import Swal from 'sweetalert2'
 interface AudioExerciseProps {
   audioSrc: string
   transcript: string
@@ -22,7 +22,16 @@ export function AudioExercise({ audioSrc, transcript, translation, onComplete }:
 
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const recognitionRef = useRef<any>(null)
-
+  const showSwal = () => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Exercise Complete',
+        text: 'Great job! You have matched all the pairs correctly.',
+        showConfirmButton: false,
+        timer: 2800,
+      })
+    }
   // Initialize audio
   useEffect(() => {
     audioRef.current = new Audio(audioSrc)
@@ -127,6 +136,7 @@ export function AudioExercise({ audioSrc, transcript, translation, onComplete }:
       recognitionRef.current.stop()
       setIsRecording(false)
       setHasCompleted(true)
+      showSwal()
       onComplete()
     }
   }
