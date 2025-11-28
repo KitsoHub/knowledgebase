@@ -7,7 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ta
 import MobileNav from '@/app/components/shared/langauges/mobile-nav';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/app/components/ui/card'
 import { AudioExercise } from '@/app/components/languages/exercise-types/audio-exercise'
-import MatchingExercise from '@/app/components/languages/exercise-types/matching-exercise'
+import { MatchingExercise } from '@/app/components/languages/exercise-types/matching-exercise'
+
 
 
 

@@ -1,136 +1,138 @@
-'use client';
+"use client"
 
-import React, { useEffect, useState } from 'react';
-import { Button } from '../../ui/button';
-import { Shuffle } from 'lucide-react';
-import { de } from 'zod/v4/locales';
+import { useState, useEffect } from "react"
+import { Button } from "@/app/components/ui/button"
+import { Shuffle } from "lucide-react"
 
 interface MatchingPair {
-  id: string;
-  term: string;
-  definition: string;
+  id: string
+  term: string
+  definition: string
 }
 
 interface MatchingExerciseProps {
-  pairs: MatchingPair[];
-  onComplete: (score: number) => void;
+  pairs: MatchingPair[]
+  onComplete: (score: number) => void
 }
 
-export default function MatchingExercise({
-  pairs,
-  onComplete,
-}: MatchingExerciseProps) {
-  const [isComplete, setIsComplete] = useState(false);
-  const [terms, setTerms] = useState<(MatchingPair & { selected: boolean })[]>(
-    []
-  );
-  const [definitions, setDefinitions] = useState<
-    (MatchingPair & { selected: boolean })[]
-  >([]);
-  const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
-  const [selectedDefinition, setSelectedDefinition] = useState<string | null>(
-    null
-  );
-  const [matches, setMatches] = useState<string[]>([]);
+export function MatchingExercise({ pairs, onComplete }: MatchingExerciseProps) {
+  const [terms, setTerms] = useState<(MatchingPair & { selected: boolean })[]>([])
+  const [definitions, setDefinitions] = useState<(MatchingPair & { selected: boolean })[]>([])
+  const [selectedTerm, setSelectedTerm] = useState<string | null>(null)
+  const [selectedDefinition, setSelectedDefinition] = useState<string | null>(null)
+  const [matches, setMatches] = useState<string[]>([])
+  const [isComplete, setIsComplete] = useState(false)
 
   useEffect(() => {
-    const termsWithSelected = pairs.map(pair => ({ ...pair, selected: false }));
-    const denintionsWithSelected = [...termsWithSelected];
+    const termsWithSelected = pairs.map((pair) => ({ ...pair, selected: false }))
+    const definitionsWithSelected = [...termsWithSelected]
 
-    for (let i = denintionsWithSelected.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [denintionsWithSelected[i], denintionsWithSelected[j]] = [
-        denintionsWithSelected[j],
-        denintionsWithSelected[i],
-      ];
+    for (let i = definitionsWithSelected.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[definitionsWithSelected[i], definitionsWithSelected[j]] = [
+        definitionsWithSelected[j],
+        definitionsWithSelected[i],
+      ]
     }
 
-    setTerms(termsWithSelected);
-    setDefinitions(denintionsWithSelected);
-  }, [pairs]);
-
-
-  const handleTermClick = (termId: string) => {
-//    check if item in matches else set the term then check if condition is set then update matches
-    if(matches.includes(termId) || isComplete) return
-
-    setSelectedTerm(termId)
-    setTerms(terms.map((term)=>({...term, selected:term.id === termId}))
-)
-
-    if (selectedDefinition) {
-        const matchingTerm = terms.find((t)=> t.id === termId)
-        const matchingDef = definitions.find((d)=> d.id === selectedDefinition)
-
-        if (matchingTerm && matchingDef && matchingTerm.id === matchingDef.id) {
-            setMatches([...matches, termId])
-            setSelectedTerm(null)
-            setSelectedDefinition(null)
-
-        }else{
-            setTimeout(()=>{
-                setSelectedTerm(null)
-                setSelectedDefinition(null)
-                setTerms(terms.map((t)=>({...t, selected: false})))
-                setDefinitions(definitions.map((d)=>({...d, selected:false})))
-            },1000)
-        }
-    }
-  };
-
-  const handleDefinitionClick = (definitionId: string) => {
-   if (matches.includes(definitionId) || isComplete) return
-
-   setSelectedDefinition(definitionId)
-   setDefinitions(definitions.map((def)=>({...def, selected: def.id === definitionId})))
-
-
-   if(selectedTerm){
-    const matchingTerm = terms.find((t)=>t.id === selectedTerm)
-    const matchingDef = definitions.find((d)=>d.id === selectedDefinition)
-
-    if (matchingTerm && matchingDef &&matchingTerm.id === matchingDef.id) {
-      setMatches([...matches, definitionId])
-      // TODO: remove the matching pair from display but still keep the score, on reset should display every pair
-      setSelectedTerm(null)
-      setSelectedDefinition(null)
-
-    }  else{
-      setTimeout(() => {
-        setSelectedTerm(null)
-        setSelectedDefinition(null)
-        setTerms(terms.map((t)=>({...t, selected:false})))
-        setDefinitions(definitions.map((d)=>({...d, selected:false})))
-
-      }, 1000);
-    }
-  }
-  };
-
-  useEffect(()=>{
-    if (matches.length === pairs.length && !isComplete) {
-        setIsComplete(true)
-        onComplete(matches.length)
-    }
-  },[matches, pairs, isComplete, onComplete])
-
-  const resetExercise = () => {
-    const termsWithSelected = pairs.map((pair)=>({...pair, selected: false}))
-    const definitionsWithSelected =[...termsWithSelected]
-
-    for(let i = definitionsWithSelected.length -1; i > 0; i--){
-        const j = Math.floor(Math.random() * (i+1));
-        [definitionsWithSelected[i], definitionsWithSelected[j]] = [definitionsWithSelected[j], definitionsWithSelected[i]]
-    }
     setTerms(termsWithSelected)
     setDefinitions(definitionsWithSelected)
-    setSelectedTerm(null);
-    setSelectedDefinition(null);
+  }, [pairs])
+
+  const handleTermClick = (id: string) => {
+    if (matches.includes(id) || isComplete) return
+
+    setSelectedTerm(id)
+    setTerms(
+      terms.map((term) => ({
+        ...term,
+        selected: term.id === id,
+      })),
+    )
+
+    if (selectedDefinition) {
+      const matchingTerm = terms.find((term) => term.id === id)
+      const matchingDef = definitions.find((def) => def.id === selectedDefinition)
+
+      if (matchingTerm && matchingDef && matchingTerm.id === matchingDef.id) {
+
+        setMatches([...matches, id])
+        setSelectedTerm(null)
+        setSelectedDefinition(null)
+      } else {
+
+        setTimeout(() => {
+          setSelectedTerm(null)
+          setSelectedDefinition(null)
+          setTerms(terms.map((term) => ({ ...term, selected: false })))
+          setDefinitions(definitions.map((def) => ({ ...def, selected: false })))
+        }, 1000)
+      }
+    }
+  }
+
+  const handleDefinitionClick = (id: string) => {
+    if (matches.includes(id) || isComplete) return
+
+    setSelectedDefinition(id)
+    setDefinitions(
+      definitions.map((def) => ({
+        ...def,
+        selected: def.id === id,
+      })),
+    )
+
+
+    if (selectedTerm) {
+      const matchingTerm = terms.find((term) => term.id === selectedTerm)
+      const matchingDef = definitions.find((def) => def.id === id)
+
+      if (matchingTerm && matchingDef && matchingTerm.id === matchingDef.id) {
+
+        setMatches([...matches, id])
+        // TODO: remove from display once matched
+        setSelectedTerm(null)
+        setSelectedDefinition(null)
+      } else {
+
+        setTimeout(() => {
+          setSelectedTerm(null)
+          setSelectedDefinition(null)
+          setTerms(terms.map((term) => ({ ...term, selected: false })))
+          setDefinitions(definitions.map((def) => ({ ...def, selected: false })))
+        }, 1000)
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    if (matches.length === pairs.length && !isComplete) {
+      setIsComplete(true)
+      onComplete(matches.length)
+    }
+  }, [matches, pairs, isComplete, onComplete])
+
+  const resetExercise = () => {
+    const termsWithSelected = pairs.map((pair) => ({ ...pair, selected: false }))
+    const definitionsWithSelected = [...termsWithSelected]
+
+
+    for (let i = definitionsWithSelected.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[definitionsWithSelected[i], definitionsWithSelected[j]] = [
+        definitionsWithSelected[j],
+        definitionsWithSelected[i],
+      ]
+    }
+
+    setTerms(termsWithSelected)
+    setDefinitions(definitionsWithSelected)
+    setSelectedTerm(null)
+    setSelectedDefinition(null)
     setMatches([])
-    setIsComplete(false);
-  };
-
-
+    setIsComplete(false)
+  }
 
   return (
     <div className="space-y-6">
@@ -184,9 +186,9 @@ export default function MatchingExercise({
 
       {isComplete && (
         <div className="p-4 rounded-lg bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300">
-          Great job! You've matched all the pairs correctly.
+          Great job! You have matched all the pairs correctly.
         </div>
       )}
     </div>
-  );
+  )
 }
