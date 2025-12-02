@@ -58,7 +58,7 @@ export function MasterKeyModal({ isOpen, onClose, onSubmit, apiaAddress }: ApiaK
 
           <div className="space-y-2">
             <div className="p-3 bg-gray-50 dark:bg-gray-800 rounded-md">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Connected Account</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Connecting to workspace ID:</p>
               <p className="text-sm font-mono text-gray-900 dark:text-gray-200">{apiaAddress}</p>
             </div>
           </div>

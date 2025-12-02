@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { mockPlants } from '@/app/utils/mock/botanical'
+import { mockPlants, mockPlants2 } from '@/app/utils/mock/botanical'
 import { MedicinalPlant } from '@/lib/types/botanical'
 import PlantCard from './plant-card'
 import { Button } from '../ui/button'
@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 
 export default function BotanicalBrowse() {
   const [botanicalData, setBotanicalData] =
-    useState<MedicinalPlant[]>(mockPlants)
+    useState<MedicinalPlant[]>(mockPlants2)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedFamily, setSelectedFamily] = useState('All Families')
   const [selectedOrigin, setSelectedOrigin] = useState('All Origins')

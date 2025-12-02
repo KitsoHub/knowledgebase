@@ -59,14 +59,18 @@ export default function PlantCard({ plant, onCardClick }: PlantCardProps) {
         <CardContent className="p-4">
           <div className="space-y-3">
             <div>
-              <h3 className="text-lg font-semibold">{plant.name}</h3>
+              <h3 className="text-lg font-semibold">{plant.localNames && plant.localNames[0]}</h3>
               <p className="text-sm text-muted-foreground italic">
                 {plant.scientificName}
               </p>
               <p className="text-sm text-muted-foreground italic">
                 {plant.localNames &&
-                  `Also known as: ${plant.localNames.join(', ')}`}
+                  `Name: ${plant.name}`}
               </p>
+              {/* <p className="text-sm text-muted-foreground italic">
+                {plant.localNames &&
+                  `Also known as: ${plant.localNames.join(', ')}`}
+              </p> */}
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <span>🌍</span>
                 <span>{plant.origin}</span>

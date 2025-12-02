@@ -98,6 +98,18 @@ export default function PatentAnalysisResults({inventionText, analysis, uploaded
               </CardContent>
             </Card>
 
+          <Card className={`border-2 ${getRiskColor(analysis.riskLevel)}`}>
+              <CardContent className="pt-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium">Patent Worthy</p>
+                    <p className="text-3xl mt-1">{analysis.noveltyScore > 70 ? "YES" : "NO"}%</p>
+                  </div>
+                  <TrendingUp className="w-8 h-8 opacity-50" />
+                </div>
+              </CardContent>
+            </Card>
+
             <Card className={`border-2 ${getRiskColor(analysis.riskLevel)}`}>
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
@@ -109,7 +121,7 @@ export default function PatentAnalysisResults({inventionText, analysis, uploaded
                 </div>
               </CardContent>
             </Card>
-
+{/*
             <Card>
               <CardContent className="pt-6">
                 <div className="flex items-center justify-between">
@@ -120,7 +132,7 @@ export default function PatentAnalysisResults({inventionText, analysis, uploaded
                   <FileCheck className="w-8 h-8 opacity-50 text-primary" />
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
 
           {/* Tabbed Content */}
@@ -147,6 +159,7 @@ export default function PatentAnalysisResults({inventionText, analysis, uploaded
                 Insights
               </TabsTrigger>
               <TabsTrigger value="export">
+
                 <Code className="w-4 h-4 mr-2" />
                 Export
               </TabsTrigger>

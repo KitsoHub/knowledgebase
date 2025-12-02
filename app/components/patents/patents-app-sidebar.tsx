@@ -145,6 +145,19 @@ export function PatentsAppSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === '/patents/apia'}
+                  tooltip="APIA"
+                >
+                  <Link href="/patents/apia">
+                    <ShieldBanIcon />
+                    <span>APIA</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
               {/* WorkSpace parent with toggler */}
               <SidebarMenuItem>
                 <SidebarMenuButton

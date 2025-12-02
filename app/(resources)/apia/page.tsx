@@ -63,7 +63,7 @@ export default function LandingPage() {
     // TODO: verify the masterKey with drf token
     if (masterKey === "admin123") {
     //   router.push("/apia/admin/dashboard")
-        router.push("/apia/admin")
+        router.push("/patents/apia")
     } else {
 
       showSwal()

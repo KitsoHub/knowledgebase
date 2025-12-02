@@ -162,9 +162,9 @@ const Navigation = memo(() => {
                       description="Medicinal plants, herbs & traditional remedies"
                     />
                     <MenuItemCard
-                      href="#"
-                      title="History & Culture"
-                      description="Dynamics of history told by people "
+                      href="/apia"
+                      title="Patents"
+                      description="Automated Patents Identification Authority "
                     />
                   </div>
                 </NavigationMenuContent>

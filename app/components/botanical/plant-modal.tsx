@@ -27,7 +27,7 @@ export const PlantModal: React.FC<PlantModalProps> = ({
         <DialogHeader className="pb-4 px-6 pt-6 flex-shrink-0">
           <DialogTitle className="flex items-start gap-4">
             <div className="flex-1">
-              <h2 className="text-2xl">{plant.name}</h2>
+              <h2 className="text-2xl">{plant.localNames && plant.localNames[0]}</h2>
               <p className="text-lg text-muted-foreground italic">
                 {plant.scientificName}
               </p>
@@ -163,10 +163,10 @@ export const PlantModal: React.FC<PlantModalProps> = ({
 
                       <div>
                         <h4 className="font-medium mb-2 text-destructive">
-                          Contraindications
+                          Contradictions
                         </h4>
                         <ul className="list-disc list-inside space-y-1 text-sm text-destructive">
-                          {plant.modernMedicine.contraindications.map(
+                          {plant.modernMedicine.contradictions.map(
                             (contraindication, index) => (
                               <li key={index}>{contraindication}</li>
                             )
