@@ -1,16 +1,16 @@
-'use client'
-
-import {
-  mockApplications,
-  PatentApplication,
-} from '@/app/utils/mock/patent-data'
+// 'use client'
 
 import { useState } from 'react'
+
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card'
 import { CheckCircle, SearchIcon, Upload } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import NoApplicationSelected from './verification/NoApplicationSelected'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs'
+import {
+  mockApplications,
+  PatentApplication,
+} from '@/app/utils/mock/patent-data'
 import SearchResults from './verification/SearchResults'
 import VerificationTools from './verification/VerificationTools'
 import ApplicationDetails from './verification/ApplicationDetails'

@@ -12,6 +12,9 @@ const config: Config = {
     extend: {
       animation: {
         blob: 'blob 7s infinite',
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-glow": "pulse-glow 2s infinite",
       },
       keyframes: {
         blob: {
@@ -27,6 +30,18 @@ const config: Config = {
           '100%': {
             transform: 'tranlate(0px, 0px) scale(1)',
           },
+        },
+        "accordion-down": {
+          from: { height: '0' },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: '0' },
+        },
+        "pulse-glow": {
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(124, 58, 237, 0.4)" },
+          "50%": { boxShadow: "0 0 0 10px rgba(124, 58, 237, 0)" },
         },
       },
       colors: {
@@ -70,11 +85,23 @@ const config: Config = {
           '4': 'hsl(var(--chart-4))',
           '5': 'hsl(var(--chart-5))',
         },
+        crypto: {
+          blue: "#1E40AF",
+          green: "#059669",
+          purple: "#7C3AED",
+          black: "#111827",
+          darkBlue: "#0F172A",
+          lightBlue: "#3B82F6",
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      backgroundImage: {
+        "crypto-gradient": "linear-gradient(to right, #1E40AF, #7C3AED)",
+        "dark-gradient": "linear-gradient(to right, #0F172A, #1E293B)",
       },
     },
   },

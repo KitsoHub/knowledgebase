@@ -126,7 +126,7 @@ export const generateApplications = (count: number): PatentApplication[] => {
   for (let i = 0; i < count; i++) {
     const stage = stages[Math.floor(Math.random() * (stages.length - 3))]
     applications.push({
-      id: `PAT-${10000 + 1}`,
+      id: `PAT-${100 + i}`,
       title: `Innovation in ${technologyAreas[Math.floor(Math.random() * technologyAreas.length)]} Technologies`,
       inventor: `Inventor ${i + 1}`,
       filingDate: getRandomDate(),

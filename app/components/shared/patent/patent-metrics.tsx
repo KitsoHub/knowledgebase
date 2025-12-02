@@ -1,3 +1,4 @@
+"use client"
 import { getSummaryData } from '@/app/utils/mock/patent-data'
 import React from 'react'
 import PatentMetricCard from './metric-card'

@@ -18,7 +18,7 @@ export default function LandingPage() {
   const [isAdminFlow, setIsAdminFlow] = useState(false)
   const [isMasterKeyModalOpen, setIsMasterKeyModalOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [connectedWallet, setConnectedWallet] = useState("")
+  const [connectedAccount, setConnectedAccount] = useState("")
   const router = useRouter()
 
       const showSwal = () => {
@@ -32,26 +32,24 @@ export default function LandingPage() {
           })
         }
 
-  const handleConnectWallet = (walletType: string) => {
+  const handleConnectAccount = (accountType: string) => {
     setIsLoading(true)
 
-    // Simulate wallet connection
+
     setTimeout(() => {
       setIsLoading(false)
 
-      // Mock wallet address
-      const walletAddress = "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
-      setConnectedWallet(walletAddress)
+      const accountAddress = "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+      setConnectedAccount(accountAddress)
 
-      // Close wallet modal
       setIsAPIASignInModalOpen(false)
 
       if (isAdminFlow) {
-        // For admin, show master key modal after wallet connection
+
         setIsMasterKeyModalOpen(true)
       } else {
-        // For regular merchant, redirect to dashboard
-        router.push("/merchant/dashboard")
+
+        router.push("/apia/admin/dashboard")
       }
     }, 1500)
   }
@@ -62,13 +60,12 @@ export default function LandingPage() {
   }
 
   const handleMasterKeySubmit = (masterKey: string) => {
-    // In a real app, verify the masterKey here
+    // TODO: verify the masterKey with drf token
     if (masterKey === "admin123") {
     //   router.push("/apia/admin/dashboard")
         router.push("/apia/admin")
     } else {
-      // Show error in the modal (handled in the modal component)
-      // This would be handled by the modal in a real implementation
+
       showSwal()
 
     }
@@ -78,7 +75,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-900 via-crypto-darkBlue to-crypto-black text-white">
-      {/* Animated background elements */}
+
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-crypto-purple opacity-10 rounded-full filter blur-3xl animate-pulse"></div>
         <div
@@ -114,23 +111,23 @@ export default function LandingPage() {
             disabled={isLoading}
           >
             <LockClosedIcon className="mr-2 h-5 w-5" />
-            {isLoading ? "Connecting..." : "APIA GetStarted"}
+            {isLoading ? "Connecting..." : "APIA Get Started"}
           </Button>
 
           <div className="mt-12 flex flex-wrap justify-center gap-8">
             <div className="flex items-center">
-              <div className="w-12 h-12 bg-crypto-blue/20 rounded-full flex items-center justify-center mr-3">
-                <Image src="/placeholder.svg?height=24&width=24" alt="Security" width={24} height={24} />
+              <div className="w-12 h-12 flex items-center justify-center mr-3">
+                <Image src="/assets/secureFiles.png" alt="Security" width={48} height={48} className=" rounded-full "/>
               </div>
               <div className="text-left">
-                <h3 className="font-medium">Secure Transactions</h3>
+                <h3 className="font-medium">Secure Files</h3>
                 <p className="text-sm text-gray-400">End-to-end encrypted verification flows</p>
               </div>
             </div>
 
             <div className="flex items-center">
               <div className="w-12 h-12 bg-crypto-purple/20 rounded-full flex items-center justify-center mr-3">
-                <Image src="/placeholder.svg?height=24&width=24" alt="Fast" width={24} height={24} />
+                <Image src="/assets/fastVerification.png" alt="Fast" width={48} height={48} className="bg-crypto-green/20 rounded-full " />
               </div>
               <div className="text-left">
                 <h3 className="font-medium">Lightning Fast</h3>
@@ -139,12 +136,12 @@ export default function LandingPage() {
             </div>
 
             <div className="flex items-center">
-              <div className="w-12 h-12 bg-crypto-green/20 rounded-full flex items-center justify-center mr-3">
-                <Image src="/placeholder.svg?height=24&width=24" alt="Global" width={24} height={24} />
+              <div className="w-12 h-12 flex roun items-center justify-center mr-3">
+                <Image src="/assets/globalReach.png" alt="Global" width={48} height={48} className="bg-crypto-green/20 rounded-full " />
               </div>
               <div className="text-left">
                 <h3 className="font-medium">Global Reach</h3>
-                <p className="text-sm text-gray-400">Accept payments worldwide</p>
+                <p className="text-sm text-gray-400">Working with international bodies</p>
               </div>
             </div>
           </div>
@@ -155,14 +152,14 @@ export default function LandingPage() {
       <APIASignInModal
         isOpen={isAPIASignInModalOpen}
         onClose={() => setIsAPIASignInModalOpen(false)}
-        onConnect={handleConnectWallet}
+        onConnect={handleConnectAccount}
       />
 
       <MasterKeyModal
         isOpen={isMasterKeyModalOpen}
         onClose={() => setIsMasterKeyModalOpen(false)}
         onSubmit={handleMasterKeySubmit}
-        apiaAddress={connectedWallet}
+        apiaAddress={connectedAccount}
       />
 
       {/* Blur overlay when master key modal is open */}

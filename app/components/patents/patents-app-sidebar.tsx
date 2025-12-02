@@ -41,7 +41,6 @@ export function PatentsAppSidebar() {
   const pathname = usePathname()
   const { state, toggleSidebar } = useSidebar()
   const [mounted, setMounted] = useState(false)
-  // State to control the WorkSpace submenu being open or closed
   const [workspaceOpen, setWorkspaceOpen] = useState(false)
 
   useEffect(() => {
@@ -49,7 +48,6 @@ export function PatentsAppSidebar() {
   }, [])
 
   if (!mounted) {
-    // Render a minimal version until client mounting completes
     return (
       <Sidebar collapsible="icon">
         <SidebarContent />
@@ -58,15 +56,14 @@ export function PatentsAppSidebar() {
     )
   }
 
-  const isCollapsed = state === 'collapsed' // or however your sidebar’s “collapsed / expanded” state is defined
-  // Toggle the submenu open/close
+  const isCollapsed = state === 'collapsed'
+
   const toggleWorkspace = () => {
     setWorkspaceOpen(prev => !prev)
   }
 
   const isOpen = state === 'expanded' ? false : true
 
-  // Determine if "WorkSpace" should be highlighted (active) if any child route matches
   const workSpaceActive =
     pathname.startsWith('/workspace') ||
     pathname.startsWith('/verifications') ||
@@ -196,19 +193,6 @@ export function PatentsAppSidebar() {
                 </>
               )}
 
-              {/* Another top-level link */}
-              {/* <SidebarMenuItem>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname === "/compliance"}
-                  tooltip="Workflows"
-                >
-                  <Link href="/compliance">
-                    <Briefcase />
-                    <span>Workflows</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem> */}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
