@@ -71,7 +71,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
         message: data.message,
         userEmail: data.userEmail || undefined,
       });
-
+    
       form.reset({
         itemId: itemId,
         category: { category: itemCategory },
@@ -79,6 +79,16 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
         message: '',
         userEmail: '',
       });
+
+      const res = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      
+      if (!res.ok) {
+         throw new Error('Failed to send email notification');
+        }
 
       setShowSuccess(true);
       toast.success('Feedback submitted successfully!');
@@ -178,7 +188,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
               name="userEmail"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email (optional)</FormLabel>
+                  <FormLabel>Email </FormLabel>
                   <input
                     type="email"
                     placeholder="your@email.com"
