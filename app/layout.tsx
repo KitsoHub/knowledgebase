@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
-
+// import { Toaster } from "@/components/ui/sonner"
+// npx shadcn@latest add sonner
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { Main } from 'next/document'
@@ -27,6 +28,7 @@ export default function RootLayout({
           {children}
           {/* <MainFooter /> */}
         </body>
+         {/* <Toaster /> */}
       </html>
     </ClerkProvider>
   )

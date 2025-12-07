@@ -1,8 +1,82 @@
+import { FeedbackItem } from "@/lib/types/folklore";
 import { createClient } from "@supabase/supabase-js";
 
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-// const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_CLIENT_API_KEY;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 
 export const supabase = createClient(supabaseUrl!, supabaseKey!)
+
+export class FeedbackService {
+  static async createFeedback(feedback: FeedbackItem): Promise<FeedbackItem> {
+    try {
+      const { data, error } = await supabase
+        .from('folklore_feedback')
+        .insert({
+          itemid: feedback.itemId,
+          category: feedback.category,
+          feedbacktype: feedback.feedBackType,
+          message: feedback.message,
+          useremail: feedback.userEmail || null,
+        }).select().single();
+
+
+      if (error) throw error;
+      if (!data) throw new Error('Failed to create feedback');
+
+    //   console.error('Sending this feedback:', data);
+
+      return data as FeedbackItem;
+    } catch (error) {
+      console.error('Error creating feedback:', error);
+      throw error instanceof Error ? error : new Error('Failed to submit feedback');
+    }
+  }
+
+  static async getFeedbackByItemId(itemId: string): Promise<FeedbackItem[]> {
+    try {
+      const { data, error } = await supabase
+        .from('folklore_feedback')
+        .select('*')
+        .eq('itemid', itemId)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    } catch (error) {
+      console.error('Error fetching feedback:', error);
+      return [];
+    }
+  }
+
+  static async getFeedbackById(id: string): Promise<FeedbackItem | null> {
+    try {
+      const { data, error } = await supabase
+        .from('folklore_feedback')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
+      return data || null;
+    } catch (error) {
+      console.error('Error fetching feedback by ID:', error);
+      return null;
+    }
+  }
+
+  static async getAllFeedback(): Promise<FeedbackItem[]> {
+    try {
+      const { data, error } = await supabase
+        .from('folklore_feedback')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    } catch (error) {
+      console.error('Error fetching all feedback:', error);
+      return [];
+    }
+  }
+}
